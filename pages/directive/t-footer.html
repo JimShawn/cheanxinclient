@@ -1,0 +1,23 @@
+<tfoot>
+<tr>
+    <td colspan="8" class="page">
+        <div class="mod-page">
+            <div class="posi fl">
+                每页显示
+                <select ng-model = "pageSize" ng-options = "pageSizee for pageSizee in pageSizes" ng-change = "changePageSize(pageSize)">
+                </select>
+                条，共{{totalNum}}条
+            </div>
+            <ul class="page-list clearfix fr">
+                <li class="item item-arrow" ng-show ="pageNum>0" ng-click="goto(0)"><a href="" >&lt;&lt;</a></li>
+                <li class="item item-arrow" ng-show ="pageNum>0" ng-click="goto(pageNum-1)"><a href="">&lt;</a></li>
+                <li class="item" ng-show ="pageNum>0" ng-click="goto(pageNum-1)"><a href="">{{pageNum}}</a></li>
+                <li class="item item-on"><a href="" >{{ pageNum+1}}</a></li>
+                <li class="item" ng-show = "(pageNum+2)<=totalPage"><a href="" ng-click="goto(pageNum+1)">{{pageNum+2}}</a></li>
+                <li class="item item-arrow" ng-show = "(pageNum+2)<=totalPage" ng-click="goto(pageNum+1)"><a href="">&gt;</a></li>
+                <li class="item item-arrow" ng-show = "(pageNum+2)<=totalPage" ng-click="goto(totalPage-1)"><a href="">&gt;&gt;</a></li>
+            </ul>
+        </div>
+    </td>
+</tr>
+</tfoot>

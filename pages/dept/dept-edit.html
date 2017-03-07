@@ -1,0 +1,49 @@
+<div class="group-table">
+    <table class="mod-table1 ">
+        <tbody>
+        <tr>
+            <td width="15%">编号</td>
+            <td width="35%">
+                <span class="group-cell">{{selectedItem.deptCode}}</span>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%"><span class="star">*</span>部门名称</td>
+            <td width="35%">
+                <span class="group-cell"><input type="text" ng-model="selectedItem.name"></span>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%"><span class="star">*</span>上级部门</td>
+            <td width="35%">
+                <span class="group-cell">{{selectedItem.parentName}}</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="15%">状态</td>
+            <td width="35%">
+                <span class="group-cell">{{selectedItem.status}}</span>
+            </td>
+        </tr>
+
+
+        <tr >
+            <td class="footer-button" id="button"  colspan="2">
+                <table class="mod-subtable">
+                    <tr >
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click = "saveDept()">保存</button>
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click = "addChildrenDept()">增加下级</button>
+                        <!--<button class="comm-btn comm-btn-blue fl button1">增加同级</button>-->
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click = "disabledDept()">禁用</button>
+                        <!--<button class="comm-btn comm-btn-blue fl button1">删除</button>-->
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+
+</div>

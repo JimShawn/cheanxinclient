@@ -1,0 +1,33 @@
+html, body { overflow: hidden; }
+.header { width: 100%; height: 55px; position: relative; background: #68ade7; overflow: hidden; color: #fff; }
+.mainContent { position: relative; overflow: hidden; }
+.frameLeft { width: 195px; height: 100%; background: #68ade7; float: left; overflow-y: auto; }
+.frameRight { float: left; height: 100%; }
+.bread { height: 40px; line-height: 40px; background: #efefef; font-size: 14px; color: #4d4d4d; padding: 0 0 0 17px; }
+.frameBox { background: #fff; }
+
+.header a { color: #fff; }
+.header .person-info { float: right; display: inline; padding: 7px 13px 0 13px; line-height: 20px; text-align: right; }
+.header .top-menu { float: right; display: inline; }
+.header .top-menu-list { overflow: hidden; }
+.header .top-menu-list .item { float: left; display: inline; text-align: center; padding: 5px 0 0 0; }
+.header .top-menu-list .item a { display: block; width: 70px; border-left: 1px solid #558dcf; }
+.header .top-menu-list .item i { width: 24px; height: 24px; background: url(../img/ico.png) no-repeat; margin: 0 0 2px 0; }
+.header .top-menu-list .item .i-pw { background-position: 0 0; }
+.header .top-menu-list .item .i-quit { background-position: -50px 0; }
+.header .top-menu-list .item .txt { display: block; }
+
+.left-menu { margin: 0 10px; font-size: 14px; }
+.left-menu-item { margin: 0 0 10px 0; }
+.left-menu-item .hd { background: #558dcf; color: #f6f2c8; height: 30px; line-height: 30px; position: relative; cursor: pointer; }
+.left-menu-item .hd h3 { margin: 0 0 0 14px; font-weight: bold; }
+.left-menu-item .hd .i-arrow-down { width: 11px; height: 6px; position: absolute; top: 50%; right: 15px; margin: -3px 0 0 0; background: url(../img/ico.png) no-repeat -100px 0; }
+.left-menu-item .bd { background: #89ceff; padding: 0 0 6px 0; }
+.left-sub-menu .item { height: 32px; line-height: 32px; }
+.left-sub-menu .item a { display: block; padding: 0 0 0 14px; color: #fff; position: relative; }
+.left-sub-menu .item .i-link-arrow { width: 10px; height: 32px; background: url(../img/ico.png) no-repeat -150px 0; position: absolute; top: 0; right: -10px; display: none; }
+.left-sub-menu .item-on a { background: #fff; color: #444; }
+.left-sub-menu .item-on .i-link-arrow { display: block; }
+
+.bread a { color: #4d4d4d; margin: 0 8px; }
+.bread .blue { color: #0090d7 !important; }

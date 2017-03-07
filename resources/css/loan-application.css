@@ -1,0 +1,49 @@
+.loan-application-row1 { margin: 0 0 20px 0; }
+.title{width: auto; margin-left: 0}
+.star{color: red; margin-right: 5px;}
+.width-half{width: 50%;display: both;float: left;}
+.width-short{width: 20%;display: both;float: left;}
+.title{float: left;margin-left: 5%;}
+.cell{float: left;margin-left: 10px;}
+.upload{display: both; float: left; width:207px; height: 262px;  border: 1px dashed #DDDDDD;margin-left:8px;  }
+.add{margin-top: 70px;}
+.upload_1{width:207px;height: 34px;background-color:#F0F0F0;color: #B2B2B2; line-height: 36px; position:relative; margin-top: 46px; }
+.footer{height: 200px;}
+.footer1{margin-top: 50px;}
+.footer .footer-button{margin-top: 22px; margin-left: 22px;}
+.footer .a{font-size: 14px;margin-top: 26px; margin-left: 22px;}
+
+.wealth{display: both;float: left;width: 70px;height: 21px;margin-left:20px;background-color: #00FF00;color: white;}
+.wealth-in{background-color: #00FF00;color: black;border:1px solid black;}
+.loan-application{ padding: 20px 0 0 0; }
+.name_cell{width: 50%;}
+.data_cell{display: both;float: left; width: 30%;   }
+.data_cell_{display: both;float: left;line-height: 30px;margin-left: 10px;margin-right: 10px; }
+.distribute{display:both;width: 800px;}
+.distribution{display: both;float: right;width:150px;margin-left: 10px;}
+
+.h2{font-size: 15px; color: black;}
+.ml{margin-left: 50px;}
+.link{display: both;float: left;margin-left: 30px;line-height: 35px;}
+.link a{color:  #0090d7;}
+
+
+.nper{display: both;float: left;width: 40px;height: 21px;margin-left:20px;background-color: #00FF00;color: white;}
+.nper-in{background-color: #00FF00;color: black;border:1px solid black;}
+.label{text-decoration: none; height: 108px; width: 90%; border: 1px solid #ECEDF0;resize: none;overflow: hidden;}
+.multiple-choice{display: both;float: left;}
+.mt{margin-top: 8px;}
+
+/*定价页面CSS*/
+.report{display: both;float: right}
+.hr{border: 1px solid #00FF00;width: 100%;margin-top:10px;margin-bottom: 10px;}
+.check{width: 103px;height: 30px;display: both;float: left;text-align: center;line-height: 30px;margin-left: 40px;background-color: #00FF00; color: white;}
+.check-in{color: black;}
+
+/*待审核页面css*/
+.consequence{width:70px;height: 20px;border: 1px solid black;text-align: center; }
+.clean tbody tr td{border: none;}
+.click{width: 136px;height: 25px;display: both;float: right;text-align: center;line-height: 25px;background-color: #00FF00; color: black;font-size: 15px;}
+#border-none{border: none;}
+.width1{width:124px; }
+.width2{width:68px; }

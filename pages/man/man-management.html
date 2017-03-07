@@ -1,0 +1,111 @@
+<div class="main" ng-controller = "manController">
+    <div class="man-manage">
+        <div class="man-manage-row1">
+            <table class="mod-table1 mod-table1-ex">
+                <tr>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">姓名</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" ng-model="queryName">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">联系方式</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" ng-model="queryTel">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">岗位</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" ng-model="queryPost">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">邮箱</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" ng-model="queryEmail">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="2">
+                        <div class="mod-state">
+                            <table class="mod-subtable mod-subtable-state fl">
+                                <tr>
+                                    <td width="25%"><label class="comm-field-t">状态</label></td>
+                                    <td width="75%">
+                                        <div class="comm-inp-wp">
+                                            <select class="comm-select1" ng-model = "selectedStatus" ng-options = "queryStatus.value for queryStatus in queryStatuses">
+                                                <option value="">-- 请选择 --</option>
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                            <button class="comm-btn comm-btn-blue fl">查询</button>
+                            <button class="comm-btn comm-btn-blue fl">清除</button>
+                            <button class="comm-btn comm-btn-blue fr" ng-click = "add()">添加</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="man-manage-row2">
+            <table class="mod-table1">
+                <thead>
+                <tr>
+                    <th width="10%">帐号</th>
+                    <th width="10%">姓名</th>
+                    <th width="10%">部门</th>
+                    <th width="10%">岗位名称</th>
+                    <th width="10%">联系方式</th>
+                    <th width="18%">邮箱</th>
+                    <th width="10%">状态</th>
+                    <th width="22%">操作</th>
+                </tr>
+                </thead>
+                <tbody >
+                <tr ng-repeat = "man in data.content">
+                    <td>{{man.username}}</td>
+                    <td>{{man.realName}}</td>
+                    <td>{{man.dept.name}}</td>
+                    <td>{{man.postName}}</td>
+                    <td>{{man.emergencyContactMobileNumber}}</td>
+                    <td>{{man.email}}</td>
+                    <td>{{man.ststus}}</td>
+                    <td class="oper"><a href="" class="blue" ng-click="edit(man)">编辑</a><a href="#" class="blue">岗位</a><a href="#" class="blue">休假</a><a href="#" class="blue">冻结</a></td>
+                </tr>
+
+                </tbody>
+
+            </table>
+            <t-footer page-size = 'data.size' page-num = 'data.number' total-page = 'data.totalPages' total-num = 'data.totalElements' change-page-size-fun = 'changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
+        </div>
+    </div>
+</div>

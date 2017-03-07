@@ -1,0 +1,112 @@
+<div class="main" ng-controller = "subProductController">
+    <div class="man-manage">
+        <div class="man-manage-row1">
+            <table class="mod-table1 mod-table1-ex">
+                <tr>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">产品名称：</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" >
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">地区名称：</label></td>
+
+                                <td id="distance" width="70%">
+                                    <div class="comm-inp-wp distance">
+
+                                        <select class="comm-select1" ng-model = "selectProvinces" ng-options = "provinces.Name for provinces in cities.provincesList">
+                                            <option value="">省份</option>
+                                        </select>
+                                    </div>
+                                    <div class="comm-inp-wp distance">
+
+                                        <select class="comm-select1" ng-model = "selectCity" ng-options = "city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true">
+                                            <option value="">城市</option>
+                                        </select>
+                                    </div>
+
+                                </td>
+
+
+
+                            </tr>
+                        </table>
+
+                    </td>
+                    <td width="33.333333%">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="mod-subtable">
+                            <tr>
+
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="2">
+                        <div class="mod-state">
+                            <button id="button" class="comm-btn comm-btn-blue fl">查询</button>
+                            <button  class="comm-btn comm-btn-blue fl">清除</button>
+                            <button class="comm-btn comm-btn-blue fr" ng-click="add()">添加</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="man-manage-row2">
+            <div class="bd">
+                <ul class="mod-tabs clearfix">
+                    <li class="item"><a href=""><span>待审核</span></a></li>
+                    <li class="item"><a href=""><span>已审核</span></a></li>
+                    <li class="item"><a href=""><span>驳回</span></a></li>
+                </ul>
+            </div>
+
+            <table class="mod-table1">
+                <thead>
+                <tr>
+                    <th width="9%">产品编号</th>
+                    <th width="9%">产品名称</th>
+                    <th width="9%">贷款类型</th>
+                    <th width="9%">地区</th>
+                    <th width="9%">还款方式</th>
+                    <th width="9%">可贷成数</th>
+                    <th width="9%">可贷期数</th>
+                    <th width="9%">贷利率/月</th>
+                    <th width="9%">状态</th>
+                    <th width="19%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat = "product in data.content">
+                    <td>{{product.id}}</td>
+                    <td>{{ product.name}}</td>
+                    <td>{{ productTypes[product.productType].name}}</td>
+                    <td>{{cities.provincesList[product.provinceId-1].Name}}--{{cities.Citys[product.cityId-1].Name}}</td>
+                    <td>{{ paybackTypes[product.repaymentMethod].name}}</td>
+                    <td>{{product.minAvailableRate}}成-{{product.maxAvailableRate}}成</td>
+                    <td>{{ product.availableTerms}}</td>
+                    <td id="accrual">{{ product.loanMonthlyInterestRate}}</td>
+                    <td>{{ status[product.status].name}}</td>
+                    <td class="oper"><a href="" class="blue" ng-click="edit(product)">编辑</a><a href="" class="blue">审核</a><a href="" class="blue">去除</a></td>
+                </tr>
+
+                </tbody>
+
+            </table>
+            <t-footer page-size = 'data.size' page-num = 'data.number' total-page = 'data.totalPages' total-num = 'data.totalElements' change-page-size-fun = 'changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
+        </div>
+    </div>
+</div>

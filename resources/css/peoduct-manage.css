@@ -1,0 +1,36 @@
+#button{margin-left: 45%;}
+#accrual{color: red;}
+
+
+.loan-intention-row1 { margin: 0 0 20px 0; }
+
+.table{width: 75%;}
+.star{color: red;}
+.label{width: 42%;text-align: left;}
+.labe2{width: 21%;text-align: left;display: both;float: left}
+.labe3{display: both;float: left;margin-left: 10px;margin-top: 10px;}
+.label_right{float: left;margin-left: 1%;}
+#button_1{border: none;}
+
+.button1{margin-right: 1%;}
+#button2{margin-right: 42%;}
+
+
+.comm-inp-wp1 { border: 0px solid #eaeaea; width: 42%; }
+.data_cell{display: both;float: left; width:20%;   }
+.data_cell_{display: both;float: left;line-height: 30px;margin-left: 10px;margin-right: 10px; }
+.a{width: 44%;padding: 0;border: none;}
+.rung{line-height: 30px;}
+.proportion{width: 35%;}
+
+.nper{display: both;float: left;margin-left: 10px; width:50px;background-color:#00FF00;   -webkit-border-radius: 0.325em;  border-radius: 0.325em; }
+.nper .nper-box{display: both;float:left;margin-top: 2px; }
+.nper-num{display: both;float: left;}
+
+#aa{padding-top: 15px}
+
+.man-manage { padding: 20px 0 0 0; }
+.man-manage .man-manage-row1 { margin: 0 0 20px 0; }
+#button{margin-left: 45%;}
+#accrual{color: red;}
+.distance{display: both;float: left; width: 40%; margin-left: 5%;}

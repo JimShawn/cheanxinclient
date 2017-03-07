@@ -1,0 +1,4 @@
+.home-row1 { overflow: hidden; }
+.home-row1 .mod { float: left; display: inline; width: 49%; }
+.backlog { margin: 0 2% 0 0; }
+.home-row1 .mod-linebox { height: 129px; overflow: hidden; padding: 13px 30px; }

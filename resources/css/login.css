@@ -1,0 +1,19 @@
+.mod-login-in { width: 1200px; margin: 0 auto; position: relative; }
+
+.login-header { height: 75px; }
+.login-header .mod-logo a { padding: 27px 0; color: #fff; }
+.login-main { height: 540px; background: url(../img/bg-login.jpg) no-repeat center top; }
+.login-footer { font-size: 16px; text-align: center; padding: 30px 0; }
+.login-footer .site { margin: 0 0 0 20px; }
+
+.login-box { width: 378px; background: #fff; position: absolute; top: 70px; right: 0; font-size: 14px; }
+.login-box-in { padding: 20px 38px; }
+.login-box .mod-hd { margin: 0 0 10px 0; }
+.login-form-item { position: relative; margin: 0 0 18px 0; }
+.login-form-item i { width: 22px; height: 22px; background: url(../img/ico.png) no-repeat -200px 0; position: absolute; top: 50%; left: 6px; margin: -11px 0 0 0; }
+.login-form-item .i-user { background-position: -200px 0; }
+.login-form-item .i-pwd { background-position: -250px 0; }
+.login-form-item .input-login { background: #fff; height: 18px; line-height: 18px; padding: 12px 6px 12px 37px; border: 1px solid #eaeaea; font-size: 14px; width: 254px; color: #444; }
+.login-box .forget-pwd { text-align: right; margin: -14px 0 26px 0; }
+.login-form-item-btn .comm-btn { padding: 10px 0; width: 299px; }
+.login-box .tip-account { text-align: center; margin: -10px 0 17px 0; }

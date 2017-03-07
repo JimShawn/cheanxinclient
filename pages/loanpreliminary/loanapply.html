@@ -1,0 +1,625 @@
+<div class="main" ng-controller="loanapplyController">
+
+    <div class="mod-hd">
+        <h2>贷款申请</h2>
+    </div>
+
+    <div class="loan-application-row1">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="title">业务来源</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="15%"><span class="star">*</span>来源城市
+                </td>
+                <td width="35%"><div class="comm-inp-wp">
+                    <select class="comm-select1" ng-model="sourceCity" ng-options = "city.Name for city in cityArray" ng-change="getProductByCity()">
+                        <option value="">请选择</option>
+                    </select>
+                </div></td>
+                <td width="15%"><span class="star">*</span>跟金融专员</td>
+                <td width="35%"><span class="cell">{{userInfo.data.realName}}</span><div class="comm-inp-wp">
+
+            </div></td>
+
+            </tr>
+            <tr>
+                <td><span class="star">*</span>来源渠道</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedSource" ng-options = "source.name for source in sources">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+                <td><span class="star">*</span>收单员</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedCollector" ng-options = "collector.realName for collector in collectors">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td> <span class="star">*</span>来源联系人姓名</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="sourcePersonName">
+                    </div>
+                </td>
+                <td><span class="star">*</span>来源联系人手机号码</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="sourcePersonTel">
+                    </div>
+                </td>
+
+
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="loan-application-row2">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="title">申请人信息</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="15%"><span class="star">*</span>申请人姓名</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="applicantName">
+                    </div>
+                </td>
+                <td width="15%"><span class="star">*</span>手机号码</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="applicantMobileNumber">
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td><span class="star">*</span>证件种类</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedIDType" ng-options = "IDType.name for IDType in IDTypes">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+                <td><span class="star">*</span>证件号码</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="applicantCertificateNumber">
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td><span class="star">*</span>婚姻状况</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedMarriages" ng-options = "marriage.name for marriage in marriages">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+                <td><span class="star">*</span>本人月收入</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="applicantIncomePerMonth">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span class="star">*</span>房产、车辆
+                </td>
+                <td colspan="3">
+                    <div class="wealth">自有房产</div>
+                    <div class="wealth wealth-in">自有车辆</div>
+                </td>
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    <span class="star">*</span>身份证文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                    </div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                    </div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传身份证文件 </div>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    学历证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传学历证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    工作及财力证明
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传工作及财力证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    房产证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传房产证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    车辆证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传车辆证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    其他证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传其他证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+    <br/>
+    <div class="loan-application-row3">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="title">共同申请人信息</span></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr height="300px">
+                <td >
+                    <span class="star">*</span>身份证文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                    </div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                    </div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传身份证文件 </div>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    工作及财力证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传工作及财力证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    房产证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传房产证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    其他证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传其他证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+    <br/>
+    <div class="loan-application-row4">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="title">担保人</span></th>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr height="300px">
+                <td >
+                    <span class="star">*</span>身份证文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                    </div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                    </div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传身份证文件 </div>
+                    </div>
+
+                </td>
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    工作及财力证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href=""><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href=""><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href=""><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传工作及财力证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    房产证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传房产证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    其他证明文件
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传其他证明文件 </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+    <br/>
+    <div class="loan-application-row5">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="title">车辆信息</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="15%"><span class="star">*</span>车架号</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="vehicleVin">
+                    </div>
+                </td>
+                <td width="15%"></td>
+                <td width="35%"></td>
+
+            </tr>
+            <tr>
+                <td><span class="star">*</span>生产厂家</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedFactory" ng-options = "factory for factory in factories">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+                <td><span class="star">*</span>汽车品牌</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedBrand" ng-options = "brand for brand in brands">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><span class="star">*</span>汽车款式</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedSeries" ng-options = "serie for serie in series">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+                <td><span class="star">*</span>二手车里程数（万公里）</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="vehicleKilometers">
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>车辆登记证书
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传车辆登记证书</div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span> 机动车行驶证
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传机动车行驶证 </div>
+                    </div>
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span> 车辆照片
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传车辆照片 </div>
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+    </div>
+    <br/>
+    <div class="loan-application-row6">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="title">贷款申请方案</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="15%"><span class="star">*</span>产品名称</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedProduct" ng-options = "product.name for product in products" ng-change="selectProduct()">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+                <td width="15%"><span class="star">*</span>贷款类型</td></td>
+                <td width="35%">
+                    <div class="comm-inp-wp width-half">
+                        {{productTypes[selectedProduct.productType].name}}
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td><span class="star">*</span>车辆成交价（元）</td>
+                <td>
+                    <div class="comm-inp-wp width-half">
+                        <input type="text" class="comm-input1" ng-model = "vehicleDealPrice">
+                    </div>
+                    <div class="link"><a href="javascript:void(0);">车价宝评估</a></div>
+                </td>
+                <td><span class="star">*</span>贷款成数</td>
+                <td>
+                    <div class="comm-inp-wp width-half">
+                        <select class="comm-select1" ng-model="selectedRate" ng-options = "rate+'成' for rate in AvailableRates.slice(selectedProduct.minAvailableRate,selectedProduct.maxAvailableRate)" ng-change="changeRate()">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td><span class="star">*</span>首付款金额（元）</td>
+                <td>
+                    <div class="comm-inp-wp width-half">
+                        <input type="text" class="comm-input1" ng-model="firstPay">
+                    </div>
+                </td>
+                <td><span class="star">*</span>贷款总金额（元）</td>
+                <td>
+                    <div class="comm-inp-wp width-half">
+                        {{vehicleDealPrice-firstPay}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="star">*</span>贷款利率</td>
+                <td>
+                    <div class="comm-inp-wp width-short">
+                        {{selectedProduct.loanMonthlyInterestRate}}
+                    </div>
+                    <div class="link">%/月</div>
+                </td>
+                <td><span class="star">*</span>贷款期数</td>
+                <td>
+                    <select class="comm-select1" ng-model="selectedTerm" ng-options = "term+'期' for term in availableTerms" ng-change="changeTerms()">
+                        <option value="">请选择</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="star">*</span>还款金额（元）</td>
+                <td>
+                    <span class="fl">{{paybackPerMonth}}元/月</span>
+                </td>
+
+
+            </tr>
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>申请表材料
+                </td>
+
+                <td colspan="3">
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload"> <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a></div>
+                    <div class="upload">
+                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
+                        <div class="upload_1">请上传申请表材料</div>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+    <br/>
+    <div class="loan-application-row7">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="title">备注</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="15%">备注</td>
+                <td colspan="3">
+                    <div>
+                        <textarea class="label" name="" id="" cols="30" rows="10" ng-model="remark"></textarea>
+                    </div>
+                </td>
+
+
+            </tr>
+
+
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="footer">
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()">提交</button>
+        <button class="comm-btn  fr footer-button" ng-click="cancel()">放弃</button>
+        <button class="comm-btn  fr footer-button" ng-click="commit()">存草稿</button>
+
+        <div class=" a fr ">
+            <img class="up-logo" src="/resources/img/up.jpg" alt="">
+            <span>更多操作</span>
+        </div>
+
+    </div>
+</div>

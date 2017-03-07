@@ -1,0 +1,50 @@
+<div class="main" ng-controller = "addPositionController">
+    <div class="mod-hd">
+        <h2>岗位添加</h2>
+    </div>
+
+    <div class="table">
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+                <td width="15%"><span class="star">*</span>岗位名称</td>
+                <td width="35%">
+                    <div class="comm-inp-wp label">
+                        <input type="text" class="comm-input1" ng-model="postName">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td><span class="star">*</span>岗位类型</td>
+                <td>
+                    <div class="comm-inp-wp label">
+                        <select class="comm-select1" ng-model = "selectedDeptType" ng-options = "postType.name for postType in data">
+                            <option value="">-- 请选择 --</option>
+                        </select>
+                    </div>
+                </td>
+                </td>
+
+            </tr>
+            <tr>
+                <td>状态</td>
+                <td><span class="label_right">有效</span></td>
+            </tr>
+
+            <tr >
+                <td id="button"  colspan="2">
+                    <table class="mod-subtable">
+                        <tr >
+                            <button class="comm-btn comm-btn-blue fl button1" ng-click="addPosition()">保存</button>
+                            <button class="comm-btn comm-btn-blue fl button1" ng-click="cancelAdd()">取消</button>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+
+
+        </table>
+    </div>
+
+</div>

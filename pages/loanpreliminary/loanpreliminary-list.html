@@ -1,0 +1,128 @@
+<div class="main" ng-controller="loanpreliminaryListController">
+    <div class="loan-intention">
+        <div class="loan-intention-row1">
+            <table class="mod-table1 mod-table1-ex">
+                <tr>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">姓名:</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp name_cell">
+                                        <input type="text" class="comm-input1" ng-model="QueryUserName">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">联系方式:</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" ng-model="queryTel">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">来源：</label></td>
+                                <td width="75%">
+
+                                    <div class="comm-inp-wp">
+                                        <select class="comm-select1" ng-model="querySelectedSource" ng-options = "source.name for source in sources">
+                                            <option value="">请选择</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">提交日期：</label></td>
+                                <td width="75%">
+
+
+                                        <adm-dtp ng-model='queryCommitBeginDate' options='{calType: "gregorian", format: "YYYY-MM-DD", default: "today"}'></adm-dtp>
+
+                                    <div class="data_cell_">——</div>
+
+                                        <adm-dtp ng-model='queryCommitEndDate' options='{calType: "gregorian", format: "YYYY-MM-DD", default: "today"}'></adm-dtp>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="2">
+                        <div class="mod-state">
+                            <button class="comm-btn comm-btn-blue fl">查询</button>
+                            <button class="comm-btn comm-btn-blue fl">清除</button>
+                            <button class="comm-btn comm-btn-blue fr" ng-click = "add()">添加</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="man-manage-row2">
+            <div class="bd">
+                <ul class="mod-tabs clearfix">
+                    <li class="item" ng-class="{'item-on':draft}" ng-click="goToDraft(1)"><a href=""><span>草稿箱</span></a></li>
+                    <li class="item " ng-class="{'item-on':waitingCheck}"><a href="" ng-click="goToDraft(2)"><span>待审核</span></a></li>
+                    <li class="item" ng-class="{'item-on':returnWaitingUpdate}"><a href="" ng-click="goToDraft(3)"><span>退回待修改</span></a></li>
+                    <li class="item " ng-class="{'item-on':checkPass}"><a href="" ng-click="goToDraft(4)"><span>审核通过</span></a></li>
+                    <li class="item" ng-class="{'item-on':checkRefuse}"><a href="" ng-click="goToDraft(5)"><span>审核拒绝</span></a></li>
+                </ul>
+            </div>
+
+            <table class="mod-table1">
+                <thead>
+                <tr>
+                    <th width="9%">编号</th>
+                    <th width="9%">申请人</th>
+                    <th width="9%">联系方式</th>
+                    <th width="9%">车型</th>
+                    <th width="9%">省份城市</th>
+                    <th width="9%">产品</th>
+                    <th width="9%">贷款金额（元）</th>
+                    <th width="9%">跟进人</th>
+                    <th width="9%">提交日期</th>
+                    <th width="9%">状态</th>
+                    <th width="9%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat = "draft in data.content">
+                    <td>{{draft.id}}</td>
+                    <td>{{draft.applicantName}}</td>
+                    <td>{{draft.applicantMobileNumber}}</td>
+                    <td>{{draft.vehicleSeries}}</td>
+                    <td>{{cityJson.provincesList[cityJson.Citys[draft.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[draft.sourceCityId-1].Name}}</td>
+                    <td>{{draft.productName}}</td>
+                    <td>{{draft.vehicleDealPrice*draft.loanRate/10}}</td>
+                    <td>{{draft.sourceFinancialCommissioner}}</td>
+                    <td>{{commonUtil.getDateFromInt(draft.modifiedTime)}}</td>
+                    <td>草稿</td>
+                    <td class="oper"><a href="" class="blue" ng-click="detial()">查看</a><a href="" class="blue" ng-click="edit(draft)">编辑</a></td>
+                </tr>
+
+
+
+
+
+                </tbody>
+
+            </table>
+            <t-footer page-size = 'data.size' page-num = 'data.number' total-page = 'data.totalPages' total-num = 'data.totalElements' change-page-size-fun = 'changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
+        </div>
+    </div>
+</div>

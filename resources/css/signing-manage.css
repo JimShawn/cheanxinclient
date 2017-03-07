@@ -1,0 +1,21 @@
+.loan-intention { padding: 20px 0 0 0; }
+.loan-intention .loan-intention-row1 { margin: 0 0 20px 0; }
+.name_cell{width: 50%;}
+.data_cell{display: both;float: left; width: 30%;   }
+.data_cell_{display: both;float: left;line-height: 30px;margin-left: 10px;margin-right: 10px; }
+
+
+
+
+
+.cell{float: left;margin-left: 3%;}
+.upload{display: both; float: left; width:207px; height: 262px;  border: 1px dashed #DDDDDD;margin-left:8px;  }
+.add{margin-top: 70px;}
+.upload_1{width:207px;height: 34px;background-color:#F0F0F0;color: #B2B2B2; line-height: 36px; position:relative; margin-top: 46px; }
+.footer{height: 200px;}
+.footer .footer-button{margin-top: 22px; margin-left: 22px;}
+.footer .a{font-size: 14px;margin-top: 26px; margin-left: 22px;}
+
+
+.loan-application-row2 .h1{font-size: 18px;}
+.loan-application-row2 .h2{font-size: 13px;color: black}

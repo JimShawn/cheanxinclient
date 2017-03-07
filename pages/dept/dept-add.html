@@ -1,0 +1,45 @@
+<div class="group-table">
+    <table class="mod-table1 ">
+        <tbody>
+
+        <tr>
+            <td width="15%"><span class="star">*</span>部门名称</td>
+            <td width="35%">
+                <span class="group-cell"><input type="text" ng-model="newItem.name"></span>
+            </td>
+        </tr>
+        <tr>
+            <td width="15%"><span class="star">*</span>上级部门</td>
+            <td width="35%">
+                <span class="group-cell">{{newItem.parentName}}</span>
+            </td>
+        </tr>
+
+        <tr>
+            <td width="15%">状态</td>
+            <td width="35%">
+                <span class="group-cell">{{newItem.status}}</span>
+            </td>
+        </tr>
+
+
+        <tr >
+            <td class="footer-button" id="button"  colspan="2">
+                <table class="mod-subtable">
+                    <tr >
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click="addDept()">保存</button>
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click="cancelAddDept()">取消</button>
+                        <!--<button class="comm-btn comm-btn-blue fl button1" ng-click = "addChildrenDept()">增加下级</button>-->
+                        <!--<button class="comm-btn comm-btn-blue fl button1">增加同级</button>-->
+                        <!--<button class="comm-btn comm-btn-blue fl button1">禁用</button>-->
+                        <!--<button class="comm-btn comm-btn-blue fl button1">删除</button>-->
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+
+</div>

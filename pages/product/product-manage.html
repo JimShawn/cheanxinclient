@@ -1,0 +1,82 @@
+
+<div class="main" ng-controller = "productController">
+    <div class="man-manage">
+        <div class="man-manage-row1">
+            <table class="mod-table1 mod-table1-ex">
+                <tr>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">产品名称：</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" ng-model = "QueryProductName">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+
+                    </td>
+                    <td width="33.333333%">
+
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="mod-subtable">
+                            <tr>
+
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="2">
+                        <div class="mod-state">
+                            <button id="button" class="comm-btn comm-btn-blue fl">查询</button>
+                            <button  class="comm-btn comm-btn-blue fl">清除</button>
+                            <button class="comm-btn comm-btn-blue fr" ng-click = "addProduct()">添加</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="man-manage-row2">
+            <table class="mod-table1">
+                <thead>
+                <tr>
+                    <th width="10%">产品编号</th>
+                    <th width="10%">产品名称</th>
+                    <th width="10%">贷款类型</th>
+                    <th width="10%">还款方式</th>
+                    <th width="10%">可贷成数</th>
+                    <th width="10%">可贷期数</th>
+                    <th width="10%">贷款利率/月</th>
+                    <th width="10%">状态</th>
+                    <th width="20%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr ng-repeat = "product in data.content">
+                    <td>{{product.id}}</td>
+                    <td>{{ product.name}}</td>
+                    <td>{{ productTypes[product.productType].name}}</td>
+                    <td>{{ paybackTypes[product.repaymentMethod].name}}</td>
+                    <td>{{product.minAvailableRate}}成-{{product.maxAvailableRate}}成</td>
+                    <td>{{ product.availableTerms}}</td>
+                    <td id="accrual">{{ product.loanMonthlyInterestRate}}</td>
+                    <td>{{ status[product.status].name}}</td>
+                    <td class="oper"><a href="" class="blue" ng-click="edit(product)">编辑</a>
+                        <!--<a href="#" class="blue">地区政策</a><a href="#" class="blue">流程设定</a>-->
+                    </td>
+                </tr>
+
+
+                </tbody>
+
+            </table>
+            <t-footer page-size = 'data.size' page-num = 'data.number' total-page = 'data.totalPages' total-num = 'data.totalElements' change-page-size-fun = 'changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
+        </div>
+    </div>
+</div>

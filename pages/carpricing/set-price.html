@@ -1,0 +1,210 @@
+<div class="main" ng-controller="setPriceController">
+
+    <div class="mod-hd">
+        <h2>申请车辆信息</h2>
+    </div>
+
+    <div class="loan-application-row1">
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+                <td rowspan="5" width="10">车辆信息</td>
+                <td width="15%">车架号：</td>
+                <td colspan="3"><span class="fl">{{applyLoan.vehicleVin}}</span></td>
+
+            </tr>
+            <tr>
+                <td width="15%">生产厂家：</td>
+                <td width="30%" ><span class="fl">{{applyLoan.vehicleManufacturers}}</span></td>
+                <td width="15%">汽车品牌：</td>
+                <td width="30%"><span class="fl">{{applyLoan.vehicleBrand}}</span></td>
+
+            </tr>
+            <tr>
+                <td width="15%">生产年份：</td>
+                <td width="30%" ><span class="fl">{{applyLoan.vehicleProductionYearMonth}}</span></td>
+                <td width="15%">汽车款式</td>
+                <td width="30%"><span class="fl">{{applyLoan.vehicleSeries}}</span></td>
+            </tr>
+            <tr>
+                <td width="15%">首次登记日期：</td>
+                <td width="30%" ><span class="fl">{{applyLoan.vehicleRegistrationYearMonth}}</span></td>
+                <td width="15%">二手车里程数（公里）</td>
+                <td width="30%"><span class="fl">{{applyLoan.vehicleKilometers}}</span></td>
+            </tr>
+            <tr>
+                <td width="15%">使用性质：</td>
+                <td width="30%" ><span class="fl">{{applyLoan.vehicleUtilityType}}</span></td>
+                <td width="15%">排放标准</td>
+                <td width="30%"><span class="fl">{{applyLoan.vehicleEmission}}</span></td>
+            </tr>
+            <tr>
+                <td>车辆登记证书：</td>
+                <td colspan="4">
+                    <div class="photo"></div>
+                    <div class="photo"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>车辆登记证书：</td>
+                <td colspan="4">
+                    <div class="photo"></div>
+                    <div class="photo"></div>
+                </td>
+            </tr>
+            <tr>
+                <td>车辆登记证书：</td>
+                <td colspan="4">
+                    <div class="photo"></div>
+                    <div class="photo"></div>
+                    <div class="photo"></div>
+                    <div class="photo"></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <br/>
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+                <td width="10%">车况宝检测评级</td>
+                <td>
+                    <span class="fl bold red"> <u>B</u></span>
+                    <div class="report blue">检测网站报告</div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="hr"></div>
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+                <td width="10%">车价宝评估价</td>
+                <td>
+                    <span class="fl bold red"><u>{{applyLoan.vehicleDealPrice}}</u></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <br/>
+    <div>
+        <h2 class="thirty bold black"> &emsp;判定结果</h2>
+    </div>
+    <div class="check round" ng-class="{'check-in':isRight}" ng-click="isRight=!isRight">车辆信息符合</div>
+    <div class="check round" ng-class="{'check-in':!isRight}" ng-click="isRight=!isRight">车辆信息不符</div>
+    <br/>
+    <br/>
+    <br/>
+    <div class="row2">
+        <table class="mod-table1">
+            <thead>
+            <tr>
+                <th colspan="4"><span class="fl">判定结果</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="20%"> <span class="red">*</span>车架号：</td>
+                <td colspan="3">
+                    <div class="comm-inp-wp inline three">
+                        <input type="text" class="comm-input1" ng-disabled="isRight" ng-model="applyLoan.vehicleVin">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="20%"><span>*</span>生产厂家：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleManufacturers" ng-options = "factory for factory in factories" ng-disabled="isRight">
+                        </select>
+                    </div>
+                </td>
+                <td width="20%"><span>*</span>汽车品牌：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleBrand" ng-options = "brand for brand in brands" ng-disabled="isRight">
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td width="20%"><span>*</span>生产年份：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp  ">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleProductionYearMonth" ng-options = "produceYear+'年' for produceYear in produceYears" ng-disabled="isRight">
+                        </select>
+                    </div>
+                </td>
+                <td width="20%"><span>*</span>汽车款式：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleSeries" ng-options = "serie for serie in series" ng-disabled="isRight">
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td width="20%"><span>*</span>首次登记日期：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp  ">
+                        <adm-dtp ng-model='applyLoan.vehicleRegistrationYearMonth' options='{calType: "gregorian", format: "YYYY-MM-DD",freezeInput:"true"}'></adm-dtp>
+                    </div>
+                </td>
+                <td width="20%"><span>*</span>二手车里程数（公里）：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp  ">
+                        <input type="text" class="comm-input1" ng-model="applyLoan.vehicleKilometers" ng-disabled="isRight">
+                    </div>
+                </td>
+
+            </tr>
+            <tr>
+                <td width="20%"><span>*</span>使用性质：</td>
+                <td width="30%">
+                    <div class="multiple-choice"><input type="radio" name="utilityType" value="非营运" ng-model="applyLoan.vehicleUtilityType" ng-disabled="isRight"> 非营运 <span>&emsp;</span><input type="radio" name="utilityType" value="营运" ng-model="applyLoan.vehicleUtilityType" ng-disabled="isRight">营运<span>&emsp;</span><input type="radio" name="utilityType" value="营转非" ng-model="applyLoan.vehicleUtilityType" ng-disabled="isRight">营转非<span>&emsp;</span><input type="radio" name="utilityType" value="教练车" ng-model="applyLoan.vehicleUtilityType" ng-disabled="isRight">教练车</div>
+
+                </td>
+                <td width="20%"><span>*</span>排放标准：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleEmission" ng-options = "emission for emission in emissiones" ng-disabled="isRight">
+                        </select>
+                    </div>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+        <table class="mod-table1">
+            <thead >
+            <th colspan="2"><span class="fl">评估价</span></th>
+            </thead>
+            <tbody>
+            <tr>
+                <td width="20%"><span class="red">*</span>评估价（元）：</td>
+                <td>
+                    <div class="comm-inp-wp inline three">
+                        <input type="text" class="comm-input1" ng-model="predictPrice">
+                    </div>
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+
+
+    <div class="footer">
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()">确认</button>
+        <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
+        <div class=" a fr ">
+            <img class="up-logo" src="/resources/img/up.jpg" alt="">
+            <span>更多操作</span>
+        </div>
+
+    </div>
+</div>

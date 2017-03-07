@@ -1,0 +1,12 @@
+.radio-checked{
+    background: #00FF00;
+    color: white;
+}
+.div-button{
+    cursor: pointer;
+}
+.main-reason{
+    position: relative;
+    left: 10%;
+    color: red;
+}
