@@ -84,7 +84,6 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
     };
     $scope.saveDept = function () {
         var deptItem = {
-            deptCode:$scope.selectedItem.deptCode,
             name:$scope.selectedItem.name,
             parentDeptId:$scope.selectedItem.parentDeptId,
             level:$scope.selectedItem.level,
@@ -98,12 +97,10 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
         });
     }
     $scope.addDept = function () {
-        $scope.newItem.deptCode = "111";
         $scope.newItem.parentDeptId = $scope.selectedItem.id;
         $scope.newItem.level = $scope.selectedItem.level+1;
         $scope.newItem.enabled = true;
         var deptItem = {
-            deptCode:"111",
             name:$scope.newItem.name,
             parentDeptId:$scope.selectedItem.id,
             level:$scope.selectedItem.level+1,

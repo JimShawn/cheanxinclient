@@ -16,7 +16,7 @@
                 </a>
             </li>
             <li class="item">
-                <a href="">
+                <a href="" ng-click="">
                     <i class="i-quit"></i>
                     <span class="txt">退出系统</span>
                 </a>
@@ -40,19 +40,19 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':loanapply}" >
+                        <li class="item" ng-class="{'item-on':menuItems[0]}" ng-click="changeItem(0)">
                             <a href="" ng-click="loanApply()">
                                 贷款申请
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item item-on" ng-class="{'item-on':loanIntention}" >
+                        <li class="item" ng-class="{'item-on':menuItems[1]}" ng-click="changeItem(1)">
                             <a href="">
                                 贷款意向
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':giveupList}" >
+                        <li class="item" ng-class="{'item-on':menuItems[2]}" ng-click="changeItem(2)">
                             <a href="">
                                 放弃名单
                                 <i class="i-link-arrow"></i>
@@ -68,19 +68,19 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':loanpreliminary}" >
+                        <li class="item" ng-class="{'item-on':menuItems[3]}" ng-click="changeItem(3)">
                             <a href="" ng-click="LoanPreliminary()">
                                 贷款预审
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':carPricing}" >
+                        <li class="item" ng-class="{'item-on':menuItems[4]}" ng-click="changeItem(4)">
                             <a href="" ng-click="setPricing()">
                                 车辆定价
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':loanReview}">
+                        <li class="item" ng-class="{'item-on':menuItems[5]}" ng-click="changeItem(5)">
                             <a href="" ng-click="loanRecheck()">
                                 贷款复审
                                 <i class="i-link-arrow"></i>
@@ -96,14 +96,14 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':signManagement}" >
-                            <a href="">
+                        <li class="item" ng-class="{'item-on':menuItems[6]}" ng-click="changeItem(6)">
+                            <a href="" ng-click="signManagement()">
                                 签约管理
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':clientGiveupSign}" >
-                            <a href="">
+                        <li class="item" ng-class="{'item-on':menuItems[7]}" ng-click="changeItem(7)">
+                            <a href="" ng-click="giveupList()">
                                 客户放弃签约
                                 <i class="i-link-arrow"></i>
                             </a>
@@ -118,13 +118,13 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':afterTransfer}" >
+                        <li class="item" ng-class="{'item-on':menuItems[8]}" ng-click="changeItem(8)">
                             <a href="">
                                 过户后放款
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':afterMortage}" >
+                        <li class="item" ng-class="{'item-on':menuItems[9]}" ng-click="changeItem(9)">
                             <a href="">
                                 抵押后放款
                                 <i class="i-link-arrow"></i>
@@ -140,7 +140,7 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':fileManagement}" >
+                        <li class="item" ng-class="{'item-on':menuItems[10]}" ng-click="changeItem(10)">
                             <a href="">
                                 档案管理
                                 <i class="i-link-arrow"></i>
@@ -156,37 +156,37 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':packbackManagement}" >
+                        <li class="item" ng-class="{'item-on':menuItems[11]}" ng-click="changeItem(11)">
                             <a href="">
                                 还款管理
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':carChase}" >
+                        <li class="item" ng-class="{'item-on':menuItems[12]}" ng-click="changeItem(12)">
                             <a href="">
                                 车辆追踪
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':electronicFenceMonitoring}" >
+                        <li class="item" ng-class="{'item-on':menuItems[13]}" ng-click="changeItem(13)">
                             <a href="">
                                 电子围栏监控
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':carMonitoringAlarm}" >
+                        <li class="item" ng-class="{'item-on':menuItems[14]}" ng-click="changeItem(14)">
                             <a href="">
                                 车辆监控报警
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':OverdueCollection}" >
+                        <li class="item" ng-class="{'item-on':menuItems[15]}" ng-click="changeItem(15)">
                             <a href="">
                                 逾期催收
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':assetsRecovery}" >
+                        <li class="item" ng-class="{'item-on':menuItems[16]}" ng-click="changeItem(16)">
                             <a href="">
                                 资产清收
                                 <i class="i-link-arrow"></i>
@@ -202,25 +202,25 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':orgManagement}" >
+                        <li class="item" ng-class="{'item-on':menuItems[17]}" ng-click="changeItem(17)">
                             <a ng-click = "deptManagement()" href="">
                                 组织管理
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':postManagement}" >
+                        <li class="item" ng-class="{'item-on':menuItems[18]}" ng-click="changeItem(18)">
                             <a  ng-click = "positionManagement()" href="">
                                 岗位管理
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':userManagement}" >
+                        <li class="item" ng-class="{'item-on':menuItems[19]}" ng-click="changeItem(19)">
                             <a target="right" ng-click = "manManagement()" href="">
                                 人员管理
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':userManagementArea}" >
+                        <li class="item" ng-class="{'item-on':menuItems[20]}" ng-click="changeItem(20)">
                             <a href="">
                                 人员管辖地区
                                 <i class="i-link-arrow"></i>
@@ -236,13 +236,13 @@
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':productManament}" >
+                        <li class="item" ng-class="{'item-on':menuItems[21]}" ng-click="changeItem(21)">
                             <a ng-click = "productManagement()" href="" target="right">
                                 产品管理
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
-                        <li class="item" ng-class="{'item-on':subProductManagement}" >
+                        <li class="item" ng-class="{'item-on':menuItems[22]}" ng-click="changeItem(22)">
                             <a ng-click = "subProductManagement()" href="" target="right">
                                 产品地域策略
                                 <i class="i-link-arrow"></i>

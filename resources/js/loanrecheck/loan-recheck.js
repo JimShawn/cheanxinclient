@@ -15,7 +15,7 @@ loanrecheck.controller("loanRecheckListController",['$scope', '$http','$location
         });
 
     };
-    $scope.getList(0,10,4);
+    $scope.getList(0,10,"4,10,12");
     $scope.waitingRecheck=true;
     $scope.cityJson = cityJson;
     $scope.commonUtil = commonUtil;
@@ -24,6 +24,61 @@ loanrecheck.controller("loanRecheckListController",['$scope', '$http','$location
         console.log($scope.data.number);
         $scope.getList($scope.data.number,size);
     };
+    $scope.loanStatuses=[
+        {
+            id:0,
+            name:"已放弃"
+        },{
+            id:1,
+            name:"草稿箱",
+        },{
+            id:2,
+            name:"待初审",
+        },{
+            id:3,
+            name:"待定价",
+        },{
+            id:4,
+            name:"待复审",
+        },{
+            id:5,
+            name:"材料待补充",
+        },{
+            id:6,
+            name:"待签约",
+        },{
+            id:7,
+            name:"方案待修改",
+        },{
+            id:8,
+            name:"待放款",
+        },{
+            id:9,
+            name:"初审退回",
+        },{
+            id:10,
+            name:"材料补充后待复审",
+        },{
+            id:11,
+            name:"材料补充后复审被拒绝",
+        },{
+            id:12,
+            name:"调整方案后待复审",
+        },{
+            id:13,
+            name:"调整方案后复审被拒绝",
+        },{
+            id:14,
+            name:"已放弃",
+        },{
+            id:15,
+            name:"已放弃",
+        },{
+            id:16,
+            name:"已放弃",
+        }
+    ];
+
 
     $scope.gotoPageFun = function (x) {
         console.log("gotoPageFun");
@@ -50,14 +105,14 @@ loanrecheck.controller("loanRecheckListController",['$scope', '$http','$location
         $state.go("main.checkloan",{items:loan});
     };
     $scope.reApply = function (loan) {
-        $state.go();
-    }
+        $state.go("main.reapplyloan",{items:loan});
+    };
     $scope.changeTab = function (type) {
         switch (type){
             case 1:
                 $scope.waitingRecheck=true;
                 $scope.recheckApproal =$scope.recheckRefuse=$scope.clientGiveup=false;
-                $scope.getList(0,10,4);
+                $scope.getList(0,10,"4,10,12");
                 break;
             case 2:
                 $scope.recheckApproal=true;
@@ -90,13 +145,44 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         "广汽","上汽","北汽","一汽"
     ];
     $scope.series = ["福克斯","科鲁兹","yalris","雷凌","宋","元"];
+    $scope.productTypes = [{
+        id:0,
+        name:"二手车贷款"
+    },{
+        id:1,
+        name:"三手车贷款"
+    }];
+    $scope.paybackTypes = [{
+        id:0,
+        name:"等额本息"
+    },{
+        id:1,
+        name:"先息后本"
+    }];
 
     $scope.produceYears = [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017];
 
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
     $scope.applyLoan = $stateParams.items;
-    if($scope.applyLoan!=null){
-        $scope.applyLoan.vehicleProductionYearMonth = parseInt($scope.applyLoan.vehicleProductionYearMonth);
+
+    $scope.getOperateLog = function (id, from, to) {
+        httpService.getOperateLog(id,from,to).then(function (res) {
+            console.log(res);
+            var data = res.data;
+            if (data.length>0){
+                    $scope.refuseReason = data[0].remark;
+                    $scope.operateUserName = data[0].operatorUsername;
+                    $scope.createdTime = data[0].createdTime;
+
+            }
+        },function (err) {
+            console.log(err);
+        })
+    };
+    if($scope.applyLoan!= null){
+        if ($scope.applyLoan.status == 10){
+            $scope.getOperateLog($scope.applyLoan.id,4,5);
+        }
     };
     $scope.showRefuseDialog = false;
     $scope.showPassDialog = false;
@@ -116,13 +202,21 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         $scope.showRefuseDialog = true;
     };
     $scope.pass = function () {
-        
+
+        httpService.getProductByID($scope.applyLoan.productId).then(function (res) {
+            console.log(res);
+            $scope.paybackType = res.data.repaymentMethod;
+            $scope.showPassDialog = true;
+        },function (err) {
+
+        })
+
     };
     $scope.doRefuse = function () {
         var loanApply = {
             reviewRemark:$scope.mainRefuseReason+$scope.otherRefuseReason
         };
-            httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {//3表示初审审批通过
+            httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {
                 console.log(res);
                 $state.go("main.loanrecheck");
             },function (err) {
@@ -130,8 +224,18 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
             });
         
     };
-    $scope.doCancelRefuse = function () {
-
+    $scope.doCancel = function () {
+        $scope.showRefuseDialog = false;
+        $scope.showPassDialog = false;
+        
+    };
+    $scope.doPass=function () {
+        httpService.updateLoandraft($scope.applyLoan.id,{},3).then(function (res) {//3表示复审审批通过
+            console.log(res);
+            $state.go("main.loanrecheck");
+        },function (err) {
+            console.log(err);
+        });
     }
 }]);
 
@@ -150,41 +254,41 @@ loanrecheck.controller("reApplyLoanController",['$scope', '$http','$location','$
 
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
     $scope.applyLoan = $stateParams.items;
+    $scope.getOperateLog = function (id, from, to) {
+        httpService.getOperateLog(id,from,to).then(function (res) {
+            console.log(res);
+            var data = res.data;
+            if (data.length>0){
+                $scope.refuseReason = data[0].remark;
+            }
+        },function (err) {
+            console.log(err);
+        })
+    };
     if($scope.applyLoan!=null){
+        $scope.getOperateLog($scope.applyLoan.id,4,5);
         $scope.applyLoan.vehicleProductionYearMonth = parseInt($scope.applyLoan.vehicleProductionYearMonth);
     };
-    $scope.showRefuseDialog = false;
-    $scope.showPassDialog = false;
-    $scope.refuse = function () {
-        var refuseStr = "";
-        if($scope.materialFake){
-            refuseStr +="材料虚假\n";
-        };
-        if($scope.creditBad){
-            refuseStr +="客户信用不良\n";
-        };
-        if($scope.paybackBad){
-            refuseStr +="客户还款能力不足\n";
-        };
-        $scope.mainRefuseReason = refuseStr;
-
-        $scope.showRefuseDialog = true;
-    };
-    $scope.pass = function () {
-
-    };
-    $scope.doRefuse = function () {
+    $scope.commit = function () {
         var loanApply = {
-            reviewRemark:$scope.mainRefuseReason+$scope.otherRefuseReason
+            materialsRemark:$scope.reapplyReason,
+            materialsFileIds:"hahhaha"
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {//3表示初审审批通过
-            console.log(res);
-            $state.go("main.loanrecheck");
+        httpService.updateLoandraft($scope.applyLoan.id,loanApply,1).then(function (res) {//3表示初审审批通过
+            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//3表示初审审批通过
+                console.log(res);
+                $state.go("main.loanrecheck");
+            },function (err) {
+                console.log(err);
+            });
         },function (err) {
             console.log(err);
         });
-
     };
+    $scope.cancel = function () {
+        $state.go("main.loanrecheck");
+    };
+
     $scope.doCancelRefuse = function () {
 
     }

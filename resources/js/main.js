@@ -14,6 +14,17 @@ authors.controller('MainController', ['$scope', '$http','$location','$rootScope'
         $('.frameBox').css({'height':(winHei-headerHei-breadHei)+'px'});
     });
 
+    $scope.menuItems = [true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
+    $scope.changeItem = function (i) {
+        for (var j=0;j<$scope.menuItems.length;j++){
+            if(i==j){
+                $scope.menuItems[j] = true;
+            }else{
+                $scope.menuItems[j] = false;
+            }
+        }
+    }
+
     $scope.manManagement = function () {//切换到人员管理页面
         console.log("manManagement");
         $state.go("main.manmanagement");
@@ -39,7 +50,12 @@ authors.controller('MainController', ['$scope', '$http','$location','$rootScope'
     $scope.loanRecheck = function () {
         $state.go("main.loanrecheck");
     };
-
+    $scope.signManagement = function () {
+        $state.go("main.signmanagement");
+    };
+    $scope.giveupList = function () {
+        $state.go("main.giveuplist");
+    };
 
 
 }]);

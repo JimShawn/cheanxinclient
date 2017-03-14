@@ -92,7 +92,7 @@ product.controller("subProductController",['$scope', '$http','$location','$rootS
 
 
     $scope.getList = function (page,size) {
-        httpService.getAllProduct(page,size,0,-1).then(function (result) {
+        httpService.getAllProduct(page,size,1,-1).then(function (result) {
             console.log(result);
             $scope.data = result.data;
         },function (error) {
@@ -217,7 +217,6 @@ product.controller("addProductController",['$scope', '$http','$location','$rootS
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:0,
             productTemplateId:0,
-            provinceId:0,
             status:0
         };
         console.log($scope.product);
@@ -317,7 +316,6 @@ product.controller("addSubProductController",['$scope', '$http','$location','$ro
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
-            provinceId:$scope.selectProvinces.Id,
             status:0
         };
         console.log($scope.product);

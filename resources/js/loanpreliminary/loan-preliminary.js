@@ -326,7 +326,7 @@ loanpreliminary.controller("loanapplyController",['$scope', '$http','$location',
             },function (err) {
                 console.log(err);
             })
-        }
+        };
 
 
     };

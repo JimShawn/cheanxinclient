@@ -156,6 +156,7 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
             emergencyContact:$scope.emergencyContact,
             emergencyContactMobileNumber:$scope.emergencyContactTel,
             password:pwdEncode,
+            enabled:true
 
         }
         httpService.addUser($scope.user).then(function (res) {

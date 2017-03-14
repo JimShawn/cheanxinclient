@@ -218,6 +218,16 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         });
         return deferd.promise;
     };
+    api.getOperateLog = function (id,from,to) {
+        var deferd = $q.defer();
+        var getOperateLogUrl = "http://localhost:8081/cheanxin/loan_logs?access_token="+$window.sessionStorage["access_token"]+"&loanId="+id+"&fromStatus="+from+"&toStatus="+to;
+        $http.get(getOperateLogUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
     api.getChekuangbaoDetailTest = function () {
         var deferd = $q.defer();
         var timestamp = Date.parse(new Date());
@@ -230,6 +240,6 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         // });
         $http.jsonp(url).success(function(data){ console.log(data) });
         return deferd.promise;
-    }
+    };
     return api;
 });

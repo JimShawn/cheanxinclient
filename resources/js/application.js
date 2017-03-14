@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ui.router','angularTreeview','city','login','main','man','footer','product','positon','dept','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck']);
+var app = angular.module('app', ['ui.router','angularTreeview','city','login','main','man','footer','product','positon','dept','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign']);
 
 app.config(function ($stateProvider,$urlRouterProvider) {
     $stateProvider.state("login", {
@@ -110,6 +110,35 @@ app.config(function ($stateProvider,$urlRouterProvider) {
     ).state("main.checkloan",{
             url:"/checkloan",
             templateUrl:"/pages/loanrecheck/check-loan.html",
+            params:{
+                "items":null
+            }
+        }
+    ).state("main.reapplyloan",{
+            url:"/reapplyloan",
+            templateUrl:"/pages/loanrecheck/reapply-loan.html",
+            params:{
+                "items":null
+            }
+        }
+    ).state("main.signmanagement",{
+            url:"/signmanagement",
+            templateUrl:"/pages/sign/sign-list.html"
+        }
+    ).state("main.eiditSign",{
+            url:"/eiditSign",
+            templateUrl:"/pages/sign/sign-edit.html",
+            params:{
+                "items":null
+            }
+        }
+    ).state("main.giveuplist",{
+            url:"/giveuplist",
+            templateUrl:"/pages/sign/giveup-list.html"
+        }
+    ).state("main.eiditGiveup",{
+            url:"/eiditGiveup",
+            templateUrl:"/pages/sign/giveup-edit.html",
             params:{
                 "items":null
             }

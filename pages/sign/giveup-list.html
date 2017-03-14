@@ -1,4 +1,4 @@
-<div class="main" ng-controller="loanRecheckListController">
+<div class="main" ng-controller="giveupListController">
     <div class="loan-intention">
         <div class="loan-intention-row1">
             <table class="mod-table1 mod-table1-ex">
@@ -30,14 +30,14 @@
                     <td width="33.333333%">
                         <table class="mod-subtable">
                             <tr>
-                                <td width="25%"><label class="comm-field-t">来源：</label></td>
+                                <td width="25%"><label class="comm-field-t">跟进人：</label></td>
                                 <td width="75%">
 
                                     <div class="comm-inp-wp">
                                         <select class="comm-select1">
                                             <option selected="selected">请选择</option>
-                                            <option>来源1</option>
-                                            <option>来源2</option>
+                                            <option>001</option>
+                                            <option>002</option>
                                         </select>
                                     </div>
 
@@ -92,10 +92,9 @@
         <div class="man-manage-row2">
             <div class="bd">
                 <ul class="mod-tabs clearfix">
-                    <li class="item " ng-class="{'item-on':waitingRecheck}" ng-click="changeTab(1)"><a href=""><span>待审核</span></a></li>
-                    <li class="item " ng-class="{'item-on':recheckApproal}" ng-click="changeTab(2)"><a href=""><span>复审通过</span></a></li>
-                    <li class="item"  ng-class="{'item-on':recheckRefuse}" ng-click="changeTab(3)"><a href=""><span>复审拒绝</span></a></li>
-                    <li class="item"  ng-class="{'item-on':clientGiveup}" ng-click="changeTab(4)"><a href="" ><span>客户放弃</span></a></li>
+                    <li class="item" ng-class="{'item-on':waitingCheck}" ng-click="changeTab(1)"><a href=""><span>待审核</span></a></li>
+                    <li class="item" ng-class="{'item-on':checked}" ng-click="changeTab(2)"><a href=""><span>确认放弃</span></a></li>
+
                 </ul>
             </div>
 
@@ -108,7 +107,8 @@
                     <th width="8%">车型</th>
                     <th width="8%">地区</th>
                     <th width="8%">产品</th>
-                    <th width="8%">贷款金额</th>
+                    <th width="8%">申请贷款方案</th>
+                    <th width="8%">审批方案</th>
                     <th width="8%">跟进人</th>
                     <th width="8%">提交日期</th>
                     <th width="8%">状态</th>
@@ -124,12 +124,18 @@
                     <td>{{loanapply.vehicleSeries}}</td>
                     <td>{{cityJson.provincesList[cityJson.Citys[loanapply.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[loanapply.sourceCityId-1].Name}}</td>
                     <td>{{loanapply.productName}}</td>
-                    <td id="red">{{loanapply.vehiclePredictPrice}}</td>
+                    <td>{{loanapply.vehiclePredictPrice}}（{{loanapply.loanTerms}}期）</td>
+                    <td class="red">{{loanapply.vehiclePredictPrice}}（{{loanapply.loanTerms}}期）</td>
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanStatuses[loanapply.status].name}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="showDetail()">查看</a><a href="" class="blue" ng-click="check(loanapply)" ng-show="waitingRecheck">审核</a><a href="" class="blue" ng-click="reApply(loanapply)" ng-show="recheckRefuse">重新申请</a></td>
+                    <td class="oper"><a href="" class="blue">查看</a><a href="" class="blue" ng-click="operate(loanapply)"ng-show="loanapply.status==7">审核</a></td>
                 </tr>
+
+
+
+
+
                 </tbody>
 
             </table>

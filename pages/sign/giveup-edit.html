@@ -1,0 +1,153 @@
+<div class="main" ng-controller="giveupEditController">
+
+    <div class="mod-hd">
+        <h2>核准贷款方案</h2>
+    </div>
+
+    <div class="loan-application-row1">
+        <table class="mod-table1">
+
+            <tbody>
+            <tr>
+                <td width="15%">产品名称：</td>
+                <td width="35%"><span class="fl">{{applyLoan.productName}}</span></td>
+                <td width="15%">申请人：</td>
+                <td width="35%"><span class="fl">{{applyLoan.applicantName}}</span></td>
+
+            </tr>
+            <tr>
+                <td width="15%">证件号：</td>
+                <td width="35%"><span class="fl">{{applyLoan.applicantCertificateNumber}}</span></td>
+                <td width="15%">手机号码：</td>
+                <td width="35%"><span class="fl">{{applyLoan.applicantMobileNumber}}</span></td>
+
+            </tr>
+            <tr>
+                <td width="15%">车辆名称：</td>
+                <td colspan="3"><span class="fl">{{applyLoan.vehicleSeries}}</span></td>
+
+            </tr>
+
+            <tr>
+                <td width="15%">车架号：</td>
+                <td width="35%"><span class="fl">{{applyLoan.vehicleVin}}</span></td>
+                <td width="15%">贷款金额（元）：</td>
+                <td width="35%"><span class="fl red">{{applyLoan.vehicleDealPrice-applyLoan.loanFirstPayment}}</span></td>
+
+            </tr>
+
+            <tr>
+                <td width="15%">利率：</td>
+                <td width="35%"><span class="fl">{{applyLoan.loanMonthlyInterestRate}}</span></td>
+                <td width="15%">期数：</td>
+                <td width="35%"><span class="fl">{{applyLoan.loanTerms}}</span></td>
+
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="loan-application-row2">
+        <div class="mod-hd">
+            <h2>放弃签约理由</h2>
+        </div>
+
+        <table class="mod-table1">
+            <thead >
+            <tr>
+                <th colspan="4"><span class="title fl">{{applicationGiveupReason}}</span></th>
+            </tr>
+            </thead>
+
+        </table>
+
+    </div>
+    <div class="footer">
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="giveup()">确认</button>
+        <button class="comm-btn  fr footer-button"><a href="javascript:void(0);" ng-click="adjust()">调整方案</a></button>
+        <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
+
+        <div class=" a fr ">
+            <img class="up-logo" src="/resources/img/up.jpg" alt="">
+            <span>更多操作</span>
+        </div>
+
+        <div class="login" ng-show="showGiveupDiaog">
+            <div class="login-title">放弃签约：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
+            <div class="login-input-content">
+                <div class="login-input">
+                    <label><span class="red"> *</span>放弃原因：</label>
+                    <input type="text" placeholder="请输入放弃原因"  name="info[username]" id="username" class="list-input" ng-model="giveupReason"/>
+                </div>
+            </div>
+
+            <div class="button-area">
+                <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
+                <button class="comm-btn login-button button-right" ng-click="doGiveup()"><a href="javascript:void(0);" >确认</a></button>
+            </div>
+
+        </div>
+
+
+    </div>
+
+        <!--弹窗内容-->
+        <div class="login_pass" ng-show="showAdjustDialog">
+            <div class="login-title">核准结果：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
+            <div class="loan-application-row1">
+                <table class="mod-table1">
+                    <tbody>
+
+                    <tr>
+                        <td width="15%">产品名称：</td>
+                        <td colspan="3">
+                            <select class="comm-select1" ng-model="selectedProduct" ng-options = "product.name for product in products" ng-change="selectProduct()">
+                                <option value="">请选择</option>
+                            </select>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td width="15%">*车辆成交价(元)：</td>
+                        <td width="30%" ><span class="fl red">{{applyLoan.vehicleDealPrice}}</span></td>
+                        <td width="15%">*贷款成数</td>
+                        <td width="30%">
+                            <select class="comm-select1" ng-model="selectedRate" ng-options = "rate+'成' for rate in AvailableRates.slice(selectedProduct.minAvailableRate,selectedProduct.maxAvailableRate)" ng-change="changeRate()">
+                                <option value="">请选择</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%">*首付款金额(元) ：</td>
+                        <td width="30%" ><input type="text" class="comm-input1" ng-model="firstPay"></td>
+                        <td width="15%">*贷款总金额(元)：</td>
+                        <td width="30%"><span class="fl red">{{applyLoan.vehicleDealPrice-firstPay}}</span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%">*贷款利率：</td>
+                        <td width="30%" ><span class="fl red">{{selectedProduct.loanMonthlyInterestRate}}%/月</span></td>
+                        <td width="15%">*贷款期数 ：</td>
+                        <td width="30%">
+                            <select class="comm-select1" ng-model="selectedTerm" ng-options = "term+'期' for term in availableTerms" ng-change="changeTerms()">
+                                <option value="">请选择</option>
+                            </select>
+                            </span></td>
+                    </tr>
+                    <tr>
+                        <td width="15%">还款金额：</td>
+                        <td width="30%" ><span class="fl red">{{paybackPerMonth}}元/月</span></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="hr"></div>
+                <div class="button-area">
+                    <div class="login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >取消</a></div>
+                    <div class="login-button button-right" ng-click="doAdjust()"><a href="javascript:void(0);" >确认</a></div>
+                </div>
+            </div>
+
+        </div>
+
+
+</div>
