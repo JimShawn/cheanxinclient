@@ -115,7 +115,10 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
             console.log(error);
         })
 
-    }
+    };
+
+
+
 
 
 }]);
