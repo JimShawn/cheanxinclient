@@ -150,7 +150,7 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
             email:$scope.email,
             identityNumber:$scope.idNum,
             identityPhoto:"www.cheanxin.com/2.jpg",
-            photo:$scope.iconUrl,
+            photo:$scope.photo,
             region:"华南",
             address:$scope.address,
             emergencyContact:$scope.emergencyContact,
@@ -199,40 +199,43 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
         $scope.getList(x,$scope.data.size);
     };
 
-    var uploader = $scope.uploader = new FileUploader({
+    // 上传图片
+    var photoUploader = $scope.photoUploader = new FileUploader({
         url: "http://localhost:8081/cheanxin/image/upload?access_token="+$window.sessionStorage["access_token"],
         queueLimit: 1, //文件个数
-        removeAfterUpload: true //上传后删除文件
+        removeAfterUpload: false //上传后不删除文件
     });
+    $scope.uploadImageText = "上传图片";
+    $scope.clearPhotoItems = function(){ //重新选择文件时，清空队列，达到覆盖文件的效果
+        photoUploader.clearQueue();
+    };
     // a sync filter
-    uploader.filters.push({
+    photoUploader.filters.push({
         name: 'syncFilter',
         fn: function(item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length < 10;
+            return this.queue.length <= 1;
         }
     });
 
     // an async filter
-    uploader.filters.push({
+    photoUploader.filters.push({
         name: 'asyncFilter',
         fn: function(item /*{File|FileLikeObject}*/, options, deferred) {
             setTimeout(deferred.resolve, 1e3);
         }
     });
-    $scope.clearItems = function(){ //重新选择文件时，清空队列，达到覆盖文件的效果
-        uploader.clearQueue();
-    };
-    uploader.onAfterAddingFile = function(fileItem) {
+    photoUploader.onAfterAddingFile = function(fileItem) {
         $scope.fileItem = fileItem._file; //添加文件之后，把文件信息赋给scope
+        uploader.uploadAll();
         console.log(uploader);
     };
-    uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    photoUploader.onSuccessItem = function(fileItem, response, status, headers) {
         $scope.uploadStatus = true; //上传成功则把状态改为true
-        $scope.iconUrl = response;
+        $scope.photo = response;
+        $scope.uploadImageText = "修改图片";
     };
-    $scope.upload = function () {
-        uploader.uploadAll();
-        console.log("hhhh");
-    }
-
+    photoUploader.onErrorItem = function(fileItem, response, status, headers) {
+        $scope.uploadStatus = false; //上传成功则把状态改为true
+        $scope.uploadImageText = "上传失败";
+    };
 }])
