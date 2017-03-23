@@ -136,6 +136,11 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
 
 
     $scope.commit = function () {
+        $scope.avatar.filter(function(n){
+            console.log(n);
+            return n!= undefined && n!=""
+        });
+        $scope.identification.filter(function(n){ return n!= undefined && n!="" });
         var pwdEncode = $scope.password1;
         for (var i=0;i<128;i++){
             pwdEncode = hex_md5(pwdEncode+"financial");
@@ -149,8 +154,8 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
             mobileNumber:$scope.tel,
             email:$scope.email,
             identityNumber:$scope.idNum,
-            identityPhoto:"www.cheanxin.com/2.jpg",
-            photo:$scope.photo,
+            identityPhoto:$scope.identification.join(","),
+            photo:$scope.avatar.join(","),
             region:"华南",
             address:$scope.address,
             emergencyContact:$scope.emergencyContact,
@@ -167,12 +172,6 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
         })
 
     }
-
-
-
-
-
-
 
     $scope.getList = function (page,size) {
         httpService.getAllUser(page,size).then(function (result) {
@@ -197,45 +196,5 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
         console.log($scope.data.size);
         console.log(x);
         $scope.getList(x,$scope.data.size);
-    };
-
-    // 上传图片
-    var photoUploader = $scope.photoUploader = new FileUploader({
-        url: "http://localhost:8081/cheanxin/image/upload?access_token="+$window.sessionStorage["access_token"],
-        queueLimit: 1, //文件个数
-        removeAfterUpload: false //上传后不删除文件
-    });
-    $scope.uploadImageText = "上传图片";
-    $scope.clearPhotoItems = function(){ //重新选择文件时，清空队列，达到覆盖文件的效果
-        photoUploader.clearQueue();
-    };
-    // a sync filter
-    photoUploader.filters.push({
-        name: 'syncFilter',
-        fn: function(item /*{File|FileLikeObject}*/, options) {
-            return this.queue.length <= 1;
-        }
-    });
-
-    // an async filter
-    photoUploader.filters.push({
-        name: 'asyncFilter',
-        fn: function(item /*{File|FileLikeObject}*/, options, deferred) {
-            setTimeout(deferred.resolve, 1e3);
-        }
-    });
-    photoUploader.onAfterAddingFile = function(fileItem) {
-        $scope.fileItem = fileItem._file; //添加文件之后，把文件信息赋给scope
-        uploader.uploadAll();
-        console.log(uploader);
-    };
-    photoUploader.onSuccessItem = function(fileItem, response, status, headers) {
-        $scope.uploadStatus = true; //上传成功则把状态改为true
-        $scope.photo = response;
-        $scope.uploadImageText = "修改图片";
-    };
-    photoUploader.onErrorItem = function(fileItem, response, status, headers) {
-        $scope.uploadStatus = false; //上传成功则把状态改为true
-        $scope.uploadImageText = "上传失败";
     };
 }])
