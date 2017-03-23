@@ -29,20 +29,7 @@
             <tr>
                 <td>照片</td>
                 <td>
-                    <table class="mod-subtable">
-                        <tr  >
-                            <a href="javascript:;" class="file">
-                                <input type="file" nv-file-select="" uploader="uploader" multiple ng-click="clearItems()"/>添加
-                            </a>
-                            <a href="javascript:;" class="file" ng-click="upload()">
-                                上传
-                            </a>
-                            <td ng-repeat="item in uploader.queue" class="img-td" width="50px" height="50px">
-                                <div ng-show="uploader.isHTML5" ng-thumb="{ file: item._file, height: 50,width:50 }" class="img-container"></div>
-                            </td>
-
-                        </tr>
-                    </table>
+                    <div class="upload" desc="头像照片" uploader="avatar"></div>
                 </td>
             </tr>
             <tr>
@@ -97,12 +84,8 @@
             <tr>
                 <td width="15%"><span class="star">*</span>身份证照片</td>
                 <td width="35%">
-                    <table class="mod-subtable">
-                        <tr >
-                            <button class="comm-btn comm-btn-blue fl button1">上传照片</button>
-
-                        </tr>
-                    </table>
+                    <div class="upload" desc="身份证正面照片" uploader="identification1"></div>
+                    <div class="upload" desc="身份证反面照片" uploader="identification2"></div>
                 </td>
             </tr>
             <tr>
