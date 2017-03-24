@@ -7,7 +7,7 @@ var imageUpload = angular.module('image-upload',[]);
 imageUpload.directive('upload',[function () {
     
     return {
-        restrict: 'C',
+        restrict: 'AC',
         scope: {
             desc: '@',
             uploader: '@',
@@ -54,14 +54,12 @@ imageUpload.directive('upload',[function () {
             imageUploader.onAfterAddingFile = function(fileItem) {
                 $scope.fileItem = fileItem._file; //添加文件之后，把文件信息赋给scope
                 imageUploader.uploadAll();
-                console.log(imageUploader);
             };
             imageUploader.onSuccessItem = function(fileItem, response, status, headers) {
                 $scope.uploadStatus = true; //上传成功则把状态改为true
                 $scope.imageUrl = "http://172.16.1.14:8888/" + response;
                 $scope.imageSize = "cover";
                 $scope.desc = fileItem.file.name;
-                console.log($scope.index);
                 $scope.uploadedUrls[$scope.index] = response;
             };
             imageUploader.onErrorItem = function(fileItem, response, status, headers) {

@@ -22,7 +22,6 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
 
     $scope.getList = function (page,size) {
         httpService.getAllUser(page,size).then(function (result) {
-            console.log(result);
             $scope.data = result.data;
 
             for (var i in $scope.data.content){
@@ -36,24 +35,18 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
                     $scope.data.content[i].ststus = "无效";
                 }
             }
-        },function (error) {
-            console.log(error);
+        },function (err) {
+            console.error(err.data.errorMessage);
         });
 
     };
     $scope.getList(0,10);
 
     $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
         $scope.getList($scope.data.number,size);
     };
 
     $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
         $scope.getList(x,$scope.data.size);
     };
 
@@ -65,19 +58,33 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
     }
 
 }]);
-man.controller("addManController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','$stateParams','FileUploader','$window',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,$stateParams,FileUploader,$window) {
-
-    if ($stateParams.items!=null){
+man.controller("addManController",['$filter', '$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','$stateParams','FileUploader','$window',function ($filter, $scope,$http,$location,$rootScope,httpService,$state,$timeout,$stateParams,FileUploader,$window) {
+    if ($stateParams.items != null) {
         var selectedItem = JSON.parse($stateParams.items);
+    }
+    httpService.getAllDept().then(function (result) {
+        $scope.depts = result.data;
+        if (selectedItem) {
+            $scope.dept = $scope.depts[selectedItem.deptId];
+        }
+    },function (err) {
+        console.error(err.data.errorMessage);
+    });
+    httpService.getAllPositionType().then(function (result) {
+        $scope.positionTypes = result.data;
+    },function (err) {
+        console.error(err.data.errorMessage);
+    });
+    
+    $scope.showPasswordInput = true;
+    if (selectedItem) {
         $scope.name = selectedItem.realName;
-        $scope.dept = selectedItem.deptId;
         $scope.account = selectedItem.username;
         $scope.tel = selectedItem.mobileNumber;
         $scope.email = selectedItem.email;
         $scope.idNum = selectedItem.identityNumber;
         $scope.address = selectedItem.address;
-        $scope.password1 = "";
-        $scope.password2 = "";
+        $scope.showPasswordInput = false;
         $scope.emergencyContact = selectedItem.emergencyContact;
         $scope.emergencyContactTel = selectedItem.emergencyContactMobileNumber;
         $scope.positonCeo = false;
@@ -136,65 +143,57 @@ man.controller("addManController",['$scope', '$http','$location','$rootScope', '
 
 
     $scope.commit = function () {
-        $scope.avatar.filter(function(n){
-            console.log(n);
-            return n!= undefined && n!=""
-        });
-        $scope.identification.filter(function(n){ return n!= undefined && n!="" });
+        var identification = $filter('filter')($scope.identification, '').join(",");
+        var avatar = $filter('filter')($scope.avatar, '').join(",");
         var pwdEncode = $scope.password1;
-        for (var i=0;i<128;i++){
-            pwdEncode = hex_md5(pwdEncode+"financial");
+        var errorMsg = false;
+        if ($scope.showPasswordInput) {
+            if (!pwdEncode) {
+                errorMsg = "密码不能为空";
+            }
+            if (!$scope.password2) {
+                errorMsg = "请重复输入密码";
+            }
+            if (pwdEncode != $scope.password2) {
+                errorMsg = "两次输入密码不一致";
+            }
         }
+        if (!identification) {
+            errorMsg = "请上传身份证图片";
+        }
+        if (!avatar) {
+            errorMsg = "请上传头像照片";
+        }
+        if (errorMsg) {
+            alert(errorMsg);
+            return;
+        }
+        // for (var i=0; i<128; i++){
+        //     pwdEncode = hex_md5(pwdEncode + "0f6a57a94327340f9712ee79b0a8dfb" + i);
+        // }
 
         //岗位还有相应的内容，所以先不处理
         $scope.user = {
             realName:$scope.name,
-            deptId:1,
+            deptId:$scope.dept.id,
             username:$scope.account,
             mobileNumber:$scope.tel,
             email:$scope.email,
             identityNumber:$scope.idNum,
-            identityPhoto:$scope.identification.join(","),
-            photo:$scope.avatar.join(","),
+            identityPhoto:identification,
+            photo: avatar,
             region:"华南",
             address:$scope.address,
             emergencyContact:$scope.emergencyContact,
             emergencyContactMobileNumber:$scope.emergencyContactTel,
             password:pwdEncode,
             enabled:true
-
         }
         httpService.addUser($scope.user).then(function (res) {
-            alert(res);
             $state.go("main.manmanagement");
         },function (err) {
-            alert(err);
+            console.error(err.data.errorMessage);
         })
 
     }
-
-    $scope.getList = function (page,size) {
-        httpService.getAllUser(page,size).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
-        },function (error) {
-            console.log(error);
-        });
-
-    };
-    $scope.getList(0,10);
-
-    $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number,size);
-    };
-
-    $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x,$scope.data.size);
-    };
 }])
