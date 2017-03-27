@@ -12,7 +12,8 @@ imageUpload.directive('upload',[function () {
             desc: '@',
             uploader: '@',
             index:'@',
-            uploadedUrls: '='
+            uploadedUrls: '=',
+            imageUrl:'@'
         },
         templateUrl:'/pages/directive/image-upload.html',
         controller: function ($scope, FileUploader, $window) {
@@ -21,8 +22,14 @@ imageUpload.directive('upload',[function () {
                 return;
             }
             $scope.uploadedUrls = new Array(10);
-            $scope.imageUrl = "/resources/img/add.png";
-            $scope.imageSize = "auto";
+            if (!$scope.imageUrl) {
+                $scope.backUrl = "/resources/img/add.png";
+                $scope.imageSize = "auto";
+            } else {
+                $scope.uploadedUrls[$scope.index] = $scope.imageUrl;
+                $scope.imageSize = "cover";
+                $scope.backUrl = "http://172.16.1.14:8888/" + $scope.imageUrl;
+            }
             if (!$scope.desc) {
                 $scope.desc = "上传图片";
             }
@@ -57,7 +64,7 @@ imageUpload.directive('upload',[function () {
             };
             imageUploader.onSuccessItem = function(fileItem, response, status, headers) {
                 $scope.uploadStatus = true; //上传成功则把状态改为true
-                $scope.imageUrl = "http://172.16.1.14:8888/" + response;
+                $scope.backUrl = "http://172.16.1.14:8888/" + response;
                 $scope.imageSize = "cover";
                 $scope.desc = fileItem.file.name;
                 $scope.uploadedUrls[$scope.index] = response;

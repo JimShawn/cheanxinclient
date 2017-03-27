@@ -64,8 +64,14 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
     }
     httpService.getAllDept().then(function (result) {
         $scope.depts = result.data;
-        if (selectedItem) {
-            $scope.dept = $scope.depts[selectedItem.deptId];
+        if (!selectedItem) {
+            return;
+        }
+        for (var i = 0; i < $scope.depts.length; i++) {
+            if ($scope.depts[i].id == selectedItem.deptId) {
+                $scope.dept = $scope.depts[i];
+                break;
+            }
         }
     },function (err) {
         console.error(err.data.errorMessage);
@@ -75,38 +81,25 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
     },function (err) {
         console.error(err.data.errorMessage);
     });
-    
-    $scope.showPasswordInput = true;
+
+    $scope.isEdit = false;
     if (selectedItem) {
+        $scope.isEdit = true;
+        $scope.id = selectedItem.id;
         $scope.name = selectedItem.realName;
         $scope.account = selectedItem.username;
         $scope.tel = selectedItem.mobileNumber;
         $scope.email = selectedItem.email;
         $scope.idNum = selectedItem.identityNumber;
         $scope.address = selectedItem.address;
-        $scope.showPasswordInput = false;
         $scope.emergencyContact = selectedItem.emergencyContact;
         $scope.emergencyContactTel = selectedItem.emergencyContactMobileNumber;
-        $scope.positonCeo = false;
-        $scope.positonCfo = false;
-        $scope.positonCoo = false;
-        $scope.positonCoo = false;
-        $scope.positonCaiwuM = false;
-        $scope.positonFengkongM = false;
-        $scope.positonXinshenM = false;
-        $scope.positonFushenM = false;
-        $scope.positonFinancial = false;
-        $scope.positonCount = false;
-        $scope.positonIncome = false;
-        $scope.positonXinshenyuan = false;
-        $scope.positonFushenyuan = false;
-        $scope.positonJinron = false;
-        $scope.positonFengkong = false;
-        $scope.positonZichan = false;
-        $scope.positonCuishou = false;
-        $scope.positonFawu = false;
-        $scope.positonZhijian = false;
-        $scope.positonXingzheng = false;
+        $scope.photo = selectedItem.photo;
+        var identityPhotoArr = selectedItem.identityPhoto.split(",");
+        $scope.identityPhotos = new Array(identityPhotoArr.length);
+        for (var i = 0; i < identityPhotoArr.length; i++) {
+            $scope.identityPhotos[i] = identityPhotoArr[i];
+        }
     }else {
         $scope.name = "";
         $scope.dept = "";
@@ -115,52 +108,18 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
         $scope.email = "";
         $scope.idNum = "";
         $scope.address = "";
-        $scope.password1 = "";
-        $scope.password2 = "";
         $scope.emergencyContact = "";
         $scope.emergencyContactTel = "";
-        $scope.positonCeo = false;
-        $scope.positonCfo = false;
-        $scope.positonCoo = false;
-        $scope.positonCoo = false;
-        $scope.positonCaiwuM = false;
-        $scope.positonFengkongM = false;
-        $scope.positonXinshenM = false;
-        $scope.positonFushenM = false;
-        $scope.positonFinancial = false;
-        $scope.positonCount = false;
-        $scope.positonIncome = false;
-        $scope.positonXinshenyuan = false;
-        $scope.positonFushenyuan = false;
-        $scope.positonJinron = false;
-        $scope.positonFengkong = false;
-        $scope.positonZichan = false;
-        $scope.positonCuishou = false;
-        $scope.positonFawu = false;
-        $scope.positonZhijian = false;
-        $scope.positonXingzheng = false;
     }
 
 
     $scope.commit = function () {
-        var identification = $filter('filter')($scope.identification, '').join(",");
-        var avatar = $filter('filter')($scope.avatar, '').join(",");
-        var pwdEncode = $scope.password1;
         var errorMsg = false;
-        if ($scope.showPasswordInput) {
-            if (!pwdEncode) {
-                errorMsg = "密码不能为空";
-            }
-            if (!$scope.password2) {
-                errorMsg = "请重复输入密码";
-            }
-            if (pwdEncode != $scope.password2) {
-                errorMsg = "两次输入密码不一致";
-            }
-        }
+        var identification = $filter('filter')($scope.identification, '').join(",");
         if (!identification) {
             errorMsg = "请上传身份证图片";
         }
+        var avatar = $filter('filter')($scope.avatar, '').join(",");
         if (!avatar) {
             errorMsg = "请上传头像照片";
         }
@@ -174,6 +133,7 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
 
         //岗位还有相应的内容，所以先不处理
         $scope.user = {
+            id:$scope.id,
             realName:$scope.name,
             deptId:$scope.dept.id,
             username:$scope.account,
@@ -186,10 +146,17 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
             address:$scope.address,
             emergencyContact:$scope.emergencyContact,
             emergencyContactMobileNumber:$scope.emergencyContactTel,
-            password:pwdEncode,
             enabled:true
         }
-        httpService.addUser($scope.user).then(function (res) {
+
+        var response;
+        if (selectedItem) {
+            response = httpService.updateUser($scope.user, $scope.id);
+        } else {
+            response = httpService.addUser($scope.user);
+        }
+
+        response.then(function (res) {
             $state.go("main.manmanagement");
         },function (err) {
             console.error(err.data.errorMessage);

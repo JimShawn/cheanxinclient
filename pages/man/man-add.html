@@ -29,30 +29,14 @@
             <tr>
                 <td><span class="star">*</span>照片</td>
                 <td>
-                    <div class="upload" desc="头像照片" uploader="avatar" uploaded-urls="avatar" index="0"></div>
+                    <div class="upload" desc="头像照片" uploader="avatar" uploaded-urls="avatar" index="0" image-url={{photo}}></div>
                 </td>
             </tr>
             <tr>
                 <td><span class="star">*</span>账号</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" name="account" ng-model="account" ng-minlength="3" ng-maxlength="20" required>
-                    </div>
-                </td>
-            </tr>
-            <tr ng-show="showPasswordInput">
-                <td><span class="star">*</span>密码</td>
-                <td>
-                    <div class="comm-inp-wp">
-                        <input type="password" class="comm-input1" name="password1" ng-model="password1" ng-minlength="6" ng-maxlength="30">
-                    </div>
-                </td>
-            </tr>
-            <tr ng-show="showPasswordInput">
-                <td><span class="star">*</span>确认密码</td>
-                <td>
-                    <div class="comm-inp-wp">
-                        <input type="password" class="comm-input1" name="password2" ng-model="password2" ng-minlength="6" ng-maxlength="30">
+                        <input type="text" class="comm-input1" name="account" ng-model="account" ng-minlength="3" ng-maxlength="20" required  ng-disabled="isEdit">
                     </div>
                 </td>
             </tr>
@@ -84,8 +68,8 @@
             <tr>
                 <td><span class="star">*</span>身份证照片</td>
                 <td>
-                    <div class="upload" desc="身份证正面照片" uploader="identification1" uploaded-urls="identification" index="0"></div>
-                    <div class="upload" desc="身份证反面照片" uploader="identification2" uploaded-urls="identification" index="1"></div>
+                    <div class="upload" desc="身份证正面照片" uploader="identification1" uploaded-urls="identification" index="0" image-url={{identityPhotos[0]}}></div>
+                    <div class="upload" desc="身份证反面照片" uploader="identification2" uploaded-urls="identification" index="1" image-url={{identityPhotos[1]}}></div>
                 </td>
             </tr>
             <tr>

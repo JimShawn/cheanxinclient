@@ -48,6 +48,16 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         });
         return deferd.promise;
     };
+    api.updateUser = function (user, id) {
+        var deferd = $q.defer();
+        var updateUserUrl = "http://localhost:8081/cheanxin/users/" + id + "?access_token="+$window.sessionStorage["access_token"];
+        $http.put(updateUserUrl,user).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
 
     api.getAllProduct = function (page,size,status,productTemplateId) {
         var deferd = $q.defer();
