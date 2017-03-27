@@ -7,15 +7,29 @@ var imageUpload = angular.module('image-upload',[]);
 imageUpload.directive('upload',[function () {
     
     return {
-        restrict: 'C',
+        restrict: 'AC',
         scope: {
             desc: '@',
-            uploader: '@'
+            uploader: '@',
+            index:'@',
+            uploadedUrls: '=',
+            imageUrl:'@'
         },
         templateUrl:'/pages/directive/image-upload.html',
         controller: function ($scope, FileUploader, $window) {
-            $scope.imageUrl = "/resources/img/add.png";
-            $scope.imageSize = "auto";
+            if ($scope.index > 9) {
+                console.error("index error.");
+                return;
+            }
+            $scope.uploadedUrls = new Array(10);
+            if (!$scope.imageUrl) {
+                $scope.backUrl = "/resources/img/add.png";
+                $scope.imageSize = "auto";
+            } else {
+                $scope.uploadedUrls[$scope.index] = $scope.imageUrl;
+                $scope.imageSize = "cover";
+                $scope.backUrl = "http://172.16.1.14:8888/" + $scope.imageUrl;
+            }
             if (!$scope.desc) {
                 $scope.desc = "上传图片";
             }
@@ -47,14 +61,13 @@ imageUpload.directive('upload',[function () {
             imageUploader.onAfterAddingFile = function(fileItem) {
                 $scope.fileItem = fileItem._file; //添加文件之后，把文件信息赋给scope
                 imageUploader.uploadAll();
-                console.log(imageUploader);
             };
             imageUploader.onSuccessItem = function(fileItem, response, status, headers) {
                 $scope.uploadStatus = true; //上传成功则把状态改为true
-                $scope.image = response;
-                $scope.imageUrl = "http://172.16.1.14:8888/" + $scope.image;
+                $scope.backUrl = "http://172.16.1.14:8888/" + response;
                 $scope.imageSize = "cover";
                 $scope.desc = fileItem.file.name;
+                $scope.uploadedUrls[$scope.index] = response;
             };
             imageUploader.onErrorItem = function(fileItem, response, status, headers) {
                 $scope.uploadStatus = false; //上传成功则把状态改为true

@@ -1,4 +1,5 @@
-<div class="main" ng-controller = "addManController">
+<form name="userForm" ng-controller="addManController" ng-submit="commit()">
+<div cass="main" style="margin-left: 50px;">
     <div class="mod-hd">
         <h2>人员信息</h2>
     </div>
@@ -7,19 +8,18 @@
         <table class="mod-table1">
             <tbody>
             <tr>
-                <td width="15%"><span class="star">*</span>人员姓名</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model = "name">
+                <td><span class="star">*</span>人员姓名</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" name="name" ng-model="name" ng-minlength="2" ng-maxlength="30" required>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td><span class="star">*</span>所属部门</td>
                 <td>
-                    <div class="comm-inp-wp label">
-                        <select class="comm-select1" ng-model = "dept" ng-options = "dept.name for dept in depts">
-
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" name="dept" ng-model="dept" ng-options = "d.name for d in depts">
                         </select>
                     </div>
                 </td>
@@ -27,88 +27,72 @@
 
             </tr>
             <tr>
-                <td>照片</td>
+                <td><span class="star">*</span>照片</td>
                 <td>
-                    <div class="upload" desc="头像照片" uploader="avatar"></div>
+                    <div class="upload" desc="头像照片" uploader="avatar" uploaded-urls="avatar" index="0" image-url={{photo}}></div>
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>账号</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model = "account">
+                <td><span class="star">*</span>账号</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" name="account" ng-model="account" ng-minlength="3" ng-maxlength="20" required  ng-disabled="isEdit">
                     </div>
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>密码</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model = "password1">
+                <td><span class="star">*</span>手机号码</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" name="tel" ng-model="tel" required>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>确认密码</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model = "password2">
+                <td><span class="star">*</span>电子邮箱</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="email" class="comm-input1" name="email" ng-model = "email" required>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>手机号码</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model="tel">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td width="15%"><span class="star">*</span>电子邮箱</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model = "email">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td width="15%"><span class="star">*</span>身份证号</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model="idNum">
+                <td><span class="star">*</span>身份证号</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" name="idNum" ng-model="idNum" required>
                     </div>
                 </td>
             </tr>
 
             <tr>
-                <td width="15%"><span class="star">*</span>身份证照片</td>
-                <td width="35%">
-                    <div class="upload" desc="身份证正面照片" uploader="identification1"></div>
-                    <div class="upload" desc="身份证反面照片" uploader="identification2"></div>
+                <td><span class="star">*</span>身份证照片</td>
+                <td>
+                    <div class="upload" desc="身份证正面照片" uploader="identification1" uploaded-urls="identification" index="0" image-url={{identityPhotos[0]}}></div>
+                    <div class="upload" desc="身份证反面照片" uploader="identification2" uploaded-urls="identification" index="1" image-url={{identityPhotos[1]}}></div>
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>住址</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model="address">
+                <td><span class="star">*</span>住址</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" name="address" ng-model="address" required>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>紧急联系人</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model="emergencyContact">
+                <td><span class="star">*</span>紧急联系人</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" name="emergencyContact" ng-model="emergencyContact" required>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>紧急联系方式</td>
-                <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model="emergencyContactTel">
+                <td><span class="star">*</span>紧急联系方式</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" name="emergencyContactTel" ng-model="emergencyContactTel" required>
                     </div>
                 </td>
             </tr>
@@ -118,112 +102,112 @@
         </table>
     </div>
 
-    <div class="mod-hd">
-        <h2>人员信息</h2>
-    </div>
+    <!--<div class="mod-hd">-->
+        <!--<h2>人员信息</h2>-->
+    <!--</div>-->
 
-    <div class="table">
-        <table class="mod-table1">
-            <tbody>
-            <tr>
-                <th colspan="4">
-                    <span class="checkbox fl"> <div class="box"><input type="checkbox"></div>高层领导岗</span>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCeo"></div> CEO</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCfo"></div> CFO</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCoo"></div> COO</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCoo"></div> CRO</span>
-                </td>
-            </tr>
-            <tr>
-                <th colspan="4">
-                    <span class="checkbox fl"> <div class="box"><input type="checkbox"></div>中层领导岗</span>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCaiwuM"></div> 财务部经理</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFengkongM"></div> 风控经理</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXinshenM"></div> 信审经理</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFushenM"></div> 复审经理</span>
-                </td>
-            </tr>
-            <tr>
-                <th colspan="4">
-                    <span class="checkbox fl"> <div class="box"><input type="checkbox"></div>执行岗位</span>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFinancial"></div> 财务</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCount"></div> 会计</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonIncome"></div> 出纳</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXinshenyuan"></div> 信审员</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFushenyuan"></div> 复审员</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonJinron"></div> 金融专员</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFengkong"></div> 风控专员</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonZichan"></div> 资产管理员</span>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCuishou"></div> 催收人员</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFawu"></div> 法务</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonZhijian"></div> 质检</span>
-                </td>
-                <td>
-                    <span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXingzheng"></div> 行政助理</span>
-                </td>
-            </tr>
-            <tr >
-                <td id="button"  colspan="2">
-                    <table class="mod-subtable">
-                        <tr >
-                            <button class="comm-btn comm-btn-blue fl button1" ng-click = "commit()">保存</button>
-                            <button class="comm-btn comm-btn-blue fl button1">取消</button>
+    <!--<div class="table">-->
+        <!--<table class="mod-table1">-->
+            <!--<tbody>-->
 
-                        </tr>
-                    </table>
-                </td>
-            </tr>
-            </tbody>
+            <!--<tr>-->
+                <!--<th colspan="4">-->
+                    <!--<span class="checkbox fl">高层领导岗</span>-->
+                <!--</th>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" position="CEO"></div> CEO</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCfo"></div> CFO</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCoo"></div> COO</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCoo"></div> CRO</span>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<th colspan="4">-->
+                    <!--<span class="checkbox fl">中层领导岗</span>-->
+                <!--</th>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCaiwuM"></div> 财务部经理</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFengkongM"></div> 风控经理</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXinshenM"></div> 信审经理</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFushenM"></div> 复审经理</span>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<th colspan="4">-->
+                    <!--<span class="checkbox fl">执行岗位</span>-->
+                <!--</th>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFinancial"></div> 财务</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCount"></div> 会计</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonIncome"></div> 出纳</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXinshenyuan"></div> 信审员</span>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFushenyuan"></div> 复审员</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonJinron"></div> 金融专员</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFengkong"></div> 风控专员</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonZichan"></div> 资产管理员</span>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCuishou"></div> 催收人员</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFawu"></div> 法务</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonZhijian"></div> 质检</span>-->
+                <!--</td>-->
+                <!--<td>-->
+                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXingzheng"></div> 行政助理</span>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--<tr >-->
+                <!--<td id="button"  colspan="2">-->
+                    <!--<table class="mod-subtable">-->
+                        <!--<tr >-->
+                            <!--<input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存">-->
+                        <!--</tr>-->
+                    <!--</table>-->
+                <!--</td>-->
+            <!--</tr>-->
+            <!--</tbody>-->
 
-        </table>
-    </div>
-
+        <!--</table>-->
+    <!--</div>-->
+    <input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存">
 </div>
+</form>
