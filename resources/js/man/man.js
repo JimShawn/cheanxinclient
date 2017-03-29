@@ -4,7 +4,7 @@
  */
 'use strict';
 var man = angular.module('man',['httpservice']);
-man.controller("manController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout) {
+man.controller("manController",['$scope', '$http','$location','$rootScope', 'httpService', '$state', '$timeout', '$window',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window) {
     $scope.queryName = "";
     $scope.queryTel = "";
     $scope.queryPost = "";
@@ -12,10 +12,10 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
     $scope.selectedStatus = {};
     $scope.queryStatuses = [{
         status:1,
-        value:"激活"
+        value:"已激活"
     },{
-        status:2,
-        value:"弃用"
+        status:0,
+        value:"已冻结"
     }
     ];
 
@@ -30,10 +30,13 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
                     $scope.data.content[i].postName += "  "+$scope.data.content[i].posts[j].name;
                 }
                 if ($scope.data.content[i].enabled){
-                    $scope.data.content[i].ststus = "有效";
+                    $scope.data.content[i].status = "已激活";
+                    $scope.data.content[i].toStatus = "冻结";
                 }else {
-                    $scope.data.content[i].ststus = "无效";
+                    $scope.data.content[i].status = "已冻结";
+                    $scope.data.content[i].toStatus = "激活";
                 }
+                $scope.data.content[i].toEnabled = !$scope.data.content[i].enabled;
             }
         },function (err) {
             console.error(err.data.errorMessage);
@@ -53,8 +56,17 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
     $scope.add = function () {
         $state.go("main.addmanmanagement",{items:null});
     };
+
     $scope.edit = function (man) {
         $state.go("main.addmanmanagement",{items:JSON.stringify(man)})
+    }
+
+    $scope.disableOrEnableUser = function (id, enabled) {
+        var user = {
+            enabled:enabled
+        }
+        httpService.patchUser(user, id);
+        $window.location.reload();
     }
 
 }]);
@@ -147,7 +159,6 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
         $scope.emergencyContact = "";
         $scope.emergencyContactTel = "";
     }
-
 
     $scope.commit = function () {
         var errorMsg = false;

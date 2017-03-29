@@ -51,17 +51,28 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
     api.updateUser = function (user, id) {
         var deferd = $q.defer();
         var updateUserUrl = "http://localhost:8081/cheanxin/users/" + id + "?access_token="+$window.sessionStorage["access_token"];
-        $http.put(updateUserUrl,user).then(function (result) {
+        $http.put(updateUserUrl, user).then(function (result) {
             deferd.resolve(result);
         },function (error) {
             deferd.reject(error);
         });
         return deferd.promise;
     };
+    api.patchUser = function (user, id) {
+        var deferd = $q.defer();
+        var patchUserUrl = "http://localhost:8081/cheanxin/users/" + id + "?access_token="+$window.sessionStorage["access_token"];
+        $http.patch(patchUserUrl, user).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    }
+    
     api.updateUserPost = function (user, postIds) {
         var deferd = $q.defer();
         var updateUserPostUrl = "http://localhost:8081/cheanxin/user_posts/users/" + user.username + "?access_token="+$window.sessionStorage["access_token"];
-        $http.put(updateUserPostUrl,postIds).then(function (result) {
+        $http.put(updateUserPostUrl, postIds).then(function (result) {
             deferd.resolve(result);
         },function (error) {
             deferd.reject(error);
