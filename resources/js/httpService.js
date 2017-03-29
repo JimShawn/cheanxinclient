@@ -58,6 +58,16 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         });
         return deferd.promise;
     };
+    api.updateUserPost = function (user, postIds) {
+        var deferd = $q.defer();
+        var updateUserPostUrl = "http://localhost:8081/cheanxin/user_posts/users/" + user.username + "?access_token="+$window.sessionStorage["access_token"];
+        $http.put(updateUserPostUrl,postIds).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
 
     api.getAllProduct = function (page,size,status,productTemplateId) {
         var deferd = $q.defer();
@@ -110,14 +120,26 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
 
     api.getAllPosition = function (page,size) {
         var deferd = $q.defer();
-        var allProductUrl = "http://localhost:8081/cheanxin/posts?access_token="+$window.sessionStorage["access_token"]+"&size="+size+"&page="+page;
-        $http.get(allProductUrl).then(function (result) {
+        var allPostsUrl = "http://localhost:8081/cheanxin/posts?access_token="+$window.sessionStorage["access_token"]+"&size="+size+"&page="+page;
+        $http.get(allPostsUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
             deferd.reject(error);
         });
         return deferd.promise;
     };
+
+    api.listAllPosts = function() {
+        var deferd = $q.defer();
+        var allPostsUrl = "http://localhost:8081/cheanxin/posts/all?access_token="+$window.sessionStorage["access_token"];
+        $http.get(allPostsUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    }
+
     api.addPosition = function (post) {
         var deferd = $q.defer();
         var addPostUrl = "http://localhost:8081/cheanxin/posts?access_token="+$window.sessionStorage["access_token"];

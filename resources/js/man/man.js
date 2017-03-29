@@ -76,11 +76,44 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
     },function (err) {
         console.error(err.data.errorMessage);
     });
-    httpService.getAllPositionType().then(function (result) {
-        $scope.positionTypes = result.data;
+    $scope.displayPosts = {};
+    httpService.listAllPosts().then(function (result) {
+        var posts = result.data;
+        for (var i = 0; i < posts.length; i++) {
+            var postTypeId = posts[i].postTypeId;
+            var postTypeKey = postTypeId + "";
+            if (!(postTypeKey in $scope.displayPosts)) {
+                $scope.displayPosts[postTypeKey] = {};
+                $scope.displayPosts[postTypeKey].value = new Array();
+                $scope.displayPosts[postTypeKey].key = posts[i].postType;
+            }
+            $scope.displayPosts[postTypeKey].value.push(posts[i]);
+        }
     },function (err) {
         console.error(err.data.errorMessage);
     });
+
+    $scope.selectedPosts = [];
+
+    var updateSelected = function(action,id) {
+        if (action == 'add' && $scope.selectedPosts.indexOf(id) == -1){
+            $scope.selectedPosts.push(id);
+        }
+        if (action == 'remove' && $scope.selectedPosts.indexOf(id) != -1){
+            var idx = $scope.selectedPosts.indexOf(id);
+            $scope.selectedPosts.splice(idx,1);
+        }
+    }
+
+    $scope.updateSelection = function($event, id) {
+        var checkbox = $event.target;
+        var action = (checkbox.checked ? 'add' : 'remove');
+        updateSelected(action,id);
+    }
+
+    $scope.isSelected = function(id) {
+        return $scope.selectedPosts.indexOf(id) >= 0;
+    }
 
     $scope.isEdit = false;
     if (selectedItem) {
@@ -100,7 +133,10 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
         for (var i = 0; i < identityPhotoArr.length; i++) {
             $scope.identityPhotos[i] = identityPhotoArr[i];
         }
-    }else {
+        for (var i in selectedItem.posts) {
+            $scope.selectedPosts.push(selectedItem.posts[i].id);
+        }
+    } else {
         $scope.name = "";
         $scope.dept = "";
         $scope.account = "";
@@ -155,6 +191,8 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
         } else {
             response = httpService.addUser($scope.user);
         }
+
+        httpService.updateUserPost($scope.user, $scope.selectedPosts);
 
         response.then(function (res) {
             $state.go("main.manmanagement");

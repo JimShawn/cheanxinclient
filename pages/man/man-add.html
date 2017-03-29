@@ -102,112 +102,25 @@
         </table>
     </div>
 
-    <!--<div class="mod-hd">-->
-        <!--<h2>人员信息</h2>-->
-    <!--</div>-->
+    <div class="mod-hd">
+        <h2>人员岗位信息</h2>
+    </div>
+    <div class="table">
+        <div ng-repeat="postType in displayPosts">
+            <div class="table-head" style="font-size: larger; font-weight: bolder; padding-left: 10px; line-height:10px; background-color: #989898;">{{postType.key}}</div>
+            <div class="table-body">
+                <div class="tb">
+                    <div class="tba" ng-repeat="post in postType.value"><div class="bd" style="line-height:18px;"><div class="cell_box"><input type="checkbox" value="{{post.id}}" ng-checked="isSelected(post.id)" ng-click="updateSelection($event,post.id)"></div>{{post.name}}</div></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <!--<div class="table">-->
-        <!--<table class="mod-table1">-->
-            <!--<tbody>-->
+    <div class="but" style="padding-top: 20px; clear: both;">
+        <input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存"/>
+        <button class="comm-btn comm-btn-blue fl button1">取消</button>
+    </div>
 
-            <!--<tr>-->
-                <!--<th colspan="4">-->
-                    <!--<span class="checkbox fl">高层领导岗</span>-->
-                <!--</th>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" position="CEO"></div> CEO</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCfo"></div> CFO</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCoo"></div> COO</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCoo"></div> CRO</span>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<th colspan="4">-->
-                    <!--<span class="checkbox fl">中层领导岗</span>-->
-                <!--</th>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCaiwuM"></div> 财务部经理</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFengkongM"></div> 风控经理</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXinshenM"></div> 信审经理</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFushenM"></div> 复审经理</span>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<th colspan="4">-->
-                    <!--<span class="checkbox fl">执行岗位</span>-->
-                <!--</th>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFinancial"></div> 财务</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCount"></div> 会计</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonIncome"></div> 出纳</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXinshenyuan"></div> 信审员</span>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFushenyuan"></div> 复审员</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonJinron"></div> 金融专员</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFengkong"></div> 风控专员</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonZichan"></div> 资产管理员</span>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--<tr>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonCuishou"></div> 催收人员</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonFawu"></div> 法务</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonZhijian"></div> 质检</span>-->
-                <!--</td>-->
-                <!--<td>-->
-                    <!--<span class="checkbox fl cell"><div class="cell_box"><input type="checkbox" ng-model="positonXingzheng"></div> 行政助理</span>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--<tr >-->
-                <!--<td id="button"  colspan="2">-->
-                    <!--<table class="mod-subtable">-->
-                        <!--<tr >-->
-                            <!--<input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存">-->
-                        <!--</tr>-->
-                    <!--</table>-->
-                <!--</td>-->
-            <!--</tr>-->
-            <!--</tbody>-->
-
-        <!--</table>-->
-    <!--</div>-->
-    <input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存">
+    <div style="margin-top: 20px; height:20px;"></div>
 </div>
 </form>
