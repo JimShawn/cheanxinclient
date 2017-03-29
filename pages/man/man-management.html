@@ -67,7 +67,7 @@
                                     </td>
                                 </tr>
                             </table>
-                            <button class="comm-btn comm-btn-blue fl">查询</button>
+                            <button class="comm-btn comm-btn-blue fl" ng-click="filter()">查询</button>
                             <button class="comm-btn comm-btn-blue fl">清除</button>
                             <button class="comm-btn comm-btn-blue fr" ng-click = "add()">添加</button>
                         </div>
@@ -98,8 +98,8 @@
                     <td>{{man.postName}}</td>
                     <td>{{man.mobileNumber}}</td>
                     <td>{{man.email}}</td>
-                    <td>{{man.ststus}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="edit(man)">编辑</a><a href="#" class="blue">冻结</a></td>
+                    <td>{{man.status}}</td>
+                    <td class="oper"><a href="" class="blue" ng-click="edit(man)">编辑</a><a href="" class="blue" ng-click="disableOrEnableUser(man.id, man.toEnabled)">{{man.toStatus}}</a></td>
                 </tr>
 
                 </tbody>
