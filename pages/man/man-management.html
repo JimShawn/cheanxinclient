@@ -9,7 +9,7 @@
                                 <td width="25%"><label class="comm-field-t">姓名</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="queryName">
+                                        <input type="text" class="comm-input1" ng-model="query.realName">
                                     </div>
                                 </td>
                             </tr>
@@ -18,10 +18,10 @@
                     <td width="33.333333%">
                         <table class="mod-subtable">
                             <tr>
-                                <td width="25%"><label class="comm-field-t">联系方式</label></td>
+                                <td width="25%"><label class="comm-field-t">手机号码</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="queryTel">
+                                        <input type="text" class="comm-input1" ng-model="query.mobileNumber">
                                     </div>
                                 </td>
                             </tr>
@@ -30,10 +30,12 @@
                     <td width="33.333333%">
                         <table class="mod-subtable">
                             <tr>
-                                <td width="25%"><label class="comm-field-t">岗位</label></td>
+                                <td width="25%"><label class="comm-field-t">部门</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="queryPost">
+                                        <select class="comm-select1" name="dept" ng-model="dept" ng-options = "d.name for d in depts">
+                                            <option value="">-- 请选择人员所在部门 --</option>
+                                        </select>
                                     </div>
                                 </td>
                             </tr>
@@ -47,7 +49,7 @@
                                 <td width="25%"><label class="comm-field-t">邮箱</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="queryEmail">
+                                        <input type="text" class="comm-input1" ng-model="query.email">
                                     </div>
                                 </td>
                             </tr>
@@ -60,14 +62,14 @@
                                     <td width="25%"><label class="comm-field-t">状态</label></td>
                                     <td width="75%">
                                         <div class="comm-inp-wp">
-                                            <select class="comm-select1" ng-model = "selectedStatus" ng-options = "queryStatus.value for queryStatus in queryStatuses">
+                                            <select class="comm-select1" ng-model = "statusObject" ng-options = "queryStatus.value for queryStatus in queryStatuses">
                                                 <option value="">-- 请选择 --</option>
                                             </select>
                                         </div>
                                     </td>
                                 </tr>
                             </table>
-                            <button class="comm-btn comm-btn-blue fl" ng-click="filter()">查询</button>
+                            <button class="comm-btn comm-btn-blue fl" ng-click="getList()">查询</button>
                             <button class="comm-btn comm-btn-blue fl">清除</button>
                             <button class="comm-btn comm-btn-blue fr" ng-click = "add()">添加</button>
                         </div>
