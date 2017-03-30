@@ -5,11 +5,14 @@
 'use strict';
 var man = angular.module('man',['httpservice']);
 man.controller("manController",['$scope', '$http','$location','$rootScope', 'httpService', '$state', '$timeout', '$window',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window) {
-    $scope.queryName = "";
-    $scope.queryTel = "";
-    $scope.queryPost = "";
-    $scope.queryEmail = "";
-    $scope.selectedStatus = {};
+    $scope.query = {};
+    $scope.query.realName = "";
+    $scope.query.mobileNumber = "";
+    $scope.query.deptId = "";
+    $scope.query.email = "";
+    $scope.query.status = "-1";
+    $scope.query.page = "0";
+    $scope.query.size = "10";
     $scope.queryStatuses = [{
         status:1,
         value:"已激活"
@@ -20,8 +23,14 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
     ];
 
 
-    $scope.getList = function (page,size) {
-        httpService.getAllUser(page,size).then(function (result) {
+    $scope.getList = function () {
+        if ($scope.statusObject) {
+            $scope.query.status = $scope.statusObject.status;
+        }
+        if ($scope.dept) {
+            $scope.query.deptId = $scope.dept.id;
+        }
+        httpService.listUsers($scope.query).then(function (result) {
             $scope.data = result.data;
 
             for (var i in $scope.data.content){
@@ -43,14 +52,18 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
         });
 
     };
-    $scope.getList(0,10);
+    $scope.getList();
 
     $scope.changePageSizeFun = function (size) {
-        $scope.getList($scope.data.number,size);
+        $scope.filter.page = $scope.data.number;
+        $scope.filter.size = size;
+        $scope.getList($scope.filter);
     };
 
     $scope.gotoPageFun = function (x) {
-        $scope.getList(x,$scope.data.size);
+        $scope.filter.page = x;
+        $scope.filter.size = $scope.data.size;
+        $scope.getList($scope.filter);
     };
 
     $scope.add = function () {
@@ -68,12 +81,6 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
         httpService.patchUser(user, id);
         $window.location.reload();
     }
-
-}]);
-man.controller("addManController",['$filter', '$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','$stateParams','FileUploader','$window',function ($filter, $scope,$http,$location,$rootScope,httpService,$state,$timeout,$stateParams,FileUploader,$window) {
-    if ($stateParams.items != null) {
-        var selectedItem = JSON.parse($stateParams.items);
-    }
     httpService.getAllDept().then(function (result) {
         $scope.depts = result.data;
         if (!selectedItem) {
@@ -88,6 +95,11 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
     },function (err) {
         console.error(err.data.errorMessage);
     });
+}]);
+man.controller("addManController",['$filter', '$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','$stateParams','FileUploader','$window',function ($filter, $scope,$http,$location,$rootScope,httpService,$state,$timeout,$stateParams,FileUploader,$window) {
+    if ($stateParams.items != null) {
+        var selectedItem = JSON.parse($stateParams.items);
+    }
     $scope.displayPosts = {};
     httpService.listAllPosts().then(function (result) {
         var posts = result.data;

@@ -28,10 +28,14 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         return deferd.promise;
     };
 
-    api.getAllUser = function (page,size) {
+    api.listUsers = function (query) {
+        var queryParams = "";
+        for (var key in query) {
+            queryParams += "&" + key + "=" + query[key];
+        }
         var deferd = $q.defer();
-        var allUserUrl = "http://localhost:8081/cheanxin/users?access_token="+$window.sessionStorage["access_token"]+"&size="+size+"&page="+page;
-        $http.get(allUserUrl).then(function (result) {
+        var listUsersUrl = "http://localhost:8081/cheanxin/users?access_token="+$window.sessionStorage["access_token"]+queryParams;
+        $http.get(listUsersUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
             deferd.reject(error);
@@ -68,7 +72,7 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         });
         return deferd.promise;
     }
-    
+
     api.updateUserPost = function (user, postIds) {
         var deferd = $q.defer();
         var updateUserPostUrl = "http://localhost:8081/cheanxin/user_posts/users/" + user.username + "?access_token="+$window.sessionStorage["access_token"];
