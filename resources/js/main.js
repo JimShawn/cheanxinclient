@@ -1,6 +1,6 @@
 var authors = angular.module('main', []);
 
-authors.controller('MainController', ['$scope', '$http','$location','$rootScope','$state',function ($scope,$http,$location,$rootScope,$state) {
+authors.controller('MainController', ['$scope', '$http', '$location', '$rootScope', '$state', 'httpService',function ($scope, $http, $location, $rootScope, $state, httpService) {
 
     $scope.$watch('$viewContentLoaded', function() {
         var winWid=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -26,7 +26,6 @@ authors.controller('MainController', ['$scope', '$http','$location','$rootScope'
     }
 
     $scope.manManagement = function () {//切换到人员管理页面
-        console.log("manManagement");
         $state.go("main.manmanagement");
     };
     $scope.productManagement =function () {
@@ -56,6 +55,11 @@ authors.controller('MainController', ['$scope', '$http','$location','$rootScope'
     $scope.giveupList = function () {
         $state.go("main.giveuplist");
     };
-
-
+    $scope.logout = function () {
+        httpService.logout().then(function () {
+            $state.go("login");
+        },function (err) {
+            console.error(err.data.errorMessage);
+        });
+    };
 }]);

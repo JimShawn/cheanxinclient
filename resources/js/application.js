@@ -170,7 +170,7 @@ app.factory('sessionInjector',['$rootScope','$window','$q', '$injector',function
         //     return config;
         // },
         responseError : function(response) {
-            if(response.status == 401){
+            if(response.status == 401 || response.status == -1){
                 var $state = $injector.get('$state');
                 return $state.go('login');
             }

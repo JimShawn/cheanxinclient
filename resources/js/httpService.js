@@ -3,7 +3,7 @@
  */
 'use strict';
 var httpservice = angular.module('httpservice', []);
-httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
+httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $injector) {
     var api = {};
     api.login = function (name,password) {
         var deferd = $q.defer();
@@ -27,6 +27,17 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         });
         return deferd.promise;
     };
+
+    api.logout = function () {
+        var deferd = $q.defer();
+        var logoutUrl = "http://localhost:8081/cheanxin/users/logout?access_token="+$window.sessionStorage["access_token"];
+        $http.delete(logoutUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    }
 
     api.listUsers = function (query) {
         var queryParams = "";
