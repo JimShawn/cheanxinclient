@@ -5,14 +5,6 @@
 'use strict';
 var man = angular.module('man',['httpservice']);
 man.controller("manController",['$scope', '$http','$location','$rootScope', 'httpService', '$state', '$timeout', '$window',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window) {
-    $scope.query = {};
-    $scope.query.realName = "";
-    $scope.query.mobileNumber = "";
-    $scope.query.deptId = "";
-    $scope.query.email = "";
-    $scope.query.status = "-1";
-    $scope.query.page = "0";
-    $scope.query.size = "10";
     $scope.queryStatuses = [{
         status:1,
         value:"已激活"
@@ -21,6 +13,20 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
         value:"已冻结"
     }
     ];
+    
+    $scope.init = function() {
+        $scope.query = {};
+        $scope.query.realName = "";
+        $scope.query.mobileNumber = "";
+        $scope.query.deptId = "";
+        $scope.query.email = "";
+        $scope.query.status = "-1";
+        $scope.query.page = "0";
+        $scope.query.size = "10";
+        $scope.statusObject = undefined;
+        $scope.dept = undefined;
+    }
+    $scope.init();
 
 
     $scope.getList = function () {
@@ -55,15 +61,15 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
     $scope.getList();
 
     $scope.changePageSizeFun = function (size) {
-        $scope.filter.page = $scope.data.number;
-        $scope.filter.size = size;
-        $scope.getList($scope.filter);
+        $scope.query.page = $scope.data.number;
+        $scope.query.size = size;
+        $scope.getList();
     };
 
     $scope.gotoPageFun = function (x) {
-        $scope.filter.page = x;
-        $scope.filter.size = $scope.data.size;
-        $scope.getList($scope.filter);
+        $scope.query.page = x;
+        $scope.query.size = $scope.data.size;
+        $scope.getList();
     };
 
     $scope.add = function () {

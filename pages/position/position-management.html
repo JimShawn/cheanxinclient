@@ -9,7 +9,7 @@
                                 <td width="25%"><label class="comm-field-t">岗位名称</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="QueryPositonName">
+                                        <input type="text" class="comm-input1" ng-model="query.name">
                                     </div>
                                 </td>
                             </tr>
@@ -33,8 +33,8 @@
                     <td class="a">
                         <table class="mod-subtable a">
                             <tr>
-                                <button class="comm-btn comm-btn-blue fl">查询</button>
-                                <button class="comm-btn comm-btn-blue fl button2">清除</button>
+                                <button class="comm-btn comm-btn-blue fl" ng-click="getList()">查询</button>
+                                <button class="comm-btn comm-btn-blue fl button2" ng-click="init()">清除</button>
                                 <button class="comm-btn comm-btn-blue fr" ng-click = "addPost()">添加</button>
                             </tr>
                         </table>
