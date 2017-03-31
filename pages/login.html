@@ -18,15 +18,13 @@
                     <div class="login-form">
                         <div class="login-form-item">
                             <i class="i-user"></i>
-                            <input type="text" class="input-login" title="请输入用户名" placeholder="请输入用户名" ng-model = "username">
+                            <input type="text" class="input-login" title="请输入用户名" placeholder="请输入用户名" ng-model = "username" ng-keyup="$event.keyCode == 13 && login()">
                         </div>
                         <div class="login-form-item">
                             <i class="i-pwd"></i>
-                            <input type="password" class="input-login" title="请输入密码" placeholder="请输入密码" ng-model = "password">
+                            <input type="password" class="input-login" title="请输入密码" placeholder="请输入密码" ng-model = "password" ng-keyup="$event.keyCode == 13 && login()">
                         </div>
-                        <div class="forget-pwd"><a href="#">忘记密码？</a></div>
                         <div class="login-form-item login-form-item-btn"><button class="comm-btn comm-btn-blue" ng-click ="login()">登录</button></div>
-                        <div class="tip-account">没有账号？<a href="#" class="blue">立即注册</a></div>
                     </div>
                 </div>
             </div>
@@ -36,6 +34,6 @@
 
 <div class="login-footer">
     <div class="mod-login-in">
-        <span class="copyright">Copyright 2015-2016</span><span class="site">www.leichicm.com</span>
+        <span class="copyright">Copyright 2015-2016</span><span class="site">www.cheanxin.com</span>
     </div>
 </div>
