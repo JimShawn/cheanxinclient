@@ -8,16 +8,28 @@ positon.controller("positionController",['$scope', '$http','$location','$rootSco
     $scope.QueryProductName = "";
     $scope.QueryPositionStatus = [{
         id:1,
-        str:"饱和"
+        str:"启用"
     },{
-        id:2,
-        str:"未饱和"
+        id:0,
+        str:"禁用"
     }];
-    $scope.selectPositionStatus = {};
 
+    $scope.init = function() {
+        $scope.query = {}
+        $scope.query.page = 0;
+        $scope.query.size = 10;
+        $scope.query.name = "";
+        $scope.query.enabled = "";
+        $scope.selectPositionStatus = undefined;
+    }
 
-    $scope.getList = function (page,size) {
-        httpService.getAllPosition(page,size).then(function (result) {
+    $scope.init();
+
+    $scope.getList = function () {
+        if ($scope.selectPositionStatus) {
+            $scope.query.enabled = $scope.selectPositionStatus.id;
+        }
+        httpService.getAllPosition($scope.query).then(function (result) {
             console.log(result);
             $scope.data = result.data;
         },function (error) {
@@ -25,20 +37,18 @@ positon.controller("positionController",['$scope', '$http','$location','$rootSco
         });
 
     };
-    $scope.getList(0,10);
+    $scope.getList();
 
     $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number,size);
+        $scope.query.page = $scope.data.number;
+        $scope.query.size = size;
+        $scope.getList();
     };
 
     $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x,$scope.data.size);
+        $scope.query.page = x;
+        $scope.query.size = $scope.data.size;
+        $scope.getList();
     };
     $scope.addPost = function () {
         $state.go("main.addpositionmanagement",{items:null});
@@ -55,7 +65,7 @@ positon.controller("positionController",['$scope', '$http','$location','$rootSco
             enabled:false
         };
         httpService.updatePosition(post,position.id).then(function (result) {
-            $scope.getList(0,10);
+            $scope.getList();
             console.log(result);
         },function (error) {
             console.log(error);

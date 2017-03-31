@@ -108,6 +108,7 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
         };
         httpService.addDept(deptItem).then(function (result) {
             console.log(result);
+            $scope.newItem.id = result.data.id;
             $scope.selectedItem = $scope.newItem;
             $scope.getAllDept();
             $state.go("main.deptmanagement.edit");

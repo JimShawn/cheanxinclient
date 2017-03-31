@@ -133,9 +133,13 @@ httpservice.factory('httpService',function ($http,$q,$window,$rootScope) {
         return deferd.promise;
     };
 
-    api.getAllPosition = function (page,size) {
+    api.getAllPosition = function (query) {
+        var queryParams = "";
+        for (var key in query) {
+            queryParams += "&" + key + "=" + query[key];
+        }
         var deferd = $q.defer();
-        var allPostsUrl = "http://localhost:8081/cheanxin/posts?access_token="+$window.sessionStorage["access_token"]+"&size="+size+"&page="+page;
+        var allPostsUrl = "http://localhost:8081/cheanxin/posts?access_token="+$window.sessionStorage["access_token"]+queryParams;
         $http.get(allPostsUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
