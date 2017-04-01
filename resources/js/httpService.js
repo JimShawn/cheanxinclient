@@ -95,14 +95,14 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         return deferd.promise;
     };
 
-    api.getAllProduct = function (page,size,status,productTemplateId) {
-        var deferd = $q.defer();
-        var allProductUrl = "http://localhost:8081/cheanxin/products?access_token="+$window.sessionStorage["access_token"]+"&size="+size+"&page="+page+"&&productTemplateId="+productTemplateId;
-        if(status!=-1){
-            allProductUrl = allProductUrl+ "&status="+status;
+    api.listProduct = function (query) {
+        var queryParams = "";
+        for (var key in query) {
+            queryParams += "&" + key + "=" + query[key];
         }
-
-        $http.get(allProductUrl).then(function (result) {
+        var deferd = $q.defer();
+        var listProductUrl = "http://localhost:8081/cheanxin/products?access_token="+$window.sessionStorage["access_token"]+queryParams;
+        $http.get(listProductUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
             deferd.reject(error);
