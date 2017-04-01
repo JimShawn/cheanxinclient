@@ -65,7 +65,8 @@
     text-decoration: none;
 }
 .img-container{
-    float: right;
+    float: left;
+    padding-left: 4px;
 }
 .img-td{
     table-layout: fixed;
@@ -107,3 +108,4 @@
     width:147px;
     height: 147px;
 }
+

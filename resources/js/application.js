@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign']);
+var app = angular.module('app', ['image-upload', 'ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign']);
 
 app.config(function ($stateProvider,$urlRouterProvider) {
     $stateProvider.state("login", {
@@ -170,7 +170,7 @@ app.factory('sessionInjector',['$rootScope','$window','$q', '$injector',function
         //     return config;
         // },
         responseError : function(response) {
-            if(response.status == 401){
+            if(response.status == 401 || response.status == -1){
                 var $state = $injector.get('$state');
                 return $state.go('login');
             }
