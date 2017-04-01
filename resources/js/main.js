@@ -1,6 +1,6 @@
 var authors = angular.module('main', []);
 
-authors.controller('MainController', ['$scope', '$http', '$location', '$rootScope', '$state', 'httpService',function ($scope, $http, $location, $rootScope, $state, httpService) {
+authors.controller('MainController', ['$scope', '$http', '$location', '$rootScope', '$state', 'httpService','$window','$interval',function ($scope, $http, $location, $rootScope, $state, httpService,$window,$interval) {
 
     $scope.$watch('$viewContentLoaded', function() {
         var winWid=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -13,6 +13,33 @@ authors.controller('MainController', ['$scope', '$http', '$location', '$rootScop
         $('.mainContent').css({'height':(winHei-headerHei)+'px'});
         $('.frameBox').css({'height':(winHei-headerHei-breadHei)+'px'});
     });
+    var user = JSON.parse($window.sessionStorage["userInfo"]);
+    $scope.userName = user.data.realName;
+    $interval(function(){
+        var now=new Date();
+        var year=now.getFullYear();
+        var month=now.getMonth()+1;
+        var day=now.getDate();
+        var hours=now.getHours();
+        var minutes=now.getMinutes();
+        var seconds=now.getSeconds();
+        if(month<10){
+            month = 0+""+month;
+        }
+        if(day<10){
+            day = 0+""+day;
+        }
+        if(hours<10){
+            hours = 0+""+hours;
+        }
+        if(minutes<10){
+            minutes = 0+""+minutes;
+        }
+        if(seconds<10){
+            seconds = 0+""+seconds;
+        }
+        $scope.nowTime = year+"-"+month+"-"+day+"   "+hours+":"+minutes+":"+seconds;
+    },1000);
 
     $scope.menuItems = [true,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
     $scope.changeItem = function (i) {
