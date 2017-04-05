@@ -4,227 +4,237 @@
  */
 'use strict';
 var product = angular.module('product',['httpservice']);
-product.controller("productController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout) {
+
+product.factory("productFactory", function () {
+    var productFactoryApi = {};
+
+    productFactoryApi.initScope = function ($scope, httpService) {
+        $scope.AvailableRates = [1,2,3,4,5,6,7,8,9];
+
+        $scope.changeCheckedStatus = function (checkArr, x) {
+            checkArr[x] = !checkArr[x];
+        };
+
+        $scope.changeRadioStatus = function (radioArr, x) {
+            for (var key in radioArr) {
+                if (key == x) {
+                    radioArr[key] = true;
+                } else {
+                    radioArr[key] = false;
+                }
+            }
+        }
+
+        $scope.productTypes = [{
+            id:0,
+            name:"二手车贷款"
+        }];
+
+        $scope.paybackTypes = [{
+            id:0,
+            name:"等额本息"
+        }];
+
+        $scope.loanPolicies = [{
+            id:0,
+            name:"过户后放款"
+        },{
+            id:1,
+            name:"抵押后放款"
+        }];
+
+        $scope.productStatus = [{
+            id:0,
+            name:"待审核",
+            on:true
+        },{
+            id:1,
+            name:"审核通过",
+            on:false
+        },{
+            id:2,
+            name:"审核拒绝",
+            on:false
+        }];
+
+        $scope.init = function() {
+            $scope.query = {};
+            $scope.query.name = "";
+            $scope.query.status = "-1";
+            $scope.query.page = "0";
+            $scope.query.size = "10";
+            $scope.query.productTemplateId = "0";
+        }
+        $scope.init();
+
+        $scope.getList = function (status, productTemplateId) {
+            if (status != undefined) {
+                $scope.query.status = status;
+            }
+            if (productTemplateId != undefined) {
+                $scope.query.productTemplateId = productTemplateId;
+            }
+            $scope.showReview = false;
+            if ($scope.query.status == 0 && $scope.query.productTemplateId < 0) {
+                $scope.showReview = true;
+            }
+            $scope.showEdit = false;
+            if ($scope.query.status == 0) {
+                $scope.showEdit = true;
+            }
+            if ($scope.selectCity) {
+                $scope.query.cityId = $scope.selectCity.Id;
+            } else {
+                $scope.query.cityId = -1;
+            }
+            if (!$scope.query.cityId) {
+                $scope.query.cityId = -1;
+            }
+            for (var i in $scope.productStatus) {
+                if ($scope.productStatus[i].id == $scope.query.status) {
+                    $scope.productStatus[i].on = true;
+                } else {
+                    $scope.productStatus[i].on = false;
+                }
+            }
+            httpService.listProduct($scope.query).then(function (result) {
+                $scope.data = result.data;
+            },function (error) {
+                console.error(error.data.errorMessage);
+            });
+
+        };
+
+        $scope.changePageSizeFun = function (size) {
+            $scope.query.page = $scope.data.number;
+            $scope.query.size = size;
+            $scope.getList();
+        };
+
+        $scope.gotoPageFun = function (x) {
+            $scope.query.page = x;
+            $scope.query.size = $scope.data.size;
+            $scope.getList();
+        };
+        return $scope;
+    }
+
+    productFactoryApi.checkTerms = function(availableTerms) {
+        var availableTermsArr = {"6":false, "12":false, "18":false, "24":false, "36":false, "48":false, "60":false}
+        if (!availableTerms) {
+            return availableTermsArr;
+        }
+        var availableTermsArray = availableTerms.split(",");
+        for (var i = 0; i < availableTermsArray.length; i++) {
+            availableTermsArr[availableTermsArray[i]] = true;
+        };
+        return availableTermsArr;
+    };
+
+    productFactoryApi.setTerms = function(availableTerms) {
+        var availableTermsStr = "";
+        for (var availableTerm in availableTerms) {
+            if (!availableTerms[availableTerm]) {
+                continue;
+            }
+            if (availableTermsStr.length == 0) {
+                availableTermsStr = availableTerm;
+            } else {
+                availableTermsStr += "," + availableTerm;
+            }
+        }
+        return availableTermsStr;
+    };
+
+    return productFactoryApi;
+});
+
+product.controller("productController",function ($scope, $http, $location, $rootScope, $state, httpService, productFactory) {
+    productFactory.initScope($scope, httpService);
     $scope.QueryPositonName = "";
-    $scope.productTypes = [{
-        id:0,
-        name:"二手车贷款"
-    },{
-        id:1,
-        name:"三手车贷款"
-    }];
-    $scope.paybackTypes = [{
-        id:0,
-        name:"等额本息"
-    },{
-        id:1,
-        name:"先息后本"
-    }];
-    $scope.status = [{
-        id:0,
-        name:"可用"
-    },{
-        id:1,
-        name:"不可用"
-    }];
 
-
-    $scope.getList = function (page,size) {
-        httpService.getAllProduct(page,size,-1,0).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
-        },function (error) {
-            console.log(error);
-        });
-
-    };
-    $scope.getList(0,10);
-
-    $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number,size);
-    };
-
-    $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x,$scope.data.size);
-    };
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement",{items:null});
     };
     $scope.edit = function (product) {
         $state.go("main.addproductmanagement",{items:JSON.stringify(product)});
-    }
+    };
+    $scope.getList();
+});
 
-}]);
-product.controller("subProductController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson) {
-    $scope.productTypes = [{
-        id:0,
-        name:"二手车贷款"
-    },{
-        id:1,
-        name:"三手车贷款"
-    }];
-    $scope.paybackTypes = [{
-        id:0,
-        name:"等额本息"
-    },{
-        id:1,
-        name:"先息后本"
-    }];
-    $scope.status = [{
-        id:0,
-        name:"可用"
-    },{
-        id:1,
-        name:"不可用"
-    }];
+product.controller("subProductController",function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson, productFactory) {
+    productFactory.initScope($scope, httpService);
 
     $scope.QueryPositonName = "";
     $scope.cities = cityJson;
     $scope.selectProvinces = {};
     $scope.selectCity = {};
 
+    $scope.getList(0, -1);
 
-
-    $scope.getList = function (page,size) {
-        httpService.getAllProduct(page,size,1,-1).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
-        },function (error) {
-            console.log(error);
-        });
-
-    };
-    $scope.getList(0,10);
-
-    $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number,size);
-    };
-
-    $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x,$scope.data.size);
-    };
     $scope.add = function () {
         $state.go("main.addsubproduct");
     };
+
     $scope.edit = function (subproduct) {
         $state.go("main.editsubproduct",{items:subproduct});
-    }
+    };
 
-}]);
-product.controller("addProductController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
+    $scope.review = function (subproduct) {
+        $state.go("main.reviewsubproduct",{items:subproduct});
+    };
+});
+
+product.controller("addProductController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,productFactory) {
+    productFactory.initScope($scope, httpService);
+
     var selectedItem = JSON.parse($stateParams.items);
 
-    $scope.productTypes = [{
-        id:0,
-        name:"二手车贷款"
-    },{
-        id:1,
-        name:"三手车贷款"
-    }];
-    $scope.paybackTypes = [{
-        id:0,
-        name:"等额本息"
-    },{
-        id:1,
-        name:"先息后本"
-    }];
-
-    $scope.AvailableRates = [1,2,3,4,5,6,7,8,9];
-    console.log(selectedItem);
-    if (selectedItem ==null){
+    if (selectedItem == null) {
         $scope.name = "";
         $scope.selectedProductType = {};
         $scope.selectedPaybackType = {};
         $scope.minAvailableRate = 1;
         $scope.maxAvailableRate = 1;
         $scope.loanMonthlyInterestRate = "";
-    }else {
+        $scope.availableTerms = productFactory.checkTerms();
+    } else {
+        $scope.id = selectedItem.id;
         $scope.name = selectedItem.name;
-        console.log($scope.productTypes);
-        console.log(selectedItem.productType);
         $scope.selectedProductType = $scope.productTypes[selectedItem.productType];
         $scope.selectedPaybackType = $scope.paybackTypes[selectedItem.repaymentMethod];
         $scope.minAvailableRate = selectedItem.minAvailableRate;
         $scope.maxAvailableRate = selectedItem.maxAvailableRate;
         $scope.loanMonthlyInterestRate = selectedItem.loanMonthlyInterestRate;
-        var availableTermsStr = selectedItem.availableTerms;
-        var availableTermsArray = availableTermsStr.split(",");
-        for(var i=0;i<availableTermsArray.length;i++){
-            if(availableTermsArray[i]==6){
-                $scope.sixTerms = true;
-            };
-            if(availableTermsArray[i]==12){
-                $scope.tweTerms = true;
-            };
-            if(availableTermsArray[i]==18){
-                $scope.eighteenTerms = true;
-            };
-            if(availableTermsArray[i]==24){
-                $scope.twentyfourTerms = true;
-            };
-            if(availableTermsArray[i]==36){
-                $scope.thirtysixTerms = true;
-            };
-        };
-        if(selectedItem.loanPolicy==0){
-            $scope.afterSign = true;
-        };
-        if(selectedItem.loanPolicy==1){
-            $scope.afterMortgage = true;
-        }
-
+        $scope.loanPolicy = $scope.loanPolicies[selectedItem.loanPolicy];
+        $scope.availableTerms = productFactory.checkTerms(selectedItem.availableTerms);
     }
 
-
-
-
-    $scope.changeCheckedStatus = function (x) {
-        console.log(x);
-        console.log($scope.sixTerms);
-    };
     $scope.commit = function () {
-        var availableTerms = "";
-        var loanPolicy = 0;
-        if ($scope.sixTerms)  {availableTerms = "6"};
-        if ($scope.tweTerms)  {availableTerms += ",12"};
-        if ($scope.eighteenTerms)  {availableTerms += ",18"};
-        if ($scope.twentyfourTerms)  {availableTerms = ",24"};
-        if ($scope.thirtysixTerms)  {availableTerms = ",36"};
-
-        if($scope.afterSign){ loanPolicy = 0};
-        if($scope.afterMortgage){ loanPolicy = 1};
-
         $scope.product = {
             name:$scope.name,
             productType:$scope.selectedProductType.id,
             repaymentMethod:$scope.selectedPaybackType.id,
             minAvailableRate:$scope.minAvailableRate,
             maxAvailableRate:$scope.maxAvailableRate,
-            availableTerms:availableTerms,
-            loanPolicy:loanPolicy,
+            availableTerms:productFactory.setTerms($scope.availableTerms),
+            loanPolicy:$scope.loanPolicy.id,
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:0,
             productTemplateId:0,
-            status:0
+            status:1
         };
-        console.log($scope.product);
-        httpService.addProduct($scope.product).then(function (res) {
-            alert("新增产品成功");
+        var response;
+        if (selectedItem) {
+            $scope.product.id = selectedItem.id;
+            response = httpService.editProduct($scope.product);
+        } else {
+            response = httpService.addProduct($scope.product);
+        }
+        response.then(function (res) {
             $state.go("main.productmanagement");
         },function (err) {
-            alert(err.data.errorMessage);
+            console.error(err.data.errorMessage);
         })
 
     };
@@ -232,171 +242,56 @@ product.controller("addProductController",['$scope', '$http','$location','$rootS
         $state.go("main.productmanagement");
     }
 
-}]);
-product.controller("addSubProductController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson) {
-    $scope.productTypes = [{
-        id:0,
-        name:"二手车贷款"
-    },{
-        id:1,
-        name:"三手车贷款"
-    }];
-    $scope.paybackTypes = [{
-        id:0,
-        name:"等额本息"
-    },{
-        id:1,
-        name:"先息后本"
-    }];
-    $scope.loanPolicy = [{
-        id:0,
-        name:"过户后放款"
-    },{
-        id:1,
-        name:"抵押后放款"
-    }];
+});
+
+product.controller("addSubProductController",function ($scope, $http, $location, $rootScope, httpService, $state, productFactory, cityJson) {
     $scope.cities = cityJson;
 
-    $scope.getList = function (page,size) {
-        httpService.getAllProduct(page,size,-1,0).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
+    productFactory.initScope($scope, httpService);
 
-        },function (error) {
-            console.log(error);
-        });
+    $scope.getList(0, 0);
 
-    };
-    $scope.getList(0,10);
     $scope.selectProduct = function () {
-        console.log($scope.selectedProduct);
-        var availableTermsStr = $scope.selectedProduct.availableTerms;
-        var availableTermsArray = availableTermsStr.split(",");
-        for(var i=0;i<availableTermsArray.length;i++){
-            if(availableTermsArray[i]==6){
-                $scope.sixTerms = true;
-            };
-            if(availableTermsArray[i]==12){
-                $scope.tweTerms = true;
-            };
-            if(availableTermsArray[i]==18){
-                $scope.eighteenTerms = true;
-            };
-            if(availableTermsArray[i]==24){
-                $scope.twentyfourTerms = true;
-            };
-            if(availableTermsArray[i]==36){
-                $scope.thirtysixTerms = true;
-            };
-        };
+        $scope.availableTerms = productFactory.checkTerms($scope.selectedProduct.availableTerms);
     }
 
-    $scope.AvailableRates = [1,2,3,4,5,6,7,8,9];
-
-    $scope.changeCheckedStatus = function (x) {
-        console.log(x);
-        console.log($scope.sixTerms);
-    };
     $scope.commit = function () {
-        var availableTerms = "";
-        if ($scope.sixTerms)  {availableTerms = "6"};
-        if ($scope.tweTerms)  {availableTerms += ",12"};
-        if ($scope.eighteenTerms)  {availableTerms += ",18"};
-        if ($scope.twentyfourTerms)  {availableTerms = ",24"};
-        if ($scope.thirtysixTerms)  {availableTerms = ",36"};
-
         $scope.product = {
             name:$scope.selectedProduct.name,
             productType:$scope.selectedProduct.productType,
             repaymentMethod:$scope.selectedProduct.repaymentMethod,
             minAvailableRate:$scope.selectedProduct.minAvailableRate,
             maxAvailableRate:$scope.selectedProduct.maxAvailableRate,
-            availableTerms:availableTerms,
+            availableTerms:productFactory.setTerms($scope.availableTerms),
             loanPolicy:$scope.selectedProduct.loanPolicy,
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
             status:0
         };
-        console.log($scope.product);
         httpService.addProduct($scope.product).then(function (res) {
-            alert("新增子产品成功");
             $state.go("main.subproductmanagement");
         },function (err) {
-            alert(err.data.errorMessage);
+            console.error(err.data.errorMessage);
         })
 
     };
     $scope.cancel = function () {
         $state.go("main.subproductmanagement");
     }
-}]);
-product.controller("editSubProductController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
+});
+
+
+product.controller("editSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory) {
+    productFactory.initScope($scope, httpService);
+
     $scope.cities = cityJson;
     $scope.selectedProduct = $stateParams.items;
-    console.log($scope.selectedProduct);
-    var availableTermsStr = $scope.selectedProduct.availableTerms;
-    var availableTermsArray = availableTermsStr.split(",");
-    for(var i=0;i<availableTermsArray.length;i++){
-        if(availableTermsArray[i]==6){
-            $scope.sixTerms = true;
-        };
-        if(availableTermsArray[i]==12){
-            $scope.tweTerms = true;
-        };
-        if(availableTermsArray[i]==18){
-            $scope.eighteenTerms = true;
-        };
-        if(availableTermsArray[i]==24){
-            $scope.twentyfourTerms = true;
-        };
-        if(availableTermsArray[i]==36){
-            $scope.thirtysixTerms = true;
-        };
-    };
-    $scope.selectProvinces = cityJson.provincesList[$scope.selectedProduct.provinceId-1];
+    $scope.availableTerms = productFactory.checkTerms($scope.selectedProduct.availableTerms);
     $scope.selectCity = cityJson.Citys[$scope.selectedProduct.cityId-1];
-
-
-
-    $scope.productTypes = [{
-        id:0,
-        name:"二手车贷款"
-    },{
-        id:1,
-        name:"三手车贷款"
-    }];
-    $scope.paybackTypes = [{
-        id:0,
-        name:"等额本息"
-    },{
-        id:1,
-        name:"先息后本"
-    }];
-    $scope.loanPolicy = [{
-        id:0,
-        name:"过户后放款"
-    },{
-        id:1,
-        name:"抵押后放款"
-    }];
-
-
-    $scope.AvailableRates = [1,2,3,4,5,6,7,8,9];
-
-    $scope.changeCheckedStatus = function (x) {
-        console.log(x);
-        console.log($scope.sixTerms);
-    };
+    $scope.selectProvinces = cityJson.provincesList[cityJson.Citys[$scope.selectedProduct.cityId-1].ProvinceId-1];
 
     $scope.commit = function () {
-        var availableTerms = "";
-        if ($scope.sixTerms)  {availableTerms = "6"};
-        if ($scope.tweTerms)  {availableTerms += ",12"};
-        if ($scope.eighteenTerms)  {availableTerms += ",18"};
-        if ($scope.twentyfourTerms)  {availableTerms = ",24"};
-        if ($scope.thirtysixTerms)  {availableTerms = ",36"};
-
         $scope.product = {
             id:$scope.selectedProduct.id,
             name:$scope.selectedProduct.name,
@@ -404,24 +299,41 @@ product.controller("editSubProductController",['$scope', '$http','$location','$r
             repaymentMethod:$scope.selectedProduct.repaymentMethod,
             minAvailableRate:$scope.selectedProduct.minAvailableRate,
             maxAvailableRate:$scope.selectedProduct.maxAvailableRate,
-            availableTerms:availableTerms,
+            availableTerms:productFactory.setTerms($scope.availableTerms),
             loanPolicy:$scope.selectedProduct.loanPolicy,
             loanMonthlyInterestRate:$scope.selectedProduct.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
-            provinceId:$scope.selectProvinces.Id,
             status:0
         };
-        console.log($scope.product);
         httpService.editProduct($scope.product).then(function (res) {
-            alert("修改子产品成功");
             $state.go("main.subproductmanagement");
         },function (err) {
-            alert(err.data.errorMessage);
+            console.error(err.data.errorMessage);
         })
 
     };
     $scope.cancel = function () {
         $state.go("main.subproductmanagement");
     }
-}]);
+});
+
+product.controller("reviewSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory) {
+    productFactory.initScope($scope, httpService);
+
+    $scope.cities = cityJson;
+    $scope.selectedProduct = $stateParams.items;
+
+    $scope.reviewSubProduct = function (status) {
+        var subProductStatus = {
+            id: $scope.selectedProduct.id,
+            status: status,
+            remark: $scope.remark
+        };
+        httpService.patchProduct(subProductStatus).then(function (res) {
+            $state.go("main.subproductmanagement");
+        },function (err) {
+            console.error(err.data.errorMessage);
+        })
+    };
+});

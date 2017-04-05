@@ -4,7 +4,28 @@
  */
 'use strict';
 var man = angular.module('man',['httpservice']);
-man.controller("manController",['$scope', '$http','$location','$rootScope', 'httpService', '$state', '$timeout', '$window',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window) {
+man.factory('deptService', function (httpService) {
+    var deptServiceApi = {}
+    deptServiceApi.listDepts = function($scope, selectedItem) {
+        httpService.getAllDept().then(function (result) {
+            $scope.depts = result.data;
+            if (!selectedItem) {
+                return;
+            }
+            for (var i = 0; i < $scope.depts.length; i++) {
+                if ($scope.depts[i].id == selectedItem.deptId) {
+                    $scope.dept = $scope.depts[i];
+                    break;
+                }
+            }
+        },function (err) {
+            console.error(err.data.errorMessage);
+        });
+    }
+    return deptServiceApi;
+})
+man.controller("manController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window, deptService) {
+    deptService.listDepts($scope);
     $scope.queryStatuses = [{
         status:1,
         value:"已激活"
@@ -87,25 +108,13 @@ man.controller("manController",['$scope', '$http','$location','$rootScope', 'htt
         httpService.patchUser(user, id);
         $window.location.reload();
     }
-    httpService.getAllDept().then(function (result) {
-        $scope.depts = result.data;
-        if (!selectedItem) {
-            return;
-        }
-        for (var i = 0; i < $scope.depts.length; i++) {
-            if ($scope.depts[i].id == selectedItem.deptId) {
-                $scope.dept = $scope.depts[i];
-                break;
-            }
-        }
-    },function (err) {
-        console.error(err.data.errorMessage);
-    });
-}]);
-man.controller("addManController",['$filter', '$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','$stateParams','FileUploader','$window',function ($filter, $scope,$http,$location,$rootScope,httpService,$state,$timeout,$stateParams,FileUploader,$window) {
+});
+
+man.controller("addManController", function ($filter, $scope ,$http, $location, $rootScope, httpService, $state, $timeout, $stateParams, FileUploader, $window, deptService) {
     if ($stateParams.items != null) {
         var selectedItem = JSON.parse($stateParams.items);
     }
+    deptService.listDepts($scope, selectedItem);
     $scope.displayPosts = {};
     httpService.listAllPosts().then(function (result) {
         var posts = result.data;
@@ -230,4 +239,4 @@ man.controller("addManController",['$filter', '$scope', '$http','$location','$ro
         })
 
     }
-}])
+})

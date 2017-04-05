@@ -1,4 +1,4 @@
-<div class="main" ng-controller = "addSubProductController">
+<div class="main" ng-controller="addSubProductController">
     <div class="mod-hd">
         <h2>产品策略</h2>
     </div>
@@ -9,9 +9,8 @@
             <tr>
                 <td width="15%"><span class="star">*</span>产品名称</td>
                 <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <select class="comm-select1" ng-model = "selectedProduct" ng-options = "product.name for product in data.content" ng-change="selectProduct()">
-                            <option value="">-- 请选择 --</option>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedProduct" ng-options="product.name for product in data.content" ng-change="selectProduct()">
                         </select>
                     </div>
                 </td>
@@ -19,7 +18,7 @@
             <tr>
                 <td width="15%"><span class="star">*</span>产品类型</td>
                 <td width="35%">
-                    <div class="comm-inp-wp label">
+                    <div class="comm-inp-wp">
                         {{productTypes[selectedProduct.productType].name}}
                     </div>
                 </td>
@@ -27,7 +26,7 @@
             <tr>
                 <td width="15%"><span class="star">*</span>还款方式</td>
                 <td width="35%">
-                    <div class="comm-inp-wp label">
+                    <div class="comm-inp-wp">
                         {{paybackTypes[selectedProduct.repaymentMethod].name}}
                     </div>
                 </td>
@@ -36,8 +35,8 @@
             <tr>
                 <td width="15%"><span class="star">*</span>贷款政策</td>
                 <td width="35%">
-                    <div class="comm-inp-wp label">
-                        {{loanPolicy[selectedProduct.loanPolicy].name}}
+                    <div class="comm-inp-wp">
+                        {{loanPolicies[selectedProduct.loanPolicy].name}}
                     </div>
                 </td>
             </tr>
@@ -62,7 +61,7 @@
                     <div class="comm-inp-wp  a">
                         <div class="fl comm-inp-wp proportion">
 
-                            <select class="comm-select1" ng-model = "selectedProduct.minAvailableRate" ng-options = "AvailableRate+'成' for AvailableRate in AvailableRates">
+                            <select class="comm-select1" ng-model="selectedProduct.minAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates">
 
                             </select>
 
@@ -71,7 +70,7 @@
                         <span class="rung">——</span>
 
                         <div class="fr comm-inp-wp proportion">
-                            <select class="comm-select1" ng-model = "selectedProduct.maxAvailableRate" ng-options = "AvailableRate+'成' for AvailableRate in AvailableRates">
+                            <select class="comm-select1" ng-model="selectedProduct.maxAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates">
 
                             </select>
                         </div>
@@ -84,25 +83,9 @@
             <tr>
                 <td width="15%"><span class="star">*</span>可贷期数</td>
                 <td width="35%">
-                    <div class="nper">
-                        <div class="nper-box"><input id="aa" type="checkbox" ng-model="sixTerms" ng-click = "changeCheckedStatus(sixTerms)"></div>
-                        <div class="nper-num">6期</div>
-                    </div>
-                    <div class="nper">
-                        <div class="nper-box"><input id="aa" type="checkbox" ng-model="tweTerms" ng-click = "changeCheckedStatus(tweTerms)"></div>
-                        <div class="nper-num">12期</div>
-                    </div>
-                    <div class="nper">
-                        <div class="nper-box"><input id="aa" type="checkbox" ng-model="eighteenTerms" ng-click = "changeCheckedStatus(eighteenTerms)"></div>
-                        <div class="nper-num">18期</div>
-                    </div>
-                    <div class="nper">
-                        <div class="nper-box"><input id="aa" type="checkbox" ng-model="twentyfourTerms" ng-click = "changeCheckedStatus(twentyfourTerms)"></div>
-                        <div class="nper-num">24期</div>
-                    </div>
-                    <div class="nper">
-                        <div class="nper-box"><input id="aa" type="checkbox" ng-model="thirtysixTerms" ng-click = "changeCheckedStatus(thirtysixTerms)"></div>
-                        <div class="nper-num">36期</div>
+                    <div class="nper" ng-repeat="(key, value) in availableTerms">
+                        <div class="nper-box"><input id="aa" type="checkbox" ng-click="changeCheckedStatus(availableTerms, key)" ng-checked="value"></div>
+                        <div class="nper-num">{{key}}期</div>
                     </div>
                 </td>
             </tr>
@@ -110,7 +93,7 @@
                 <td width="15%"><span class="star">*</span>贷款利率</td>
                 <td width="35%">
                     <div class="comm-inp-wp labe2">
-                        <input type="text" class="comm-input1" ng-model = "loanMonthlyInterestRate">
+                        <input type="text" class="comm-input1" ng-model="loanMonthlyInterestRate">
                     </div>
                     <div class="labe3">
                         %/月
@@ -125,13 +108,13 @@
                 <td width="35%">
                     <div class="comm-inp-wp labe2">
 
-                        <select class="comm-select1" ng-model = "selectProvinces" ng-options = "provinces.Name for provinces in cities.provincesList">
+                        <select class="comm-select1" ng-model="selectProvinces" ng-options="provinces.Name for provinces in cities.provincesList">
                             <option value="">省份</option>
                         </select>
                     </div>
                     <div class="comm-inp-wp distance">
 
-                        <select class="comm-select1" ng-model = "selectCity" ng-options = "city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true">
+                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true">
                             <option value="">城市</option>
                         </select>
                     </div>
@@ -143,8 +126,8 @@
                 <td id="button"  colspan="2">
                     <table class="mod-subtable">
                         <tr >
-                            <button class="comm-btn comm-btn-blue fl button1" ng-click = "commit()">保存</button>
-                            <button class="comm-btn comm-btn-blue fl button1" ng-click = "cancel()">取消</button>
+                            <button class="comm-btn comm-btn-blue fl button1" ng-click="commit()">保存</button>
+                            <button class="comm-btn comm-btn-blue fl button1" ng-click="cancel()">取消</button>
                         </tr>
                     </table>
                 </td>

@@ -51,6 +51,13 @@ app.config(function ($stateProvider,$urlRouterProvider) {
                 "items":null
             }
         }
+    ).state("main.reviewsubproduct", {
+            url:"/reviewsubproduct",
+            templateUrl:"/pages/product/sub-product-review.html",
+            params:{
+                "items":null
+            }
+        }
     ).state("main.positionmanagement", {
             url:"/positionmanagement",
             templateUrl:"/pages/position/position-management.html"
