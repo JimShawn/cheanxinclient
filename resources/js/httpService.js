@@ -143,6 +143,17 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         });
         return deferd.promise;
     };
+    api.patchProduct = function (product) {
+        var deferd = $q.defer();
+        var patchProductUrl = "http://localhost:8081/cheanxin/products/"+product.id+"?access_token="+$window.sessionStorage["access_token"];
+
+        $http.patch(patchProductUrl, product).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
 
     api.getAllPosition = function (query) {
         var queryParams = "";

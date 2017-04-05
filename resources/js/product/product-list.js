@@ -35,10 +35,13 @@ product.factory("productFactory", function () {
             name:"等额本息"
         }];
 
-        $scope.loanPolicies = {"afterSign":false, "afterMortgage":false};
-        $scope.loanPolicyNames = {"afterSign":"过户后放款", "afterMortgage":"抵押后放款"}
-        $scope.loanPolicyIds = {"afterSign":0, "afterMortgage":1}
-s
+        $scope.loanPolicies = [{
+            id:0,
+            name:"过户后放款"
+        },{
+            id:1,
+            name:"抵押后放款"
+        }];
 
         $scope.productStatus = [{
             id:0,
@@ -64,9 +67,20 @@ s
         }
         $scope.init();
 
-        $scope.getList = function (status) {
+        $scope.getList = function (status, productTemplateId) {
             if (status != undefined) {
                 $scope.query.status = status;
+            }
+            if (productTemplateId != undefined) {
+                $scope.query.productTemplateId = productTemplateId;
+            }
+            $scope.showReview = false;
+            if ($scope.query.status == 0 && $scope.query.productTemplateId < 0) {
+                $scope.showReview = true;
+            }
+            $scope.showEdit = false;
+            if ($scope.query.status == 0) {
+                $scope.showEdit = true;
             }
             if ($scope.selectCity) {
                 $scope.query.cityId = $scope.selectCity.Id;
@@ -84,7 +98,6 @@ s
                 }
             }
             httpService.listProduct($scope.query).then(function (result) {
-                console.log(result);
                 $scope.data = result.data;
             },function (error) {
                 console.error(error.data.errorMessage);
@@ -133,23 +146,6 @@ s
         return availableTermsStr;
     };
 
-    productFactoryApi.checkLoanPolicy = function (loanPolicies, loanPolicyIds, id) {
-        for (var key in loanPolicies) {
-            if (loanPolicyIds[key] == id) {
-                loanPolicies[key] = true;
-                return;
-            }
-        }
-    }
-
-    productFactoryApi.setLoanPolicy = function (loanPolicies, loanPolicyIds) {
-        for (var key in loanPolicies) {
-            if (loanPolicies[key] == true) {
-                return loanPolicyIds[key];
-            }
-        }
-    }
-
     return productFactoryApi;
 });
 
@@ -162,7 +158,7 @@ product.controller("productController",function ($scope, $http, $location, $root
     };
     $scope.edit = function (product) {
         $state.go("main.addproductmanagement",{items:JSON.stringify(product)});
-    }
+    };
     $scope.getList();
 });
 
@@ -174,17 +170,7 @@ product.controller("subProductController",function ($scope,$http,$location,$root
     $scope.selectProvinces = {};
     $scope.selectCity = {};
 
-    $scope.init = function() {
-        $scope.query = {};
-        $scope.query.name = "";
-        $scope.query.status = "0";
-        $scope.query.page = "0";
-        $scope.query.size = "10";
-        $scope.query.productTemplateId = "-1";
-    }
-    $scope.init();
-
-    $scope.getList(0);
+    $scope.getList(0, -1);
 
     $scope.add = function () {
         $state.go("main.addsubproduct");
@@ -192,8 +178,11 @@ product.controller("subProductController",function ($scope,$http,$location,$root
 
     $scope.edit = function (subproduct) {
         $state.go("main.editsubproduct",{items:subproduct});
-    }
+    };
 
+    $scope.review = function (subproduct) {
+        $state.go("main.reviewsubproduct",{items:subproduct});
+    };
 });
 
 product.controller("addProductController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,productFactory) {
@@ -217,8 +206,8 @@ product.controller("addProductController", function ($scope,$http,$location,$roo
         $scope.minAvailableRate = selectedItem.minAvailableRate;
         $scope.maxAvailableRate = selectedItem.maxAvailableRate;
         $scope.loanMonthlyInterestRate = selectedItem.loanMonthlyInterestRate;
+        $scope.loanPolicy = $scope.loanPolicies[selectedItem.loanPolicy];
         $scope.availableTerms = productFactory.checkTerms(selectedItem.availableTerms);
-        productFactory.checkLoanPolicy($scope.loanPolicies, $scope.loanPolicyIds, selectedItem.loanPolicy);
     }
 
     $scope.commit = function () {
@@ -229,7 +218,7 @@ product.controller("addProductController", function ($scope,$http,$location,$roo
             minAvailableRate:$scope.minAvailableRate,
             maxAvailableRate:$scope.maxAvailableRate,
             availableTerms:productFactory.setTerms($scope.availableTerms),
-            loanPolicy:productFactory.setLoanPolicy($scope.loanPolicies, $scope.loanPolicyIds),
+            loanPolicy:$scope.loanPolicy.id,
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:0,
             productTemplateId:0,
@@ -255,14 +244,52 @@ product.controller("addProductController", function ($scope,$http,$location,$roo
 
 });
 
-product.controller("editSubProductController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams, productFactory) {
+product.controller("addSubProductController",function ($scope, $http, $location, $rootScope, httpService, $state, productFactory, cityJson) {
+    $scope.cities = cityJson;
+
+    productFactory.initScope($scope, httpService);
+
+    $scope.getList(0, 0);
+
+    $scope.selectProduct = function () {
+        $scope.availableTerms = productFactory.checkTerms($scope.selectedProduct.availableTerms);
+    }
+
+    $scope.commit = function () {
+        $scope.product = {
+            name:$scope.selectedProduct.name,
+            productType:$scope.selectedProduct.productType,
+            repaymentMethod:$scope.selectedProduct.repaymentMethod,
+            minAvailableRate:$scope.selectedProduct.minAvailableRate,
+            maxAvailableRate:$scope.selectedProduct.maxAvailableRate,
+            availableTerms:productFactory.setTerms($scope.availableTerms),
+            loanPolicy:$scope.selectedProduct.loanPolicy,
+            loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
+            cityId:$scope.selectCity.Id,
+            productTemplateId:$scope.selectedProduct.id,
+            status:0
+        };
+        httpService.addProduct($scope.product).then(function (res) {
+            $state.go("main.subproductmanagement");
+        },function (err) {
+            console.error(err.data.errorMessage);
+        })
+
+    };
+    $scope.cancel = function () {
+        $state.go("main.subproductmanagement");
+    }
+});
+
+
+product.controller("editSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory) {
     productFactory.initScope($scope, httpService);
 
     $scope.cities = cityJson;
     $scope.selectedProduct = $stateParams.items;
     $scope.availableTerms = productFactory.checkTerms($scope.selectedProduct.availableTerms);
-    $scope.selectProvinces = cityJson.provincesList[$scope.selectedProduct.provinceId-1];
     $scope.selectCity = cityJson.Citys[$scope.selectedProduct.cityId-1];
+    $scope.selectProvinces = cityJson.provincesList[cityJson.Citys[$scope.selectedProduct.cityId-1].ProvinceId-1];
 
     $scope.commit = function () {
         $scope.product = {
@@ -277,17 +304,36 @@ product.controller("editSubProductController", function ($scope,$http,$location,
             loanMonthlyInterestRate:$scope.selectedProduct.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
-            provinceId:$scope.selectProvinces.Id,
             status:0
         };
         httpService.editProduct($scope.product).then(function (res) {
             $state.go("main.subproductmanagement");
         },function (err) {
-            alert(err.data.errorMessage);
+            console.error(err.data.errorMessage);
         })
 
     };
     $scope.cancel = function () {
         $state.go("main.subproductmanagement");
     }
+});
+
+product.controller("reviewSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory) {
+    productFactory.initScope($scope, httpService);
+
+    $scope.cities = cityJson;
+    $scope.selectedProduct = $stateParams.items;
+
+    $scope.reviewSubProduct = function (status) {
+        var subProductStatus = {
+            id: $scope.selectedProduct.id,
+            status: status,
+            remark: $scope.remark
+        };
+        httpService.patchProduct(subProductStatus).then(function (res) {
+            $state.go("main.subproductmanagement");
+        },function (err) {
+            console.error(err.data.errorMessage);
+        })
+    };
 });

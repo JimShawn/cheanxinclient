@@ -64,11 +64,9 @@
             <tr>
                 <td width="15%"><span class="star">*</span>贷款政策</td>
                 <td width="35%">
-                    <div >
-                        <div class="nper" ng-repeat="(key, value) in loanPolicies">
-                            <div class="nper-box"><input id="bb" type="radio" ng-click="changeRadioStatus(loanPolicies, key)" ng-checked="value"></div>
-                            <div class="nper-num">{{loanPolicyNames[key]}}</div>
-                        </div>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="loanPolicy" ng-options="loanPolicy.name for loanPolicy in loanPolicies">
+                        </select>
                     </div>
                 </td>
             </tr>

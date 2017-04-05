@@ -33,12 +33,8 @@
                                     </div>
 
                                 </td>
-
-
-
                             </tr>
                         </table>
-
                     </td>
                     <td>
                         <div class="mod-state">
@@ -61,16 +57,15 @@
             <table class="mod-table1">
                 <thead>
                 <tr>
-                    <th width="9%">产品编号</th>
-                    <th width="9%">产品名称</th>
-                    <th width="9%">贷款类型</th>
-                    <th width="9%">地区</th>
-                    <th width="9%">还款方式</th>
-                    <th width="9%">可贷成数</th>
-                    <th width="9%">可贷期数</th>
-                    <th width="9%">贷利率/月</th>
-                    <th width="9%">状态</th>
-                    <th width="19%">操作</th>
+                    <th width="11%">产品编号</th>
+                    <th width="11%">产品名称</th>
+                    <th width="11%">贷款类型</th>
+                    <th width="11%">地区</th>
+                    <th width="11%">还款方式</th>
+                    <th width="11%">可贷成数</th>
+                    <th width="11%">可贷期数</th>
+                    <th width="11%">贷利率/月</th>
+                    <th width="12%">操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,13 +73,12 @@
                     <td>{{product.id}}</td>
                     <td>{{product.name}}</td>
                     <td>{{productTypes[product.productType].name}}</td>
-                    <td>{{cities.provincesList[product.provinceId-1].Name}}--{{cities.Citys[product.cityId-1].Name}}</td>
+                    <td>{{cities.provincesList[cities.Citys[product.cityId-1].ProvinceId-1].Name}}--{{cities.Citys[product.cityId-1].Name}}</td>
                     <td>{{paybackTypes[product.repaymentMethod].name}}</td>
                     <td>{{product.minAvailableRate}}成-{{product.maxAvailableRate}}成</td>
                     <td>{{product.availableTerms}}</td>
                     <td id="accrual">{{product.loanMonthlyInterestRate}}</td>
-                    <td>{{status[product.status].name}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="edit(product)">编辑</a><a href="" class="blue">审核</a><a href="" class="blue">去除</a></td>
+                    <td class="oper"><a href="" class="blue" ng-click="edit(product)" ng-show="showEdit">编辑</a><a href="" class="blue" ng-show="showReview" ng-click="review(product)">审核</a>
                 </tr>
 
                 </tbody>
