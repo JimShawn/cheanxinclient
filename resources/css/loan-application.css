@@ -5,7 +5,7 @@
 .width-short{width: 20%;display: both;float: left;}
 .title{float: left;margin-left: 5%;}
 .cell{float: left;margin-left: 10px;}
-.upload{display: both; float: left; width:150px; height: 150px;  border: 1px dashed #DDDDDD;margin-left:8px;  }
+.upload{display: both; float: left; width:207px; height: 262px;  border: 1px dashed #DDDDDD;margin-left:8px;  }
 .add{margin-top: 70px;}
 .upload_1{width:207px;height: 34px;background-color:#F0F0F0;color: #B2B2B2; line-height: 36px; position:relative; margin-top: 46px; }
 .footer{height: 200px;}
@@ -34,13 +34,13 @@
 .multiple-choice{display: both;float: left;}
 .mt{margin-top: 8px;}
 
-/*¶¨¼ÛÒ³ÃæCSS*/
+/*ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½CSS*/
 .report{display: both;float: right}
 .hr{border: 1px solid #00FF00;width: 100%;margin-top:10px;margin-bottom: 10px;}
 .check{width: 103px;height: 30px;display: both;float: left;text-align: center;line-height: 30px;margin-left: 40px;background-color: #00FF00; color: white;}
 .check-in{color: black;}
 
-/*´ýÉóºËÒ³Ãæcss*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½css*/
 .consequence{width:70px;height: 20px;border: 1px solid black;text-align: center; }
 .clean tbody tr td{border: none;}
 .click{width: 136px;height: 25px;display: both;float: right;text-align: center;line-height: 25px;background-color: #00FF00; color: black;font-size: 15px;}
@@ -48,7 +48,7 @@
 .width1{width:124px; }
 .width2{width:68px; }
 
-/*ÉêÇëÖØÉóÒ³Ãæcss*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ò³ï¿½ï¿½css*/
 .the-reason{height:130px;margin-top: 10px; }
 .reason{width: 70px;}
 .row3{height: 500px;margin-top: 10px;}
