@@ -1,0 +1,96 @@
+<div class="main" ng-controller="reviewSubProductController">
+    <div class="mod-hd">
+        <h2>产品策略</h2>
+    </div>
+
+    <div class="table">
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+                <td width="15%">产品名称</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{selectedProduct.name}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">产品类型</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{productTypes[selectedProduct.productType].name}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">还款方式</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{paybackTypes[selectedProduct.repaymentMethod].name}}
+                    </div>
+                </td>
+            </tr>
+            </tr>
+            <tr>
+                <td width="15%">贷款政策</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{loanPolicies[selectedProduct.loanPolicy].name}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">可贷成数</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{selectedProduct.minAvailableRate}} - {{selectedProduct.maxAvailableRate}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">可贷期数</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{selectedProduct.availableTerms}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">贷款利率</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{selectedProduct.loanMonthlyInterestRate}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%">城市</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        {{cities.provincesList[cities.Citys[selectedProduct.cityId-1].ProvinceId-1].Name}}--{{cities.Citys[selectedProduct.cityId-1].Name}}
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td width="15%"><span class="star">*</span>备注</td>
+                <td width="25%">
+                    <div class="comm-inp-wp">
+                        <input type="text" placeholder="" class="list-input" ng-model="remark">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td id="button"  colspan="2">
+                    <table class="mod-subtable">
+                        <tr >
+                            <button class="comm-btn comm-btn-blue fl button1" ng-click="reviewSubProduct(1)">通过</button>
+                            <button class="comm-btn comm-btn-blue fl button1" ng-click="reviewSubProduct(2)">拒绝</button>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>

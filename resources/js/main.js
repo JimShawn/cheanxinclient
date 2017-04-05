@@ -8,7 +8,6 @@ authors.controller('MainController', ['$scope', '$http', '$location', '$rootScop
         var frameLeftWid=$('.frameLeft').width();
         var headerHei=$('.header').height();
         var breadHei=$('.bread').height();
-        console.log("aaa");
         $('.frameRight').css({'width':(winWid-frameLeftWid)+'px'});
         $('.mainContent').css({'height':(winHei-headerHei)+'px'});
         $('.frameBox').css({'height':(winHei-headerHei-breadHei)+'px'});
