@@ -1,5 +1,28 @@
 <div class="main" ng-controller="editLoanapplyController">
 
+    <div class="out-background" ng-show="showReturnDialog">
+        <!--弹窗内容-->
+        <div class="login" >
+            <div class="login-title">拒绝原因：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
+            <div class="login-input-content">
+                <div class="login-input">
+                    <span class="main-reason">{{errMsg}}</span>
+                </div>
+                <div class="login-input">
+                    <label>其他：</label>
+                    <input type="text" placeholder=""  name="info[username]" id="username" class="list-input" ng-model="errMsgOther"/>
+                </div>
+            </div>
+
+            <div class="button-area">
+                <div class="login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >取消</a></div>
+                <div class="login-button button-right" ng-click="doReturn()"><a href="javascript:void(0);" >确认</a></div>
+            </div>
+
+        </div>
+
+    </div>
+
     <div class="mod-hd">
         <h2>贷款申请</h2>
     </div>
@@ -21,31 +44,21 @@
             <tr>
                 <td width="20%"><span class="red">*</span>来源渠道：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedSource" ng-options = "source.name for source in sources">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedSource.name}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>收单员：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        {{selectedDraft.sourceReceiver}}
-                    </div>
+                    <span class="cell">{{selectedDraft.sourceReceiver}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>来源联系人姓名：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.sourcePersonName">
-                    </div>
+                    <span class="cell">{{selectedDraft.sourcePersonName}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>来源人手机号码：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.sourcePersonTel">
-                    </div>
+                    <span class="cell">{{selectedDraft.sourcePersonTel}}</span>
                 </td>
             </tr>
             </tbody>
@@ -64,103 +77,68 @@
             <tr>
                 <td width="20%"><span class="red">*</span>申请人姓名：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantName">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantName}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>婚姻状况：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedMarriages" ng-options = "marriage.name for marriage in marriages">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedMarriages.name}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>证件种类：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedIDType" ng-options = "IDType.name for IDType in IDTypes">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedIDType.name}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>证件号码：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantCertificateNumber">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantCertificateNumber}}</span>
                 </td>
             </tr>
 
             <tr>
                 <td width="20%"><span class="red">*</span>出生日期：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <adm-dtp ng-model='birth' options='{calType: "gregorian", format: "YYYY-MM-DD", default: "today"}'></adm-dtp>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantBirthYearMonth}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>性别：</td>
                 <td width="30%">
-                    <div class="multiple-choice"><input type="radio"  name="gender" value="0" ng-model="selectedDraft.applicantGender" ng-checked="selectedDraft.applicantGender==0"> 男 <span>&emsp;</span><input type="radio" name="gender" value="1" ng-model="selectedDraft.applicantGender" ng-checked="selectedDraft.applicantGender==1">女</div>
+                    <span class="cell">{{selectedDraft.applicantGender==null?'':(selectedDraft.applicantGender==0?'男':'女')}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>手机号码：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantMobileNumber">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantMobileNumber}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>学历：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantQualification" ng-options = "qualification for qualification in qualifications">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantQualification}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>本地户籍：</td>
                 <td width="30%">
-                    <div class="multiple-choice">
-                        <input type="radio" name="census"  value="0" ng-model="selectedDraft.applicantCensus" ng-checked="selectedDraft.applicantCensus==cityJson.Citys[selectedDraft.sourceCityId-1].Name"> 是
-                        <span>&emsp;</span>
-                        <input type="radio" name="census" value="1" ng-model="selectedDraft.applicantCensus" ng-checked="selectedDraft.applicantCensus!=cityJson.Citys[selectedDraft.sourceCityId-1].Name">否
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantCensusCityId==null?'':(selectedDraft.applicantCensusCityId==0?'是':'否')}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span> 本人月收入：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantIncomePerMonth">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantIncomePerMonth}}</span>
                 </td>
             </tr>
             <tr>
                 <td ><span class="red">*</span>现居住地址：</td>
                 <td colspan="3">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantAddress">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantAddress}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%">住宅电话：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp inline two">
-                        <input type="text" class="comm-input1" ng-model="areaNumber">
-                    </div>
-                    <div class="inline mt">&emsp;--&emsp;</div>
-                    <div class="comm-inp-wp inline five">
-                        <input type="text" class="comm-input1" ng-model="telephone">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantTelephone}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span> 房产、车辆：</td>
                 <td width="30%">
-                    <div class="wealth">自有房产</div>
-                    <div class="wealth wealth-in">自有车辆</div>
+                    <span class="cell">自有房产</span>
                 </td>
             </tr>
 
@@ -178,9 +156,7 @@
             <tr>
                 <td ><span class="red">*</span>现工作单位：</td>
                 <td colspan="3">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerName">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantEmployerName}}</span>
                 </td>
 
             </tr>
@@ -188,216 +164,136 @@
 
                 <td ><span class="red">*</span>现单位地址：</td>
                 <td colspan="3">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerAddress">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantEmployerAddress}}</span>
                 </td>
 
             </tr>
             <tr>
                 <td width="20%">现单位电话：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp inline two">
-                        <input type="text" class="comm-input1" ng-model="companyAreaNumber">
-                    </div>
-                    <div class="inline mt">&emsp;--&emsp;</div>
-                    <div class="comm-inp-wp inline five">
-                        <input type="text" class="comm-input1" ng-model="companyTelephone">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantEmployerTelephone}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>现单位工作年限：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantWorkYears" ng-options = "year for year in years">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantWorkYears}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%">现单位性质：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantEmployerType" ng-options = "companyType for companyType in companyTypes">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantEmployerType}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>现单位所属行业：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantEmployerIndustry" ng-options = "industry for industry in industries">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantEmployerIndustry}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>职务：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantPosition" ng-options = "position for position in positiones">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantPosition}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>职称：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantJobTitle" ng-options = "jobTitle for jobTitle in jobTitles">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantJobTitle}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>本人职业：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantOccupation" ng-options = "occupation for occupation in occupationes">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantOccupation}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>本人岗位：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.applicantPost" ng-options = "post for post in posts">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantPost}}</span>
                 </td>
             </tr>
             <tr>
                 <td ><span class="red">*</span>邮件邮寄地址：</td>
                 <td colspan="3">
-                    <div class="multiple-choice"><input type="radio" name="gender" ng-click="changePostAddress(1)"> 单位 <span>&emsp;</span><input type="radio" name="gender" ng-click="changePostAddress(2)">住宅<span>&emsp;</span><input type="radio" name="gender" ng-click="changePostAddress(3)">其他
-                        </div>
-                    <div class="comm-inp-wp width-short" ng-show="otherAddress">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.applicantPostAddress" >
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantPostAddress}}</span>
 
                 </td>
             </tr>
             <tr>
                 <td ><span class="red">*</span>收件邮政编码：</td>
                 <td colspan="3">
-                    <div class="comm-inp-wp width-short">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.areaCode">
-                    </div>
+                    <span class="cell">{{selectedDraft.applicantPostCode}}</span>
                 </td>
             </tr>
 
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     <span class="star">*</span>身份证文件
                 </td>
 
+
                 <td colspan="3">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传身份证文件 </div>
+                    <div class="upload" ng-repeat="item1 in picArrayTwo[0]" ng-click="openFillContent(item1)">
+                        <a href="javascript:void(0);"><img class="add" ng-Src="{{item1.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     学历证明文件
                 </td>
 
                 <td colspan="3">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传学历证明文件 </div>
+                    <div class="upload"  ng-repeat="item2 in picArrayTwo[1]" ng-click="openFillContent(item2)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item2.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     工作及财力
                 </td>
 
                 <td colspan="3">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传工作及财力文件 </div>
+                    <div class="upload" ng-repeat="item3 in picArrayTwo[2]" ng-click="openFillContent(item3)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item3.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     房产证明文件
                 </td>
 
                 <td colspan="3">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传房产证明文件 </div>
+                    <div class="upload" ng-repeat="item4 in picArrayTwo[3]" ng-click="openFillContent(item4)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item4.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+
+
+
+            <tr height="150px">
                 <td >
                     车辆证明文件
                 </td>
 
                 <td colspan="3">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传车辆证明文件 </div>
+                    <div class="upload" ng-repeat="item5 in picArrayTwo[4]" ng-click="openFillContent(item5)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item5.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     其他证明文件
                 </td>
 
                 <td colspan="3">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传其他证明文件 </div>
+                    <div class="upload"   ng-repeat="item6 in picArrayTwo[5]" ng-click="openFillContent(item6)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item6.url}}" alt=""></a>
                     </div>
 
                 </td>
@@ -425,91 +321,64 @@
                 <td width="16%">月收入（元）</td>
             </tr>
             <tr>
-                <td width="12%"><input type="text" class="comm-input1" ng-model="selectedDraft.coApplicantName"></td>
-                <td width="12%"><input type="text" class="comm-input1" ng-model="selectedDraft.coApplicantRelationship"></td>
+                <td width="12%">
+
+                    <span class="cell">{{selectedDraft.coApplicantName}}</span>
+                </td>
+                <td width="12%"><span class="cell">{{selectedDraft.coApplicantRelationship}}</span></td>
                 <td width="12%"><div class="multiple-choice">
-                    <input type="radio" name="census"  value="0" ng-model="selectedDraft.coApplicantCensusCityId" ng-checked="selectedDraft.coApplicantCensusCityId==cityJson.Citys[selectedDraft.sourceCityId-1].Name"> 是
-                    <span>&emsp;</span>
-                    <input type="radio" name="census" value="1" ng-model="selectedDraft.coApplicantCensusCityId" ng-checked="selectedDraft.coApplicantCensusCityId!=cityJson.Citys[selectedDraft.sourceCityId-1].Name">否
+                    <span class="cell">{{selectedDraft.coApplicantCensusCityId==null?'':(selectedDraft.coApplicantCensusCityId==0?'是':'否')}}</span>
                 </div></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.coApplicantCertificateNumber"></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.coApplicantMobileNumber"></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.coApplicantQualification"></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.coApplicantIncomePerMonth"></td>
+                <td width="16%"><span class="cell">{{selectedDraft.coApplicantCertificateNumber}}</span></td>
+                <td width="16%"><span class="cell">{{selectedDraft.coApplicantMobileNumber}}</span></td>
+                <td width="16%"><span class="cell">{{selectedDraft.coApplicantQualification}}</span></td>
+                <td width="16%"><span class="cell">{{selectedDraft.coApplicantIncomePerMonth}}</span></td>
             </tr>
 
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     <span class="star">*</span>身份证文件
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传身份证文件 </div>
+                    <div class="upload"  ng-repeat="item7 in picArrayTwo[6]" ng-click="openFillContent(item7)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item7.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     工作及财力
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传工作及财力文件 </div>
+                    <div class="upload" ng-repeat="item8 in picArrayTwo[7]" ng-click="openFillContent(item8)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item8.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     房产证明文件
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传房产证明文件 </div>
+                    <div class="upload"  ng-repeat="item9 in picArrayTwo[8]" ng-click="openFillContent(item9)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item9.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     其他证明文件
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传其他证明文件 </div>
+                    <div class="upload" ng-repeat="item10 in picArrayTwo[9]" ng-click="openFillContent(item10)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item10.url}}" alt=""></a>
                     </div>
 
                 </td>
@@ -537,91 +406,62 @@
                 <td width="16%">月收入（元）</td>
             </tr>
             <tr>
-                <td width="12%"><input type="text" class="comm-input1" ng-model="selectedDraft.guarantorName"></td>
-                <td width="12%"><input type="text" class="comm-input1" ng-model="selectedDraft.guarantorRelationship"></td>
+                <td width="12%"><span class="cell">{{selectedDraft.guarantorName}}</span></td>
+                <td width="12%"><span class="cell">{{selectedDraft.guarantorRelationship}}</span></td>
                 <td width="12%"><div class="multiple-choice">
-                    <input type="radio" name="census"  value="0" ng-model="selectedDraft.guarantorCensusCityId" ng-checked="selectedDraft.guarantorCensusCityId==cityJson.Citys[selectedDraft.sourceCityId-1].Name"> 是
-                    <span>&emsp;</span>
-                    <input type="radio" name="census" value="1" ng-model="selectedDraft.guarantorCensusCityId" ng-checked="selectedDraft.guarantorCensusCityId!=cityJson.Citys[selectedDraft.sourceCityId-1].Name">否
+                    <span class="cell">{{selectedDraft.guarantorCensusCityId==null?'':(selectedDraft.guarantorCensusCityId==0?'是':'否')}}</span>
                 </div></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.guarantorCertificateNumber"></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.guarantorMobileNumber"></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.guarantorRealEstateOwnType"></td>
-                <td width="16%"><input type="text" class="comm-input1" ng-model="selectedDraft.guarantorIncomePerMonth"></td>
+                <td width="16%"><span class="cell">{{selectedDraft.guarantorCertificateNumber}}</span></td>
+                <td width="16%"><span class="cell">{{selectedDraft.guarantorMobileNumber}}</span></td>
+                <td width="16%"><span class="cell">{{selectedDraft.guarantorRealEstateOwnType}}</span></td>
+                <td width="16%"><span class="cell">{{selectedDraft.guarantorIncomePerMonth}}</span></td>
             </tr>
 
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     <span class="star">*</span>身份证文件
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传身份证文件 </div>
+                    <div class="upload"  ng-repeat="item11 in picArrayTwo[10]" ng-click="openFillContent(item11)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item11.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+
+            <tr height="150px">
                 <td >
                     工作及财力
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传工作及财力文件 </div>
+                    <div class="upload" ng-repeat="item12 in picArrayTwo[11]" ng-click="openFillContent(item12)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item12.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     房产证明文件
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传房产证明文件 </div>
+                    <div class="upload" ng-repeat="item13 in picArrayTwo[12]" ng-click="openFillContent(item13)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item13.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     其他证明文件
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传其他证明文件 </div>
+                    <div class="upload" ng-repeat="item14 in picArrayTwo[13]" ng-click="openFillContent(item14)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item14.url}}" alt=""></a>
                     </div>
 
                 </td>
@@ -649,10 +489,10 @@
                 <td colspan="3" width="55%">现居住地址</td>
             </tr>
             <tr>
-                <td width="15%"><input type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContact"></td>
-                <td width="15%"><input type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactRelationship"></span></td>
-                <td width="15%"><input type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactMobileNumber"></td>
-                <td colspan="3" width="55%"><input type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactAddress"></td>
+                <td width="15%"><span class="cell">{{selectedDraft.applicantFirstEmergencyContact}}</span></td>
+                <td width="15%"><span class="cell">{{selectedDraft.applicantFirstEmergencyContactRelationship}}</span></span></td>
+                <td width="15%"><span class="cell">{{selectedDraft.applicantFirstEmergencyContactMobileNumber}}</span></td>
+                <td colspan="3" width="55%"><span class="cell">{{selectedDraft.applicantFirstEmergencyContactAddress}}</span></td>
             </tr>
             </tbody>
         </table>
@@ -669,58 +509,38 @@
             <tr>
                 <td width="20%"><span class="red">*</span>车架号：</td>
                 <td colspan="3">
-                    <div class="comm-inp-wp width-short">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.vehicleVin">
-                    </div>
+                    <span class="cell">{{selectedDraft.vehicleVin}}</span>
                 </td>
 
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>生产厂家：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.vehicleManufacturers" ng-options = "factory for factory in factories">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.vehicleManufacturers}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>汽车品牌：</td>
-                <td width="30%">  <div class="comm-inp-wp">
-                    <select class="comm-select1" ng-model="selectedDraft.vehicleBrand" ng-options = "brand for brand in brands">
-                        <option value="">请选择</option>
-                    </select>
-                </div>
+                <td width="30%">
+                    <span class="cell">{{selectedDraft.vehicleBrand}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>生产年份：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.vehicleProductionYearMonth" ng-options = "produceYear+'年' for produceYear in produceYears">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.vehicleProductionYearMonth}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>汽车款式：</td>
-                <td width="30%">  <div class="comm-inp-wp">
-                    <select class="comm-select1" ng-model="selectedDraft.vehicleSeries" ng-options = "serie for serie in series">
-                        <option value="">请选择</option>
-                    </select>
-                </div>
+                <td width="30%">
+                    <span class="cell">{{selectedDraft.vehicleSeries}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>首次登记日期：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <adm-dtp ng-model='selectedDraft.vehicleRegistrationYearMonth' options='{calType: "gregorian", format: "YYYY-MM-DD"}'></adm-dtp>
-                    </div>
+                    <span class="cell">{{selectedDraft.vehicleRegistrationYearMonth}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>二手车里程数（万公里）：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.vehicleKilometers">
-                    </div>
+                    <span class="cell">{{selectedDraft.vehicleKilometers}}</span>
                 </td>
             </tr>
 
@@ -728,71 +548,46 @@
             <tr>
                 <td width="20%"><span class="red">*</span>使用性质：</td>
                 <td width="30%">
-                    <div class="multiple-choice"><input type="radio" name="utilityType" value="非营运" ng-model="selectedDraft.vehicleUtilityType"> 非营运 <span>&emsp;</span><input type="radio" name="utilityType" value="营运" ng-model="selectedDraft.vehicleUtilityType">营运<span>&emsp;</span><input type="radio" name="utilityType" value="营转非" ng-model="selectedDraft.vehicleUtilityType">营转非<span>&emsp;</span><input type="radio" name="utilityType" value="教练车" ng-model="selectedDraft.vehicleUtilityType">教练车</div>
-
+                    <span class="cell">{{selectedDraft.vehicleUtilityType}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>排放标准：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedDraft.vehicleEmission" ng-options = "emission for emission in emissiones">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
+                    <span class="cell">{{selectedDraft.vehicleEmission}}</span>
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     <span class="red">*</span>车辆登记证书
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传车辆登记证书 </div>
+                    <div class="upload" ng-repeat="item15 in picArrayTwo[14]" ng-click="openFillContent(item15)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item15.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+
+            <tr height="150px">
                 <td >
                     <span class="red">*</span>机动车行驶证
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传机动车行驶证 </div>
+                    <div class="upload"ng-repeat="item16 in picArrayTwo[15]" ng-click="openFillContent(item16)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item16.url}}" alt=""></a>
                     </div>
 
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     <span class="red">*</span>车辆照片
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传车辆照片</div>
+                    <div class="upload"  ng-repeat="item17 in picArrayTwo[16]" ng-click="openFillContent(item17)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item17.url}}" alt=""></a>
                     </div>
 
                 </td>
@@ -812,9 +607,7 @@
             <tr>
                 <td width="20%"><span class="red">*</span>产品名称：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        {{draftProduct.name}}
-                    </div>
+                    <span class="cell">{{draftProduct.name}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>贷款类型：</td>
                 <td width="30%"><span class="fl">{{productTypes[draftProduct.productType].name}}</span></td>
@@ -833,45 +626,32 @@
             <tr>
                 <td width="20%">车辆成交价：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp width-half">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.vehicleDealPrice">
-                    </div>
+                    <span class="fl">{{selectedDraft.vehicleDealPrice}}</span>
                     <div class="link"><a href="javascript:void(0);">车价宝评估</a></div>
                 </td>
                 <td width="20%">贷款成数：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.loanRate">成
-                    </div>
+                    <span class="fl">{{selectedDraft.loanRate}}成</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>首付款金额（元）：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <!--<input type="text" class="comm-input1" ng-model="selectedDraft.vehicleDealPrice*selectedDraft.loanRate/10">-->
-                        {{selectedDraft.loanFirstPayment}}
-                    </div>
+                    <span class="fl">{{selectedDraft.loanFirstPayment}}</span>
                 </td>
                 <td width="20%"><span class="red">*</span>贷款总金额（元）：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp">
-                        <!--<input type="text" class="comm-input1" ng-model="selectedDraft.vehicleDealPrice*(1-selectedDraft.loanRate)/10">-->
-                        {{selectedDraft.vehicleDealPrice*(1-selectedDraft.loanRate/10)}}
-                    </div>
+                    <span class="fl">{{selectedDraft.vehicleDealPrice*(1-selectedDraft.loanRate/10)}}</span>
                 </td>
             </tr>
             <tr>
                 <td width="20%"><span class="red">*</span>贷款利率：</td>
                 <td width="30%">
-                    <div class="comm-inp-wp width-short">
-                        <input type="text" class="comm-input1" ng-model="selectedDraft.loanMonthlyInterestRate">
-                    </div>
-                    <div class="link">%/月</div>
+                    <span class="fl">{{selectedDraft.loanMonthlyInterestRate}}%/月</span>
                 </td>
                 <td width="20%"><span class="red">*</span>贷款期数：</td>
                 <td width="30%">
-                    <input type="text" class="comm-input1" ng-model="selectedDraft.loanTerms">期
+                    <span class="fl">{{selectedDraft.loanTerms}}期</span>
                 </td>
 
             </tr>
@@ -881,21 +661,14 @@
                     <span class="fl">{{selectedDraft.vehicleDealPrice*(1-selectedDraft.loanRate/10)*(selectedDraft.loanMonthlyInterestRate/100+1/selectedDraft.loanTerms)}}元/月</span>
                 </td>
             </tr>
-            <tr height="300px">
+            <tr height="150px">
                 <td >
                     <span class="red">*</span>申请表材料
                 </td>
 
                 <td colspan="6">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add" src="/resources/img/add.png" alt=""></a>
-                        <div class="upload_1">请上传申请表材料</div>
+                    <div class="upload" ng-repeat="item18 in picArrayTwo[17]" ng-click="openFillContent(item18)">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{item18.url}}" alt=""></a>
                     </div>
 
                 </td>
@@ -917,7 +690,7 @@
                 <td width="15%">备注</td>
                 <td colspan="3">
                     <div>
-                        <textarea class="label" name="" id="" cols="30" rows="10"></textarea>
+                        <textarea class="label" name="" id="" cols="30" rows="10" ng-model="selectedDraft.remark"></textarea>
                     </div>
                 </td>
             </tr>
@@ -926,11 +699,496 @@
     </div>
     <div class="footer">
         <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()">提交</button>
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="cancel()">放弃申请</button>
-        <!--<button class="comm-btn comm-btn-blue fr footer-button" ng-click="">存草稿</button>-->
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="returnAndUpdate()">退回修改</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="doRefuse()" >拒绝</button>
         <div class=" a fr ">
             <img class="up-logo" src="/resources/img/up.jpg" alt="">
             <span>更多操作</span>
+        </div>
+    </div>
+
+    <!--照片信息填写页面-->
+    <div class="main contain" ng-show="showFillContent">
+        <div class="close-container" ng-click="closeFillContent()"><img class="close-img" src="/resources/img/close.png"/></div>
+
+        <div class="left">
+            <div class="photo_container">
+                <span class="left_icon"><img src="/resources/img/left.gif" alt="" ng-click="move(selectedPicIndex-1)"></span>
+                <div  class="photo">
+
+                    <div id="img">
+                        <img ng-src="{{picArrays[selectedPicIndex].url}}" alt=""/>
+                    </div>
+
+                </div>
+                <span class="right_icon"><img src="/resources/img/right.gif" alt="" ng-click="move(selectedPicIndex+1)"></span>
+            </div>
+            <div class="menu">
+                <span class="icon1 icon"></span>
+                <span class="icon2 icon"></span>
+                <span class="icon3 icon"></span>
+                <span class="icon4 icon"></span>
+                <span class="icon5 icon"></span>
+                <span id="turn_right" class="icon6 icon"></span>
+                <span id="turn_left" class="icon7 icon"></span>
+            </div>
+
+            <div class="thumbnail">
+
+                <ul class="icon-list>
+                    <li " ng-repeat="pic in picArrays.slice(startIndex,endIndex+1)">
+                        <img class="cotainer_1 "  ng-class = "{'icon-list-selected':startIndex+$index == selectedPicIndex}" ng-src="{{pic.url}}" alt="" >
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+        <div class="right">
+            <div class="message-audit">
+                <div class="message-audit_1 ">
+                    <div class="mod-hd title">
+                        <h2>申请人信息</h2>
+                    </div>
+                    <div class="write"><img src="/resources/img/write.jpg" alt=""></div>
+                </div>
+
+
+                <div class="message-audit_2">
+                    <span >图片归类：</span>
+                    <div class="comm-inp-wp select">
+                        <select class="comm-select1" ng-model = "selectedType" ng-options = "picType.name for picType in picTypes" ng-change="changeType()">
+
+                        </select>
+                    </div>
+                </div>
+
+                <div class="message-audit_3">
+                    <div class="message-audit_3_1" ng-click="markError(1)" ng-class="{'message-audit_3_2':picArrays[selectedPicIndex].notClear}">图片不清晰</div>
+                    <div class="message-audit_3_1" ng-click="markError(2)" ng-class="{'message-audit_3_2':picArrays[selectedPicIndex].imgError}">图片错误</div>
+                    <div class="message-audit_3_1" ng-click="markError(3)" ng-class="{'message-audit_3_2':picArrays[selectedPicIndex].otherErr}">其他</div>
+                    <input type="text" class="comm-input1 id-card-reason" ng-model="picArrays[selectedPicIndex].msg"></div>
+                </div>
+
+
+                    <div class="message">
+                        <div class="message_1" ng-show="currentPage==0">
+                            <form name="form1">
+
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">姓名:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input type="text" class="comm-input1" ng-model="selectedDraft.applicantName">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.applicantCertificateNumber">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">证件类型:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select  class="comm-select1" ng-model="selectedIDType" ng-options = "IDType.name for IDType in IDTypes">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">性别:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <div class="multiple-choice"><input type="radio"  name="gender" value="0" ng-model="selectedDraft.applicantGender" ng-checked="selectedDraft.applicantGender==0"> 男 <span>&emsp;</span><input type="radio" name="gender" value="1" ng-model="selectedDraft.applicantGender" ng-checked="selectedDraft.applicantGender==1">女</div>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">本地户籍:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input type="radio" name="census"  value="0" ng-model="selectedDraft.applicantCensusCityId" ng-checked="selectedDraft.applicantCensusCityId==0"> 是
+                                    <span>&emsp;</span>
+                                    <input type="radio" name="census" value="1" ng-model="selectedDraft.applicantCensusCityId" ng-checked="selectedDraft.applicantCensusCityId==1">否
+                                </div>
+                            </div>
+
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">出生日期:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <div class="comm-inp-wp2">
+                                        <input name="selectedDraft.applicantBirthYearMonth" type="text" class="comm-input1" ng-model="selectedDraft.applicantBirthYearMonth">
+                                    </div>
+                                </div>
+                                <div class="message-write"><img src="/resources/img/write.jpg" alt=""></div>
+                            </div>
+                            </form>
+                        </div>
+                        <!--申请人工作及财产证明-->
+                        <div class="message_1" ng-show="currentPage==2">
+                            <form name="form2">
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">现工作单位:</sapn></div>
+                                <div class="personal-message2 "><input name="applicantEmployerName" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerName"></div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">现单位地址:</sapn></div>
+                                <div class="personal-message2 "><input name="applicantEmployerAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerAddress"></div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">单位电话:</sapn></div>
+                                <div class="personal-message2 "><input name="applicantEmployerTelephone" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerTelephone"></div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">现单位工作年限:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="applicantWorkYears" class="comm-select1" ng-model="selectedDraft.applicantWorkYears" ng-options = "year for year in years">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">现单位性质:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select  name="applicantEmployerType" class="comm-select1" ng-model="selectedDraft.applicantEmployerType" ng-options = "companyType for companyType in companyTypes">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">现单位所属行业:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="applicantEmployerIndustry" class="comm-select1" ng-model="selectedDraft.applicantEmployerIndustry" ng-options = "industry for industry in industries">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">职务:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="applicantPosition" class="comm-select1" ng-model="selectedDraft.applicantPosition" ng-options = "position for position in positiones">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">职称:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="applicantJobTitle" class="comm-select1" ng-model="selectedDraft.applicantJobTitle" ng-options = "jobTitle for jobTitle in jobTitles">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">本人职业:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="applicantOccupation" class="comm-select1" ng-model="selectedDraft.applicantOccupation" ng-options = "occupation for occupation in occupationes">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">本人岗位:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="applicantPost" class="comm-select1" ng-model="selectedDraft.applicantPost" ng-options = "post for post in posts">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                                </form>
+                        </div>
+
+                        <!--共同申请人信息-->
+                        <div class="message_1" ng-show="currentPage==6">
+                            <form name="form3">
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">共同申请人姓名:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantName" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantName">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">本地户籍:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input type="radio" name="census1"  value="0" ng-model="selectedDraft.coApplicantCensusCityId" ng-checked="selectedDraft.coApplicantCensusCityId==0"> 是
+                                    <span>&emsp;</span>
+                                    <input type="radio" name="census1" value="1" ng-model="selectedDraft.coApplicantCensusCityId" ng-checked="selectedDraft.coApplicantCensusCityId==1">否
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantCertificateNumber">
+                                </div>
+                            </div>
+                                </form>
+                        </div>
+
+
+                        <!--担保人信息-->
+                        <div class="message_1" ng-show="currentPage==10">
+                            <form name="form4">
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">担保人姓名:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorName" type="text" class="comm-input1" ng-model="selectedDraft.guarantorName">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">本地户籍:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input type="radio" name="census2"  value="0" ng-model="selectedDraft.guarantorCensusCityId" ng-checked="selectedDraft.guarantorCensusCityId==0"> 是
+                                    <span>&emsp;</span>
+                                    <input type="radio" name="census2" value="1" ng-model="selectedDraft.guarantorCensusCityId" ng-checked="selectedDraft.guarantorCensusCityId==1">否
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorCertificateNumber">
+                                </div>
+                            </div>
+                            </form>
+                        </div>
+                        <!--汽车信息-->
+                        <div class="message_1" ng-show="currentPage==14 || currentPage==15 || currentPage==16">
+                            <form name="form5">
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">车架号:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="vehicleVin" type="text" class="comm-input1" ng-model="selectedDraft.vehicleVin">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">生产厂家:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="vehicleManufacturers" class="comm-select1" ng-model="selectedDraft.vehicleManufacturers" ng-options = "factory for factory in factories">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">汽车品牌:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="vehicleBrand" class="comm-select1" ng-model="selectedDraft.vehicleBrand" ng-options = "brand for brand in brands">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">生产年份:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="vehicleProductionYearMonth" class="comm-select1" ng-model="selectedDraft.vehicleProductionYearMonth" ng-options = "produceYear+'年' for produceYear in produceYears">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">汽车款式:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="vehicleSeries" class="comm-select1" ng-model="selectedDraft.vehicleSeries" ng-options = "serie for serie in series">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">首次登记日期:</sapn></div>
+                                <div class="personal-message2 content2">
+                                    <div class="comm-inp-wp2">
+                                        <input name="vehicleRegistrationYearMonth" type="text" class="comm-input1" ng-model="selectedDraft.vehicleRegistrationYearMonth">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">二手车里程数(万公里):</sapn></div>
+                                <div class="personal-message2 content2">
+                                    <input name="vehicleKilometers" type="text" class="comm-input1" ng-model="selectedDraft.vehicleKilometers">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">使用性质:</sapn></div>
+                                <div class="personal-message2 content2">
+                                    <div class="multiple-choice"><input type="radio" name="utilityType" value="非营运" ng-model="selectedDraft.vehicleUtilityType"> 非营运 <input type="radio" name="utilityType" value="营运" ng-model="selectedDraft.vehicleUtilityType">营运<input type="radio" name="utilityType" value="营转非" ng-model="selectedDraft.vehicleUtilityType">营转非<input type="radio" name="utilityType" value="教练车" ng-model="selectedDraft.vehicleUtilityType">教练车</div>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">排放标准:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select  name="vehicleEmission" class="comm-select1" ng-model="selectedDraft.vehicleEmission" ng-options = "emission for emission in emissiones">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                                <div class="message-write"><img src="/resources/img/write.jpg" alt=""></div>
+                            </div>
+
+                            </form>
+
+                        </div>
+
+                        <!--申请表信息-->
+                        <div class="message_1" ng-show="currentPage==17">
+                            <form name="form6">
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">学历:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <select name="applicantQualification" class="comm-select1" ng-model="selectedDraft.applicantQualification" ng-options = "qualification for qualification in qualifications">
+                                        <option value="">请选择</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">现居住地址:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantAddress">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">住宅电话:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantTelephone" type="text" class="comm-input1" ng-model="selectedDraft.applicantTelephone">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">邮件邮寄地址:</sapn></div>
+                                <div class="personal-message2 content3">
+                                    <div class="multiple-choice">
+                                    <input type="radio" name="address" ng-click="changePostAddress(1)" ng-checked="selectedDraft.applicantPostAddress == selectedDraft.applicantEmployerAddress"> 单位 <span>&emsp;</span><input type="radio" name="address" ng-click="changePostAddress(2)" ng-checked="selectedDraft.applicantPostAddress == selectedDraft.applicantAddress">住宅
+                                        <span>&emsp;</span><input type="radio" name="address" ng-click="changePostAddress(3)" ng-checked="selectedDraft.applicantPostAddress != selectedDraft.applicantEmployerAddress && selectedDraft.applicantPostAddress != selectedDraft.applicantAddress">其他
+                                    <input type="text" class="comm-input1" ng-model="selectedDraft.applicantPostAddress">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">收件邮政编码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantPostCode" type="text" class="comm-input1" ng-model="selectedDraft.applicantPostCode">
+                                </div>
+                            </div>
+
+                            <!--共同申请人-->
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">共同申请人姓名:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantName" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantName" >
+
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">与申请人关系:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantRelationship" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantRelationship">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">本地户籍:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <span class="multiple-choice">{{selectedDraft.coApplicantCensusCityId==cityJson.Citys[selectedDraft.sourceCityId-1].Name?'是':'否'}}</span>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantCertificateNumber" >
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">手机号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantMobileNumber">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">教育程度:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantQualification" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantQualification">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">月收入（元）:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="coApplicantIncomePerMonth" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantIncomePerMonth">
+                                </div>
+                            </div>
+
+                            <!--担保人-->
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">担保人姓名:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorName" type="text" class="comm-input1" ng-model="selectedDraft.guarantorName" disabled>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">与申请人关系:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorRelationship" type="text" class="comm-input1" ng-model="selectedDraft.guarantorRelationship">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">本地户籍:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <span class="multiple-choice"> {{selectedDraft.guarantorCensusCityId==cityJson.Citys[selectedDraft.sourceCityId-1].Name?'是':'否'}}</span>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorCertificateNumber" disabled>
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">手机号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorMobileNumber">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">房产属权:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorRealEstateOwnType" type="text" class="comm-input1" ng-model="selectedDraft.guarantorRealEstateOwnType">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">月收入（元）:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="guarantorIncomePerMonth" type="text" class="comm-input1" ng-model="selectedDraft.guarantorIncomePerMonth">
+                                </div>
+                            </div>
+
+                            <!--紧急联系人-->
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">联系人姓名:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantFirstEmergencyContact" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContact">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">与申请人关系:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantFirstEmergencyContactRelationship" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactRelationship">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">手机号码:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantFirstEmergencyContactMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactMobileNumber">
+                                </div>
+                            </div>
+                            <div class="personal-message">
+                                <div class="personal-message1"><sapn class="span">现居住地址:</sapn></div>
+                                <div class="personal-message2 ">
+                                    <input name="applicantFirstEmergencyContactAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactAddress">
+                                </div>
+                                <div class="message-write"><img src="/resources/img/write.jpg" alt=""></div>
+                            </div>
+                            </form>
+                        </div>
+                    <div class="button">
+                        <button class="comm-btn  fl" ng-show="false">上一页</button>
+                        <button class="comm-btn comm-btn-blue fl button2" ng-click="save()" ng-show="currentPage==0 || currentPage==2 || currentPage==6 || currentPage==10 || currentPage==17 || currentPage==14 || currentPage==15 || currentPage==16">保存</button>
+                        <button class="comm-btn  fl" ng-show="false">下一页</button>
+                    </div>
+
+
+            </div>
         </div>
     </div>
 </div>
