@@ -1,0 +1,128 @@
+<div class="main" ng-controller="afterTransferListController">
+    <div class="loan-intention">
+        <div class="loan-intention-row1">
+            <table class="mod-table1 mod-table1-ex">
+                <tr>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">姓名:</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp name_cell">
+                                        <input type="text" class="comm-input1">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">联系方式:</label></td>
+                                <td width="75%">
+                                    <div class="comm-inp-wp">
+                                        <input type="text" class="comm-input1" >
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td width="33.333333%">
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">来源：</label></td>
+                                <td width="75%">
+
+                                    <div class="comm-inp-wp">
+                                        <select class="comm-select1">
+                                            <option selected="selected">请选择</option>
+                                            <option>来源1</option>
+                                            <option>来源2</option>
+                                        </select>
+                                    </div>
+
+
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <table class="mod-subtable">
+                            <tr>
+                                <td width="25%"><label class="comm-field-t">提交日期：</label></td>
+                                <td width="75%">
+
+                                    <div class="comm-inp-wp data_cell ">
+                                        <input type="text" class="comm-input1">
+                                    </div>
+                                    <div class="data_cell_">——</div>
+                                    <div class="comm-inp-wp data_cell">
+                                        <input type="text" class="comm-input1">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                    <td colspan="2">
+                        <div class="mod-state">
+                            <button class="comm-btn comm-btn-blue fl">查询</button>
+                            <button class="comm-btn comm-btn-blue fl">清除</button>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+
+        <div class="man-manage-row2">
+            <div class="bd">
+                <ul class="mod-tabs clearfix">
+                    <li class="item" ng-class="{'item-on':tab==8}" ng-click="goToTab(8)"><a href=""><span>待过户</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==21}" ng-click="goToTab(21)"><a href=""><span>退回待修改</span></a></li>
+                    <li class="item " ng-class="{'item-on':tab==22}" ng-click="goToTab(22)"><a href=""><span>待审核</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==23}" ng-click="goToTab(23)"><a href=""><span>待放款</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==24}" ng-click="goToTab(24)"><a href=""><span>已放款</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==19}" ng-click="goToTab(19)"><a href=""><span>无法过户</span></a></li>
+                </ul>
+            </div>
+
+            <table class="mod-table1">
+                <thead>
+                <tr >
+                    <th width="9%">编号</th>
+                    <th width="9%">申请人</th>
+                    <th width="9%">联系方式</th>
+                    <th width="9%">车型</th>
+                    <th width="9%">地区</th>
+                    <th width="9%">产品</th>
+                    <th width="9%">贷款方案</th>
+                    <th width="9%">跟进人</th>
+                    <th width="9%">提交日期</th>
+                    <th width="9%">状态</th>
+                    <th width="9%">操作</th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr ng-repeat = "loanapply in data.content">
+                    <td>{{loanapply.id}}</td>
+                    <td>{{loanapply.applicantName}}</td>
+                    <td>{{loanapply.applicantMobileNumber}}</td>
+                    <td>{{loanapply.vehicleSeries}}</td>
+                    <td>{{cityJson.provincesList[cityJson.Citys[loanapply.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[loanapply.sourceCityId-1].Name}}</td>
+                    <td>{{loanapply.productName}}</td>
+                    <td id="red">{{loanapply.vehiclePredictPrice}}</td>
+                    <td>{{loanapply.sourceFinancialCommissioner}}</td>
+                    <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
+                    <td>{{loanStatuses[loanapply.status].name}}</td>
+                    <td class="oper"><a href="" class="blue">查看</a><a href="" class="blue">过户结果</a></td>
+                </tr>
+
+                </tbody>
+
+            </table>
+            <t-footer page-size = 'data.size' page-num = 'data.number' total-page = 'data.totalPages' total-num = 'data.totalElements' change-page-size-fun = 'changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
+        </div>
+    </div>
+</div>

@@ -82,6 +82,12 @@ authors.controller('MainController', ['$scope', '$http', '$location', '$rootScop
     $scope.giveupList = function () {
         $state.go("main.giveuplist");
     };
+    $scope.afterTransfer = function () {
+        $state.go("main.afterTransferLoanList");
+    };
+    $scope.afterMortgage = function () {
+        $state.go("main.afterMortgageLoanList");
+    };
     $scope.logout = function () {
         httpService.logout().then(function () {
             $state.go("login");
