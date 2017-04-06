@@ -195,7 +195,7 @@ product.controller("addProductController", function ($scope,$http,$location,$roo
         $scope.selectedProductType = {};
         $scope.selectedPaybackType = {};
         $scope.minAvailableRate = 1;
-        $scope.maxAvailableRate = 1;
+        $scope.maxAvailableRate = 9;
         $scope.loanMonthlyInterestRate = "";
         $scope.availableTerms = productFactory.checkTerms();
     } else {
@@ -267,6 +267,7 @@ product.controller("addSubProductController",function ($scope, $http, $location,
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
+            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
             status:0
         };
         httpService.addProduct($scope.product).then(function (res) {
@@ -304,6 +305,7 @@ product.controller("editSubProductController", function ($scope, $http, $locatio
             loanMonthlyInterestRate:$scope.selectedProduct.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
+            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
             status:0
         };
         httpService.editProduct($scope.product).then(function (res) {
