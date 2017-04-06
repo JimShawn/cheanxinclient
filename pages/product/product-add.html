@@ -1,4 +1,4 @@
-<div class="main" ng-controller="addProductController">
+<form ng-controller="addProductController" name="productAddForm" ng-submit="commit()">
     <div class="mod-hd">
         <h2>产品添加</h2>
     </div>
@@ -10,7 +10,7 @@
                 <td width="15%"><span class="star">*</span>产品名称</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="name">
+                        <input type="text" class="comm-input1" ng-model="name" required>
                     </div>
                 </td>
             </tr>
@@ -18,7 +18,7 @@
                 <td width="15%"><span class="star">*</span>产品类型</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedProductType" ng-options="productType.name for productType in productTypes">
+                        <select class="comm-select1" ng-model="selectedProductType" ng-options="productType.name for productType in productTypes" required>
                         </select>
                     </div>
                 </td>
@@ -27,7 +27,7 @@
                 <td width="15%"><span class="star">*</span>还款方式</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedPaybackType" ng-options="paybackType.name for paybackType in paybackTypes">
+                        <select class="comm-select1" ng-model="selectedPaybackType" ng-options="paybackType.name for paybackType in paybackTypes" required>
                         </select>
                     </div>
                 </td>
@@ -37,13 +37,13 @@
                 <td width="35%">
                     <div class="comm-inp-wp  a">
                         <div class="fl comm-inp-wp proportion">
-                            <select class="comm-select1" ng-model="minAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates">
+                            <select class="comm-select1" ng-model="minAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates" required>
                             </select>
                         </div>
                         <span class="rung">——</span>
 
                         <div class="fr comm-inp-wp proportion">
-                            <select class="comm-select1" ng-model="maxAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates">
+                            <select class="comm-select1" ng-model="maxAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates" required>
                             </select>
                         </div>
 
@@ -65,7 +65,7 @@
                 <td width="15%"><span class="star">*</span>贷款政策</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="loanPolicy" ng-options="loanPolicy.name for loanPolicy in loanPolicies">
+                        <select class="comm-select1" ng-model="loanPolicy" ng-options="loanPolicy.name for loanPolicy in loanPolicies" required>
                         </select>
                     </div>
                 </td>
@@ -74,28 +74,25 @@
                 <td width="15%"><span class="star">*</span>贷款利率</td>
                 <td width="35%">
                     <div class="comm-inp-wp labe2">
-                        <input type="text" class="comm-input1" ng-model="loanMonthlyInterestRate">
+                        <input type="text" class="comm-input1" ng-model="loanMonthlyInterestRate" required>
                     </div>
                     <div class="labe3">
                         %/月
                     </div>
-
                 </td>
             </tr>
             <tr >
                 <td id="button"  colspan="2">
                     <table class="mod-subtable">
                         <tr >
-                            <button class="comm-btn comm-btn-blue fl button1" ng-click="commit()">保存</button>
+                            <input type="submit" value="保存" class="comm-btn comm-btn-blue fl button1" />
                             <button class="comm-btn comm-btn-blue fl button1" ng-click="cancel()">取消</button>
                         </tr>
                     </table>
                 </td>
             </tr>
             </tbody>
-
-
         </table>
     </div>
-
 </div>
+</form>
