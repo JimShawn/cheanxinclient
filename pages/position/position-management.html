@@ -1,4 +1,4 @@
-<div class="main" ng-controller = "positionController">
+<div class="main" ng-controller="positionController">
     <div class="man-manage">
         <div class="man-manage-row1">
             <table class="mod-table1 mod-table1-ex">
@@ -9,7 +9,7 @@
                                 <td width="25%"><label class="comm-field-t">岗位名称</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.name">
+                                        <input type="text" class="comm-input1" ng-model="query.name" ng-keyup="$event.keyCode == 13 && getList()">
                                     </div>
                                 </td>
                             </tr>
@@ -21,8 +21,8 @@
                                 <td width="22%"><label class="comm-field-t">状态</label></td>
                                 <td width="78%">
                                     <div class="comm-inp-wp">
-
-                                        <select class="comm-select1" ng-model = "selectPositionStatus" ng-options = "queryStatus.str for queryStatus in QueryPositionStatus">
+                                        <select class="comm-select1" ng-model="selectPositionStatus" ng-options="queryStatus.str for queryStatus in QueryPositionStatus" ng-change="getList()">
+                                            <option value="">岗位状态</option>
                                         </select>
                                     </div>
                                 </td>
@@ -34,7 +34,7 @@
                             <tr>
                                 <button class="comm-btn comm-btn-blue fl" ng-click="getList()">查询</button>
                                 <button class="comm-btn comm-btn-blue fl button2" ng-click="ser">清除</button>
-                                <button class="comm-btn comm-btn-blue fr" ng-click = "addPost()">添加</button>
+                                <button class="comm-btn comm-btn-blue fr" ng-click="addPost()">添加</button>
                             </tr>
                         </table>
                     </td>
@@ -46,26 +46,29 @@
             <table class="mod-table1">
                 <thead>
                 <tr>
-                    <th width="15%">岗位名称</th>
-                    <th width="15%">岗位类型</th>
-                    <th width="15%">岗位状态</th>
-                    <th width="40%">操作</th>
+                    <th>岗位名称</th>
+                    <th>岗位类型</th>
+                    <th>岗位状态</th>
+                    <th>操作</th>
                 </tr>
                 </thead>
                 <tbody>
-                <tr ng-repeat = "position in data.content">
+                <tr ng-repeat="position in data.content">
                     <td>{{position.name}}</td>
                     <td>{{position.postType}}</td>
-                    <td>启用</td>
-                    <td class="oper"><a href="" class="blue" ng-click = "edit(position)">编辑</a><a href="" class="blue" ng-click="disable(position)">禁用</a>
-                        <!--<a href="" class="blue">删除</a>-->
+                    <td>{{QueryPositionStatus[0 + position.enabled].str}}</td>
+                    <td class="oper">
+                        <span>
+                            <a href="" class="blue" ng-click="edit(position)" ng-show="position.editable">编辑</a>
+                            <a href="" class="blue" ng-click="disableOrEnabled(position)" ng-show="position.editable">{{QueryPositionStatus[1 - position.enabled].str}}</a>
+                        </span>
                     </td>
                 </tr>
 
                 </tbody>
 
             </table>
-            <t-footer page-size = 'data.size' page-num = 'data.number' total-page = 'data.totalPages' total-num = 'data.totalElements' change-page-size-fun = 'changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
+            <t-footer page-size='data.size' page-num='data.number' total-page='data.totalPages' total-num='data.totalElements' change-page-size-fun='changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
         </div>
     </div>
 </div>

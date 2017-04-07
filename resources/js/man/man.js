@@ -53,9 +53,13 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
     $scope.getList = function () {
         if ($scope.statusObject) {
             $scope.query.status = $scope.statusObject.status;
+        } else {
+            $scope.query.status = -1;
         }
         if ($scope.dept) {
             $scope.query.deptId = $scope.dept.id;
+        } else {
+            $scope.query.deptId = "";
         }
         httpService.listUsers($scope.query).then(function (result) {
             $scope.data = result.data;

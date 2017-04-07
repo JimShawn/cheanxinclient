@@ -27,7 +27,7 @@
                                         </select>
                                     </div>
                                     <div class="comm-inp-wp distance">
-                                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true">
+                                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true" ng-change="getList()">
                                             <option value="">城市</option>
                                         </select>
                                     </div>
