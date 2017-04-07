@@ -221,6 +221,16 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         });
         return deferd.promise;
     };
+    api.getDept = function (id) {
+        var deferd = $q.defer();
+        var getDeptUrl = "http://localhost:8081/cheanxin/depts/" + id + "?access_token="+$window.sessionStorage["access_token"];
+        $http.get(getDeptUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
     api.addDept = function (dept) {
         var deferd = $q.defer();
         var addDeptUrl = "http://localhost:8081/cheanxin/depts?access_token="+$window.sessionStorage["access_token"];
@@ -235,6 +245,16 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         var deferd = $q.defer();
         var updateDeptUrl = "http://localhost:8081/cheanxin/depts/"+id+"?access_token="+$window.sessionStorage["access_token"];
         $http.put(updateDeptUrl,dept).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+    api.updateDeptCity = function (deptCity) {
+        var deferd = $q.defer();
+        var updateDeptCityUrl = "http://localhost:8081/cheanxin/dept_cities?access_token="+$window.sessionStorage["access_token"];
+        $http.put(updateDeptCityUrl,deptCity).then(function (result) {
             deferd.resolve(result);
         },function (error) {
             deferd.reject(error);

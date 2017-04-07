@@ -1,11 +1,11 @@
+<form name="deptForm" ng-submit="addDept()">
 <div class="group-table">
     <table class="mod-table1 ">
         <tbody>
-
         <tr>
             <td width="15%"><span class="star">*</span>部门名称</td>
             <td width="35%">
-                <span class="group-cell"><input type="text" ng-model="newItem.name"></span>
+                <span class="group-cell"><input type="text" ng-model="newItem.name" required/></span>
             </td>
         </tr>
         <tr>
@@ -14,32 +14,41 @@
                 <span class="group-cell">{{newItem.parentName}}</span>
             </td>
         </tr>
-
         <tr>
             <td width="15%">状态</td>
             <td width="35%">
                 <span class="group-cell">{{newItem.status}}</span>
             </td>
         </tr>
-
-
-        <tr >
+        <tr>
+            <td width="15%"><span class="star">*</span>适用地区</td>
+            <td width="35%">
+                <div class="comm-inp-wp labe2">
+                    <select class="comm-select1" ng-model="selectProvince" ng-options="province.Name for province in cities.provincesList" required>
+                    </select>
+                </div>
+                <div class="comm-inp-wp labe2" ng-repeat="city in cities.Citys | filter:{ProvinceId:selectProvince.Id}:true">
+                    <input type="checkbox" value="{{city.Id}}" ng-click="updateSelection($event, city)" ng-checked="isSelected(city.Id)" /> {{city.Name}}
+                </div>
+                <div>
+                    <ul>
+                        <li><h3 style="font-weight: bolder;">已选城市</h3></li>
+                        <li ng-repeat="city in selectedCities">{{city.Name}}</li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
             <td class="footer-button" id="button"  colspan="2">
                 <table class="mod-subtable">
                     <tr >
-                        <button class="comm-btn comm-btn-blue fl button1" ng-click="addDept()">保存</button>
+                        <input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存" />
                         <button class="comm-btn comm-btn-blue fl button1" ng-click="cancelAddDept()">取消</button>
-                        <!--<button class="comm-btn comm-btn-blue fl button1" ng-click = "addChildrenDept()">增加下级</button>-->
-                        <!--<button class="comm-btn comm-btn-blue fl button1">增加同级</button>-->
-                        <!--<button class="comm-btn comm-btn-blue fl button1">禁用</button>-->
-                        <!--<button class="comm-btn comm-btn-blue fl button1">删除</button>-->
                     </tr>
                 </table>
             </td>
         </tr>
         </tbody>
-
-
     </table>
-
 </div>
+</form>
