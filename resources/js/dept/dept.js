@@ -4,11 +4,31 @@
  */
 'use strict';
 var dept = angular.module('dept',['httpservice']);
-dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout) {
+dept.controller("deptController", function ($scope, $http, $location, $rootScope, httpService, $state,cityJson) {
+    $scope.showDeptDetail = false;
+    $scope.cities = cityJson;
+    $scope.selectProvince = $scope.cities.provincesList[27];
+    $scope.selectedCityIds = [];
+    $scope.selectedCities = [];
+
+    $scope.updateSelection = function($event, city) {
+        var checked = $event.target.checked;
+        var index = $scope.selectedCityIds.indexOf(city.Id);
+        if (checked && index == -1){
+            $scope.selectedCityIds.push(city.Id);
+            $scope.selectedCities.push(city)
+        } else if (!checked && index != -1){
+            $scope.selectedCityIds.splice(index, 1);
+            $scope.selectedCities.splice(index, 1)
+        }
+    }
+
+    $scope.isSelected = function(id) {
+        return $scope.selectedCityIds.indexOf(id) >= 0;
+    }
 
     $scope.getAllDept = function () {
         httpService.getAllDept().then(function (result) {
-            console.log(result.data);
             var list = result.data;
             for (var i in list){
                 if(list[i].enabled){
@@ -32,13 +52,8 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
             if (!$scope.selectedItem){
                 $scope.selectedItem = list[0];
             }
-
-            console.log($scope.data);
-
-
-
         },function (error) {
-            console.log(error);
+            console.error(error);
         });
 
     };
@@ -47,11 +62,19 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
     $scope.$watch( 'xiangqitree.currentNode', function( newObj, oldObj ) {
         if( $scope.xiangqitree && angular.isObject($scope.xiangqitree.currentNode) ) {
             $scope.selectedItem = $scope.xiangqitree.currentNode;
-            $state.go("main.deptmanagement.edit");
+            httpService.getDept($scope.selectedItem.id).then(function (result) {
+                $scope.selectedCityIds = result.data.cityIds;
+                $scope.selectedCities = [];
+                angular.forEach($scope.selectedCityIds, function(value){
+                    $scope.selectedCities.push($scope.cities.Citys[value-1]);
+                });
+                $scope.showDeptDetail = true;
+                $state.go("main.deptmanagement.edit");
+            },function (err) {
+                console.error(err);
+            });
         }
     }, false);
-
-    $state.go("main.deptmanagement.edit");
     
     $scope.addChildrenDept = function () {
         $scope.newItem = {};
@@ -60,10 +83,12 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
         $scope.newItem.status = "有效";
         $state.go("main.deptmanagement.add");
     };
+
     $scope.cancelAddDept = function () {
         $scope.newItem = {};
         $state.go("main.deptmanagement.edit");
     };
+
     $scope.disabledDept = function () {
         var deptItem = {
             deptCode:$scope.selectedItem.deptCode,
@@ -73,15 +98,14 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
             enabled:false
         };
         httpService.updateDept(deptItem,$scope.selectedItem.id).then(function (result) {
-            console.log(result);
-            alert("禁用成功");
             $scope.selectedItem = undefined;
             $scope.getAllDept();
             $state.go("main.deptmanagement.edit");
         },function (err) {
-            console.log(err);
+            console.error(err);
         });
     };
+
     $scope.saveDept = function () {
         var deptItem = {
             name:$scope.selectedItem.name,
@@ -90,12 +114,20 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
             enabled:true
         };
         httpService.updateDept(deptItem,$scope.selectedItem.id).then(function (result) {
-            console.log(result);
-            alert("修改成功");
+            var deptCities = {
+                deptId: $scope.selectedItem.id,
+                cityIds: $scope.selectedCityIds
+            }
+            httpService.updateDeptCity(deptCities).then(function (result) {
+                alert("保存成功");
+            }, function (err) {
+                console.error(err);
+            })
         },function (err) {
-            console.log(err);
+            console.error(err);
         });
     }
+
     $scope.addDept = function () {
         $scope.newItem.parentDeptId = $scope.selectedItem.id;
         $scope.newItem.level = $scope.selectedItem.level+1;
@@ -107,19 +139,21 @@ dept.controller("deptController",['$scope', '$http','$location','$rootScope', 'h
             enabled:true
         };
         httpService.addDept(deptItem).then(function (result) {
-            console.log(result);
             $scope.newItem.id = result.data.id;
             $scope.selectedItem = $scope.newItem;
-            $scope.getAllDept();
-            $state.go("main.deptmanagement.edit");
+            var deptCities = {
+                deptId: $scope.selectedItem.id,
+                cityIds: $scope.selectedCityIds
+            }
+            httpService.updateDeptCity(deptCities).then(function (result) {
+                $scope.getAllDept();
+                $state.go("main.deptmanagement.edit");
+            }, function (err) {
+                console.error(err);
+            })
         },function (error) {
-            console.log(error);
+            console.error(error);
         })
 
     };
-
-
-
-
-
-}]);
+});
