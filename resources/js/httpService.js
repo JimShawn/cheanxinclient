@@ -82,6 +82,16 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
             deferd.reject(error);
         });
         return deferd.promise;
+    };
+    api.patchUserPassword = function (userPasswordMap) {
+        var deferd = $q.defer();
+        var patchUserPasswordUrl = "http://localhost:8081/cheanxin/users/password?access_token="+$window.sessionStorage["access_token"];
+        $http.patch(patchUserPasswordUrl, userPasswordMap).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
     }
 
     api.updateUserPost = function (user, postIds) {

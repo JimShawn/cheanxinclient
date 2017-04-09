@@ -1,4 +1,4 @@
-<form name="deptForm" ng-submit="addDept()">
+<form name="deptForm">
 <div class="group-table">
     <table class="mod-table1 ">
         <tbody>
@@ -42,7 +42,7 @@
             <td class="footer-button" id="button"  colspan="2">
                 <table class="mod-subtable">
                     <tr >
-                        <input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存" />
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click="addDept()">保存</button>
                         <button class="comm-btn comm-btn-blue fl button1" ng-click="cancelAddDept()">取消</button>
                     </tr>
                 </table>

@@ -18,6 +18,9 @@ app.config(function ($stateProvider,$urlRouterProvider) {
     }).state("main.manmanagement",{
         url:"/manmanagement",
         templateUrl:'/pages/man/man-management.html'
+    }).state("main.manpassword",{
+        url:"/manpassword",
+        templateUrl:'/pages/man/man-password.html'
     }).state("main.addmanmanagement",{
         url:"/addmanmanagement",
         templateUrl:'/pages/man/man-add.html',
