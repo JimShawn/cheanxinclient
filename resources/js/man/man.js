@@ -53,9 +53,13 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
     $scope.getList = function () {
         if ($scope.statusObject) {
             $scope.query.status = $scope.statusObject.status;
+        } else {
+            $scope.query.status = -1;
         }
         if ($scope.dept) {
             $scope.query.deptId = $scope.dept.id;
+        } else {
+            $scope.query.deptId = "";
         }
         httpService.listUsers($scope.query).then(function (result) {
             $scope.data = result.data;
@@ -187,6 +191,10 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
         $scope.emergencyContactTel = "";
     }
 
+    $scope.cancelSaveMan = function () {
+        $state.go("main.manmanagement");
+    };
+
     $scope.commit = function () {
         var errorMsg = false;
         var identification = $filter('filter')($scope.identification, '').join(",");
@@ -239,4 +247,29 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
         })
 
     }
-})
+});
+
+man.controller("manPasswordController", function ($scope, httpService, $state) {
+    $scope.commit = function () {
+        if ($scope.oldPassword == $scope.newPassword1) {
+            alert("新旧密码不能相同");
+        }
+        if ($scope.newPassword1 != $scope.newPassword2) {
+            alert("两次输入密码不一致");
+        }
+        $scope.passwordMap = {
+            oldPassword: $scope.oldPassword,
+            newPassword1: $scope.newPassword1,
+            newPassword2: $scope.newPassword2
+        }
+        httpService.patchUserPassword($scope.passwordMap).then(function (res) {
+            $scope.logout();
+        },function (err) {
+            console.error(err.data.errorMessage);
+        })
+    }
+
+    $scope.cancelPassword = function () {
+        $state.go("main.mainpage");
+    }
+});

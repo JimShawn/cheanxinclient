@@ -82,6 +82,16 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
             deferd.reject(error);
         });
         return deferd.promise;
+    };
+    api.patchUserPassword = function (userPasswordMap) {
+        var deferd = $q.defer();
+        var patchUserPasswordUrl = "http://localhost:8081/cheanxin/users/password?access_token="+$window.sessionStorage["access_token"];
+        $http.patch(patchUserPasswordUrl, userPasswordMap).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
     }
 
     api.updateUserPost = function (user, postIds) {
@@ -169,7 +179,6 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         });
         return deferd.promise;
     };
-
     api.listAllPosts = function() {
         var deferd = $q.defer();
         var allPostsUrl = "http://localhost:8081/cheanxin/posts/all?access_token="+$window.sessionStorage["access_token"];
@@ -195,6 +204,16 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         var deferd = $q.defer();
         var updatePostUrl = "http://localhost:8081/cheanxin/posts/"+id+"?access_token="+$window.sessionStorage["access_token"];
         $http.put(updatePostUrl,post).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+    api.patchPosition = function (post,id) {
+        var deferd = $q.defer();
+        var patchPostUrl = "http://localhost:8081/cheanxin/posts/"+id+"?access_token="+$window.sessionStorage["access_token"];
+        $http.patch(patchPostUrl,post).then(function (result) {
             deferd.resolve(result);
         },function (error) {
             deferd.reject(error);

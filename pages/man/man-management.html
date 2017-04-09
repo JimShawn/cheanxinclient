@@ -1,4 +1,4 @@
-<div class="main" ng-controller = "manController">
+<div class="main" ng-controller="manController">
     <div class="man-manage">
         <div class="man-manage-row1">
             <table class="mod-table1 mod-table1-ex">
@@ -33,7 +33,8 @@
                                 <td width="25%"><label class="comm-field-t">部门</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <select class="comm-select1" name="dept" ng-model="dept" ng-options = "d.name for d in depts">
+                                        <select class="comm-select1" name="dept" ng-model="dept" ng-options="d.name for d in depts" ng-change="getList()">
+                                            <option value="">人员部门</option>
                                         </select>
                                     </div>
                                 </td>
@@ -61,7 +62,8 @@
                                     <td width="25%"><label class="comm-field-t">状态</label></td>
                                     <td width="75%">
                                         <div class="comm-inp-wp">
-                                            <select class="comm-select1" ng-model = "statusObject" ng-options = "queryStatus.value for queryStatus in queryStatuses">
+                                            <select class="comm-select1" ng-model="statusObject" ng-options="queryStatus.value for queryStatus in queryStatuses" ng-change="getList()">
+                                                <option value="">人员状态</option>
                                             </select>
                                         </div>
                                     </td>
@@ -91,7 +93,7 @@
                 </tr>
                 </thead>
                 <tbody >
-                <tr ng-repeat = "man in data.content">
+                <tr ng-repeat="man in data.content">
                     <td>{{man.username}}</td>
                     <td>{{man.realName}}</td>
                     <td>{{man.dept.name}}</td>
@@ -105,7 +107,7 @@
                 </tbody>
 
             </table>
-            <t-footer page-size = 'data.size' page-num = 'data.number' total-page = 'data.totalPages' total-num = 'data.totalElements' change-page-size-fun = 'changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
+            <t-footer page-size='data.size' page-num='data.number' total-page='data.totalPages' total-num='data.totalElements' change-page-size-fun='changePageSizeFun(size)' goto-page-fun='gotoPageFun(page)'></t-footer>
         </div>
     </div>
 </div>
