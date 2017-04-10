@@ -82,6 +82,8 @@ positon.controller("addPositionController", function ($scope,$http,$location,$ro
                         $scope.selectedDeptType = $scope.data[i];
                     }
                 }
+            } else {
+                $scope.selectedDeptType = $scope.data[$scope.data.length - 1];
             }
         },function (error) {
             console.error(error);

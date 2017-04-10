@@ -10,6 +10,7 @@ man.factory('deptService', function (httpService) {
         httpService.getAllDept().then(function (result) {
             $scope.depts = result.data;
             if (!selectedItem) {
+                $scope.dept = $scope.depts[0];
                 return;
             }
             for (var i = 0; i < $scope.depts.length; i++) {
@@ -181,7 +182,6 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
         }
     } else {
         $scope.name = "";
-        $scope.dept = "";
         $scope.account = "";
         $scope.tel = "";
         $scope.email = "";
