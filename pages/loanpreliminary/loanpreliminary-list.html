@@ -111,8 +111,8 @@
                     <td>{{draft.vehicleDealPrice*draft.loanRate/10}}</td>
                     <td>{{draft.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(draft.modifiedTime)}}</td>
-                    <td>草稿</td>
-                    <td class="oper"><a href="" class="blue" ng-click="detial()">查看</a><a href="" class="blue" ng-click="edit(draft)">编辑</a></td>
+                    <td>{{loanStatuses[draft.status].name}}</td>
+                    <td class="oper"><a href="" class="blue" ng-click="detial()">查看</a><a href="" class="blue" ng-click="edit(draft)"  ng-show="draft.status == 1 || draft.status ==2 ||draft.status ==9">编辑</a></td>
                 </tr>
 
 

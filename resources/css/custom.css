@@ -108,3 +108,16 @@
     width:147px;
     height: 147px;
 }
+.pic-container{
+    float: left;
+    width: 150px;
+    height: 150px;
+    border: 1px dashed #DDDDDD;
+    margin-left: 8px;
+}
+/*表格中的照片*/
+.photo-price{display: both;float: left;width:70px;height: 50px; background-color: #558dcf;margin-left: 10px;}
+#close2{
+    width: 20px;
+    height: 20px;
+}

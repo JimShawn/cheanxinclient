@@ -155,6 +155,20 @@ app.config(function ($stateProvider,$urlRouterProvider) {
             url:"/afterTransferLoanList",
             templateUrl:"/pages/lending/transfer-list.html"
         }
+    ).state("main.uploadTransferResult",{
+            url:"/uploadTransferResult",
+            templateUrl:"/pages/lending/transfer-edit.html",
+            params:{
+                "items":null
+            }
+        }
+    ).state("main.checkTransferResult",{
+            url:"/checkTransferResult",
+            templateUrl:"/pages/lending/check-transfer.html",
+            params:{
+                "items":null
+            }
+        }
     ).state("main.afterMortgageLoanList",{
             url:"/afterMortgageLoanList",
             templateUrl:"/pages/lending/mortgage-list.html"
