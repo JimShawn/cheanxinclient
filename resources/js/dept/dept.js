@@ -4,7 +4,7 @@
  */
 'use strict';
 var dept = angular.module('dept',['httpservice']);
-dept.controller("deptController", function ($scope, $http, $location, $rootScope, httpService, $state,cityJson) {
+dept.controller("deptController", function ($scope, $http, $location, $rootScope, httpService, $state, cityJson, toaster) {
     $scope.showDeptDetail = false;
     $scope.cities = cityJson;
     $scope.selectProvince = $scope.cities.provincesList[27];
@@ -53,13 +53,13 @@ dept.controller("deptController", function ($scope, $http, $location, $rootScope
                 $scope.selectedItem = list[0];
             }
         },function (error) {
-            console.error(error);
+            toaster.error(error);
         });
 
     };
     $scope.getAllDept();
 
-    $scope.$watch( 'xiangqitree.currentNode', function( newObj, oldObj ) {
+    $scope.$watch( 'xiangqitree.currentNode', function(newObj, oldObj) {
         if( $scope.xiangqitree && angular.isObject($scope.xiangqitree.currentNode) ) {
             $scope.selectedItem = $scope.xiangqitree.currentNode;
             httpService.getDept($scope.selectedItem.id).then(function (result) {
@@ -71,7 +71,7 @@ dept.controller("deptController", function ($scope, $http, $location, $rootScope
                 $scope.showDeptDetail = true;
                 $state.go("main.deptmanagement.edit");
             },function (err) {
-                console.error(err);
+                toaster.error(err.data.errorMessage);
             });
         }
     }, false);
@@ -102,7 +102,7 @@ dept.controller("deptController", function ($scope, $http, $location, $rootScope
             $scope.getAllDept();
             $state.go("main.deptmanagement.edit");
         },function (err) {
-            console.error(err);
+            toaster.error(err.data.errorMessage);
         });
     };
 
@@ -121,10 +121,10 @@ dept.controller("deptController", function ($scope, $http, $location, $rootScope
             httpService.updateDeptCity(deptCities).then(function (result) {
                 alert("保存成功");
             }, function (err) {
-                console.error(err);
+                toaster.error(err.data.errorMessage);
             })
         },function (err) {
-            console.error(err);
+            toaster.error(err.data.errorMessage);
         });
     }
 
@@ -149,10 +149,10 @@ dept.controller("deptController", function ($scope, $http, $location, $rootScope
                 $scope.getAllDept();
                 $state.go("main.deptmanagement.edit");
             }, function (err) {
-                console.error(err);
+                toaster.error(err.data.errorMessage);
             })
         },function (error) {
-            console.error(error);
+            toaster.error(error);
         })
 
     };

@@ -4,9 +4,9 @@
  */
 'use strict';
 
-var login = angular.module('login',['httpservice']);
+var login = angular.module('login',['httpservice', 'toaster']);
 
-login.controller('LoginController', function($scope,$http,$location,$rootScope,httpService,$state, commonUtil) {
+login.controller('LoginController', function($scope, $http, $location, $rootScope ,httpService, $state, commonUtil, toaster) {
     $scope.username = "";
     $scope.password = "";
     $scope.showId = false;
@@ -18,10 +18,10 @@ login.controller('LoginController', function($scope,$http,$location,$rootScope,h
         // var pwdEncode = $scope.password;
         httpService.login($scope.username,pwdEncode).then(function() {
             $rootScope.isLogin = true;
+            toaster.success("已登录");
             $state.go("main.mainpage");
         },function(error) {
-            console.error(error);
-            alert("用户名或者密码错误");
+            toaster.error("用户名或者密码错误");
         })
     };
 
