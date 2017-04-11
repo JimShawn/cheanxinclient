@@ -1,6 +1,7 @@
 'use strict';
 
-var app = angular.module('app', ['image-upload', 'ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign','toaster']);
+var app = angular.module('app', ['image-upload', 'ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept',
+    'lending','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign','toaster']);
 
 app.config(function ($stateProvider,$urlRouterProvider) {
     $stateProvider.state("login", {
@@ -152,6 +153,28 @@ app.config(function ($stateProvider,$urlRouterProvider) {
             params:{
                 "items":null
             }
+        }
+    ).state("main.afterTransferLoanList",{
+            url:"/afterTransferLoanList",
+            templateUrl:"/pages/lending/transfer-list.html"
+        }
+    ).state("main.uploadTransferResult",{
+            url:"/uploadTransferResult",
+            templateUrl:"/pages/lending/transfer-edit.html",
+            params:{
+                "items":null
+            }
+        }
+    ).state("main.checkTransferResult",{
+            url:"/checkTransferResult",
+            templateUrl:"/pages/lending/check-transfer.html",
+            params:{
+                "items":null
+            }
+        }
+    ).state("main.afterMortgageLoanList",{
+            url:"/afterMortgageLoanList",
+            templateUrl:"/pages/lending/mortgage-list.html"
         }
     );
     $urlRouterProvider.otherwise('/login');

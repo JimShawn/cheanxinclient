@@ -81,6 +81,12 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
     $scope.giveupList = function () {
         $state.go("main.giveuplist");
     };
+    $scope.afterTransfer = function () {
+        $state.go("main.afterTransferLoanList");
+    };
+    $scope.afterMortgage = function () {
+        $state.go("main.afterMortgageLoanList");
+    };
     $scope.logout = function () {
         httpService.logout().then(function () {
             toaster.success("您已安全退出");

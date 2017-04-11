@@ -1,0 +1,277 @@
+<div class="main" ng-controller="transferDetailController">
+
+    <div class="mod-hd">
+        <h2>贷款信息</h2>
+    </div>
+
+    <div class="loan-application-row1">
+        <table class="mod-table1">
+
+            <tbody>
+            <tr>
+
+                <td width="15%">申请人：</td>
+                <td width="35%"><span class="fl">{{applyLoan.applicantName}}</span></td>
+                <td width="15%">手机号码：</td>
+                <td width="35%"><span class="fl">{{applyLoan.applicantMobileNumber}}</span></td>
+
+
+            </tr>
+            <tr>
+                <td width="15%">车辆名称：</td>
+                <td width="35%"><span class="fl">{{applyLoan.vehicleSeries}}</span></td>
+                <td width="15%">车架号：</td>
+                <td width="35%"><span class="fl">{{applyLoan.vehicleVin}}</span></td>
+
+            </tr>
+
+            <tr>
+
+                <td width="15%">产品名称：</td>
+                <td width="35%"><span class="fl">{{applyLoan.productName}}</span></td>
+                <td width="15%">贷款金额（元）：</td>
+                <td width="35%"><span class="fl red">{{applyLoan.vehicleDealPrice-applyLoan.loanFirstPayment}}</span></td>
+
+            </tr>
+
+            <tr>
+                <td width="15%">利率：</td>
+                <td width="35%"><span class="fl">{{applyLoan.loanMonthlyInterestRate}}</span></td>
+                <td width="15%">期数：</td>
+                <td width="35%"><span class="fl">{{applyLoan.loanTerms}}</span></td>
+
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
+
+    <div class="loan-application-row2" ng-show="applyLoan.status ==22">
+        <div class="mod-hd">
+            <h2>过户结果</h2>
+        </div>
+
+        <table class="mod-table1">
+            <thead >
+            <tr>
+                <th colspan="4"><span class="title fl">过户结果</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+
+                <td width="15%"><span class="red">*</span>过户完成日期：</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <span>{{applyLoan.transferCardNumber}}</span>
+                    </div>
+                </td>
+                <td width="15%"><span class="red">*</span>过户后车牌号：</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <span>{{commonUtil.getDateFromInt(applyLoan.transferCreatedTime)}}</span>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>过户材料
+                </td>
+
+                <td colspan="3">
+                    <div class="pic-container" >
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+applyLoan.transferFileIds}}" alt=""></a>
+                    </div>
+
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>GPS安装
+                </td>
+
+                <td colspan="3">
+                    <div class="pic-container" >
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+applyLoan.transferGPSFileIds}}" alt=""></a>
+                    </div>
+
+                </td>
+            </tr>
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>保险合同
+                </td>
+
+                <td colspan="3">
+                    <div class="pic-container" >
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+applyLoan.transferInsuranceFileIds}}" alt=""></a>
+                    </div>
+
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="loan-application-row2" ng-show="applyLoan.status ==23">
+        <div class="mod-hd">
+            <h2>放款结果</h2>
+        </div>
+
+        <table class="mod-table1">
+            <thead >
+            <tr>
+                <th colspan="4"><span class="title fl">放款结果</span></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+
+                <td width="15%"><span class="red">*</span>放款日期：</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <adm-dtp ng-model='applyLoan.releaseCreatedTime' options='{calType: "gregorian", format: "YYYY-MM-DD"}'></adm-dtp>
+                    </div>
+                </td>
+                <td width="15%"><span class="red">*</span>放款金额：</td>
+                <td width="35%">
+                        <span class="fl red">{{applyLoan.vehicleDealPrice-applyLoan.loanFirstPayment}}</span>
+                </td>
+
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>放款凭证
+                </td>
+
+                <td colspan="3">
+                        <div class="upload" desc="请上传放款材料" uploader="lendingPic1" uploaded-urls="lendingPic" index="0" image-url={{lendingPhotoes[0]}}></div>
+                        <div class="upload" desc="请上传放款材料" uploader="lendingPic2" uploaded-urls="lendingPic" index="1" image-url={{lendingPhotoes[1]}}></div>
+                        <div class="upload" desc="请上传放款材料" uploader="lendingPic3" uploaded-urls="lendingPic" index="2" image-url={{lendingPhotoes[2]}}></div>
+
+
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+
+    <div class="loan-application-row2" ng-show="applyLoan.status ==24">
+        <div class="mod-hd">
+            <h2>上传抵押材料</h2>
+        </div>
+
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+
+                <td width="15%"><span class="red">*</span>抵押日期：</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <adm-dtp ng-model='applyLoan.mortgageCreatedTime' options='{calType: "gregorian", format: "YYYY-MM-DD"}'></adm-dtp>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>抵押材料
+                </td>
+
+                <td colspan="3">
+                    <div class="upload" desc="请上传抵押材料" uploader="mortggePic1" uploaded-urls="mortgagePic" index="0" image-url={{mortgagePhotoes[0]}}></div>
+                    <div class="upload" desc="请上传抵押材料" uploader="mortgagePic2" uploaded-urls="mortgagePic" index="1" image-url={{mortgagePhotoes[1]}}></div>
+                    <div class="upload" desc="请上传抵押材料" uploader="mortgagePic3" uploaded-urls="mortgagePic" index="2" image-url={{mortgagePhotoes[2]}}></div>
+
+
+                </td>
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+    <div class="loan-application-row2" ng-show="applyLoan.status ==19">
+        <div class="mod-hd">
+            <h2>无法过户</h2>
+        </div>
+
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+
+                <td width="15%"><span class="red">*</span>无法过户原因：</td>
+                <td width="35%">
+                    <span class="fl">{{cantTransferReason}}</span>
+                </td>
+
+            </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <div class="footer">
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="uploadMortgage()" ng-show="applyLoan.status ==24">提交</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="checkPass()" ng-show="applyLoan.status ==22">审核通过</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="lendingConfirm()" ng-show="applyLoan.status ==23">确定放款</button>
+        <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status ==22"><a href="javascript:void(0);" ng-click="failTransfer()">退回修改</a></button>
+        <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status ==19"><a href="javascript:void(0);" ng-click="doCantTransfer()">确认</a></button>
+        <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status ==19"><a href="javascript:void(0);" ng-click="continueTransfer()">继续过户</a></button>
+        <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
+
+        <div class=" a fr ">
+            <img class="up-logo" src="/resources/img/up.jpg" alt="">
+            <span>更多操作</span>
+        </div>
+
+        <div class="login" ng-show="showGiveupDiaog">
+            <div class="login-title">退回：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
+            <div class="login-input-content">
+                <div class="login-input">
+                    <label><span class="red"> *</span>回退原因：</label>
+                    <input type="text" placeholder="请输入回退原因"  name="info[username]" id="username" class="list-input" ng-model="giveupReason"/>
+                </div>
+            </div>
+
+            <div class="button-area">
+                <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
+                <button class="comm-btn login-button button-right" ng-click="doFailTransfer()"><a href="javascript:void(0);" >确认</a></button>
+            </div>
+
+        </div>
+
+        <div class="login" ng-show="showTransferDiaog">
+            <div class="login-title" ng-show="confirmCantTransfer">确认无法过户：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close1" src="/resources/img/close.png" alt=""/></a></div></div>
+            <div class="login-title" ng-show="confirmCanTransfer">可过户原因：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close2" src="/resources/img/close.png" alt=""/></a></div></div>
+            <div class="login-input-content">
+                <div class="login-input">
+                    <label><span class="red"> *</span>原因：</label>
+                    <input type="text" placeholder="请输入原因"  id="username1" class="list-input" ng-model="transferReason"/>
+                </div>
+            </div>
+
+            <div class="button-area">
+                <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
+                <button class="comm-btn login-button button-right" ng-click="doOperateTransfer()"><a href="javascript:void(0);" >确认</a></button>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

@@ -138,7 +138,7 @@
                     <span class="star">*</span>身份证文件
                 </td>
 
-                <td>
+                <td colspan="4">
                     <div class="upload" desc="身份证正面照片" uploader="applicantIdentification1" uploaded-urls="applicantIdentification" index="0" image-url={{identityPhotos[0]}}></div>
                     <div class="upload" desc="身份证反面照片" uploader="applicantIdentification2" uploaded-urls="applicantIdentification" index="1" image-url={{identityPhotos[1]}}></div>
                 </td>
@@ -222,9 +222,9 @@
                     <span class="star">*</span>身份证文件
                 </td>
 
-                <td>
-                    <div class="upload" desc="身份证正面照片" uploader="coApplicantIdentification1" uploaded-urls="coApplicantIdentification" index="0" image-url={{identityPhotos[0]}}></div>
-                    <div class="upload" desc="身份证反面照片" uploader="coApplicantIdentification2" uploaded-urls="coApplicantIdentification" index="1" image-url={{identityPhotos[1]}}></div>
+                <td colspan="4">
+                    <div class="upload" desc="身份证正面照片" uploader="coApplicantIdentification1" uploaded-urls="coApplicantIdentification" index="0" image-url={{coIdentityPhotos[0]}}></div>
+                    <div class="upload" desc="身份证反面照片" uploader="coApplicantIdentification2" uploaded-urls="coApplicantIdentification" index="1" image-url={{coIdentityPhotos[1]}}></div>
                 </td>
             </tr>
             <tr height="300px">
@@ -281,9 +281,9 @@
                     <span class="star">*</span>身份证文件
                 </td>
 
-                <td>
-                    <div class="upload" desc="身份证正面照片" uploader="guarantorIdentification1" uploaded-urls="guarantorIdentification" index="0" image-url={{identityPhotos[0]}}></div>
-                    <div class="upload" desc="身份证反面照片" uploader="guarantorIdentification2" uploaded-urls="guarantorIdentification" index="1" image-url={{identityPhotos[1]}}></div>
+                <td colspan="4">
+                    <div class="upload" desc="身份证正面照片" uploader="guarantorIdentification1" uploaded-urls="guarantorIdentification" index="0" image-url={{guarantorIdentityPhotos[0]}}></div>
+                    <div class="upload" desc="身份证反面照片" uploader="guarantorIdentification2" uploaded-urls="guarantorIdentification" index="1" image-url={{guarantorIdentityPhotos[1]}}></div>
                 </td>
             </tr>
             <tr height="300px">
@@ -386,7 +386,7 @@
                     <span class="red">*</span>车辆登记证书
                 </td>
 
-                <td>
+                <td colspan="4">
                     <div class="upload" desc="车辆登记证书1" uploader="vehicleRegistrationCertificate1" uploaded-urls="vehicleRegistrationCertificate" index="0" image-url={{vehicleRegistrationCertificatePhotos[0]}}></div>
                     <div class="upload" desc="车辆登记证书2" uploader="vehicleRegistrationCertificate2" uploaded-urls="vehicleRegistrationCertificate" index="1" image-url={{vehicleRegistrationCertificatePhotos[1]}}></div>
                     <div class="upload" desc="车辆登记证书3" uploader="vehicleRegistrationCertificate3" uploaded-urls="vehicleRegistrationCertificate" index="2" image-url={{vehicleRegistrationCertificatePhotos[2]}}></div>
@@ -397,7 +397,7 @@
                     <span class="red">*</span> 机动车行驶证
                 </td>
 
-                <td>
+                <td colspan="4">
                     <div class="upload" desc="机动车行驶证1" uploader="vehicleLicense1" uploaded-urls="vehicleLicense" index="0" image-url={{vehicleLicensePhotos[0]}}></div>
                     <div class="upload" desc="机动车行驶证2" uploader="vehicleLicense2" uploaded-urls="vehicleLicense" index="1" image-url={{vehicleLicensePhotos[1]}}></div>
                 </td>
@@ -545,9 +545,9 @@
     </div>
 
     <div class="footer">
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()">提交</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit(2)">提交</button>
         <button class="comm-btn  fr footer-button" ng-click="cancel()">放弃</button>
-        <button class="comm-btn  fr footer-button" ng-click="commit()">存草稿</button>
+        <button class="comm-btn  fr footer-button" ng-click="commit(1)">存草稿</button>
 
         <div class=" a fr ">
             <img class="up-logo" src="/resources/img/up.jpg" alt="">
