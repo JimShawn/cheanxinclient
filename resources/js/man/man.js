@@ -249,7 +249,7 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
     }
 });
 
-man.controller("manPasswordController", function ($scope, httpService, $state) {
+man.controller("manPasswordController", function ($scope, httpService, $state, commonUtil) {
     $scope.commit = function () {
         if ($scope.oldPassword == $scope.newPassword1) {
             alert("新旧密码不能相同");
@@ -258,9 +258,9 @@ man.controller("manPasswordController", function ($scope, httpService, $state) {
             alert("两次输入密码不一致");
         }
         $scope.passwordMap = {
-            oldPassword: $scope.oldPassword,
-            newPassword1: $scope.newPassword1,
-            newPassword2: $scope.newPassword2
+            oldPassword: commonUtil.encodePassword($scope.oldPassword),
+            newPassword1: commonUtil.encodePassword($scope.newPassword1),
+            newPassword2: commonUtil.encodePassword($scope.newPassword2)
         }
         httpService.patchUserPassword($scope.passwordMap).then(function (res) {
             $scope.logout();
