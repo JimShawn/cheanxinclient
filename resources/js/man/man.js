@@ -4,7 +4,7 @@
  */
 'use strict';
 var man = angular.module('man',['httpservice']);
-man.factory('deptService', function (httpService) {
+man.factory('deptService', function (httpService, toaster) {
     var deptServiceApi = {}
     deptServiceApi.listDepts = function($scope, selectedItem) {
         httpService.getAllDept().then(function (result) {
@@ -20,12 +20,12 @@ man.factory('deptService', function (httpService) {
                 }
             }
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         });
     }
     return deptServiceApi;
 })
-man.controller("manController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window, deptService) {
+man.controller("manController", function ($scope, $http, $location, $rootScope,httpService, $state, $timeout, $window, deptService, toaster) {
     deptService.listDepts($scope);
     $scope.queryStatuses = [{
         status:1,
@@ -80,7 +80,7 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
                 $scope.data.content[i].toEnabled = !$scope.data.content[i].enabled;
             }
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         });
 
     };
@@ -115,7 +115,7 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
     }
 });
 
-man.controller("addManController", function ($filter, $scope ,$http, $location, $rootScope, httpService, $state, $timeout, $stateParams, FileUploader, $window, deptService) {
+man.controller("addManController", function ($filter, $scope , $http, $location, $rootScope, httpService, $state, $timeout, $stateParams, FileUploader, $window, deptService, toaster) {
     if ($stateParams.items != null) {
         var selectedItem = JSON.parse($stateParams.items);
     }
@@ -134,7 +134,7 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
             $scope.displayPosts[postTypeKey].value.push(posts[i]);
         }
     },function (err) {
-        console.error(err.data.errorMessage);
+        toaster.error(err.data.errorMessage);
     });
 
     $scope.selectedPosts = [];
@@ -206,7 +206,7 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
             errorMsg = "请上传头像照片";
         }
         if (errorMsg) {
-            alert(errorMsg);
+            toaster.error(errorMsg);
             return;
         }
         // for (var i=0; i<128; i++){
@@ -241,21 +241,22 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
         httpService.updateUserPost($scope.user, $scope.selectedPosts);
 
         response.then(function (res) {
+            toaster.success("保存成功");
             $state.go("main.manmanagement");
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         })
 
     }
 });
 
-man.controller("manPasswordController", function ($scope, httpService, $state, commonUtil) {
+man.controller("manPasswordController", function ($scope, httpService, $state, commonUtil, toaster) {
     $scope.commit = function () {
         if ($scope.oldPassword == $scope.newPassword1) {
-            alert("新旧密码不能相同");
+            toaster.error("新旧密码不能相同");
         }
         if ($scope.newPassword1 != $scope.newPassword2) {
-            alert("两次输入密码不一致");
+            toaster.error("两次输入密码不一致");
         }
         $scope.passwordMap = {
             oldPassword: commonUtil.encodePassword($scope.oldPassword),
@@ -263,9 +264,10 @@ man.controller("manPasswordController", function ($scope, httpService, $state, c
             newPassword2: commonUtil.encodePassword($scope.newPassword2)
         }
         httpService.patchUserPassword($scope.passwordMap).then(function (res) {
+            toaster.success("密码修改成功");
             $scope.logout();
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         })
     }
 
