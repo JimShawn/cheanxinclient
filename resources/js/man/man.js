@@ -25,7 +25,7 @@ man.factory('deptService', function (httpService) {
     }
     return deptServiceApi;
 })
-man.controller("manController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window, deptService) {
+man.controller("manController", function ($scope, $http, $location, $rootScope,httpService, $state, $timeout, $window, deptService) {
     deptService.listDepts($scope);
     $scope.queryStatuses = [{
         status:1,
@@ -115,7 +115,7 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
     }
 });
 
-man.controller("addManController", function ($filter, $scope ,$http, $location, $rootScope, httpService, $state, $timeout, $stateParams, FileUploader, $window, deptService) {
+man.controller("addManController", function ($filter, $scope , $http, $location, $rootScope, httpService, $state, $timeout, $stateParams, FileUploader, $window, deptService) {
     if ($stateParams.items != null) {
         var selectedItem = JSON.parse($stateParams.items);
     }
@@ -249,7 +249,7 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
     }
 });
 
-man.controller("manPasswordController", function ($scope, httpService, $state, commonUtil) {
+man.controller("manPasswordController", function ($scope, httpService, $state, commonUtil, toaster) {
     $scope.commit = function () {
         if ($scope.oldPassword == $scope.newPassword1) {
             alert("新旧密码不能相同");
