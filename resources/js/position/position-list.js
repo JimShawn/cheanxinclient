@@ -4,14 +4,14 @@
  */
 'use strict';
 var positon = angular.module('positon',['httpservice']);
-positon.controller("positionController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout) {
+positon.controller("positionController", function ($scope, $http, $location, $rootScope, httpService, $state, toaster) {
     $scope.QueryProductName = "";
     $scope.QueryPositionStatus = [{
-        id:1,
-        str:"启用"
-    },{
         id:0,
         str:"禁用"
+    },{
+        id:1,
+        str:"启用"
     }];
 
     $scope.init = function() {
@@ -28,12 +28,13 @@ positon.controller("positionController",['$scope', '$http','$location','$rootSco
     $scope.getList = function () {
         if ($scope.selectPositionStatus) {
             $scope.query.enabled = $scope.selectPositionStatus.id;
+        } else {
+            $scope.query.enabled = -1;
         }
         httpService.getAllPosition($scope.query).then(function (result) {
-            console.log(result);
             $scope.data = result.data;
         },function (error) {
-            console.log(error);
+            toaster.error(error.data.errorMessage);
         });
 
     };
@@ -54,30 +55,25 @@ positon.controller("positionController",['$scope', '$http','$location','$rootSco
         $state.go("main.addpositionmanagement",{items:null});
     };
     $scope.edit = function (position) {
-        console.log(JSON.stringify(position));
-
         $state.go("main.addpositionmanagement",{items:JSON.stringify(position)});
     };
-    $scope.disable = function (position) {
+    $scope.disableOrEnabled = function (position) {
         var post = {
-            name:position.name,
-            postTypeId:position.postTypeId,
-            enabled:false
+            enabled:1 - position.enabled
         };
-        httpService.updatePosition(post,position.id).then(function (result) {
+        httpService.patchPosition(post,position.id).then(function (result) {
+            toaster.success("操作成功");
             $scope.getList();
-            console.log(result);
         },function (error) {
-            console.log(error);
+            toaster.error(error.data.errorMessage);
         })
     }
 
-}]);
-positon.controller("addPositionController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$stateParams) {
+});
+positon.controller("addPositionController", function ($scope, $http, $location, $rootScope,httpService, $state, $stateParams, toaster) {
     $scope.selectedDeptType = {};
     $scope.getPostTypeList = function () {
         httpService.getAllPositionType().then(function (result) {
-            console.log(result);
             $scope.data = result.data;
             if($stateParams.items!=null){
                 var selectedItem = JSON.parse($stateParams.items);
@@ -87,9 +83,11 @@ positon.controller("addPositionController",['$scope', '$http','$location','$root
                         $scope.selectedDeptType = $scope.data[i];
                     }
                 }
+            } else {
+                $scope.selectedDeptType = $scope.data[$scope.data.length - 1];
             }
         },function (error) {
-            console.log(error);
+            toaster.error(error.data.errorMessage);
         });
 
     };
@@ -99,22 +97,23 @@ positon.controller("addPositionController",['$scope', '$http','$location','$root
         var post = {
             name:$scope.postName,
             postTypeId:$scope.selectedDeptType.id,
-            enabled:true
+            enabled:true,
+            editable:true
         };
         if($stateParams.items!=null){
             var selectedItem = JSON.parse($stateParams.items);
             httpService.updatePosition(post,selectedItem.id).then(function (result) {
+                toaster.success("保存成功");
                 $state.go("main.positionmanagement");
-                console.log(result);
             },function (error) {
-                console.log(error);
+                toaster.error(error.data.errorMessage);
             })
         }else {
             httpService.addPosition(post).then(function (result) {
+                toaster.success("保存成功");
                 $state.go("main.positionmanagement");
-                console.log(result);
             },function (error) {
-                console.log(error);
+                toaster.error(error.data.errorMessage);
             })
         }
 
@@ -122,6 +121,4 @@ positon.controller("addPositionController",['$scope', '$http','$location','$root
     $scope.cancelAdd = function () {
         $state.go("main.positionmanagement");
     }
-
-
-}]);
+});

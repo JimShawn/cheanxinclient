@@ -1,4 +1,5 @@
-<div class="main" ng-controller = "addPositionController">
+<form name="addPositionForm">
+<div class="main" ng-controller="addPositionController">
     <div class="mod-hd">
         <h2>岗位添加</h2>
     </div>
@@ -9,28 +10,22 @@
             <tr>
                 <td width="15%"><span class="star">*</span>岗位名称</td>
                 <td width="35%">
-                    <div class="comm-inp-wp label">
-                        <input type="text" class="comm-input1" ng-model="postName">
+                    <div class="comm-inp-wp">
+                        <input type="text" class="comm-input1" ng-model="postName" required minlength="3" maxlength="20">
                     </div>
                 </td>
             </tr>
             <tr>
                 <td><span class="star">*</span>岗位类型</td>
                 <td>
-                    <div class="comm-inp-wp label">
-                        <select class="comm-select1" ng-model = "selectedDeptType" ng-options = "postType.name for postType in data">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedDeptType" ng-options="postType.name for postType in data" required>
                         </select>
                     </div>
                 </td>
                 </td>
-
             </tr>
             <tr>
-                <td>状态</td>
-                <td><span class="label_right">有效</span></td>
-            </tr>
-
-            <tr >
                 <td id="button"  colspan="2">
                     <table class="mod-subtable">
                         <tr >
@@ -41,9 +36,7 @@
                 </td>
             </tr>
             </tbody>
-
-
         </table>
     </div>
-
 </div>
+</form>

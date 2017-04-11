@@ -1,49 +1,63 @@
-<div class="group-table">
+<form name="deptForm">
+<div class="group-table" ng-show="showDeptDetail">
     <table class="mod-table1 ">
         <tbody>
         <tr>
-            <td width="15%">编号</td>
-            <td width="35%">
+            <th width="15%">编号</th>
+            <th colspan="2">
                 <span class="group-cell">{{selectedItem.id}}</span>
+            </th>
+        </tr>
+        <tr>
+            <td><span class="star">*</span>部门名称</td>
+            <td colspan="2">
+                <span class="group-cell"><input type="text" ng-model="selectedItem.name" required></span>
             </td>
         </tr>
         <tr>
-            <td width="15%"><span class="star">*</span>部门名称</td>
-            <td width="35%">
-                <span class="group-cell"><input type="text" ng-model="selectedItem.name"></span>
-            </td>
-        </tr>
-        <tr>
-            <td width="15%"><span class="star">*</span>上级部门</td>
-            <td width="35%">
+            <td><span class="star">*</span>上级部门</td>
+            <td colspan="2">
                 <span class="group-cell">{{selectedItem.parentName}}</span>
             </td>
         </tr>
-
         <tr>
-            <td width="15%">状态</td>
-            <td width="35%">
+            <td>状态</td>
+            <td colspan="2">
                 <span class="group-cell">{{selectedItem.status}}</span>
             </td>
         </tr>
-
-
-        <tr >
-            <td class="footer-button" id="button"  colspan="2">
+        <tr>
+            <td><span class="star">*</span>适用地区</td>
+            <td>
+                <div class="comm-inp-wp labe2">
+                    <select class="comm-select1" ng-model="selectProvince" ng-options="province.Name for province in cities.provincesList" required>
+                    </select>
+                </div>
+                <div class="comm-inp-wp labe2" ng-repeat="city in cities.Citys | filter:{ProvinceId:selectProvince.Id}:true">
+                    <input type="checkbox" value="{{city.Id}}" ng-click="updateSelection($event, city)" ng-checked="isSelected(city.Id)" /> {{city.Name}}
+                </div>
+            </td>
+            <td>
+                <div>
+                    <ul>
+                        <li><h3 style="font-weight: bolder;">已选城市</h3></li>
+                        <li ng-repeat="city in selectedCities">{{city.Name}}</li>
+                    </ul>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td class="footer-button" id="button" colspan="3">
                 <table class="mod-subtable">
-                    <tr >
-                        <button class="comm-btn comm-btn-blue fl button1" ng-click = "saveDept()">保存</button>
-                        <button class="comm-btn comm-btn-blue fl button1" ng-click = "addChildrenDept()">增加下级</button>
-                        <!--<button class="comm-btn comm-btn-blue fl button1">增加同级</button>-->
-                        <button class="comm-btn comm-btn-blue fl button1" ng-click = "disabledDept()">禁用</button>
-                        <!--<button class="comm-btn comm-btn-blue fl button1">删除</button>-->
+                    <tr>
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click="saveDept()">保存</button>
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click="addChildrenDept()">增加下级</button>
+                        <button class="comm-btn comm-btn-blue fl button1" ng-click="disabledDept()">禁用</button>
                     </tr>
                 </table>
             </td>
         </tr>
         </tbody>
-
-
     </table>
-
 </div>
+</form>

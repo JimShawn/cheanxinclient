@@ -1,6 +1,6 @@
 var authors = angular.module('main', []);
 
-authors.controller('MainController', ['$scope', '$http', '$location', '$rootScope', '$state', 'httpService','$window','$interval',function ($scope, $http, $location, $rootScope, $state, httpService,$window,$interval) {
+authors.controller('MainController', function($scope, $http, $location, $rootScope, $state, httpService, $window, $interval, toaster) {
 
     $scope.$watch('$viewContentLoaded', function() {
         var winWid=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -89,9 +89,10 @@ authors.controller('MainController', ['$scope', '$http', '$location', '$rootScop
     };
     $scope.logout = function () {
         httpService.logout().then(function () {
+            toaster.success("您已安全退出");
             $state.go("login");
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         });
     };
-}]);
+});

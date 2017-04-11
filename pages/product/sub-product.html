@@ -27,7 +27,7 @@
                                         </select>
                                     </div>
                                     <div class="comm-inp-wp distance">
-                                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true">
+                                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true" ng-change="getList()">
                                             <option value="">城市</option>
                                         </select>
                                     </div>
@@ -57,15 +57,16 @@
             <table class="mod-table1">
                 <thead>
                 <tr>
-                    <th width="11%">产品编号</th>
-                    <th width="11%">产品名称</th>
-                    <th width="11%">贷款类型</th>
-                    <th width="11%">地区</th>
-                    <th width="11%">还款方式</th>
-                    <th width="11%">可贷成数</th>
-                    <th width="11%">可贷期数</th>
-                    <th width="11%">贷利率/月</th>
-                    <th width="12%">操作</th>
+                    <th width="6%">产品编号</th>
+                    <th width="10%">产品名称</th>
+                    <th width="10%">贷款类型</th>
+                    <th width="10%">地区</th>
+                    <th width="10%">还款方式</th>
+                    <th width="10%">可贷成数</th>
+                    <th width="10%">可贷期数</th>
+                    <th width="10%">贷利率/月</th>
+                    <th width="10%">可贷车辆年限</th>
+                    <th width="10%">操作</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -78,6 +79,7 @@
                     <td>{{product.minAvailableRate}}成-{{product.maxAvailableRate}}成</td>
                     <td>{{product.availableTerms}}</td>
                     <td id="accrual">{{product.loanMonthlyInterestRate}}</td>
+                    <td>{{product.maxAvailableVehicleYear}}</td>
                     <td class="oper"><a href="" class="blue" ng-click="edit(product)" ng-show="showEdit">编辑</a><a href="" class="blue" ng-show="showReview" ng-click="review(product)">审核</a>
                 </tr>
 

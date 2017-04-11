@@ -21,5 +21,13 @@ commonUtil.factory("commonUtil",function (cityJson) {
             }
         }
     };
+
+    factory.encodePassword = function(password) {
+        for (var i = 0; i < 273; i++) {
+            password = hex_md5(password + "cheanxin");
+        }
+        return password;
+    }
+
     return factory;
 });

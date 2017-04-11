@@ -5,11 +5,13 @@
 'use strict';
 var product = angular.module('product',['httpservice']);
 
-product.factory("productFactory", function () {
+product.factory("productFactory", function (toaster) {
     var productFactoryApi = {};
 
     productFactoryApi.initScope = function ($scope, httpService) {
         $scope.AvailableRates = [1,2,3,4,5,6,7,8,9];
+        $scope.minAvailableRate = $scope.AvailableRates[0];
+        $scope.maxAvailableRate = $scope.AvailableRates[$scope.AvailableRates.length - 1];
 
         $scope.changeCheckedStatus = function (checkArr, x) {
             checkArr[x] = !checkArr[x];
@@ -29,11 +31,13 @@ product.factory("productFactory", function () {
             id:0,
             name:"二手车贷款"
         }];
+        $scope.selectedProductType = $scope.productTypes[0];
 
         $scope.paybackTypes = [{
             id:0,
             name:"等额本息"
         }];
+        $scope.selectedPaybackType = $scope.paybackTypes[0];
 
         $scope.loanPolicies = [{
             id:0,
@@ -42,6 +46,7 @@ product.factory("productFactory", function () {
             id:1,
             name:"抵押后放款"
         }];
+        $scope.loanPolicy = $scope.loanPolicies[0];
 
         $scope.productStatus = [{
             id:0,
@@ -100,7 +105,7 @@ product.factory("productFactory", function () {
             httpService.listProduct($scope.query).then(function (result) {
                 $scope.data = result.data;
             },function (error) {
-                console.error(error.data.errorMessage);
+                toaster.error(error.data.errorMessage);
             });
 
         };
@@ -149,7 +154,7 @@ product.factory("productFactory", function () {
     return productFactoryApi;
 });
 
-product.controller("productController",function ($scope, $http, $location, $rootScope, $state, httpService, productFactory) {
+product.controller("productController", function($scope, $http, $location, $rootScope, $state, httpService, productFactory) {
     productFactory.initScope($scope, httpService);
     $scope.QueryPositonName = "";
 
@@ -162,7 +167,7 @@ product.controller("productController",function ($scope, $http, $location, $root
     $scope.getList();
 });
 
-product.controller("subProductController",function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson, productFactory) {
+product.controller("subProductController",function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, productFactory) {
     productFactory.initScope($scope, httpService);
 
     $scope.QueryPositonName = "";
@@ -185,17 +190,14 @@ product.controller("subProductController",function ($scope,$http,$location,$root
     };
 });
 
-product.controller("addProductController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,productFactory) {
+product.controller("addProductController", function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, $stateParams, productFactory, toaster) {
+
     productFactory.initScope($scope, httpService);
 
     var selectedItem = JSON.parse($stateParams.items);
 
     if (selectedItem == null) {
         $scope.name = "";
-        $scope.selectedProductType = {};
-        $scope.selectedPaybackType = {};
-        $scope.minAvailableRate = 1;
-        $scope.maxAvailableRate = 1;
         $scope.loanMonthlyInterestRate = "";
         $scope.availableTerms = productFactory.checkTerms();
     } else {
@@ -232,9 +234,10 @@ product.controller("addProductController", function ($scope,$http,$location,$roo
             response = httpService.addProduct($scope.product);
         }
         response.then(function (res) {
+            toaster.success("保存成功");
             $state.go("main.productmanagement");
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         })
 
     };
@@ -244,7 +247,7 @@ product.controller("addProductController", function ($scope,$http,$location,$roo
 
 });
 
-product.controller("addSubProductController",function ($scope, $http, $location, $rootScope, httpService, $state, productFactory, cityJson) {
+product.controller("addSubProductController",function ($scope, $http, $location, $rootScope, httpService, $state, productFactory, cityJson, toaster) {
     $scope.cities = cityJson;
 
     productFactory.initScope($scope, httpService);
@@ -267,12 +270,14 @@ product.controller("addSubProductController",function ($scope, $http, $location,
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
+            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
             status:0
         };
-        httpService.addProduct($scope.product).then(function (res) {
+        httpService.addProduct($scope.product).then(function () {
+            toaster.success("保存成功");
             $state.go("main.subproductmanagement");
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         })
 
     };
@@ -282,7 +287,7 @@ product.controller("addSubProductController",function ($scope, $http, $location,
 });
 
 
-product.controller("editSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory) {
+product.controller("editSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory, toaster) {
     productFactory.initScope($scope, httpService);
 
     $scope.cities = cityJson;
@@ -304,12 +309,14 @@ product.controller("editSubProductController", function ($scope, $http, $locatio
             loanMonthlyInterestRate:$scope.selectedProduct.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
+            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
             status:0
         };
-        httpService.editProduct($scope.product).then(function (res) {
+        httpService.editProduct($scope.product).then(function () {
+            toaster.success("保存成功");
             $state.go("main.subproductmanagement");
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         })
 
     };
@@ -318,7 +325,7 @@ product.controller("editSubProductController", function ($scope, $http, $locatio
     }
 });
 
-product.controller("reviewSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory) {
+product.controller("reviewSubProductController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, cityJson, $stateParams, productFactory, toaster) {
     productFactory.initScope($scope, httpService);
 
     $scope.cities = cityJson;
@@ -330,10 +337,11 @@ product.controller("reviewSubProductController", function ($scope, $http, $locat
             status: status,
             remark: $scope.remark
         };
-        httpService.patchProduct(subProductStatus).then(function (res) {
+        httpService.patchProduct(subProductStatus).then(function () {
+            toaster.success("审核成功");
             $state.go("main.subproductmanagement");
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         })
     };
 });

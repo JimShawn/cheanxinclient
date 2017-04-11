@@ -1,9 +1,9 @@
-<form name="userForm" ng-controller="addManController" ng-submit="commit()">
-<div cass="main" style="margin-left: 50px;">
+
+<div cass="main" style="margin-left: 50px;" ng-controller="addManController">
+    <form name="userForm" ng-submit="commit()">
     <div class="mod-hd">
         <h2>人员信息</h2>
     </div>
-
     <div class="table">
         <table class="mod-table1">
             <tbody>
@@ -11,7 +11,7 @@
                 <td><span class="star">*</span>人员姓名</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" name="name" ng-model="name" ng-minlength="2" ng-maxlength="30" required>
+                        <input type="text" class="comm-input1" name="name" ng-model="name" minlength="2" maxlength="30" required>
                     </div>
                 </td>
             </tr>
@@ -19,12 +19,11 @@
                 <td><span class="star">*</span>所属部门</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" name="dept" ng-model="dept" ng-options = "d.name for d in depts">
+                        <select class="comm-select1" name="dept" ng-model="dept" ng-options="d.name for d in depts">
                         </select>
                     </div>
                 </td>
                 </td>
-
             </tr>
             <tr>
                 <td><span class="star">*</span>照片</td>
@@ -36,7 +35,7 @@
                 <td><span class="star">*</span>账号</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" name="account" ng-model="account" ng-minlength="3" ng-maxlength="20" required  ng-disabled="isEdit">
+                        <input type="text" class="comm-input1" name="account" ng-model="account" minlength="3" maxlength="20" required  ng-disabled="isEdit">
                     </div>
                 </td>
             </tr>
@@ -52,7 +51,7 @@
                 <td><span class="star">*</span>电子邮箱</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <input type="email" class="comm-input1" name="email" ng-model = "email" required>
+                        <input type="email" class="comm-input1" name="email" ng-model="email" required>
                     </div>
                 </td>
             </tr>
@@ -97,8 +96,6 @@
                 </td>
             </tr>
             </tbody>
-
-
         </table>
     </div>
 
@@ -118,9 +115,9 @@
 
     <div class="but" style="padding-top: 20px; clear: both;">
         <input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存"/>
-        <button class="comm-btn comm-btn-blue fl button1">取消</button>
+        <button class="comm-btn comm-btn-blue fl button1" ng-click="cancelSaveMan()">取消</button>
     </div>
 
     <div style="margin-top: 20px; height:20px;"></div>
+    </form>
 </div>
-</form>

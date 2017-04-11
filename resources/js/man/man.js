@@ -4,12 +4,13 @@
  */
 'use strict';
 var man = angular.module('man',['httpservice']);
-man.factory('deptService', function (httpService) {
+man.factory('deptService', function (httpService, toaster) {
     var deptServiceApi = {}
     deptServiceApi.listDepts = function($scope, selectedItem) {
         httpService.getAllDept().then(function (result) {
             $scope.depts = result.data;
             if (!selectedItem) {
+                $scope.dept = $scope.depts[0];
                 return;
             }
             for (var i = 0; i < $scope.depts.length; i++) {
@@ -19,12 +20,12 @@ man.factory('deptService', function (httpService) {
                 }
             }
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         });
     }
     return deptServiceApi;
 })
-man.controller("manController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout, $window, deptService) {
+man.controller("manController", function ($scope, $http, $location, $rootScope,httpService, $state, $timeout, $window, deptService, toaster) {
     deptService.listDepts($scope);
     $scope.queryStatuses = [{
         status:1,
@@ -53,9 +54,13 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
     $scope.getList = function () {
         if ($scope.statusObject) {
             $scope.query.status = $scope.statusObject.status;
+        } else {
+            $scope.query.status = -1;
         }
         if ($scope.dept) {
             $scope.query.deptId = $scope.dept.id;
+        } else {
+            $scope.query.deptId = "";
         }
         httpService.listUsers($scope.query).then(function (result) {
             $scope.data = result.data;
@@ -75,7 +80,7 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
                 $scope.data.content[i].toEnabled = !$scope.data.content[i].enabled;
             }
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         });
 
     };
@@ -110,7 +115,7 @@ man.controller("manController", function ($scope,$http,$location,$rootScope,http
     }
 });
 
-man.controller("addManController", function ($filter, $scope ,$http, $location, $rootScope, httpService, $state, $timeout, $stateParams, FileUploader, $window, deptService) {
+man.controller("addManController", function ($filter, $scope , $http, $location, $rootScope, httpService, $state, $timeout, $stateParams, FileUploader, $window, deptService, toaster) {
     if ($stateParams.items != null) {
         var selectedItem = JSON.parse($stateParams.items);
     }
@@ -129,7 +134,7 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
             $scope.displayPosts[postTypeKey].value.push(posts[i]);
         }
     },function (err) {
-        console.error(err.data.errorMessage);
+        toaster.error(err.data.errorMessage);
     });
 
     $scope.selectedPosts = [];
@@ -177,7 +182,6 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
         }
     } else {
         $scope.name = "";
-        $scope.dept = "";
         $scope.account = "";
         $scope.tel = "";
         $scope.email = "";
@@ -186,6 +190,10 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
         $scope.emergencyContact = "";
         $scope.emergencyContactTel = "";
     }
+
+    $scope.cancelSaveMan = function () {
+        $state.go("main.manmanagement");
+    };
 
     $scope.commit = function () {
         var errorMsg = false;
@@ -198,7 +206,7 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
             errorMsg = "请上传头像照片";
         }
         if (errorMsg) {
-            alert(errorMsg);
+            toaster.error(errorMsg);
             return;
         }
         // for (var i=0; i<128; i++){
@@ -233,10 +241,37 @@ man.controller("addManController", function ($filter, $scope ,$http, $location, 
         httpService.updateUserPost($scope.user, $scope.selectedPosts);
 
         response.then(function (res) {
+            toaster.success("保存成功");
             $state.go("main.manmanagement");
         },function (err) {
-            console.error(err.data.errorMessage);
+            toaster.error(err.data.errorMessage);
         })
 
     }
-})
+});
+
+man.controller("manPasswordController", function ($scope, httpService, $state, commonUtil, toaster) {
+    $scope.commit = function () {
+        if ($scope.oldPassword == $scope.newPassword1) {
+            toaster.error("新旧密码不能相同");
+        }
+        if ($scope.newPassword1 != $scope.newPassword2) {
+            toaster.error("两次输入密码不一致");
+        }
+        $scope.passwordMap = {
+            oldPassword: commonUtil.encodePassword($scope.oldPassword),
+            newPassword1: commonUtil.encodePassword($scope.newPassword1),
+            newPassword2: commonUtil.encodePassword($scope.newPassword2)
+        }
+        httpService.patchUserPassword($scope.passwordMap).then(function (res) {
+            toaster.success("密码修改成功");
+            $scope.logout();
+        },function (err) {
+            toaster.error(err.data.errorMessage);
+        })
+    }
+
+    $scope.cancelPassword = function () {
+        $state.go("main.mainpage");
+    }
+});

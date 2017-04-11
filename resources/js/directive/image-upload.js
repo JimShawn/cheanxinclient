@@ -5,7 +5,8 @@
 'use strict';
 var imageUpload = angular.module('image-upload',[]);
 imageUpload.directive('upload',[function () {
-    
+    var imageHost = "http://172.16.1.14:8888/";
+    var serverHost = "http://localhost:8081/cheanxin/";
     return {
         restrict: 'AC',
         scope: {
@@ -28,13 +29,13 @@ imageUpload.directive('upload',[function () {
             } else {
                 $scope.uploadedUrls[$scope.index] = $scope.imageUrl;
                 $scope.imageSize = "cover";
-                $scope.backUrl = "http://172.16.1.14:8888/" + $scope.imageUrl;
+                $scope.backUrl = imageHost + $scope.imageUrl;
             }
             if (!$scope.desc) {
                 $scope.desc = "上传图片";
             }
             var imageUploader = $scope.imageUploader = new FileUploader({
-                url: "http://localhost:8081/cheanxin/image/upload?access_token="+$window.sessionStorage["access_token"],
+                url: serverHost + "image/upload?access_token=" + $window.sessionStorage["access_token"],
                 queueLimit: 1, //文件个数
                 removeAfterUpload: false //上传后不删除文件
             });
@@ -64,7 +65,7 @@ imageUpload.directive('upload',[function () {
             };
             imageUploader.onSuccessItem = function(fileItem, response, status, headers) {
                 $scope.uploadStatus = true; //上传成功则把状态改为true
-                $scope.backUrl = "http://172.16.1.14:8888/" + response;
+                $scope.backUrl = imageHost + response;
                 $scope.imageSize = "cover";
                 $scope.desc = fileItem.file.name;
                 $scope.uploadedUrls[$scope.index] = response;

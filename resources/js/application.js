@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('app', ['image-upload', 'ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept',
-    'lending','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign']);
+    'lending','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign','toaster']);
 
 app.config(function ($stateProvider,$urlRouterProvider) {
     $stateProvider.state("login", {
@@ -19,6 +19,9 @@ app.config(function ($stateProvider,$urlRouterProvider) {
     }).state("main.manmanagement",{
         url:"/manmanagement",
         templateUrl:'/pages/man/man-management.html'
+    }).state("main.manpassword",{
+        url:"/manpassword",
+        templateUrl:'/pages/man/man-password.html'
     }).state("main.addmanmanagement",{
         url:"/addmanmanagement",
         templateUrl:'/pages/man/man-add.html',

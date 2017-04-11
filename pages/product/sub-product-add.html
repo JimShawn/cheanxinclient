@@ -1,4 +1,5 @@
-<div class="main" ng-controller="addSubProductController">
+<form ng-controller="addSubProductController" name="subProductAddForm" ng-submit="commit()">
+<div class="main">
     <div class="mod-hd">
         <h2>产品策略</h2>
     </div>
@@ -10,7 +11,7 @@
                 <td width="15%"><span class="star">*</span>产品名称</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedProduct" ng-options="product.name for product in data.content" ng-change="selectProduct()">
+                        <select class="comm-select1" ng-model="selectedProduct" ng-options="product.name for product in data.content" ng-change="selectProduct()" required>
                         </select>
                     </div>
                 </td>
@@ -57,27 +58,17 @@
             <tr>
                 <td width="15%"><span class="star">*</span>可贷成数</td>
                 <td width="35%">
-
                     <div class="comm-inp-wp  a">
                         <div class="fl comm-inp-wp proportion">
-
-                            <select class="comm-select1" ng-model="selectedProduct.minAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates">
-
+                            <select class="comm-select1" ng-model="selectedProduct.minAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates" required>
                             </select>
-
                         </div>
-
                         <span class="rung">——</span>
-
                         <div class="fr comm-inp-wp proportion">
-                            <select class="comm-select1" ng-model="selectedProduct.maxAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates">
-
+                            <select class="comm-select1" ng-model="selectedProduct.maxAvailableRate" ng-options="AvailableRate+'成' for AvailableRate in AvailableRates" required>
                             </select>
                         </div>
-
                     </div>
-
-
                 </td>
             </tr>
             <tr>
@@ -93,7 +84,7 @@
                 <td width="15%"><span class="star">*</span>贷款利率</td>
                 <td width="35%">
                     <div class="comm-inp-wp labe2">
-                        <input type="text" class="comm-input1" ng-model="loanMonthlyInterestRate">
+                        <input type="text" class="comm-input1" ng-model="loanMonthlyInterestRate" required>
                     </div>
                     <div class="labe3">
                         %/月
@@ -102,31 +93,36 @@
 
                 </td>
             </tr>
-
+            <tr>
+                <td width="15%"><span class="star">*</span>可贷车辆年限</td>
+                <td width="35%">
+                    <div class="comm-inp-wp labe2">
+                        <input type="text" class="comm-input1" ng-model="maxAvailableVehicleYear" required>
+                    </div>
+                </td>
+            </tr>
             <tr>
                 <td width="15%"><span class="star">*</span>适用地区</td>
                 <td width="35%">
                     <div class="comm-inp-wp labe2">
-
-                        <select class="comm-select1" ng-model="selectProvinces" ng-options="provinces.Name for provinces in cities.provincesList">
+                        <select class="comm-select1" ng-model="selectProvinces" ng-options="provinces.Name for provinces in cities.provincesList" required>
                             <option value="">省份</option>
                         </select>
                     </div>
                     <div class="comm-inp-wp distance">
 
-                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true">
+                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvinces.Id}:true" required>
                             <option value="">城市</option>
                         </select>
                     </div>
 
                 </td>
             </tr>
-
-            <tr >
+            <tr>
                 <td id="button"  colspan="2">
                     <table class="mod-subtable">
                         <tr >
-                            <button class="comm-btn comm-btn-blue fl button1" ng-click="commit()">保存</button>
+                            <input type="submit" class="comm-btn comm-btn-blue fl button1" value="保存" />
                             <button class="comm-btn comm-btn-blue fl button1" ng-click="cancel()">取消</button>
                         </tr>
                     </table>
@@ -137,5 +133,5 @@
 
         </table>
     </div>
-
 </div>
+</form>
