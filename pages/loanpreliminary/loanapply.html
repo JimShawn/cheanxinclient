@@ -468,13 +468,14 @@
                 <td><span class="star">*</span>首付款金额（元）</td>
                 <td>
                     <div class="comm-inp-wp width-half">
-                        <input type="text" class="comm-input1" ng-model="firstPay">
+                        {{vehicleDealPrice-applicantLoanPrice}}
                     </div>
                 </td>
                 <td><span class="star">*</span>贷款总金额（元）</td>
                 <td>
                     <div class="comm-inp-wp width-half">
-                        {{vehicleDealPrice-firstPay}}
+                        <input type="text" class="comm-input1" ng-model="applicantLoanPrice">
+
                     </div>
                 </td>
             </tr>
@@ -482,7 +483,7 @@
                 <td><span class="star">*</span>贷款利率</td>
                 <td>
                     <div class="comm-inp-wp width-short">
-                        {{selectedProduct.loanMonthlyInterestRate}}
+                        {{selectedProduct.productLoanMonthlyInterestRate}}
                     </div>
                     <div class="link">%/月</div>
                 </td>

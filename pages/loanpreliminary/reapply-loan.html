@@ -45,19 +45,19 @@
             </tr>
             <tr>
                 <td width="15%">首付款（元）：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.loanFirstPayment}}</span></td>
+                <td width="30%" ><span class="fl">{{applyLoan.vehicleDealPrice-applyLoan.applicantLoanPrice}}</span></td>
                 <td width="15%">贷款金额（元）：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.vehicleDealPrice-applyLoan.loanFirstPayment}}</span></td>
+                <td width="30%" ><span class="fl">{{applyLoan.applicantLoanPrice}}</span></td>
             </tr>
             <tr>
                 <td width="15%">利率：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.loanMonthlyInterestRate}}</span></td>
+                <td width="30%" ><span class="fl">{{applyLoan.productLoanMonthlyInterestRate}}</span></td>
                 <td width="15%">期数：</td>
                 <td width="30%" ><span class="fl">{{applyLoan.loanTerms}}</span></td>
             </tr>
             <tr>
                 <td width="15%">月供：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.vehicleDealPrice*(1-applyLoan.loanRate/10)*(applyLoan.loanMonthlyInterestRate/100+1/applyLoan.loanTerms)}}</span></td>
+                <td width="30%" ><span class="fl">{{applyLoan.applicantLoanPrice*(applyLoan.productLoanMonthlyInterestRate/100+1/applyLoan.loanTerms)}}</span></td>
             </tr>
             </tbody>
         </table>

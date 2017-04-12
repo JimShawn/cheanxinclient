@@ -251,8 +251,8 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                 $scope.selectedSeries = selectedItem.vehicleSeries;
                 $scope.vehicleKilometers = selectedItem.vehicleKilometers;
                 $scope.vehicleDealPrice = selectedItem.vehicleDealPrice;
-                $scope.selectedRate = selectedItem.loanRate;
-                $scope.firstPay = selectedItem.loanFirstPayment;
+                $scope.selectedRate = selectedItem.applicantLoanRate;
+                $scope.applicantLoanPrice = selectedItem.applicantLoanPrice;
                 $scope.remark = selectedItem.remark;
 
 
@@ -356,10 +356,10 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         $scope.availableTerms = termsStr.split(",");
     };
     $scope.changeRate = function () {
-        $scope.firstPay = $scope.vehicleDealPrice * (1 - $scope.selectedRate / 10);
+        $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = ($scope.vehicleDealPrice - $scope.firstPay) / $scope.selectedTerm + ($scope.vehicleDealPrice - $scope.firstPay) * $scope.selectedProduct.loanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.productLoanMonthlyInterestRate / 100;
     };
     $scope.commit = function (operateType) {
         //预先获取图片url
@@ -421,10 +421,9 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         var loanDraft = {
             vehicleDealPrice: $scope.vehicleDealPrice,
             productId: $scope.selectedProduct.id,
-            loanRate: $scope.selectedRate,
-            loanFirstPayment: $scope.firstPay,
+            applicantLoanRate: $scope.selectedRate,
+            applicantLoanPrice: $scope.applicantLoanPrice,
             loanTerms: $scope.selectedTerm,
-            loanMonthlyInterestRate: $scope.selectedProduct.loanMonthlyInterestRate,
             remark: $scope.remark,
             sourceFinancialCommissioner: $scope.userInfo.data.realName,
             sourceReceiver: $scope.selectedCollector.realName,
@@ -1059,10 +1058,10 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         $scope.availableTerms = termsStr.split(",");
     };
     $scope.changeRate = function () {
-        $scope.firstPay = $scope.vehicleDealPrice * (1 - $scope.selectedRate / 10);
+        $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = ($scope.vehicleDealPrice - $scope.firstPay) / $scope.selectedTerm + ($scope.vehicleDealPrice - $scope.firstPay) * $scope.selectedProduct.loanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm +  $scope.applicantLoanPrice * $scope.selectedProduct.productLoanMonthlyInterestRate / 100;
     };
 
     var getLoanBean = function (loanDraft) {
