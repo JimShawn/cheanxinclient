@@ -338,7 +338,7 @@ lending.controller("transferDetailController",['$filter','$scope', '$http','$loc
             return;
         };
         var loan = {
-            releaseAmount:$scope.applyLoan.vehicleDealPrice-$scope.applyLoan.loanFirstPayment,
+            releaseAmount:$scope.applyLoan.applicantLoanPrice,
             releaseCreatedTime:date.getTime()/1000,
             releaseFileIds:lendingPic
         };

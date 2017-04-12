@@ -426,14 +426,14 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
         $scope.showAdjustDialog = false;
     };
     $scope.changeRate = function () {
-        $scope.firstPay = $scope.applyLoan.vehicleDealPrice*(1-$scope.selectedRate/10);
+        $scope.applicantLoanPrice = $scope.applyLoan.vehicleDealPrice*$scope.selectedRate/10;
     };
     $scope.selectProduct = function () {
         var termsStr = $scope.selectedProduct.availableTerms;
         $scope.availableTerms = termsStr.split(",");
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = ($scope.applyLoan.vehicleDealPrice-$scope.firstPay)/$scope.selectedTerm+($scope.applyLoan.vehicleDealPrice-$scope.firstPay)*$scope.selectedProduct.loanMonthlyInterestRate/100;
+        $scope.paybackPerMonth = $scope.applicantLoanPrice/$scope.selectedTerm+$scope.applicantLoanPrice*$scope.selectedProduct.productLoanMonthlyInterestRate/100;
     };
     $scope.adjust= function () {
         httpService.getProductByCityId($scope.applyLoan.sourceCityId).then(function (res) {
@@ -447,10 +447,9 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
     $scope.doAdjust = function () {
         var loan = {
             productId:$scope.selectedProduct.id,
-            loanRate:$scope.selectedRate,
-            loanFirstPayment:$scope.firstPay,
-            loanTerms:$scope.selectedTerm,
-            loanMonthlyInterestRate:$scope.selectedProduct.loanMonthlyInterestRate
+            applicantLoanRate:$scope.selectedRate,
+            applicantLoanPrice:$scope.applicantLoanPrice,
+            loanTerms:$scope.selectedTerm
         };
         httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function (res) {//1表示修改
             console.log(res);
