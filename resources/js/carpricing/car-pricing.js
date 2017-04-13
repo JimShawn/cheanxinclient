@@ -83,6 +83,9 @@ product.controller("setPriceController",['$scope', '$http','$location','$rootSco
     $scope.applyLoan = $stateParams.items;
     if($scope.applyLoan!=null){
         $scope.applyLoan.vehicleProductionYearMonth = parseInt($scope.applyLoan.vehicleProductionYearMonth);
+        $scope.vehicleRegistrationCertificateFileIds = $scope.applyLoan.vehicleRegistrationCertificateFileIds.split(",");
+        $scope.vehicleLicenseFileIds = $scope.applyLoan.vehicleLicenseFileIds.split(",");
+        $scope.vehicleFileIds = $scope.applyLoan.vehicleFileIds.split(",");
     }
 
 

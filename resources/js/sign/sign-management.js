@@ -340,6 +340,12 @@ sign.controller("giveupListController",['$scope', '$http','$location','$rootScop
         },{
             id:35,
             name:"审核不通过"
+        },{
+            id:36,
+            name:"待还款"
+        },{
+            id:37,
+            name:"待审核"
         }
     ];
 

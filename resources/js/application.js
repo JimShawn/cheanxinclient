@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('app', ['image-upload', 'ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept',
-    'lending','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign','toaster']);
+    'lending','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign','toaster','mortgage']);
 
 app.config(function ($stateProvider,$urlRouterProvider) {
     $stateProvider.state("login", {
@@ -175,6 +175,20 @@ app.config(function ($stateProvider,$urlRouterProvider) {
     ).state("main.afterMortgageLoanList",{
             url:"/afterMortgageLoanList",
             templateUrl:"/pages/lending/mortgage-list.html"
+        }
+    ).state("main.uploadMortgageResult",{
+            url:"/uploadMortgageResult",
+            templateUrl:"/pages/lending/mortgage-edit.html",
+            params:{
+                "items":null
+            }
+        }
+    ).state("main.checkMortgageResult",{
+            url:"/checkMortgageResult",
+            templateUrl:"/pages/lending/check-mortgage.html",
+            params:{
+                "items":null
+            }
         }
     );
     $urlRouterProvider.otherwise('/login');

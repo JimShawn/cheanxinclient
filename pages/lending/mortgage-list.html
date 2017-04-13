@@ -78,12 +78,12 @@
         <div class="man-manage-row2">
             <div class="bd">
                 <ul class="mod-tabs clearfix">
-                    <li class="item" ng-class="{'item-on':tab==8}" ng-click="goToTab(25)"><a href=""><span>待办理</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==21}" ng-click="goToTab(28)"><a href=""><span>退回待修改</span></a></li>
-                    <li class="item " ng-class="{'item-on':tab==22}" ng-click="goToTab(29)"><a href=""><span>待审核</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==23}" ng-click="goToTab(30)"><a href=""><span>待放款</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==24}" ng-click="goToTab(31)"><a href=""><span>已放款</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==19}" ng-click="goToTab(26)"><a href=""><span>无法过户</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==25}" ng-click="goToTab(25)"><a href=""><span>待办理</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==28}" ng-click="goToTab(28)"><a href=""><span>退回待修改</span></a></li>
+                    <li class="item " ng-class="{'item-on':tab==29}" ng-click="goToTab(29)"><a href=""><span>待审核</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==30}" ng-click="goToTab(30)"><a href=""><span>待放款</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==36}" ng-click="goToTab(36)"><a href=""><span>已放款</span></a></li>
+                    <li class="item" ng-class="{'item-on':tab==26}" ng-click="goToTab(26)"><a href=""><span>无法过户</span></a></li>
                 </ul>
             </div>
 
@@ -117,12 +117,11 @@
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanStatuses[loanapply.status].name}}</td>
                     <td class="oper"><a href="" class="blue">查看</a>
-                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status==8">过户结果</a>
-                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status==21">重新上传</a>
-                        <a href="" class="blue" ng-click="lending(loanapply)" ng-show="loanapply.status==23">放款</a>
-                        <a href="" class="blue" ng-click="uploadMortgageResult(loanapply)" ng-show="loanapply.status==24">办理抵押</a>
-                        <a href="" class="blue" ng-click="checkCantTransfer(loanapply)" ng-show="loanapply.status==19">审核</a>
-                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status==22">审核</a></td>
+                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status==25">办理结果</a>
+                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status==28">重新上传</a>
+                        <a href="" class="blue" ng-click="lending(loanapply)" ng-show="loanapply.status==30">放款</a>
+                        <a href="" class="blue" ng-click="checkCantMortgage(loanapply)" ng-show="loanapply.status==26">审核</a>
+                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status==29">审核</a></td>
                 </tr>
 
                 </tbody>

@@ -117,6 +117,12 @@ lending.controller("afterTransferListController",['$scope', '$http','$location',
         },{
             id:35,
             name:"审核不通过"
+        },{
+            id:36,
+            name:"待还款"
+        },{
+            id:37,
+            name:"待审核"
         }
     ];
     $scope.getList = function (page,size,status) {
@@ -256,6 +262,11 @@ lending.controller("transferDetailController",['$filter','$scope', '$http','$loc
         },function (err) {
 
         })
+    };
+    if($scope.applyLoan.status ==22){
+            $scope.transferPhotoes = $scope.applyLoan.transferFileIds.split(",");
+            $scope.GPSPhotoes = $scope.applyLoan.transferGPSFileIds.split(",");
+            $scope.insuranceContractPhotoes = $scope.applyLoan.transferInsuranceFileIds.split(",");
     }
 
 
