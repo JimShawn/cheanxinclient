@@ -121,6 +121,21 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         return deferd.promise;
     };
 
+    api.listProductTemplate = function (query) {
+        var queryParams = "";
+        for (var key in query) {
+            queryParams += "&" + key + "=" + query[key];
+        }
+        var deferd = $q.defer();
+        var listProductTemplateUrl = serverHost + "product_templates?access_token=" + $window.sessionStorage["access_token"] + queryParams;
+        $http.get(listProductTemplateUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+
     api.getProductByCityId = function (cityId) {
         var deferd = $q.defer();
         var productUrl = serverHost + "products/all?access_token=" + $window.sessionStorage["access_token"] + "&cityId="+cityId;
@@ -131,7 +146,28 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         });
         return deferd.promise;
     };
+    api.addProductTemplate = function (product) {
+        var deferd = $q.defer();
+        var addProductTemplateUrl = serverHost + "product_templates?access_token=" + $window.sessionStorage["access_token"];
 
+        $http.post(addProductTemplateUrl,product).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+    api.editProductTemplate = function (product) {
+        var deferd = $q.defer();
+        var editProductTemplateUrl = serverHost + "product_templates/" + product.id + "?access_token=" + $window.sessionStorage["access_token"];
+
+        $http.patch(editProductTemplateUrl,product).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
     api.addProduct = function (product) {
         var deferd = $q.defer();
         var addProductUrl = serverHost + "products?access_token=" + $window.sessionStorage["access_token"];

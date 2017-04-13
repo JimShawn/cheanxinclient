@@ -201,7 +201,7 @@ app.config(function ($stateProvider,$urlRouterProvider) {
 // }]);
 //
 
-app.factory('sessionInjector',['$rootScope','$window','$q', '$injector',function ($rootScope,$window,$q,$injector) {
+app.factory('sessionInjector', function ($rootScope, $window, $q, $injector, toaster) {
     var sessionInjector = {
         // request: function(config){
         //     var userInfo = $window.sessionStorage['userInfo'];
@@ -216,9 +216,12 @@ app.factory('sessionInjector',['$rootScope','$window','$q', '$injector',function
         //     }
         //     return config;
         // },
-        responseError : function(response) {
-            if(response.status == 401 || response.status == -1){
+        responseError: function(response) {
+            // TODO: why response status is -1
+            // if (response.status == 401 || response.status == -1) {
+            if (response.status == 401) {
                 var $state = $injector.get('$state');
+                toaster.error("未登录授权");
                 return $state.go('login');
             }
             return $q.reject(response);
@@ -226,7 +229,8 @@ app.factory('sessionInjector',['$rootScope','$window','$q', '$injector',function
     };
 
     return sessionInjector;
-}]);
+});
+
 app.config(['$httpProvider',function ($httpProvider) {
     console.log($httpProvider);
     $httpProvider.interceptors.push('sessionInjector');
