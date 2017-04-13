@@ -63,12 +63,14 @@ product.factory("productFactory", function (toaster) {
         }];
 
         $scope.init = function() {
-            $scope.query = {};
+            if (!$scope.query) {
+                $scope.query = {};
+            }
             $scope.query.name = "";
-            $scope.query.status = "-1";
             $scope.query.page = "0";
             $scope.query.size = "10";
-            $scope.query.productTemplateId = "0";
+            $scope.selectProvince = {};
+            $scope.selectCity = {};
         }
         $scope.init();
 
@@ -87,7 +89,7 @@ product.factory("productFactory", function (toaster) {
             if ($scope.query.status == 0) {
                 $scope.showEdit = true;
             }
-            if ($scope.selectCity) {
+            if ($scope.selectCity && $scope.selectCity.Id) {
                 $scope.query.cityId = $scope.selectCity.Id;
             } else {
                 $scope.query.cityId = -1;
@@ -121,6 +123,24 @@ product.factory("productFactory", function (toaster) {
             $scope.query.size = $scope.data.size;
             $scope.getList();
         };
+
+        $scope.initTemplate = function() {
+            $scope.query = {};
+            $scope.query.name = "";
+            $scope.query.page = "0";
+            $scope.query.size = "10";
+        }
+        $scope.initTemplate();
+
+        $scope.getTemplateList = function () {
+            $scope.showEdit = true;
+            httpService.listProductTemplate($scope.query).then(function (result) {
+                $scope.data = result.data;
+            },function (error) {
+                toaster.error(error.data.errorMessage);
+            });
+        };
+
         return $scope;
     }
 
@@ -154,7 +174,7 @@ product.factory("productFactory", function (toaster) {
     return productFactoryApi;
 });
 
-product.controller("productController", function($scope, $http, $location, $rootScope, $state, httpService, productFactory) {
+product.controller("productTemplateController", function($scope, $http, $location, $rootScope, $state, httpService, productFactory) {
     productFactory.initScope($scope, httpService);
     $scope.QueryPositonName = "";
 
@@ -164,7 +184,7 @@ product.controller("productController", function($scope, $http, $location, $root
     $scope.edit = function (product) {
         $state.go("main.addproductmanagement",{items:JSON.stringify(product)});
     };
-    $scope.getList();
+    $scope.getTemplateList();
 });
 
 product.controller("subProductController",function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, productFactory) {
@@ -172,8 +192,6 @@ product.controller("subProductController",function ($scope, $http, $location, $r
 
     $scope.QueryPositonName = "";
     $scope.cities = cityJson;
-    $scope.selectProvinces = {};
-    $scope.selectCity = {};
 
     $scope.getList(0, -1);
 
@@ -190,7 +208,7 @@ product.controller("subProductController",function ($scope, $http, $location, $r
     };
 });
 
-product.controller("addProductController", function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, $stateParams, productFactory, toaster) {
+product.controller("addProductTemplateController", function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, $stateParams, productFactory, toaster) {
 
     productFactory.initScope($scope, httpService);
 
@@ -221,17 +239,14 @@ product.controller("addProductController", function ($scope, $http, $location, $
             maxAvailableRate:$scope.maxAvailableRate,
             availableTerms:productFactory.setTerms($scope.availableTerms),
             loanPolicy:$scope.loanPolicy.id,
-            loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
-            cityId:0,
-            productTemplateId:0,
-            status:1
+            loanMonthlyInterestRate:$scope.loanMonthlyInterestRate
         };
         var response;
         if (selectedItem) {
             $scope.product.id = selectedItem.id;
-            response = httpService.editProduct($scope.product);
+            response = httpService.editProductTemplate($scope.product);
         } else {
-            response = httpService.addProduct($scope.product);
+            response = httpService.addProductTemplate($scope.product);
         }
         response.then(function (res) {
             toaster.success("保存成功");
@@ -252,7 +267,7 @@ product.controller("addSubProductController",function ($scope, $http, $location,
 
     productFactory.initScope($scope, httpService);
 
-    $scope.getList(0, 0);
+    $scope.getTemplateList();
 
     $scope.selectProduct = function () {
         $scope.availableTerms = productFactory.checkTerms($scope.selectedProduct.availableTerms);
@@ -294,7 +309,7 @@ product.controller("editSubProductController", function ($scope, $http, $locatio
     $scope.selectedProduct = $stateParams.items;
     $scope.availableTerms = productFactory.checkTerms($scope.selectedProduct.availableTerms);
     $scope.selectCity = cityJson.Citys[$scope.selectedProduct.cityId-1];
-    $scope.selectProvinces = cityJson.provincesList[cityJson.Citys[$scope.selectedProduct.cityId-1].ProvinceId-1];
+    $scope.selectProvince = cityJson.provincesList[cityJson.Citys[$scope.selectedProduct.cityId-1].ProvinceId-1];
 
     $scope.commit = function () {
         $scope.product = {
@@ -309,7 +324,7 @@ product.controller("editSubProductController", function ($scope, $http, $locatio
             loanMonthlyInterestRate:$scope.selectedProduct.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
-            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
+            maxAvailableVehicleYear:$scope.selectedProduct.maxAvailableVehicleYear,
             status:0
         };
         httpService.editProduct($scope.product).then(function () {
