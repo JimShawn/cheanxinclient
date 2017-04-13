@@ -44,24 +44,57 @@
                     <tr>
                         <td width="15%">车辆成交价：</td>
                         <td width="30%" ><span class="fl red">{{applyLoan.vehicleDealPrice}}</span></td>
-                        <td width="15%">贷款成数：</td>
-                        <td width="30%"><span class="fl red">{{applyLoan.applicantLoanRate}}</span></td>
+                        <td width="15%">车辆评估价：</td>
+                        <td width="30%" ><span class="fl red">{{applyLoan.vehiclePredictPrice}}</span></td>
+
                     </tr>
                     <tr>
-                        <td width="15%">首付金额：</td>
-                        <td width="30%" ><span class="fl red">{{applyLoan.vehicleDealPrice-applyLoan.applicantLoanPrice}}</span></td>
-                        <td width="15%">贷款总金额：</td>
+                        <td width="15%">贷款申请成数：</td>
+                        <td width="30%"><span class="fl red">{{applyLoan.applicantLoanRate}}</span></td>
+                        <td width="15%">贷款核准成数：</td>
+                        <td width="30%">
+                            <div class="comm-inp-wp width-half">
+                                <select class="comm-select1" ng-model="reviewLoanRate" ng-options = "rate+'成' for rate in AvailableRates.slice(minRate,maxRate)" ng-change="changeRate()">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td width="15%">申请贷款总金额：</td>
                         <td width="30%"><span class="fl red">{{applyLoan.applicantLoanPrice}}</span></td>
+                        <td width="15%">核准贷款总金额：</td>
+                        <td width="30%">
+                            <div class="comm-inp-wp inline one">
+                                <input type="text" class="comm-input1" ng-model="reviewLoanPrice">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="15%">申请首付金额：</td>
+                        <td width="30%" ><span class="fl red">{{applyLoan.vehicleDealPrice-applyLoan.applicantLoanPrice}}</span></td>
+                        <td width="15%">核准首付金额：</td>
+                        <td width="30%" ><span class="fl red">{{applyLoan.vehiclePredictPrice-reviewLoanPrice}}</span></td>
+                    </tr>
+
+                    <tr>
+                        <td width="15%">申请贷款期数：</td>
+                        <td width="30%"><span class="fl red">{{applyLoan.loanTerms}}</span></td>
+                        <td width="15%">核准贷款期数：</td>
+                        <td width="30%">
+                            <select class="comm-select1" ng-model="selectedTerm" ng-options = "term+'期' for term in availableTerms" ng-change="changeTerms()">
+                                <option value="">请选择</option>
+                            </select>
+                        </td>
                     </tr>
                     <tr>
                         <td width="15%">贷款利率：</td>
                         <td width="30%" ><span class="fl red">{{applyLoan.productLoanMonthlyInterestRate}}%/月</span></td>
-                        <td width="15%">贷款期数：</td>
-                        <td width="30%"><span class="fl red">{{applyLoan.loanTerms}}</span></td>
-                    </tr>
-                    <tr>
-                        <td>还款金额（元/月）：</td>
-                        <td>{{applyLoan.applicantLoanPrice*(applyLoan.productLoanMonthlyInterestRate/100+1/applyLoan.loanTerms)}}</td>
+                        <td width="15%">还款金额（元/月）：</td>
+                        <td width="30%" >
+                            <span class="fl red">{{payPerMonth}}</span>
+                        </td>
                     </tr>
                     </tbody>
                 </table>

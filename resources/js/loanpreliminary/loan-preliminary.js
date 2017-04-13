@@ -79,22 +79,22 @@ loanpreliminary.controller("loanpreliminaryListController", ['$scope', '$http', 
             name:"方案待修改",
         },{
             id:8,
-            name:"待放款",
+            name:"待过户",
         },{
             id:9,
             name:"初审退回",
         },{
             id:10,
-            name:"材料补充后待复审",
+            name:"待复审",
         },{
             id:11,
-            name:"材料补充后复审被拒绝",
+            name:"拒绝",
         },{
             id:12,
-            name:"调整方案后待复审",
+            name:"待复审",
         },{
             id:13,
-            name:"调整方案后复审被拒绝",
+            name:"拒绝",
         },{
             id:14,
             name:"已放弃",
@@ -104,6 +104,69 @@ loanpreliminary.controller("loanpreliminaryListController", ['$scope', '$http', 
         },{
             id:16,
             name:"已放弃",
+        },{
+            id:17,
+            name:"待审核"
+        },{
+            id:18,
+            name:"待审核"
+        },{
+            id:19,
+            name:"待确认"
+        },{
+            id:20,
+            name:"放弃贷款"
+        },{
+            id:21,
+            name:"材料待补充"
+        },{
+            id:22,
+            name:"待审核"
+        },{
+            id:23,
+            name:"待放款"
+        },{
+            id:24,
+            name:"已放款"
+        },{
+            id:25,
+            name:"待过户"
+        },{
+            id:26,
+            name:"待确认"
+        },{
+            id:27,
+            name:"放弃贷款"
+        },{
+            id:28,
+            name:"材料待补充"
+        },{
+            id:29,
+            name:"待审核"
+        },{
+            id:30,
+            name:"待放款"
+        },{
+            id:31,
+            name:"待还款"
+        },{
+            id:32,
+            name:"待审核"
+        },{
+            id:33,
+            name:"待审核"
+        },{
+            id:34,
+            name:"审核不通过"
+        },{
+            id:35,
+            name:"审核不通过"
+        },{
+            id:36,
+            name:"待还款"
+        },{
+            id:37,
+            name:"待审核"
         }
     ];
 
@@ -461,7 +524,8 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
             vehicleRegistrationCertificateFileIds: vehicleRegistrationCertificateFileIds,
             vehicleLicenseFileIds: vehicleLicenseFileIds,
             vehicleFileIds: vehicleFileIds,
-            applicationPicUrl: applicationPicUrl
+            applicationPicUrl: applicationPicUrl,
+            productLoanMonthlyInterestRate:$scope.selectedProduct.productLoanMonthlyInterestRate
 
         };
         if($scope.type == 1){

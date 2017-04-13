@@ -133,6 +133,12 @@ loanrecheck.controller("loanRecheckListController",['$scope', '$http','$location
         },{
             id:35,
             name:"审核不通过"
+        },{
+            id:36,
+            name:"待还款"
+        },{
+            id:37,
+            name:"待审核"
         }
     ];
 
@@ -216,6 +222,7 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         id:1,
         name:"先息后本"
     }];
+    $scope.AvailableRates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
     $scope.produceYears = [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017];
 
@@ -263,12 +270,22 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         httpService.getProductByID($scope.applyLoan.productId).then(function (res) {
             console.log(res);
             $scope.paybackType = res.data.repaymentMethod;
+            $scope.minRate = res.data.minAvailableRate;
+            $scope.maxRate = res.data.maxAvailableRate;
+            var termsStr = res.data.availableTerms;
+            $scope.availableTerms = termsStr.split(",");
             $scope.showPassDialog = true;
         },function (err) {
 
         })
 
     };
+    $scope.changeRate = function () {
+        $scope.reviewLoanPrice = $scope.applyLoan.vehiclePredictPrice * $scope.reviewLoanRate/10;
+    };
+    $scope.changeTerms = function () {
+        $scope.payPerMonth = $scope.reviewLoanPrice*($scope.applyLoan.productLoanMonthlyInterestRate/100+1/$scope.selectedTerm);
+    }
     $scope.doRefuse = function () {
         var loanApply = {
             reviewRemark:$scope.mainRefuseReason+$scope.otherRefuseReason
@@ -287,12 +304,21 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         
     };
     $scope.doPass=function () {
-        httpService.updateLoandraft($scope.applyLoan.id,{},3).then(function (res) {//3表示复审审批通过
-            console.log(res);
-            $state.go("main.loanrecheck");
+        var loan = {
+            reviewLoanRate:$scope.reviewLoanRate,
+            reviewLoanPrice:$scope.reviewLoanPrice
+        };
+        httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function (res) {//1表示更新
+            httpService.updateLoandraft($scope.applyLoan.id,{},3).then(function (res) {//3表示复审审批通过
+                console.log(res);
+                $state.go("main.loanrecheck");
+            },function (err) {
+                console.log(err);
+            });
         },function (err) {
             console.log(err);
         });
+
     }
 }]);
 
