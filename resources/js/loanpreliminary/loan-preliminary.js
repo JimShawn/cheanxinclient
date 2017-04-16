@@ -194,7 +194,8 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
 
 });
 
-loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http', '$location', '$rootScope', 'httpService', '$state', '$window', 'cityJson', '$stateParams', function ($filter, $scope, $http, $location, $rootScope, httpService, $state, $window, cityJson, $stateParams) {
+loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http', '$location', '$rootScope', 'httpService', '$state', '$window', 'cityJson', '$stateParams','toaster', function ($filter, $scope, $http, $location, $rootScope, httpService, $state, $window, cityJson, $stateParams,toaster) {
+
 
     $scope.init = function () {
         var userInfo = $window.sessionStorage['userInfo'];
@@ -207,24 +208,61 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         var selectedItem = $stateParams.items;
         $scope.type = $stateParams.type;
         if($scope.type == 2){
-            $scope.identityPhotos = selectedItem.applicantCertificateFileIds.split(",");
-            $scope.applicantQualificationPhotos = selectedItem.applicantQualificationFileIds.split(",");
-            $scope.applicantIncomePhotos = selectedItem.applicantIncomeFileIds.split(",");
-            $scope.applicantEstatePhotos = selectedItem.applicantEstateFileIds.split(",");
-            $scope.applicantVehiclePhotos = selectedItem.applicantVehicleFileIds.split(",");
-            $scope.applicantOtherPhotos = selectedItem.applicantOtherFileIds.split(",");
-            $scope.coIdentityPhotos = selectedItem.coApplicantCertificateFileIds.split(",");
-            $scope.coApplicantIncomePhotos = selectedItem.coApplicantIncomeFileIds.split(",");
-            $scope.coApplicantEstatePhotos = selectedItem.coApplicantEstateFileIds.split(",");
-            $scope.coApplicantOtherPhotos = selectedItem.coApplicantOtherFileIds.split(",");
-            $scope.guarantorIdentityPhotos = selectedItem.guarantorCertificateFileIds.split(",");
-            $scope.guarantorIncomePhotos = selectedItem.guarantorIncomeFileIds.split(",");
-            $scope.guarantorEstatePhotos = selectedItem.guarantorEstateFileIds.split(",");
-            $scope.guarantorOtherPhotos = selectedItem.guarantorOtherFileIds.split(",");
-            $scope.vehicleRegistrationCertificatePhotos = selectedItem.vehicleRegistrationCertificateFileIds.split(",");
-            $scope.vehicleLicensePhotos = selectedItem.vehicleLicenseFileIds.split(",");
-            $scope.vehiclePhotos = selectedItem.vehicleFileIds.split(",");
-            $scope.applicationPicPhotos = selectedItem.applicationPicUrl.split(",");
+            if(selectedItem.applicantCertificateFileIds){
+                $scope.identityPhotos = selectedItem.applicantCertificateFileIds.split(",");
+            };
+            if(selectedItem.applicantQualificationFileIds){
+                $scope.applicantQualificationPhotos = selectedItem.applicantQualificationFileIds.split(",");
+            };
+            if(selectedItem.applicantIncomeFileIds){
+                $scope.applicantIncomePhotos = selectedItem.applicantIncomeFileIds.split(",");
+            };
+            if(selectedItem.applicantEstateFileIds){
+                $scope.applicantEstatePhotos = selectedItem.applicantEstateFileIds.split(",");
+            };
+            if(selectedItem.applicantVehicleFileIds){
+                $scope.applicantVehiclePhotos = selectedItem.applicantVehicleFileIds.split(",");
+            };
+            if(selectedItem.applicantOtherFileIds){
+                $scope.applicantOtherPhotos = selectedItem.applicantOtherFileIds.split(",");
+            };
+
+            if(selectedItem.coApplicantCertificateFileIds){
+                $scope.coIdentityPhotos = selectedItem.coApplicantCertificateFileIds.split(",");
+            };
+            if(selectedItem.coApplicantIncomeFileIds){
+                $scope.coApplicantIncomePhotos = selectedItem.coApplicantIncomeFileIds.split(",");
+            };
+            if(selectedItem.coApplicantEstateFileIds){
+                $scope.coApplicantEstatePhotos = selectedItem.coApplicantEstateFileIds.split(",");
+            };
+            if(selectedItem.coApplicantOtherFileIds){
+                $scope.coApplicantOtherPhotos = selectedItem.coApplicantOtherFileIds.split(",");
+            };
+            if(selectedItem.guarantorCertificateFileIds){
+                $scope.guarantorIdentityPhotos = selectedItem.guarantorCertificateFileIds.split(",");
+            };
+            if(selectedItem.guarantorIncomeFileIds){
+                $scope.guarantorIncomePhotos = selectedItem.guarantorIncomeFileIds.split(",");
+            };
+            if(selectedItem.guarantorEstateFileIds){
+                $scope.guarantorEstatePhotos = selectedItem.guarantorEstateFileIds.split(",");
+            };
+            if(selectedItem.guarantorOtherFileIds){
+                $scope.guarantorOtherPhotos = selectedItem.guarantorOtherFileIds.split(",");
+            };
+            if(selectedItem.vehicleRegistrationCertificateFileIds){
+                $scope.vehicleRegistrationCertificatePhotos = selectedItem.vehicleRegistrationCertificateFileIds.split(",");
+            };
+            if(selectedItem.vehicleLicenseFileIds){
+                $scope.vehicleLicensePhotos = selectedItem.vehicleLicenseFileIds.split(",");
+            };
+            if(selectedItem.vehicleFileIds){
+                $scope.vehiclePhotos = selectedItem.vehicleFileIds.split(",");
+            };
+            if(selectedItem.applicationPicUrl){
+                $scope.applicationPicPhotos = selectedItem.applicationPicUrl.split(",");
+            };
         }
 
 
@@ -374,7 +412,6 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
     };
     $scope.commit = function (operateType) {
         //预先获取图片url
-        var errorMsg = "";
         var applicantCertificateFileIds = $filter('filter')($scope.applicantIdentification, '').join(",");
         var applicantQualificationFileIds = $filter('filter')($scope.applicantQualification, '').join(",");
         var applicantIncomeFileIds = $filter('filter')($scope.applicantIncome, '').join(",");
@@ -393,58 +430,163 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         var vehicleLicenseFileIds = $filter('filter')($scope.vehicleLicense, '').join(",");
         var vehicleFileIds = $filter('filter')($scope.vehicle, '').join(",");
         var applicationPicUrl = $filter('filter')($scope.applicationPic, '').join(",");
-        if (!applicantCertificateFileIds) {
-            errorMsg += "请上传申请人身份证图片" + "\n";
-        }
-        ;
-        if (!coApplicantCertificateFileIds) {
-            errorMsg += "请上传共同申请人身份证图片" + "\n";
-        }
-        ;
-        if (!guarantorCertificateFileIds) {
-            errorMsg += "请上传担保人身份证图片" + "\n";
-        }
-        ;
-        if (!applicantIncomeFileIds && !applicantEstateFileIds) {
-            errorMsg += "申请人收入证明和房产证明必须传一个" + "\n";
-        }
-        ;
-        if (!vehicleRegistrationCertificateFileIds) {
-            errorMsg += "请上传车辆登记证书" + "\n";
-        }
-        ;
-        if (!vehicleLicenseFileIds) {
-            errorMsg += "请上传机动车行驶证" + "\n";
-        }
-        ;
-        if (!vehicleFileIds) {
-            errorMsg += "请上传车辆照片" + "\n";
-        }
-        ;
-        if (!applicationPicUrl) {
-            errorMsg += "请上传申请表" + "\n";
-        }
-        ;
-        if (errorMsg != "") {
-            alert(errorMsg);
-            return;
-        }
+        var isPhone = /^1\d{10}$/;
+        var isCertificate = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+
+        if(operateType == 2){//如果是提交，则做必填项以及字段规则的验证
+            if(!$scope.sourceCity){
+                toaster.error("请选择来源城市");
+                return;
+            };
+            if(!$scope.selectedSource){
+                toaster.error("请选择来源渠道");
+                return;
+            };
+            if(!$scope.selectedCollector){
+                toaster.error("请选择收单员");
+                return;
+            };
+            if(!$scope.sourcePersonName){
+                toaster.error("请输入来源人姓名");
+                return;
+            };
+            if(!$scope.sourcePersonTel){
+                toaster.error("请输入来源人手机号");
+                return;
+            };
+            if(!isPhone.test($scope.sourcePersonTel)){
+                toaster.error("请输入来源人格式正确的手机号");
+                return;
+            };
+            if(!$scope.applicantName){
+                toaster.error("请输入申请人姓名");
+                return;
+            };
+            if(!$scope.applicantMobileNumber){
+                toaster.error("请输入申请人手机号");
+                return;
+            };
+            if(!isPhone.test($scope.applicantMobileNumber)){
+                toaster.error("请输入申请人格式正确的手机号");
+                return;
+            };
+            if(!$scope.selectedIDType){
+                toaster.error("请选择证件类型");
+                return;
+            };
+            if(!$scope.applicantCertificateNumber){
+                    toaster.error("请输入证件号码");
+                    return;
+            };
+            if($scope.selectedIDType.id ==0 &&!isCertificate.test($scope.applicantCertificateNumber)){
+                toaster.error("请输入格式正确的身份证号码");
+                return;
+            };
+            if(!$scope.selectedMarriages){
+                toaster.error("请选择婚姻状况");
+                return;
+            };
+            if(!$scope.applicantIncomePerMonth){
+                toaster.error("请输入本人月收入");
+                return;
+            };
+
+            if (!applicantCertificateFileIds) {
+                toaster.error("请上传申请人身份证图片");
+                return;
+            };
+            if (!applicantIncomeFileIds && !applicantEstateFileIds) {
+                toaster.error("申请人收入证明和房产证明必须传一个");
+                return;
+            };
+            if (!coApplicantCertificateFileIds) {
+                toaster.error("请上传共同申请人身份证图片");
+                return;
+            };
+            if (!guarantorCertificateFileIds) {
+                toaster.error("请上传担保人身份证图片");
+                return;
+            };
+            if(!$scope.vehicleVin || $scope.vehicleVin.length!=17){
+                toaster.error("请输入17位车架号");
+                return;
+            };
+            if(!$scope.selectedFactory){
+                toaster.error("请选择汽车生产厂家");
+                return;
+            };
+            if(!$scope.selectedBrand){
+                toaster.error("请选择汽车生产品牌");
+                return;
+            };
+            if(!$scope.selectedSeries){
+                toaster.error("请选择汽车款式");
+                return;
+            };
+
+            if(!$scope.vehicleKilometers || $scope.vehicleKilometers>=1000 || $scope.vehicleKilometers<=0){
+                toaster.error("请输入二手车里程数");
+                return;
+            };
+
+            if (!vehicleRegistrationCertificateFileIds) {
+                toaster.error("请上传车辆登记证书");
+                return;
+            };
+            if (!vehicleLicenseFileIds) {
+                toaster.error("请上传机动车行驶证");
+                return;
+            };
+            if (!vehicleFileIds) {
+                toaster.error("请上传车辆照片");
+                return;
+            };
+            if(!$scope.selectedProduct){
+                toaster.error("请选择产品");
+                return;
+            };
+            if(!$scope.vehicleDealPrice || $scope.vehicleDealPrice>=100000000 || $scope.vehicleDealPrice<0){
+                toaster.error("请输入正确的车辆成交价");
+                return;
+            };
+            if(!$scope.selectedRate){
+                toaster.error("请选择贷款成数");
+                return;
+            };
+            if(!$scope.applicantLoanPrice){
+                toaster.error("请输入贷款金额");
+                return;
+            };
+            if($scope.applicantLoanPrice>$scope.vehicleDealPrice*$scope.selectedProduct.maxAvailableRate/10){
+                toaster.error("贷款金额不能大于最高可贷成数的金额");
+                return;
+            };
+            if($scope.applicantLoanPrice<$scope.vehicleDealPrice*$scope.selectedProduct.minAvailableRate/10){
+                toaster.error("贷款金额不能小于最高可贷成数的金额");
+                return;
+            };
+            if(!$scope.selectedTerm){
+                toaster.error("请选择期数");
+                return;
+            };
+            if (!applicationPicUrl) {
+                toaster.error("请上传申请表");
+                return;
+            };
+        };
+
+
+
         var loanDraft = {
             vehicleDealPrice: $scope.vehicleDealPrice,
-            productId: $scope.selectedProduct.id,
             applicantLoanRate: $scope.selectedRate,
             applicantLoanPrice: $scope.applicantLoanPrice,
             loanTerms: $scope.selectedTerm,
             remark: $scope.remark,
             sourceFinancialCommissioner: $scope.userInfo.data.realName,
-            sourceReceiver: $scope.selectedCollector.realName,
-            sourceCityId: $scope.sourceCity.Id,
-            sourceChannel: $scope.selectedSource.id,
             sourcePersonName: $scope.sourcePersonName,
             sourcePersonTel: $scope.sourcePersonTel,
             applicantName: $scope.applicantName,
-            applicantMarriage: $scope.selectedMarriages.id,
-            applicantCertificateType: $scope.selectedIDType.id,
             applicantCertificateNumber: $scope.applicantCertificateNumber,
             applicantMobileNumber: $scope.applicantMobileNumber,
             applicantIncomePerMonth: $scope.applicantIncomePerMonth,
@@ -454,27 +596,82 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
             vehicleSeries: $scope.selectedSeries,
             vehicleKilometers: $scope.vehicleKilometers,
             status: 1,
-            creatorUsername: $scope.userInfo.data.username,
-            applicantCertificateFileIds: applicantCertificateFileIds,
-            applicantQualificationFileIds: applicantQualificationFileIds,
-            applicantIncomeFileIds: applicantIncomeFileIds,
-            applicantEstateFileIds: applicantEstateFileIds,
-            applicantVehicleFileIds: applicantVehicleFileIds,
-            applicantOtherFileIds: applicantOtherFileIds,
-            coApplicantCertificateFileIds: coApplicantCertificateFileIds,
-            coApplicantIncomeFileIds: coApplicantIncomeFileIds,
-            coApplicantEstateFileIds: coApplicantEstateFileIds,
-            coApplicantOtherFileIds: coApplicantOtherFileIds,
-            guarantorCertificateFileIds: guarantorCertificateFileIds,
-            guarantorIncomeFileIds: guarantorIncomeFileIds,
-            guarantorEstateFileIds: guarantorEstateFileIds,
-            guarantorOtherFileIds: guarantorOtherFileIds,
-            vehicleRegistrationCertificateFileIds: vehicleRegistrationCertificateFileIds,
-            vehicleLicenseFileIds: vehicleLicenseFileIds,
-            vehicleFileIds: vehicleFileIds,
-            applicationPicUrl: applicationPicUrl,
-            productLoanMonthlyInterestRate:$scope.selectedProduct.loanMonthlyInterestRate
+            creatorUsername: $scope.userInfo.data.username
 
+        };
+        if(applicantCertificateFileIds){
+            loanDraft.applicantCertificateFileIds = applicantCertificateFileIds;
+        };
+        if(applicantQualificationFileIds){
+            loanDraft.applicantQualificationFileIds = applicantQualificationFileIds;
+        };
+        if(applicantIncomeFileIds){
+            loanDraft.applicantIncomeFileIds = applicantIncomeFileIds;
+        };
+        if(applicantEstateFileIds){
+            loanDraft.applicantEstateFileIds = applicantEstateFileIds;
+        };
+        if(applicantVehicleFileIds){
+            loanDraft.applicantVehicleFileIds = applicantVehicleFileIds;
+        };
+        if(applicantOtherFileIds){
+            loanDraft.applicantOtherFileIds = applicantOtherFileIds;
+        };
+        if(coApplicantCertificateFileIds){
+            loanDraft.coApplicantCertificateFileIds = coApplicantCertificateFileIds;
+        };
+        if(coApplicantIncomeFileIds){
+            loanDraft.coApplicantIncomeFileIds = coApplicantIncomeFileIds;
+        };
+        if(coApplicantEstateFileIds){
+            loanDraft.coApplicantEstateFileIds = coApplicantEstateFileIds;
+        };
+        if(coApplicantOtherFileIds){
+            loanDraft.coApplicantOtherFileIds = coApplicantOtherFileIds;
+        };
+        if(guarantorCertificateFileIds){
+            loanDraft.guarantorCertificateFileIds = guarantorCertificateFileIds;
+        };
+        if(guarantorIncomeFileIds){
+            loanDraft.guarantorIncomeFileIds = guarantorIncomeFileIds;
+        };
+        if(guarantorEstateFileIds){
+            loanDraft.guarantorEstateFileIds = guarantorEstateFileIds;
+        };
+        if(guarantorOtherFileIds){
+            loanDraft.guarantorOtherFileIds = guarantorOtherFileIds;
+        };
+        if(vehicleRegistrationCertificateFileIds){
+            loanDraft.vehicleRegistrationCertificateFileIds = vehicleRegistrationCertificateFileIds;
+        };
+        if(vehicleLicenseFileIds){
+            loanDraft.vehicleLicenseFileIds = vehicleLicenseFileIds;
+        };
+        if(vehicleFileIds){
+            loanDraft.vehicleFileIds = vehicleFileIds;
+        };
+        if(applicationPicUrl){
+            loanDraft.applicationPicUrl = applicationPicUrl;
+        };
+        if($scope.selectedProduct){
+            loanDraft.productId = $scope.selectedProduct.id;
+            loanDraft.productLoanMonthlyInterestRate = $scope.selectedProduct.productLoanMonthlyInterestRate;
+        };
+        if($scope.selectedCollector){
+            loanDraft.sourceReceiver = $scope.selectedCollector.realName;
+        };
+        if($scope.sourceCity){
+            loanDraft.sourceCityId = $scope.sourceCity.Id;
+        };
+
+        if($scope.selectedSource){
+            loanDraft.sourceChannel = $scope.selectedSource.id;
+        };
+        if($scope.selectedMarriages){
+            loanDraft.applicantMarriage = $scope.selectedMarriages.id;
+        };
+        if($scope.selectedIDType){
+            loanDraft.applicantCertificateType = $scope.selectedIDType.id;
         };
         if($scope.type == 1){
             httpService.addLoandraft(loanDraft).then(function (res) {

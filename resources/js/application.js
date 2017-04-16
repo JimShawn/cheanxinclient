@@ -357,6 +357,12 @@ app.factory('sessionInjector', function ($rootScope, $window, $q, $injector, toa
         //     }
         //     return config;
         // },
+        requestError:function(rejection){
+            //请求发生了错误，如果能从错误中恢复，可以返回一个请求或promise。
+            return response;
+            //或者，可以通过返回一个rejection来阻止下一步
+            //return $q.reject(rejection);
+        },
         responseError: function(response) {
             // TODO: why response status is -1
             // if (response.status == 401 || response.status == -1) {
