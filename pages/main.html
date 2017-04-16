@@ -33,19 +33,37 @@
 <div class="mainContent">
     <div class="frameLeft">
         <div class="left-menu">
-            <div class="left-menu-item">
+            <div class="left-menu-item" ng-repeat="(i, menuItem) in menuItems" ng-show="menuItem.show">
                 <div class="hd">
-                    <h3>贷款申请</h3>
+                    <h3>{{menuItem.name}}</h3>
                     <i class="i-arrow-down"></i>
                 </div>
                 <div class="bd">
                     <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':menuItems[0]}" ng-click="changeItem(0)">
-                            <a href="#!/main/loanapply">
-                                贷款申请
+                        <li class="item" ng-class="{'item-on':subItem.highlight}" ng-click="changeItem(i, j)" ng-repeat="(j, subItem) in menuItem.subItems" ng-show="subItem.show">
+                            <a href="" target="right">
+                                {{subItem.name}}
                                 <i class="i-link-arrow"></i>
                             </a>
                         </li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <!--<div class="left-menu-item">-->
+                <!--<div class="hd">-->
+                    <!--<h3>贷款申请</h3>-->
+                    <!--<i class="i-arrow-down"></i>-->
+                <!--</div>-->
+                <!--<div class="bd">-->
+                    <!--<ul class="left-sub-menu">-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[0]}" ng-click="changeItem(0)">-->
+                            <!--<a href="#!/main/loanapply">-->
+                                <!--贷款申请-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
                         <!--<li class="item" ng-class="{'item-on':menuItems[1]}" ng-click="changeItem(1)">-->
                             <!--<a href="">-->
                                 <!--贷款意向-->
@@ -58,81 +76,81 @@
                                 <!--<i class="i-link-arrow"></i>-->
                             <!--</a>-->
                         <!--</li>-->
-                    </ul>
-                </div>
-            </div>
-            <div class="left-menu-item">
-                <div class="hd">
-                    <h3>贷前审批</h3>
-                    <i class="i-arrow-down"></i>
-                </div>
-                <div class="bd">
-                    <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':menuItems[3]}" ng-click="changeItem(3)">
-                            <a href="" ng-click="LoanPreliminary()">
-                                贷款预审
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="item" ng-class="{'item-on':menuItems[4]}" ng-click="changeItem(4)">
-                            <a href="" ng-click="setPricing()">
-                                车辆定价
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="item" ng-class="{'item-on':menuItems[5]}" ng-click="changeItem(5)">
-                            <a href="" ng-click="loanRecheck()">
-                                贷款复审
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="left-menu-item">
-                <div class="hd">
-                    <h3>签约管理</h3>
-                    <i class="i-arrow-down"></i>
-                </div>
-                <div class="bd">
-                    <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':menuItems[6]}" ng-click="changeItem(6)">
-                            <a href="" ng-click="signManagement()">
-                                签约管理
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="item" ng-class="{'item-on':menuItems[7]}" ng-click="changeItem(7)">
-                            <a href="" ng-click="giveupList()">
-                                客户放弃签约
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="left-menu-item">
-                <div class="hd">
-                    <h3>放款管理</h3>
-                    <i class="i-arrow-down"></i>
-                </div>
-                <div class="bd">
-                    <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':menuItems[8]}" ng-click="changeItem(8)">
-                            <a href="" ng-click="afterTransfer()">
-                                过户后放款
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="item" ng-class="{'item-on':menuItems[9]}" ng-click="changeItem(9)">
-                            <a href="" ng-click="afterMortgage()">
-                                抵押后放款
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="left-menu-item">-->
+                <!--<div class="hd">-->
+                    <!--<h3>贷前审批</h3>-->
+                    <!--<i class="i-arrow-down"></i>-->
+                <!--</div>-->
+                <!--<div class="bd">-->
+                    <!--<ul class="left-sub-menu">-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[3]}" ng-click="changeItem(3)">-->
+                            <!--<a href="" ng-click="LoanPreliminary()">-->
+                                <!--贷款预审-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[4]}" ng-click="changeItem(4)">-->
+                            <!--<a href="" ng-click="setPricing()">-->
+                                <!--车辆定价-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[5]}" ng-click="changeItem(5)">-->
+                            <!--<a href="" ng-click="loanRecheck()">-->
+                                <!--贷款复审-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="left-menu-item">-->
+                <!--<div class="hd">-->
+                    <!--<h3>签约管理</h3>-->
+                    <!--<i class="i-arrow-down"></i>-->
+                <!--</div>-->
+                <!--<div class="bd">-->
+                    <!--<ul class="left-sub-menu">-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[6]}" ng-click="changeItem(6)">-->
+                            <!--<a href="" ng-click="signManagement()">-->
+                                <!--签约管理-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[7]}" ng-click="changeItem(7)">-->
+                            <!--<a href="" ng-click="giveupList()">-->
+                                <!--客户放弃签约-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="left-menu-item">-->
+                <!--<div class="hd">-->
+                    <!--<h3>放款管理</h3>-->
+                    <!--<i class="i-arrow-down"></i>-->
+                <!--</div>-->
+                <!--<div class="bd">-->
+                    <!--<ul class="left-sub-menu">-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[8]}" ng-click="changeItem(8)">-->
+                            <!--<a href="" ng-click="afterTransfer()">-->
+                                <!--过户后放款-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[9]}" ng-click="changeItem(9)">-->
+                            <!--<a href="" ng-click="afterMortgage()">-->
+                                <!--抵押后放款-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
             <!--<div class="left-menu-item">-->
                 <!--<div class="hd">-->
                     <!--<h3>档案管理</h3>-->
@@ -195,57 +213,57 @@
                     <!--</ul>-->
                 <!--</div>-->
             <!--</div>-->
-            <div class="left-menu-item">
-                <div class="hd">
-                    <h3>系统管理</h3>
-                    <i class="i-arrow-down"></i>
-                </div>
-                <div class="bd">
-                    <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':menuItems[17]}" ng-click="changeItem(17)">
-                            <a ng-click = "deptManagement()" href="">
-                                组织管理
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="item" ng-class="{'item-on':menuItems[18]}" ng-click="changeItem(18)">
-                            <a  ng-click = "positionManagement()" href="">
-                                岗位管理
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="item" ng-class="{'item-on':menuItems[19]}" ng-click="changeItem(19)">
-                            <a target="right" ng-click = "manManagement()" href="">
-                                人员管理
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="left-menu-item">
-                <div class="hd">
-                    <h3>产品管理</h3>
-                    <i class="i-arrow-down"></i>
-                </div>
-                <div class="bd">
-                    <ul class="left-sub-menu">
-                        <li class="item" ng-class="{'item-on':menuItems[21]}" ng-click="changeItem(21)">
-                            <a ng-click = "productManagement()" href="" target="right">
-                                产品管理
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
-                        <li class="item" ng-class="{'item-on':menuItems[22]}" ng-click="changeItem(22)">
-                            <a ng-click = "subProductManagement()" href="" target="right">
-                                产品地域策略
-                                <i class="i-link-arrow"></i>
-                            </a>
-                        </li>
+            <!--<div class="left-menu-item">-->
+                <!--<div class="hd">-->
+                    <!--<h3>系统管理</h3>-->
+                    <!--<i class="i-arrow-down"></i>-->
+                <!--</div>-->
+                <!--<div class="bd">-->
+                    <!--<ul class="left-sub-menu">-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[17]}" ng-click="changeItem(17)">-->
+                            <!--<a ng-click = "deptManagement()" href="">-->
+                                <!--组织管理-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[18]}" ng-click="changeItem(18)">-->
+                            <!--<a  ng-click = "positionManagement()" href="">-->
+                                <!--岗位管理-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[19]}" ng-click="changeItem(19)">-->
+                            <!--<a target="right" ng-click = "manManagement()" href="">-->
+                                <!--人员管理-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="left-menu-item">-->
+                <!--<div class="hd">-->
+                    <!--<h3>产品管理</h3>-->
+                    <!--<i class="i-arrow-down"></i>-->
+                <!--</div>-->
+                <!--<div class="bd">-->
+                    <!--<ul class="left-sub-menu">-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[21]}" ng-click="changeItem(21)">-->
+                            <!--<a ng-click = "productManagement()" href="" target="right">-->
+                                <!--产品管理-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
+                        <!--<li class="item" ng-class="{'item-on':menuItems[22]}" ng-click="changeItem(22)">-->
+                            <!--<a ng-click = "subProductManagement()" href="" target="right">-->
+                                <!--产品地域策略-->
+                                <!--<i class="i-link-arrow"></i>-->
+                            <!--</a>-->
+                        <!--</li>-->
 
-                    </ul>
-                </div>
-            </div>
+                    <!--</ul>-->
+                <!--</div>-->
+            <!--</div>-->
         </div>
     </div>
     <div class="frameRight">

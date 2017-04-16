@@ -3,7 +3,8 @@
  */
 'use strict';
 var loanpreliminary = angular.module('loanpreliminary', ['httpservice']);
-loanpreliminary.controller("loanpreliminaryListController", ['$scope', '$http', '$location', '$rootScope', 'httpService', '$state', '$timeout', 'commonUtil', 'cityJson', function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, commonUtil, cityJson) {
+loanpreliminary.controller("loanpreliminaryListController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, commonUtil, cityJson, $stateParams, $window) {
+    commonUtil.initTab($scope, $stateParams, $window, "preliminaryTabs", httpService);
     $scope.QueryUserName = "";
     $scope.queryTel = "";
     $scope.sources = [
@@ -173,80 +174,28 @@ loanpreliminary.controller("loanpreliminaryListController", ['$scope', '$http', 
     $scope.commonUtil = commonUtil;
     $scope.cityJson = cityJson;
 
-    $scope.getList = function (page, size, status) {
-        httpService.getLoanPreliminary(page, size, status).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
-        }, function (error) {
-            console.log(error);
-        });
-
-    };
-    $scope.getList(0, 10, 1);
-
-    $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number, size);
-    };
-
-    $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x, $scope.data.size);
-    };
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement", {items: null});
     };
     $scope.edit = function (draft) {
-        if ($scope.draft) {
-            $state.go("main.loanapply", {items: draft, type: 2});
-        } else if ($scope.waitingCheck) {
+        if (draft.status == 2) {
             $state.go("main.eidtloanapply", {items: draft});
-        } else if ($scope.returnWaitingUpdate) {
+        } else {
             $state.go("main.loanapply", {items: draft, type: 2});
         }
-
-
     };
     $scope.draft = true;//默认草稿箱页面
-    $scope.goToDraft = function (pageType) {
-        switch (pageType) {
-            case 1:
-                $scope.draft = true;
-                $scope.waitingCheck = $scope.returnWaitingUpdate = $scope.checkPass = $scope.checkRefuse = false;
-                $scope.getList(0, 10, 1);
-                break;
-            case 2:
-                $scope.waitingCheck = true;
-                $scope.draft = $scope.returnWaitingUpdate = $scope.checkPass = $scope.checkRefuse = false;
-                $scope.getList(0, 10, 2);
-                break;
-            case 3:
-                $scope.returnWaitingUpdate = true;
-                $scope.waitingCheck = $scope.draft = $scope.checkPass = $scope.checkRefuse = false;
-                $scope.getList(0, 10, 9);
-                break;
-            case 4:
-                $scope.checkPass = true;
-                $scope.waitingCheck = $scope.returnWaitingUpdate = $scope.draft = $scope.checkRefuse = false;
-                $scope.getList(0, 10, 3);
-                break;
-            case 5:
-                $scope.checkRefuse = true;
-                $scope.waitingCheck = $scope.returnWaitingUpdate = $scope.draft = $scope.checkPass = false;
-                $scope.getList(0, 10, 0);
-                break;
-        }
+    $scope.goToDraft = function (i) {
+        commonUtil.changeTab($scope, i);
     };
     $scope.add = function () {
         $state.go("main.loanapply", {items: null, type: 1});
     }
 
-}]);
+});
+
 loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http', '$location', '$rootScope', 'httpService', '$state', '$window', 'cityJson', '$stateParams','toaster', function ($filter, $scope, $http, $location, $rootScope, httpService, $state, $window, cityJson, $stateParams,toaster) {
+
 
     $scope.init = function () {
         var userInfo = $window.sessionStorage['userInfo'];
@@ -459,7 +408,7 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.productLoanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100;
     };
     $scope.commit = function (operateType) {
         //预先获取图片url
@@ -1321,7 +1270,7 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm +  $scope.applicantLoanPrice * $scope.selectedProduct.productLoanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm +  $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100;
     };
 
     var getLoanBean = function (loanDraft) {
