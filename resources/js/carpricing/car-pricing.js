@@ -3,35 +3,12 @@
  */
 'use strict';
 var carpricing = angular.module('carpricing',['httpservice']);
-carpricing.controller("carPricingListController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','commonUtil','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,commonUtil,cityJson,$stateParams) {
+carpricing.controller("carPricingListController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,commonUtil,cityJson,$stateParams, $window) {
+    commonUtil.initTab($scope, $stateParams, $window, "priceTabs", httpService);
 
-    $scope.getList = function (page,size,status) {
-        httpService.getLoanPreliminary(page,size,status).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
-
-        },function (error) {
-            console.log(error);
-        });
-
-    };
-    $scope.getList(0,10,3);
-    $scope.waitingPricing=true;
     $scope.cityJson = cityJson;
     $scope.commonUtil = commonUtil;
-    $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number,size);
-    };
-
-    $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x,$scope.data.size);
-    };
+    
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement",{items:null});
     };
@@ -49,23 +26,12 @@ carpricing.controller("carPricingListController",['$scope', '$http','$location',
     $scope.setPrice = function (loan) {
         $state.go("main.setpricelist",{items:loan});
     };
-    $scope.changeTab = function (type) {
-        switch (type){
-            case 1:
-                $scope.waitingPricing=true;
-                $scope.Priced =false;
-                $scope.getList(0,10,3);
-                break;
-            case 2:
-                $scope.Priced=true;
-                $scope.waitingPricing=false;
-                $scope.getList(0,10,4);
-                break;
-
-        }
+    $scope.changeTab = function(i) {
+        commonUtil.changeTab($scope, i);
     }
 
-}]);
+});
+
 product.controller("setPriceController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
     $scope.cities = cityJson;
 

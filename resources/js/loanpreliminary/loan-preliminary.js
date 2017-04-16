@@ -4,17 +4,7 @@
 'use strict';
 var loanpreliminary = angular.module('loanpreliminary', ['httpservice']);
 loanpreliminary.controller("loanpreliminaryListController", function ($scope, $http, $location, $rootScope, httpService, $state, $timeout, commonUtil, cityJson, $stateParams, $window) {
-    $scope.subTabs = $stateParams.subTabs;
-    if (!$scope.subTabs) {
-        $scope.subTabs = JSON.parse($window.sessionStorage['preliminaryTabs']);
-    }
-    for (var i in $scope.subTabs) {
-        if ($scope.subTabs[i].show) {
-            $scope.subTab = $scope.subTabs[i];
-            $scope.subTab.highlight = true;
-            break;
-        }
-    }
+    commonUtil.initTab($scope, $stateParams, $window, "preliminaryTabs", httpService);
     $scope.QueryUserName = "";
     $scope.queryTel = "";
     $scope.sources = [
@@ -184,30 +174,6 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
     $scope.commonUtil = commonUtil;
     $scope.cityJson = cityJson;
 
-    $scope.getList = function (page, size, status) {
-        httpService.getLoanPreliminary(page, size, status).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
-        }, function (error) {
-            console.log(error);
-        });
-
-    };
-    $scope.getList(0, 10, $scope.subTabs[0].status);
-
-    $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number, size);
-    };
-
-    $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x, $scope.data.size);
-    };
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement", {items: null});
     };
@@ -220,42 +186,7 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
     };
     $scope.draft = true;//默认草稿箱页面
     $scope.goToDraft = function (i) {
-        for (var key in $scope.subTabs) {
-            if (key == i) {
-                $scope.subTabs[key].highlight = true;
-                $scope.subTab = $scope.subTabs[key];
-                $scope.getList(0, 10, $scope.subTabs[key].status)
-            } else {
-                $scope.subTabs[key].highlight = false;
-            }
-        }
-        // switch (pageType) {
-        //     case 1:
-        //         $scope.draft = true;
-        //         $scope.waitingCheck = $scope.returnWaitingUpdate = $scope.checkPass = $scope.checkRefuse = false;
-        //         $scope.getList(0, 10, 1);
-        //         break;
-        //     case 2:
-        //         $scope.waitingCheck = true;
-        //         $scope.draft = $scope.returnWaitingUpdate = $scope.checkPass = $scope.checkRefuse = false;
-        //         $scope.getList(0, 10, 2);
-        //         break;
-        //     case 3:
-        //         $scope.returnWaitingUpdate = true;
-        //         $scope.waitingCheck = $scope.draft = $scope.checkPass = $scope.checkRefuse = false;
-        //         $scope.getList(0, 10, 9);
-        //         break;
-        //     case 4:
-        //         $scope.checkPass = true;
-        //         $scope.waitingCheck = $scope.returnWaitingUpdate = $scope.draft = $scope.checkRefuse = false;
-        //         $scope.getList(0, 10, 3);
-        //         break;
-        //     case 5:
-        //         $scope.checkRefuse = true;
-        //         $scope.waitingCheck = $scope.returnWaitingUpdate = $scope.draft = $scope.checkPass = false;
-        //         $scope.getList(0, 10, 0);
-        //         break;
-        // }
+        commonUtil.changeTab($scope, i);
     };
     $scope.add = function () {
         $state.go("main.loanapply", {items: null, type: 1});
