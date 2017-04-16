@@ -1,57 +1,6 @@
 var authors = angular.module('main', []);
 
 authors.controller('MainController', function($scope, $http, $location, $rootScope, $state, httpService, $window, $interval, toaster) {
-    var preliminaryTabs = [
-        {
-            name:"草稿箱",
-            review:false,
-            edit:false,
-            show:false,
-            highlight:true,
-            editRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_UPDATE"],
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_READ"],
-            status:"1"
-        },
-        {
-            name:"待审核",
-            review:false,
-            edit:false,
-            show:false,
-            highlight:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ"],
-            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_REVIEW"],
-            status:"2"
-        },
-        {
-            name:"退回待修改",
-            review:false,
-            edit:false,
-            show:false,
-            highlight:false,
-            editRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_UPDATE"],
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_READ"],
-            status:"9"
-        },
-        {
-            name:"审核通过",
-            review:false,
-            edit:false,
-            show:false,
-            highlight:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ"],
-            status:"3"
-        },
-        {
-            name:"审核拒绝",
-            review:false,
-            edit:false,
-            show:false,
-            highlight:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ"],
-            status:"0"
-        }
-    ];
-    $window.sessionStorage['preliminaryTabs'] = JSON.stringify(preliminaryTabs);
     $scope.$watch('$viewContentLoaded', function() {
         var winWid=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         var winHei=window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
@@ -90,17 +39,314 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
         $scope.nowTime = year+"-"+month+"-"+day+"   "+hours+":"+minutes+":"+seconds;
     },1000);
 
-    // $scope.menuItems = [false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false,false];
-    // $scope.changeItem = function (i) {
-    //     for (var j=0;j<$scope.menuItems.length;j++){
-    //         if(i==j){
-    //             $scope.menuItems[j] = true;
-    //         }else{
-    //             $scope.menuItems[j] = false;
-    //         }
-    //     }
-    // }
-
+    var preliminaryTabs = [
+        {
+            name:"草稿箱",
+            review:false,
+            edit:false,
+            show:false,
+            highlight:true,
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_UPDATE"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_READ"],
+            status:"1"
+        },
+        {
+            name:"待审核",
+            review:false,
+            edit:false,
+            show:false,
+            highlight:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_REVIEW"],
+            status:"2"
+        },
+        {
+            name:"退回待修改",
+            review:false,
+            edit:false,
+            show:false,
+            highlight:false,
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_UPDATE"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_READ"],
+            status:"9"
+        },
+        {
+            name:"审核通过",
+            review:false,
+            edit:false,
+            show:false,
+            highlight:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ"],
+            status:"3"
+        },
+        {
+            name:"审核拒绝",
+            review:false,
+            edit:false,
+            show:false,
+            highlight:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ"],
+            status:"0"
+        }
+    ];
+    var priceTabs = [
+        {
+            name:"待定价",
+            review:false,
+            edit:false,
+            show:false,
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_UPDATE"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
+            status:"0"
+        },
+        {
+            name:"已定价",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
+            status:"1"
+        }
+    ];
+    var recheckTabs = [
+        {
+            name:"待审核",
+            review:false,
+            edit:false,
+            show:false,
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_REVIEW"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
+            status:"0"
+        },
+        {
+            name:"复审通过",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
+            status:"1"
+        },
+        {
+            name:"复审拒绝",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
+            status:"1"
+        },
+        {
+            name:"客户放弃",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
+            status:"1"
+        }
+    ];
+    var signTabs = [
+        {
+            name:"待签约",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_REVIEW"],
+            status:"1"
+        },
+        {
+            name:"退回待修改",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_REVIEW"],
+            status:"1"
+        },
+        {
+            name:"待审核",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_REVIEW"],
+            status:"1"
+        },
+        {
+            name:"已审核",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ"],
+            status:"1"
+        }
+    ];
+    var giveupTabs = [
+        {
+            name:"待审核",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_REVIEW"],
+            status:"1"
+        },
+        {
+            name:"已放弃",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_READ"],
+            status:"1"
+        }
+    ];
+    var transferTabs = [
+        {
+            name:"待过户",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_UPDATE"],
+            status:"1"
+        },
+        {
+            name:"退回待修改",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_UPDATE"],
+            status:"1"
+        },
+        {
+            name:"待审核",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_REVIEW"],
+            status:"1"
+        },
+        {
+            name:"待放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE"],
+            status:"1"
+        },
+        {
+            name:"已放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_UPDATE"],
+            status:"1"
+        },
+        {
+            name:"抵押材料待审核",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_REVIEW"],
+            status:"1"
+        },
+        {
+            name:"无法过户",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_REVIEW"],
+            status:"1"
+        }
+    ];
+    var mortgageTabs = [
+        {
+            name:"待办理",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_UPDATE"],
+            status:"1"
+        },
+        {
+            name:"退回待修改",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_UPDATE"],
+            status:"1"
+        },
+        {
+            name:"待审核",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW"],
+            status:"1"
+        },
+        {
+            name:"待放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
+            status:"1"
+        },
+        {
+            name:"已放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
+            status:"1"
+        },
+        {
+            name:"无法办理",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_READ"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_REVIEW"],
+            status:"1"
+        }
+    ];
+    var productTabs = [
+        {
+            name:"待审核",
+            review:false,
+            edit:false,
+            show:false,
+            editRoles:["ROLE_ADMIN", "ROLE_PRODUCT_UPDATE"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_PRODUCT_REVIEW"],
+            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"],
+            status:"0"
+        },
+        {
+            name:"审核通过",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"],
+            status:"1"
+        },
+        {
+            name:"审核拒绝",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"],
+            status:"2"
+        }
+    ];
     $scope.menuItems = [
         {
             name: "贷款申请",
@@ -142,25 +388,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
                     highlight:false,
                     page:"main.carpricinglist",
-                    subTabs:[
-                        {
-                            name:"待定价",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_UPDATE"],
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
-                            status:"0"
-                        },
-                        {
-                            name:"已定价",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
-                            status:"1"
-                        }
-                    ]
+                    subTabs:priceTabs
                 },
                 {
                     name:"贷款复审",
@@ -168,41 +396,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
                     highlight:false,
                     page:"main.loanrecheck",
-                    subTabs:[
-                        {
-                            name:"待审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_REVIEW"],
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-                            status:"0"
-                        },
-                        {
-                            name:"复审通过",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-                            status:"1"
-                        },
-                        {
-                            name:"复审拒绝",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-                            status:"1"
-                        },
-                        {
-                            name:"客户放弃",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-                            status:"1"
-                        }
-                    ]
+                    subTabs:recheckTabs
                 }
             ]
         },
@@ -217,43 +411,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     show:false,
                     highlight:false,
                     page:"main.signmanagement",
-                    subTabs:[
-                        {
-                            name:"待签约",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_REVIEW"],
-                            status:"1"
-                        },
-                        {
-                            name:"退回待修改",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_REVIEW"],
-                            status:"1"
-                        },
-                        {
-                            name:"待审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_REVIEW"],
-                            status:"1"
-                        },
-                        {
-                            name:"已审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ"],
-                            status:"1"
-                        }
-                    ]
+                    subTabs:signTabs
                 },
                 {
                     name:"客户放弃签约",
@@ -261,26 +419,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     show:false,
                     highlight:false,
                     page:"main.giveuplist",
-                    subTabs:[
-                        ,
-                        {
-                            name:"待审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_REVIEW"],
-                            status:"1"
-                        },
-                        {
-                            name:"已放弃",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_READ"],
-                            status:"1"
-                        }
-                    ]
+                    subTabs:giveupTabs
                 }
             ]
         },
@@ -295,71 +434,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     show:false,
                     highlight:false,
                     page:"main.afterTransferLoanList",
-                    subTabs:[
-                        {
-                            name:"待过户",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_UPDATE"],
-                            status:"1"
-                        },
-                        {
-                            name:"退回待修改",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_UPDATE"],
-                            status:"1"
-                        },
-                        {
-                            name:"待审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_REVIEW"],
-                            status:"1"
-                        },
-                        {
-                            name:"待放款",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE_READ"],
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE"],
-                            status:"1"
-                        },
-                        {
-                            name:"已放款",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_UPDATE"],
-                            status:"1"
-                        },
-                        {
-                            name:"抵押材料待审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_REVIEW"],
-                            status:"1"
-                        },
-                        {
-                            name:"无法过户",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_REVIEW"],
-                            status:"1"
-                        }
-                    ]
+                    subTabs:transferTabs
                 },
                 {
                     name:"抵押后放款",
@@ -367,61 +442,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     show:false,
                     highlight:false,
                     page:"main.afterMortgageLoanList",
-                    subTabs:[
-                        {
-                            name:"待办理",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_UPDATE"],
-                            status:"1"
-                        },
-                        {
-                            name:"退回待修改",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_UPDATE"],
-                            status:"1"
-                        },
-                        {
-                            name:"待审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW"],
-                            status:"1"
-                        },
-                        {
-                            name:"待放款",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ"],
-                            editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
-                            status:"1"
-                        },
-                        {
-                            name:"已放款",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
-                            status:"1"
-                        },
-                        {
-                            name:"无法办理",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_READ"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_REVIEW"],
-                            status:"1"
-                        }
-                    ]
+                    subTabs:mortgageTabs
                 }
             ]
         },
@@ -501,54 +522,41 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     showRoles:["ROLE_PRODUCT_READ", "ROLE_ADMIN"],
                     highlight:false,
                     page:"main.subproductmanagement",
-                    subTabs:[
-                        {
-                            name:"待审核",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            editRoles:["ROLE_ADMIN", "ROLE_PRODUCT_UPDATE"],
-                            reviewRoles:["ROLE_ADMIN", "ROLE_PRODUCT_REVIEW"],
-                            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"],
-                            status:"0"
-                        },
-                        {
-                            name:"审核通过",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"],
-                            status:"1"
-                        },
-                        {
-                            name:"审核拒绝",
-                            review:false,
-                            edit:false,
-                            show:false,
-                            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"],
-                            status:"2"
-                        }
-                    ]
+                    subTabs:productTabs
                 }
             ]
         }
     ];
 
+    var hasRoleAuthority = function (roles, postAuthorities) {
+        if (!roles) {
+            return false;
+        }
+        if (!postAuthorities) {
+            return false;
+        }
+        for (var i in postAuthorities) {
+            if (roles.indexOf(postAuthorities[i].authority) >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     for (var i = 0; i < $scope.menuItems.length; i++) {
         for (var j = 0; j < $scope.menuItems[i].subItems.length; j++) {
-            var showRoles = $scope.menuItems[i].subItems[j].showRoles;
-            if (!showRoles) {
-                continue;
+            var hasSubItemShowAuthority = hasRoleAuthority($scope.menuItems[i].subItems[j].showRoles, user.data.postAuthorities);
+            $scope.menuItems[i].subItems[j].show = hasSubItemShowAuthority;
+            if (!$scope.menuItems[i].show && hasSubItemShowAuthority) {
+                $scope.menuItems[i].show = true;
             }
-            if (!user.data.postAuthorities) {
-                continue;
-            }
-            for (var k in user.data.postAuthorities) {
-                if (showRoles.indexOf(user.data.postAuthorities[k].authority) >= 0) {
-                    $scope.menuItems[i].subItems[j].show = true;
-                    $scope.menuItems[i].show = true;
-                    continue;
-                }
+            for (var k = 0; k < $scope.menuItems[i].subItems[j].subTabs.length; k++) {
+                var hasTabShowAuthority = hasRoleAuthority($scope.menuItems[i].subItems[j].subTabs[k].showRoles, user.data.postAuthorities);
+                $scope.menuItems[i].subItems[j].subTabs[k].show = hasTabShowAuthority;
+                var hasTabEditAuthority = hasRoleAuthority($scope.menuItems[i].subItems[j].subTabs[k].editRoles, user.data.postAuthorities);
+                $scope.menuItems[i].subItems[j].subTabs[k].edit = hasTabEditAuthority;
+                var hasTabReviewAuthority = hasRoleAuthority($scope.menuItems[i].subItems[j].subTabs[k].reviewRoles, user.data.postAuthorities);
+                $scope.menuItems[i].subItems[j].subTabs[k].review = hasTabReviewAuthority;
             }
         }
     }
@@ -567,43 +575,14 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
         }
     }
 
-    // $scope.manManagement = function () {//切换到人员管理页面
-    //     $state.go("main.manmanagement");
-    // };
-    // $scope.productManagement =function () {
-    //     $state.go("main.productmanagement");
-    // };
-    // $scope.subProductManagement =function () {
-    //     $state.go("main.subproductmanagement");
-    // };
-    // $scope.positionManagement =function () {
-    //     $state.go("main.positionmanagement");
-    // };
-    // $scope.deptManagement = function () {
-    //     $state.go("main.deptmanagement");
-    // };
-    // $scope.LoanPreliminary = function () {
-    //     $state.go("main.loanpreliminary");
-    // };
-    // $scope.setPricing = function () {
-    //     $state.go("main.carpricinglist");
-    // };
-    // $scope.loanRecheck = function () {
-    //     $state.go("main.loanrecheck");
-    // };
-    // $scope.signManagement = function () {
-    //     $state.go("main.signmanagement");
-    // };
-    // $scope.giveupList = function () {
-    //     $state.go("main.giveuplist");
-    // };
-    // $scope.afterTransfer = function () {
-    //     $state.go("main.afterTransferLoanList");
-    // };
-    // $scope.afterMortgage = function () {
-    //     $state.go("main.afterMortgageLoanList");
-    // };
-
+    $window.sessionStorage['preliminaryTabs'] = JSON.stringify(preliminaryTabs);
+    $window.sessionStorage['priceTabs'] = JSON.stringify(priceTabs);
+    $window.sessionStorage['recheckTabs'] = JSON.stringify(recheckTabs);
+    $window.sessionStorage['signTabs'] = JSON.stringify(signTabs);
+    $window.sessionStorage['giveupTabs'] = JSON.stringify(giveupTabs);
+    $window.sessionStorage['transferTabs'] = JSON.stringify(transferTabs);
+    $window.sessionStorage['mortgageTabs'] = JSON.stringify(mortgageTabs);
+    $window.sessionStorage['productTabs'] = JSON.stringify(productTabs);
 
     $scope.logout = function () {
         httpService.logout().then(function () {

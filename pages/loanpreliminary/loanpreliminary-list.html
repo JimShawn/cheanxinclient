@@ -75,7 +75,7 @@
         <div class="man-manage-row2">
             <div class="bd">
                 <ul class="mod-tabs clearfix">
-                    <li class="item" ng-class="{'item-on':subTab.highlight}" ng-click="goToDraft(i)" ng-repeat="(i, subTab) in subTabs"><a href=""><span>{{subTab.name}}</span></a></li>
+                    <li class="item" ng-class="{'item-on':subTab.highlight}" ng-click="goToDraft(i)" ng-repeat="(i, subTab) in subTabs" ng-show="subTab.show"><a href=""><span>{{subTab.name}}</span></a></li>
                     <!--<li class="item" ng-class="{'item-on':draft}" ng-click="goToDraft(1)"><a href=""><span>草稿箱</span></a></li>-->
                     <!--<li class="item " ng-class="{'item-on':waitingCheck}"><a href="" ng-click="goToDraft(2)"><span>待审核</span></a></li>-->
                     <!--<li class="item" ng-class="{'item-on':returnWaitingUpdate}"><a href="" ng-click="goToDraft(3)"><span>退回待修改</span></a></li>-->
@@ -113,7 +113,7 @@
                     <td>{{draft.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(draft.modifiedTime)}}</td>
                     <td>{{loanStatuses[draft.status].name}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="detial()">查看</a><a href="" class="blue" ng-click="edit(draft)"  ng-show="draft.status == 1 || draft.status ==2 ||draft.status ==9">编辑</a></td>
+                    <td class="oper"><a href="" class="blue" ng-click="detial()">查看</a><a href="" class="blue" ng-click="edit(draft)"  ng-show="subTab.edit && (draft.status == 1 || draft.status ==2 ||draft.status == 9)">编辑</a></td>
                 </tr>
 
 

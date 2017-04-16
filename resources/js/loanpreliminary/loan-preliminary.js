@@ -8,6 +8,13 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
     if (!$scope.subTabs) {
         $scope.subTabs = JSON.parse($window.sessionStorage['preliminaryTabs']);
     }
+    for (var i in $scope.subTabs) {
+        if ($scope.subTabs[i].show) {
+            $scope.subTab = $scope.subTabs[i];
+            $scope.subTab.highlight = true;
+            break;
+        }
+    }
     $scope.QueryUserName = "";
     $scope.queryTel = "";
     $scope.sources = [
@@ -205,21 +212,18 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
         $state.go("main.addproductmanagement", {items: null});
     };
     $scope.edit = function (draft) {
-        if ($scope.draft) {
-            $state.go("main.loanapply", {items: draft, type: 2});
-        } else if ($scope.waitingCheck) {
+        if (draft.status == 2) {
             $state.go("main.eidtloanapply", {items: draft});
-        } else if ($scope.returnWaitingUpdate) {
+        } else {
             $state.go("main.loanapply", {items: draft, type: 2});
         }
-
-
     };
     $scope.draft = true;//默认草稿箱页面
     $scope.goToDraft = function (i) {
         for (var key in $scope.subTabs) {
             if (key == i) {
                 $scope.subTabs[key].highlight = true;
+                $scope.subTab = $scope.subTabs[key];
                 $scope.getList(0, 10, $scope.subTabs[key].status)
             } else {
                 $scope.subTabs[key].highlight = false;
