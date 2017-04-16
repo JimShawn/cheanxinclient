@@ -13,23 +13,20 @@ carpricing.controller("carPricingListController", function ($scope,$http,$locati
         $state.go("main.addproductmanagement",{items:null});
     };
     $scope.test = function () {
-        //
         httpService.getChekuangbaoDetailTest().then(function (res) {
             console.log(res);
         },function (err) {
             console.log(err);
         })
     };
+    
     $scope.showDetail = function (loan) {
         
     };
+
     $scope.setPrice = function (loan) {
         $state.go("main.setpricelist",{items:loan});
     };
-    $scope.changeTab = function(i) {
-        commonUtil.changeTab($scope, i);
-    }
-
 });
 
 product.controller("setPriceController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {

@@ -3,153 +3,11 @@
  */
 'use strict';
 var loanrecheck = angular.module('loanrecheck',['httpservice']);
-loanrecheck.controller("loanRecheckListController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','commonUtil','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,commonUtil,cityJson,$stateParams) {
-
-    $scope.getList = function (page,size,status) {
-        httpService.getLoanPreliminary(page,size,status).then(function (result) {
-            console.log(result);
-            $scope.data = result.data;
-
-        },function (error) {
-            console.log(error);
-        });
-
-    };
-    $scope.getList(0,10,"4,10,12");
-    $scope.waitingRecheck=true;
+loanrecheck.controller("loanRecheckListController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,commonUtil,cityJson,$stateParams, $window) {
+    commonUtil.initTab($scope, $stateParams, $window, "recheckTabs", httpService);
     $scope.cityJson = cityJson;
     $scope.commonUtil = commonUtil;
-    $scope.changePageSizeFun = function (size) {
-        console.log(size);
-        console.log($scope.data.number);
-        $scope.getList($scope.data.number,size);
-    };
-    $scope.loanStatuses=[
-        {
-            id:0,
-            name:"已放弃"
-        },{
-            id:1,
-            name:"草稿箱",
-        },{
-            id:2,
-            name:"待初审",
-        },{
-            id:3,
-            name:"待定价",
-        },{
-            id:4,
-            name:"待复审",
-        },{
-            id:5,
-            name:"材料待补充",
-        },{
-            id:6,
-            name:"待签约",
-        },{
-            id:7,
-            name:"方案待修改",
-        },{
-            id:8,
-            name:"待过户",
-        },{
-            id:9,
-            name:"初审退回",
-        },{
-            id:10,
-            name:"待复审",
-        },{
-            id:11,
-            name:"拒绝",
-        },{
-            id:12,
-            name:"待复审",
-        },{
-            id:13,
-            name:"拒绝",
-        },{
-            id:14,
-            name:"已放弃",
-        },{
-            id:15,
-            name:"已放弃",
-        },{
-            id:16,
-            name:"已放弃",
-        },{
-            id:17,
-            name:"待审核"
-        },{
-            id:18,
-            name:"待审核"
-        },{
-            id:19,
-            name:"待确认"
-        },{
-            id:20,
-            name:"放弃贷款"
-        },{
-            id:21,
-            name:"材料待补充"
-        },{
-            id:22,
-            name:"待审核"
-        },{
-            id:23,
-            name:"待放款"
-        },{
-            id:24,
-            name:"已放款"
-        },{
-            id:25,
-            name:"待过户"
-        },{
-            id:26,
-            name:"待确认"
-        },{
-            id:27,
-            name:"放弃贷款"
-        },{
-            id:28,
-            name:"材料待补充"
-        },{
-            id:29,
-            name:"待审核"
-        },{
-            id:30,
-            name:"待放款"
-        },{
-            id:31,
-            name:"待还款"
-        },{
-            id:32,
-            name:"待审核"
-        },{
-            id:33,
-            name:"待审核"
-        },{
-            id:34,
-            name:"审核不通过"
-        },{
-            id:35,
-            name:"审核不通过"
-        },{
-            id:36,
-            name:"待还款"
-        },{
-            id:37,
-            name:"待审核"
-        }
-    ];
 
-
-    $scope.gotoPageFun = function (x) {
-        console.log("gotoPageFun");
-
-        console.log($scope.data.size);
-        console.log(x);
-        $scope.getList(x,$scope.data.size);
-    };
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement",{items:null});
     };
@@ -170,33 +28,7 @@ loanrecheck.controller("loanRecheckListController",['$scope', '$http','$location
     $scope.reApply = function (loan) {
         $state.go("main.reapplyloan",{items:loan});
     };
-    $scope.changeTab = function (type) {
-        switch (type){
-            case 1:
-                $scope.waitingRecheck=true;
-                $scope.recheckApproal =$scope.recheckRefuse=$scope.clientGiveup=false;
-                $scope.getList(0,10,"4,10,12");
-                break;
-            case 2:
-                $scope.recheckApproal=true;
-                $scope.waitingRecheck=$scope.recheckRefuse=$scope.clientGiveup=false;
-                $scope.getList(0,10,6);//审核通过
-                break;
-            case 3:
-                $scope.recheckRefuse=true;
-                $scope.waitingRecheck =$scope.recheckApproal=$scope.clientGiveup=false;
-                $scope.getList(0,10,5);//补充材料
-                break;
-            case 4:
-                $scope.clientGiveup=true;
-                $scope.waitingRecheck =$scope.recheckApproal=$scope.recheckRefuse=false;
-                $scope.getList(0,10,15);//放弃补充材料
-                break;
-
-        }
-    }
-
-}]);
+});
 
 loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
     $scope.cities = cityJson;
@@ -305,6 +137,7 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
     };
     $scope.doPass=function () {
         var loan = {
+            reviewLoanTerms:$scope.selectedTerm,
             reviewLoanRate:$scope.reviewLoanRate,
             reviewLoanPrice:$scope.reviewLoanPrice
         };

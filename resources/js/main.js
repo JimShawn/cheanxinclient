@@ -116,7 +116,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_REVIEW"],
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-            status:"0"
+            status:"4,10,12"
         },
         {
             name:"复审通过",
@@ -124,7 +124,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-            status:"1"
+            status:"6"
         },
         {
             name:"复审拒绝",
@@ -132,7 +132,8 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-            status:"1"
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_READ"],
+            status:"5"
         },
         {
             name:"客户放弃",
@@ -140,7 +141,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-            status:"1"
+            status:"15"
         }
     ];
     var signTabs = [
@@ -151,17 +152,17 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_REVIEW"],
-            status:"1"
+            status:"6"
         },
-        {
-            name:"退回待修改",
-            review:false,
-            edit:false,
-            show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_READ"],
-            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_REVIEW"],
-            status:"1"
-        },
+        // {
+        //     name:"退回待修改",
+        //     review:false,
+        //     edit:false,
+        //     show:false,
+        //     showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_READ"],
+        //     reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_REVIEW"],
+        //     status:"1"
+        // },
         {
             name:"待审核",
             review:false,
@@ -169,7 +170,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_REVIEW"],
-            status:"1"
+            status:"37"
         },
         {
             name:"已审核",
@@ -177,7 +178,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ"],
-            status:"1"
+            status:"8,25"
         }
     ];
     var giveupTabs = [
@@ -188,7 +189,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_REVIEW"],
-            status:"1"
+            status:"17"
         },
         {
             name:"已放弃",
@@ -196,7 +197,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_READ"],
-            status:"1"
+            status:"16"
         }
     ];
     var transferTabs = [
@@ -207,7 +208,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_UPDATE"],
-            status:"1"
+            status:"8"
         },
         {
             name:"退回待修改",
@@ -216,7 +217,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_UPDATE"],
-            status:"1"
+            status:"21"
         },
         {
             name:"待审核",
@@ -225,7 +226,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_REVIEW"],
-            status:"1"
+            status:"22"
         },
         {
             name:"待放款",
@@ -234,7 +235,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE"],
-            status:"1"
+            status:"23"
         },
         {
             name:"已放款",
@@ -243,7 +244,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_UPDATE"],
-            status:"1"
+            status:"24"
         },
         {
             name:"抵押材料待审核",
@@ -252,7 +253,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_REVIEW"],
-            status:"1"
+            status:"38"
         },
         {
             name:"无法过户",
@@ -261,7 +262,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_REVIEW"],
-            status:"1"
+            status:"29"
         }
     ];
     var mortgageTabs = [
@@ -272,7 +273,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_UPDATE"],
-            status:"1"
+            status:"25"
         },
         {
             name:"退回待修改",
@@ -281,7 +282,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_UPDATE"],
-            status:"1"
+            status:"28"
         },
         {
             name:"待审核",
@@ -290,7 +291,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW"],
-            status:"1"
+            status:"29"
         },
         {
             name:"待放款",
@@ -299,7 +300,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
-            status:"1"
+            status:"30"
         },
         {
             name:"已放款",
@@ -307,7 +308,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
-            status:"1"
+            status:"36"
         },
         {
             name:"无法办理",
@@ -316,7 +317,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_REVIEW"],
-            status:"1"
+            status:"26"
         }
     ];
     var productTabs = [

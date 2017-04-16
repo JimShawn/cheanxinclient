@@ -92,9 +92,7 @@
         <div class="man-manage-row2">
             <div class="bd">
                 <ul class="mod-tabs clearfix">
-                    <li class="item" ng-class="{'item-on':waitingCheck}" ng-click="changeTab(1)"><a href=""><span>待审核</span></a></li>
-                    <li class="item" ng-class="{'item-on':checked}" ng-click="changeTab(2)"><a href=""><span>确认放弃</span></a></li>
-
+                    <li class="item" ng-class="{'item-on':subTab.highlight}" ng-click="changeTab(i)" ng-repeat="(i, subTab) in subTabs" ng-show="subTab.show"><a href=""><span>{{subTab.name}}</span></a></li>
                 </ul>
             </div>
 
@@ -129,13 +127,8 @@
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanStatuses[loanapply.status].name}}</td>
-                    <td class="oper"><a href="" class="blue">查看</a><a href="" class="blue" ng-click="operate(loanapply)"ng-show="loanapply.status==7">审核</a></td>
+                    <td class="oper"><a href="" class="blue">查看</a><a href="" class="blue" ng-click="operate(loanapply)" ng-show="loanapply.status==7">审核</a></td>
                 </tr>
-
-
-
-
-
                 </tbody>
 
             </table>

@@ -78,12 +78,7 @@
         <div class="man-manage-row2">
             <div class="bd">
                 <ul class="mod-tabs clearfix">
-                    <li class="item" ng-class="{'item-on':tab==8}" ng-click="goToTab(8)"><a href=""><span>待过户</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==21}" ng-click="goToTab(21)"><a href=""><span>退回待修改</span></a></li>
-                    <li class="item " ng-class="{'item-on':tab==22}" ng-click="goToTab(22)"><a href=""><span>待审核</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==23}" ng-click="goToTab(23)"><a href=""><span>待放款</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==24}" ng-click="goToTab(24)"><a href=""><span>已放款</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==19}" ng-click="goToTab(19)"><a href=""><span>无法过户</span></a></li>
+                    <li class="item" ng-class="{'item-on':subTab.highlight}" ng-click="changeTab(i)" ng-repeat="(i, subTab) in subTabs" ng-show="subTab.show"><a href=""><span>{{subTab.name}}</span></a></li>
                 </ul>
             </div>
 
