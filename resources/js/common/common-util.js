@@ -44,10 +44,9 @@ commonUtil.factory("commonUtil",function (cityJson) {
 
         $scope.getList = function (page, size, status) {
             httpService.getLoanPreliminary(page, size, status).then(function (result) {
-                console.log(result);
                 $scope.data = result.data;
             }, function (error) {
-                console.log(error);
+                console.error(error);
             });
 
         };
@@ -55,11 +54,11 @@ commonUtil.factory("commonUtil",function (cityJson) {
         $scope.getList(0, 10, $scope.subTab.status);
 
         $scope.changePageSizeFun = function (size) {
-            $scope.getList($scope.data.number, size);
+            $scope.getList($scope.data.number, size, $scope.subTab.status);
         };
 
         $scope.gotoPageFun = function (x) {
-            $scope.getList(x, $scope.data.size);
+            $scope.getList(x, $scope.data.size, $scope.subTab.status);
         };
     }
 

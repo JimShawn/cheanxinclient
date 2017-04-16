@@ -8,7 +8,7 @@ carpricing.controller("carPricingListController", function ($scope,$http,$locati
 
     $scope.cityJson = cityJson;
     $scope.commonUtil = commonUtil;
-    
+
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement",{items:null});
     };
