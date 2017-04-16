@@ -813,7 +813,7 @@
                                 <div class="personal-message1"><sapn class="span">出生日期:</sapn></div>
                                 <div class="personal-message2 ">
                                     <div class="comm-inp-wp2">
-                                        <input name="selectedDraft.applicantBirthYearMonth" type="text" class="comm-input1" ng-model="selectedDraft.applicantBirthYearMonth">
+                                        <input name="selectedDraft.applicantBirthYearMonth" type="text" class="comm-input1" ng-model="selectedDraft.applicantBirthYearMonth" maxlength="10">
                                     </div>
                                 </div>
                                 <div class="message-write"><img src="/resources/img/write.jpg" alt=""></div>
@@ -825,15 +825,15 @@
                             <form name="form2">
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">现工作单位:</sapn></div>
-                                <div class="personal-message2 "><input name="applicantEmployerName" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerName"></div>
+                                <div class="personal-message2 "><input name="applicantEmployerName" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerName" maxlength="30"></div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">现单位地址:</sapn></div>
-                                <div class="personal-message2 "><input name="applicantEmployerAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerAddress"></div>
+                                <div class="personal-message2 "><input name="applicantEmployerAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerAddress" maxlength="100"></div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">单位电话:</sapn></div>
-                                <div class="personal-message2 "><input name="applicantEmployerTelephone" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerTelephone"></div>
+                                <div class="personal-message2 "><input name="applicantEmployerTelephone" type="number" class="comm-input1" ng-model="selectedDraft.applicantEmployerTelephone"></div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">现单位工作年限:</sapn></div>
@@ -859,7 +859,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="personal-message">
+                            <div class="personal-message" ng-show="selectedDraft.applicantEmployerType =='党政机关' || selectedDraft.applicantEmployerType =='国有企业' || selectedDraft.applicantEmployerType =='集体企业' ||selectedDraft.applicantEmployerType =='军队'">
                                 <div class="personal-message1"><sapn class="span">职务:</sapn></div>
                                 <div class="personal-message2 ">
                                     <select name="applicantPosition" class="comm-select1" ng-model="selectedDraft.applicantPosition" ng-options = "position for position in positiones">
@@ -867,7 +867,7 @@
                                     </select>
                                 </div>
                             </div>
-                            <div class="personal-message">
+                            <div class="personal-message" ng-show="selectedDraft.applicantEmployerType =='党政机关' || selectedDraft.applicantEmployerType =='国有企业' || selectedDraft.applicantEmployerType =='集体企业' ||selectedDraft.applicantEmployerType =='军队'">
                                 <div class="personal-message1"><sapn class="span">职称:</sapn></div>
                                 <div class="personal-message2 ">
                                     <select name="applicantJobTitle" class="comm-select1" ng-model="selectedDraft.applicantJobTitle" ng-options = "jobTitle for jobTitle in jobTitles">
@@ -900,7 +900,7 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">共同申请人姓名:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantName" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantName">
+                                    <input name="coApplicantName" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantName" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
@@ -914,7 +914,7 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantCertificateNumber">
+                                    <input name="coApplicantCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantCertificateNumber" maxlength="30">
                                 </div>
                             </div>
                                 </form>
@@ -927,7 +927,7 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">担保人姓名:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorName" type="text" class="comm-input1" ng-model="selectedDraft.guarantorName">
+                                    <input name="guarantorName" type="text" class="comm-input1" ng-model="selectedDraft.guarantorName" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
@@ -941,7 +941,7 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorCertificateNumber">
+                                    <input name="guarantorCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorCertificateNumber" maxlength="30">
                                 </div>
                             </div>
                             </form>
@@ -952,7 +952,7 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">车架号:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="vehicleVin" type="text" class="comm-input1" ng-model="selectedDraft.vehicleVin">
+                                    <input name="vehicleVin" type="text" class="comm-input1" ng-model="selectedDraft.vehicleVin" maxlength="17">
                                 </div>
                             </div>
                             <div class="personal-message">
@@ -1000,7 +1000,7 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">二手车里程数(万公里):</sapn></div>
                                 <div class="personal-message2 content2">
-                                    <input name="vehicleKilometers" type="text" class="comm-input1" ng-model="selectedDraft.vehicleKilometers">
+                                    <input name="vehicleKilometers" type="number" class="comm-input1" ng-model="selectedDraft.vehicleKilometers" >
                                 </div>
                             </div>
                             <div class="personal-message">
