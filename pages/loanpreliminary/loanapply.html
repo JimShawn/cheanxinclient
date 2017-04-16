@@ -16,7 +16,7 @@
                 <td width="15%"><span class="star">*</span>来源城市
                 </td>
                 <td width="35%"><div class="comm-inp-wp">
-                    <select class="comm-select1" ng-model="sourceCity" ng-options = "city.Name for city in cityArray" ng-change="getProductByCity()">
+                    <select class="comm-select1" ng-model="sourceCity" ng-options = "city.Name for city in cityArray" ng-change="getProductByCity()" >
                         <option value="">请选择</option>
                     </select>
                 </div></td>
@@ -49,7 +49,7 @@
                 <td> <span class="star">*</span>来源联系人姓名</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="sourcePersonName">
+                        <input type="text" class="comm-input1" ng-model="sourcePersonName" maxlength="5">
                     </div>
                 </td>
                 <td><span class="star">*</span>来源联系人手机号码</td>
@@ -78,7 +78,7 @@
                 <td width="15%"><span class="star">*</span>申请人姓名</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="applicantName">
+                        <input type="text" class="comm-input1" ng-model="applicantName" maxlength="5">
                     </div>
                 </td>
                 <td width="15%"><span class="star">*</span>手机号码</td>
@@ -118,20 +118,20 @@
                 <td><span class="star">*</span>本人月收入</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="applicantIncomePerMonth">
+                        <input  class="comm-input1" ng-model="applicantIncomePerMonth" type="number" maxlength="10">
                     </div>
                 </td>
             </tr>
 
-            <tr>
-                <td>
-                    <span class="star">*</span>房产、车辆
-                </td>
-                <td colspan="3">
-                    <div class="wealth">自有房产</div>
-                    <div class="wealth wealth-in">自有车辆</div>
-                </td>
-            </tr>
+            <!--<tr>-->
+                <!--<td>-->
+                    <!--<span class="star">*</span>房产、车辆-->
+                <!--</td>-->
+                <!--<td colspan="3">-->
+                    <!--<div class="wealth">自有房产</div>-->
+                    <!--<div class="wealth wealth-in">自有车辆</div>-->
+                <!--</td>-->
+            <!--</tr>-->
 
             <tr height="300px">
                 <td >
@@ -377,7 +377,7 @@
                 <td><span class="star">*</span>二手车里程数（万公里）</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="vehicleKilometers">
+                        <input class="comm-input1" ng-model="vehicleKilometers" type="number" maxlength="8">
                     </div>
                 </td>
             </tr>
@@ -450,7 +450,7 @@
                 <td><span class="star">*</span>车辆成交价（元）</td>
                 <td>
                     <div class="comm-inp-wp width-half">
-                        <input type="text" class="comm-input1" ng-model = "vehicleDealPrice">
+                        <input type="number" class="comm-input1" ng-model = "vehicleDealPrice" maxlength="10">
                     </div>
                     <div class="link"><a href="javascript:void(0);">车价宝评估</a></div>
                 </td>
@@ -546,7 +546,7 @@
     </div>
 
     <div class="footer">
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit(2)">提交</button>
+        <input class="comm-btn comm-btn-blue fr footer-button" ng-click="commit(2)" type="submit">提交</input>
         <button class="comm-btn  fr footer-button" ng-click="cancel()">放弃</button>
         <button class="comm-btn  fr footer-button" ng-click="commit(1)">存草稿</button>
 
@@ -556,4 +556,5 @@
         </div>
 
     </div>
+    </form>
 </div>

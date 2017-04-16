@@ -6,7 +6,7 @@ var commonUtil = angular.module('commonUtil',['city']);
 commonUtil.factory("commonUtil",function (cityJson) {
     var factory = {};
     factory.getDateFromInt=function(timeInt){
-        var time = new Date(timeInt);
+        var time = new Date(timeInt*1000);
         var y = time.getFullYear();
         var m = time.getMonth()+1;
         var d = time.getDate();
