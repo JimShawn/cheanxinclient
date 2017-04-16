@@ -97,7 +97,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_UPDATE"],
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
-            status:"0"
+            status:"3"
         },
         {
             name:"已定价",
@@ -105,7 +105,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
-            status:"1"
+            status:"4"
         }
     ];
     var recheckTabs = [

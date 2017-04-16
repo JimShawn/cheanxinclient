@@ -29,5 +29,50 @@ commonUtil.factory("commonUtil",function (cityJson) {
         return password;
     }
 
+    factory.initTab = function($scope, $stateParams, $window, name, httpService) {
+        $scope.subTabs = $stateParams.subTabs;
+        if (!$scope.subTabs) {
+            $scope.subTabs = JSON.parse($window.sessionStorage[name]);
+        }
+        for (var i in $scope.subTabs) {
+            if ($scope.subTabs[i].show) {
+                $scope.subTab = $scope.subTabs[i];
+                $scope.subTab.highlight = true;
+                break;
+            }
+        }
+
+        $scope.getList = function (page, size, status) {
+            httpService.getLoanPreliminary(page, size, status).then(function (result) {
+                $scope.data = result.data;
+            }, function (error) {
+                console.error(error);
+            });
+
+        };
+
+        $scope.getList(0, 10, $scope.subTab.status);
+
+        $scope.changePageSizeFun = function (size) {
+            $scope.getList($scope.data.number, size, $scope.subTab.status);
+        };
+
+        $scope.gotoPageFun = function (x) {
+            $scope.getList(x, $scope.data.size, $scope.subTab.status);
+        };
+    }
+
+    factory.changeTab = function($scope, i) {
+        for (var key in $scope.subTabs) {
+            if (key == i) {
+                $scope.subTabs[key].highlight = true;
+                $scope.subTab = $scope.subTabs[key];
+                $scope.getList(0, 10, $scope.subTabs[key].status)
+            } else {
+                $scope.subTabs[key].highlight = false;
+            }
+        }
+    }
+
     return factory;
 });
