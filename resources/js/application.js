@@ -147,6 +147,9 @@ app.config(function ($stateProvider,$urlRouterProvider) {
     ).state("main.loanpreliminary",{
             url:"/loanpreliminary",
             templateUrl:"/pages/loanpreliminary/loanpreliminary-list.html",
+            params:{
+                "subTabs":null
+            },
             ncyBreadcrumb: {
                 label: '预审',
                 parent:'main.mainpage'
