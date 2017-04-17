@@ -12,7 +12,6 @@ loanrecheck.controller("loanRecheckListController", function ($scope,$http,$loca
         $state.go("main.addproductmanagement",{items:null});
     };
     $scope.test = function () {
-        //
         httpService.getChekuangbaoDetailTest().then(function (res) {
             console.log(res);
         },function (err) {
@@ -60,6 +59,9 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
 
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
     $scope.applyLoan = $stateParams.items;
+    if ($scope.applyLoan.materialsFileIds) {
+        $scope.materialsFileIds = $scope.applyLoan.materialsFileIds;
+    }
 
     $scope.getOperateLog = function (id, from, to) {
         httpService.getOperateLog(id,from,to).then(function (res) {
@@ -122,12 +124,12 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         var loanApply = {
             reviewRemark:$scope.mainRefuseReason+$scope.otherRefuseReason
         };
-            httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {
-                console.log(res);
-                $state.go("main.loanrecheck");
-            },function (err) {
-                console.log(err);
-            });
+        httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {
+            console.log(res);
+            $state.go("main.loanrecheck");
+        },function (err) {
+            console.log(err);
+        });
         
     };
     $scope.doCancel = function () {
@@ -155,7 +157,7 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
     }
 }]);
 
-loanrecheck.controller("reApplyLoanController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
+loanrecheck.controller("reApplyLoanController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,$filter) {
     $scope.cities = cityJson;
 
     $scope.brands = [
@@ -188,19 +190,27 @@ loanrecheck.controller("reApplyLoanController",['$scope', '$http','$location','$
     $scope.commit = function () {
         var loanApply = {
             materialsRemark:$scope.reapplyReason,
-            materialsFileIds:"hahhaha"
+            materialsFileIds:$filter('filter')($scope.materials, '').join(",")
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loanApply,1).then(function (res) {//3表示初审审批通过
-            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//3表示初审审批通过
-                console.log(res);
+        httpService.updateLoandraft($scope.applyLoan.id,loanApply,1).then(function () {
+            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function () {
                 $state.go("main.loanrecheck");
             },function (err) {
-                console.log(err);
+                console.error(err);
             });
         },function (err) {
-            console.log(err);
+            console.error(err);
         });
     };
+
+    $scope.abort = function () {
+        httpService.updateLoandraft($scope.applyLoan.id, {}, 5).then(function () {
+            $state.go("main.loanrecheck");
+        },function (err) {
+            console.error(err);
+        });
+    }
+
     $scope.cancel = function () {
         $state.go("main.loanrecheck");
     };
@@ -208,4 +218,4 @@ loanrecheck.controller("reApplyLoanController",['$scope', '$http','$location','$
     $scope.doCancelRefuse = function () {
 
     }
-}]);
+});

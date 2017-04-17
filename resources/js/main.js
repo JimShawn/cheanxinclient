@@ -1,6 +1,12 @@
 var authors = angular.module('main', []);
 
 authors.controller('MainController', function($scope, $http, $location, $rootScope, $state, httpService, $window, $interval, toaster) {
+    if (!window.sessionStorage['currentItemIndex']) {
+        window.sessionStorage['currentItemIndex'] = 0;
+    }
+    if (!window.sessionStorage['currentSubItemIndex']) {
+        window.sessionStorage['currentSubItemIndex'] = 0;
+    }
     $scope.$watch('$viewContentLoaded', function() {
         var winWid=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
         var winHei=window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
@@ -132,7 +138,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
-            editRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_READ"],
+            editRoles:["ROLE_ADMIN", "ROLE_LOAN_DRAFT_UPDATE"],
             status:"5"
         },
         {
@@ -142,7 +148,15 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
             status:"15"
-        }
+        },
+        {
+            name:"复审未通过",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_SECOND_READ"],
+            status:"11"
+        },
     ];
     var signTabs = [
         {
@@ -566,8 +580,10 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
         for(var k = 0; k < $scope.menuItems.length; k++) {
             for (var l = 0; l < $scope.menuItems[k].subItems.length; l++) {
                 if (i == k && l == j) {
+                    $window.sessionStorage['currentItemIndex'] = k;
+                    $window.sessionStorage['currentSubItemIndex'] = l;
                     $scope.subItem = $scope.menuItems[k].subItems[l];
-                    $scope.subItem.highlight = true;
+                    $scope.menuItems[k].subItems[l].highlight = true;
                     $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
                 } else {
                     $scope.menuItems[k].subItems[l].highlight = false;
@@ -575,6 +591,15 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             }
         }
     }
+
+    for(var k = 0; k < $scope.menuItems.length; k++) {
+        for (var l = 0; l < $scope.menuItems[k].subItems.length; l++) {
+            $scope.menuItems[k].subItems[l].highlight = false;
+        }
+    }
+    $scope.subItem = $scope.menuItems[$window.sessionStorage['currentItemIndex']].subItems[$window.sessionStorage['currentSubItemIndex']];
+    $scope.subItem.highlight = true;
+    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
 
     $window.sessionStorage['preliminaryTabs'] = JSON.stringify(preliminaryTabs);
     $window.sessionStorage['priceTabs'] = JSON.stringify(priceTabs);

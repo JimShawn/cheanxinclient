@@ -5,6 +5,9 @@
 var commonUtil = angular.module('commonUtil',['city']);
 commonUtil.factory("commonUtil",function (cityJson) {
     var factory = {};
+    var currentTab = {};
+    var currentTabIndex = {};
+    var currentItem = "";
     factory.getDateFromInt=function(timeInt){
         var time = new Date(timeInt*1000);
         var y = time.getFullYear();
@@ -30,17 +33,27 @@ commonUtil.factory("commonUtil",function (cityJson) {
     }
 
     factory.initTab = function($scope, $stateParams, $window, name, httpService) {
+        currentItem = name;
         $scope.subTabs = $stateParams.subTabs;
         if (!$scope.subTabs) {
             $scope.subTabs = JSON.parse($window.sessionStorage[name]);
         }
-        for (var i in $scope.subTabs) {
-            if ($scope.subTabs[i].show) {
-                $scope.subTab = $scope.subTabs[i];
-                $scope.subTab.highlight = true;
-                break;
+        if (!currentTab[name]) {
+            for (var i in $scope.subTabs) {
+                if ($scope.subTabs[i].show) {
+                    currentTab[name] = $scope.subTabs[i];
+                    currentTabIndex[name] = i;
+                    break;
+                }
             }
         }
+        $scope.subTab = currentTab[name];
+
+        for (var i in $scope.subTabs) {
+            $scope.subTabs[i].highlight = false;
+        }
+        $scope.subTabs[currentTabIndex[name]].highlight = true;
+
 
         $scope.getList = function (page, size, status) {
             httpService.getLoanPreliminary(page, size, status).then(function (result) {
@@ -67,6 +80,8 @@ commonUtil.factory("commonUtil",function (cityJson) {
                     $scope.subTabs[key].highlight = true;
                     $scope.subTab = $scope.subTabs[key];
                     $scope.getList(0, 10, $scope.subTabs[key].status)
+                    currentTab[currentItem] = $scope.subTab;
+                    currentTabIndex[currentItem] = i;
                 } else {
                     $scope.subTabs[key].highlight = false;
                 }
@@ -109,7 +124,7 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 name:"待复审",
             },{
                 id:11,
-                name:"拒绝",
+                name:"复审未通过",
             },{
                 id:12,
                 name:"待复审",
