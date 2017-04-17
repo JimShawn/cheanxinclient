@@ -5,7 +5,7 @@
         <div class="login" >
             <div class="login-title">拒绝原因：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
             <div class="login-input-content">
-                <div class="login-input">
+                <div class="login-input" ng-repeat="errMsg in errMsgs">
                     <span class="main-reason">{{errMsg}}</span>
                 </div>
                 <div class="login-input">
@@ -713,7 +713,7 @@
 
         <div class="left">
             <div class="photo_container">
-                <span class="left_icon"><img src="/resources/img/left.gif" alt="" ng-click="move(selectedPicIndex-1)"></span>
+                <span class="left_icon"><img  ng-src="{{leftIcon}}" alt="" ng-click="move(selectedPicIndex-1)" class="span-img"></span>
                 <div  class="photo">
 
                     <div id="img">
@@ -721,7 +721,7 @@
                     </div>
 
                 </div>
-                <span class="right_icon"><img src="/resources/img/right.gif" alt="" ng-click="move(selectedPicIndex+1)"></span>
+                <span class="right_icon"><img  alt="" ng-src="{{rightIcon}}" ng-click="move(selectedPicIndex+1)" class="span-img"></span>
             </div>
             <div class="menu">
                 <span class="icon1 icon"></span>
@@ -833,7 +833,7 @@
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">单位电话:</sapn></div>
-                                <div class="personal-message2 "><input name="applicantEmployerTelephone" type="number" class="comm-input1" ng-model="selectedDraft.applicantEmployerTelephone"></div>
+                                <div class="personal-message2 "><input name="applicantEmployerTelephone" type="text" class="comm-input1" ng-model="selectedDraft.applicantEmployerTelephone" ng-keyup="selectedDraft.applicantEmployerTelephone = isNumber(selectedDraft.applicantEmployerTelephone)"></div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">现单位工作年限:</sapn></div>
@@ -1026,6 +1026,12 @@
                         <!--申请表信息-->
                         <div class="message_1" ng-show="currentPage==17">
                             <form name="form6">
+                                <div class="personal-message">
+                                    <div class="personal-message1"><sapn class="span">申请人信息:</sapn></div>
+                                    <div class="personal-message2 ">
+
+                                    </div>
+                                </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">学历:</sapn></div>
                                 <div class="personal-message2 ">
@@ -1038,13 +1044,13 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">现居住地址:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="applicantAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantAddress">
+                                    <input name="applicantAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantAddress" maxlength="30">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">住宅电话:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="applicantTelephone" type="text" class="comm-input1" ng-model="selectedDraft.applicantTelephone">
+                                    <input name="applicantTelephone" type="text" class="comm-input1" ng-model="selectedDraft.applicantTelephone" ng-keyup="selectedDraft.applicantTelephone = isNumber(selectedDraft.applicantTelephone)">
                                 </div>
                             </div>
                             <div class="personal-message">
@@ -1053,29 +1059,37 @@
                                     <div class="multiple-choice">
                                     <input type="radio" name="address" ng-click="changePostAddress(1)" ng-checked="selectedDraft.applicantPostAddress == selectedDraft.applicantEmployerAddress"> 单位 <span>&emsp;</span><input type="radio" name="address" ng-click="changePostAddress(2)" ng-checked="selectedDraft.applicantPostAddress == selectedDraft.applicantAddress">住宅
                                         <span>&emsp;</span><input type="radio" name="address" ng-click="changePostAddress(3)" ng-checked="selectedDraft.applicantPostAddress != selectedDraft.applicantEmployerAddress && selectedDraft.applicantPostAddress != selectedDraft.applicantAddress">其他
-                                    <input type="text" class="comm-input1" ng-model="selectedDraft.applicantPostAddress">
+                                    <input type="text" class="comm-input1" ng-model="selectedDraft.applicantPostAddress" maxlength="50">
                                     </div>
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">收件邮政编码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="applicantPostCode" type="text" class="comm-input1" ng-model="selectedDraft.applicantPostCode">
+                                    <input name="applicantPostCode" type="text" class="comm-input1" ng-model="selectedDraft.applicantPostCode" ng-keyup="selectedDraft.applicantPostCode = isNumber(selectedDraft.applicantPostCode)">
                                 </div>
                             </div>
+                                </br>
+
 
                             <!--共同申请人-->
+                                <div class="personal-message">
+                                    <div class="personal-message1"><sapn class="span">共同申请人信息:</sapn></div>
+                                    <div class="personal-message2 ">
+
+                                    </div>
+                                </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">共同申请人姓名:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantName" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantName" >
+                                    <input name="coApplicantName" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantName" maxlength="10">
 
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">与申请人关系:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantRelationship" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantRelationship">
+                                    <input name="coApplicantRelationship" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantRelationship" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
@@ -1087,39 +1101,46 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantCertificateNumber" >
+                                    <input name="coApplicantCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantCertificateNumber" maxlength="20">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">手机号码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantMobileNumber">
+                                    <input name="coApplicantMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantMobileNumber" ng-keyup="selectedDraft.coApplicantMobileNumber = isNumber(selectedDraft.coApplicantMobileNumber)">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">教育程度:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantQualification" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantQualification">
+                                    <input name="coApplicantQualification" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantQualification" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">月收入（元）:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="coApplicantIncomePerMonth" type="text" class="comm-input1" ng-model="selectedDraft.coApplicantIncomePerMonth">
+                                    <input name="coApplicantIncomePerMonth" type="number" class="comm-input1" ng-model="selectedDraft.coApplicantIncomePerMonth" >
                                 </div>
                             </div>
+                                </br>
 
                             <!--担保人-->
+                                <div class="personal-message">
+                                    <div class="personal-message1"><sapn class="span">担保人信息:</sapn></div>
+                                    <div class="personal-message2 ">
+
+                                    </div>
+                                </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">担保人姓名:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorName" type="text" class="comm-input1" ng-model="selectedDraft.guarantorName" disabled>
+                                    <input name="guarantorName" type="text" class="comm-input1" ng-model="selectedDraft.guarantorName" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">与申请人关系:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorRelationship" type="text" class="comm-input1" ng-model="selectedDraft.guarantorRelationship">
+                                    <input name="guarantorRelationship" type="text" class="comm-input1" ng-model="selectedDraft.guarantorRelationship" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
@@ -1131,51 +1152,58 @@
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">证件号码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorCertificateNumber" disabled>
+                                    <input name="guarantorCertificateNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorCertificateNumber" maxlength="20">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">手机号码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorMobileNumber">
+                                    <input name="guarantorMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.guarantorMobileNumber" ng-keyup="selectedDraft.guarantorMobileNumber = isNumber(selectedDraft.guarantorMobileNumber)">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">房产属权:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorRealEstateOwnType" type="text" class="comm-input1" ng-model="selectedDraft.guarantorRealEstateOwnType">
+                                    <input name="guarantorRealEstateOwnType" type="text" class="comm-input1" ng-model="selectedDraft.guarantorRealEstateOwnType" maxlength="5">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">月收入（元）:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="guarantorIncomePerMonth" type="text" class="comm-input1" ng-model="selectedDraft.guarantorIncomePerMonth">
+                                    <input name="guarantorIncomePerMonth" type="number" class="comm-input1" ng-model="selectedDraft.guarantorIncomePerMonth">
                                 </div>
                             </div>
+                                </br>
 
                             <!--紧急联系人-->
+                                <div class="personal-message">
+                                    <div class="personal-message1"><sapn class="span">紧急联系人信息:</sapn></div>
+                                    <div class="personal-message2 ">
+
+                                    </div>
+                                </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">联系人姓名:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="applicantFirstEmergencyContact" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContact">
+                                    <input name="applicantFirstEmergencyContact" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContact" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">与申请人关系:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="applicantFirstEmergencyContactRelationship" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactRelationship">
+                                    <input name="applicantFirstEmergencyContactRelationship" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactRelationship" maxlength="10">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">手机号码:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="applicantFirstEmergencyContactMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactMobileNumber">
+                                    <input name="applicantFirstEmergencyContactMobileNumber" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactMobileNumber" ng-keyup="selectedDraft.applicantFirstEmergencyContactMobileNumber = isNumber(selectedDraft.applicantFirstEmergencyContactMobileNumber)">
                                 </div>
                             </div>
                             <div class="personal-message">
                                 <div class="personal-message1"><sapn class="span">现居住地址:</sapn></div>
                                 <div class="personal-message2 ">
-                                    <input name="applicantFirstEmergencyContactAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactAddress">
+                                    <input name="applicantFirstEmergencyContactAddress" type="text" class="comm-input1" ng-model="selectedDraft.applicantFirstEmergencyContactAddress" maxlength="50">
                                 </div>
                                 <div class="message-write"><img src="/resources/img/write.jpg" alt=""></div>
                             </div>

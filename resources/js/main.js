@@ -188,7 +188,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ABORT_REVIEW"],
-            status:"1"
+            status:"17"
         },
         {
             name:"已放弃",
