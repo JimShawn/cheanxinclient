@@ -57,11 +57,10 @@ loanrecheck.controller("signEditController",['$filter','$scope', '$http','$locat
         $scope.showGiveupDiaog =false;
     };
     $scope.doGiveup = function () {
-
         var loanApply = {
             reviewRemark:$scope.giveupReason
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {//4表示放弃签约
+        httpService.updateLoandraft($scope.applyLoan.id,loanApply,5).then(function (res) {
             console.log(res);
             $state.go("main.signmanagement");
             $scope.showGiveupDiaog =false;
@@ -109,8 +108,6 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
         $scope.getOperateLog($scope.applyLoan.id,6,7);
     }
 
-
-
     $scope.cancel = function () {
         $state.go("main.giveuplist");
     };
@@ -136,9 +133,8 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
             $scope.products = res.data;
             $scope.showAdjustDialog = true;
         },function (err) {
-
+            console.error(err);
         })
-
     };
     $scope.doAdjust = function () {
         var loan = {
@@ -147,29 +143,25 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
             applicantLoanPrice:$scope.applicantLoanPrice,
             loanTerms:$scope.selectedTerm
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function (res) {//1表示修改
-            console.log(res);
-            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//2表示提交审批
-                console.log(res);
+        httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function () {
+            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function () {
                 $state.go("main.signmanagement");
             },function (err) {
-                console.log(err);
+                console.error(err);
             });
         },function (err) {
-            console.log(err);
+            console.error(err);
         })
     };
     $scope.doGiveup = function () {
-
         var loanApply = {
             reviewRemark:$scope.giveupReason
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loanApply,5).then(function (res) {//4表示放弃签约
-            console.log(res);
+        httpService.updateLoandraft($scope.applyLoan.id,loanApply,3).then(function () {
             $state.go("main.giveuplist");
             $scope.showGiveupDiaog =false;
         },function (err) {
-            console.log(err);
+            console.error(err);
         });
     };
 }]);

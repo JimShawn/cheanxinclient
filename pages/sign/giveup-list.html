@@ -127,7 +127,7 @@
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanStatuses[loanapply.status].name}}</td>
-                    <td class="oper"><a href="" class="blue">查看</a><a href="" class="blue" ng-click="operate(loanapply)" ng-show="loanapply.status==7">审核</a></td>
+                    <td class="oper"><a href="" class="blue">查看</a><a href="" class="blue" ng-click="operate(loanapply)" ng-show="loanapply.status == 17 && subTab.review">审核</a></td>
                 </tr>
                 </tbody>
 
