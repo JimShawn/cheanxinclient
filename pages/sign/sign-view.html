@@ -1,4 +1,4 @@
-<div class="main" ng-controller="signEditController">
+<div class="main" ng-controller="signViewController">
 
     <div class="mod-hd">
         <h2>核准贷款方案</h2>
@@ -25,7 +25,6 @@
             <tr>
                 <td width="15%">车辆名称：</td>
                 <td colspan="3"><span class="fl">{{applyLoan.vehicleSeries}}</span></td>
-
             </tr>
 
             <tr>
@@ -33,7 +32,6 @@
                 <td width="35%"><span class="fl">{{applyLoan.vehicleVin}}</span></td>
                 <td width="15%">贷款金额（元）：</td>
                 <td width="35%"><span class="fl red">{{applyLoan.applicantLoanPrice}}</span></td>
-
             </tr>
 
             <tr>
@@ -41,7 +39,6 @@
                 <td width="35%"><span class="fl">{{applyLoan.productLoanMonthlyInterestRate}}</span></td>
                 <td width="15%">期数：</td>
                 <td width="35%"><span class="fl">{{applyLoan.loanTerms}}</span></td>
-
             </tr>
             </tbody>
 
@@ -63,63 +60,39 @@
             <tr>
                 <td width="15%"><span class="red">*</span>合同编号：</td>
                 <td width="35%">
-                    <div class="comm-inp-wp">
-                        <input type="text" class="comm-input1" ng-model="contractNumber">
-                    </div>
+                    {{applyLoan.contractNumber}}
                 </td>
                 <td width="15%"><span class="red">*</span>签约日期：</td>
                 <td width="35%">
-                    <div class="comm-inp-wp">
-                        <adm-dtp ng-model='singData' options='{calType: "gregorian", format: "YYYY-MM-DD"}'></adm-dtp>
-                    </div>
+                    {{applyLoan.contractCreatedTime}}
                 </td>
-
             </tr>
 
             <tr height="300px">
                 <td >
                     <span class="red">*</span>签约材料
                 </td>
-
                 <td colspan="3">
                     <div class="upload" desc="请上传签约材料" uploader="signPic1" uploaded-urls="signPic" index="0" image-url={{signPhotoes[0]}}></div>
                     <div class="upload" desc="请上传签约材料" uploader="signPic2" uploaded-urls="signPic" index="1" image-url={{signPhotoes[1]}}></div>
                     <div class="upload" desc="请上传签约材料" uploader="signPic3" uploaded-urls="signPic" index="2" image-url={{signPhotoes[2]}}></div>
-
                 </td>
             </tr>
-
             </tbody>
-
         </table>
+
+        <div class="the-reason">
+            <div class="inline reason">
+                理由：
+            </div>
+            <div class="inline write_area">
+                <textarea class="label" cols="100%" rows="5" ng-model="reason"></textarea>
+            </div>
+        </div>
 
     </div>
     <div class="footer">
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()">提交</button>
-        <button class="comm-btn  fr footer-button"><a href="javascript:void(0);" ng-click="giveup()">放弃签约</a></button>
-        <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
-
-        <div class=" a fr ">
-            <img class="up-logo" src="/resources/img/up.jpg" alt="">
-            <span>更多操作</span>
-        </div>
-
-        <div class="login" ng-show="showGiveupDialog">
-            <div class="login-title">放弃签约：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
-            <div class="login-input-content">
-                <div class="login-input">
-                    <label><span class="red"> *</span>放弃原因：</label>
-                    <input type="text" placeholder="请输入放弃原因"  name="info[username]" id="username" class="list-input" ng-model="giveupReason"/>
-                </div>
-            </div>
-
-            <div class="button-area">
-                <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
-                <button class="comm-btn login-button button-right" ng-click="doGiveup()"><a href="javascript:void(0);" >确认</a></button>
-            </div>
-
-        </div>
-
-
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="doReview(3)">通过</button>
+        <button class="comm-btn  fr footer-button"><a href="javascript:void(0);" ng-click="doReview(4)">拒绝</a></button>
     </div>
 </div>

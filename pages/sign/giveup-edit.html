@@ -52,41 +52,53 @@
         <div class="mod-hd">
             <h2>放弃签约理由</h2>
         </div>
-
         <table class="mod-table1">
             <thead >
             <tr>
                 <th colspan="4"><span class="title fl">{{applicationGiveupReason}}</span></th>
             </tr>
             </thead>
-
         </table>
-
     </div>
+
+
     <div class="footer">
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="giveup()">确认</button>
-        <button class="comm-btn  fr footer-button"><a href="javascript:void(0);" ng-click="adjust()">调整方案</a></button>
-        <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="giveup()">确认放弃</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="resign()">同意签约</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="adjust()">调整方案</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="cancel()">返回列表</button>
 
         <div class=" a fr ">
             <img class="up-logo" src="/resources/img/up.jpg" alt="">
             <span>更多操作</span>
         </div>
 
-        <div class="login" ng-show="showGiveupDiaog">
+        <div class="login" ng-show="showGiveupDialog">
             <div class="login-title">放弃签约：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
             <div class="login-input-content">
                 <div class="login-input">
-                    <label><span class="red"> *</span>放弃原因：</label>
-                    <input type="text" placeholder="请输入放弃原因"  name="info[username]" id="username" class="list-input" ng-model="giveupReason"/>
+                    <label><span class="red"> *</span>原因：</label>
+                    <input type="text" placeholder="请输入原因"  class="list-input" ng-model="giveupReason"/>
                 </div>
             </div>
-
             <div class="button-area">
                 <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
                 <button class="comm-btn login-button button-right" ng-click="doGiveup()"><a href="javascript:void(0);" >确认</a></button>
             </div>
+        </div>
 
+        <div class="login" ng-show="showResignDialog">
+            <div class="login-title">同意签约：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
+            <div class="login-input-content">
+                <div class="login-input">
+                    <label><span class="red"> *</span>原因：</label>
+                    <input type="text" placeholder="请输入原因" class="list-input" ng-model="resignReason"/>
+                </div>
+            </div>
+            <div class="button-area">
+                <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
+                <button class="comm-btn login-button button-right" ng-click="doResign()"><a href="javascript:void(0);" >确认</a></button>
+            </div>
         </div>
 
 
