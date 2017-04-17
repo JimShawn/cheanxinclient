@@ -1,11 +1,11 @@
 var authors = angular.module('main', []);
 
 authors.controller('MainController', function($scope, $http, $location, $rootScope, $state, httpService, $window, $interval, toaster) {
-    if (!window.sessionStorage['currentItemIndex']) {
-        window.sessionStorage['currentItemIndex'] = 0;
+    if (!window.sessionStorage.currentItemIndex) {
+        window.sessionStorage.currentItemIndex = 0;
     }
-    if (!window.sessionStorage['currentSubItemIndex']) {
-        window.sessionStorage['currentSubItemIndex'] = 0;
+    if (!window.sessionStorage.currentSubItemIndex) {
+        window.sessionStorage.currentSubItemIndex = 0;
     }
     $scope.$watch('$viewContentLoaded', function() {
         var winWid=window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -580,8 +580,8 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
         for(var k = 0; k < $scope.menuItems.length; k++) {
             for (var l = 0; l < $scope.menuItems[k].subItems.length; l++) {
                 if (i == k && l == j) {
-                    $window.sessionStorage['currentItemIndex'] = k;
-                    $window.sessionStorage['currentSubItemIndex'] = l;
+                    $window.sessionStorage.currentItemIndex = k;
+                    $window.sessionStorage.currentSubItemIndex = l;
                     $scope.subItem = $scope.menuItems[k].subItems[l];
                     $scope.menuItems[k].subItems[l].highlight = true;
                     $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
@@ -597,7 +597,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             $scope.menuItems[k].subItems[l].highlight = false;
         }
     }
-    $scope.subItem = $scope.menuItems[$window.sessionStorage['currentItemIndex']].subItems[$window.sessionStorage['currentSubItemIndex']];
+    $scope.subItem = $scope.menuItems[$window.sessionStorage.currentItemIndex].subItems[$window.sessionStorage.currentSubItemIndex];
     $scope.subItem.highlight = true;
     $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
 

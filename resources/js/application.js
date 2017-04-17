@@ -246,6 +246,17 @@ app.config(function ($stateProvider,$urlRouterProvider) {
                 parent:'main.signmanagement'
             }
         }
+    ).state("main.viewSign",{
+            url:"/viewSign",
+            templateUrl:"/pages/sign/sign-view.html",
+            params:{
+                "items":null
+            },
+            ncyBreadcrumb: {
+                label: '审核签约',
+                parent:'main.signmanagement'
+            }
+        }
     ).state("main.giveuplist",{
             url:"/giveuplist",
             templateUrl:"/pages/sign/giveup-list.html",

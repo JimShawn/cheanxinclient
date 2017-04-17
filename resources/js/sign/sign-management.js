@@ -13,24 +13,35 @@ sign.controller("signListController",function ($scope, $http, $location, $rootSc
         $state.go("main.eiditSign",{items:loan})
     }
 
+    $scope.review = function (loan) {
+        $state.go("main.viewSign",{items:loan})
+    }
 });
 
 loanrecheck.controller("signEditController",['$filter','$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
     $scope.cities = cityJson;
 
     $scope.applyLoan = $stateParams.items;
-    $scope.showGiveupDiaog =false;
+    $scope.contractNumber = $scope.applyLoan.contractNumber;
+    $scope.singData = $scope.applyLoan.contractCreatedTime * 1000;
+    var signPhotoArr = $scope.applyLoan.contractFileIds.split(",");
+    $scope.signPhotoes = new Array(signPhotoArr.length);
+    for (var i = 0; i < signPhotoArr.length; i++) {
+        $scope.signPhotoes[i] = signPhotoArr[i];
+    }
+    $scope.showGiveupDialog =false;
 
 
     $scope.cancel = function () {
         $state.go("main.signmanagement");
     };
-    $scope.giveup=function () {
-        $scope.showGiveupDiaog =true;
+
+    $scope.giveup = function () {
+        $scope.showGiveupDialog = true;
     };
+
     $scope.commit = function () {
         var date = new Date($scope.singData);
-        console.log(date.getTime());
         var signPicFileIds = $filter('filter')($scope.signPic, '').join(",");
         if(signPicFileIds == ""){
             alert("请添加签约材料");
@@ -53,22 +64,45 @@ loanrecheck.controller("signEditController",['$filter','$scope', '$http','$locat
             console.log(err);
         })
     };
+
     $scope.doCancel = function () {
-        $scope.showGiveupDiaog =false;
+        $scope.showGiveupDialog = false;
     };
+
     $scope.doGiveup = function () {
         var loanApply = {
             reviewRemark:$scope.giveupReason
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loanApply,5).then(function (res) {
-            console.log(res);
-            $state.go("main.signmanagement");
-            $scope.showGiveupDiaog =false;
+        httpService.updateLoandraft($scope.applyLoan.id, loanApply, 5).then(function () {
+            $state.go("main.giveuplist");
+            $scope.showGiveupDialog = false;
+            $scope.showResignDialog = false;
         },function (err) {
-            console.log(err);
+            console.error(err);
         });
     };
 }]);
+
+loanrecheck.controller("signViewController", function ($filter, $scope, $rootScope, httpService, $state, $stateParams, commonUtil) {
+    $scope.applyLoan = $stateParams.items;
+    var signPhotoArr = $scope.applyLoan.contractFileIds.split(",");
+    $scope.signPhotoes = new Array(signPhotoArr.length);
+    for (var i = 0; i < signPhotoArr.length; i++) {
+        $scope.signPhotoes[i] = signPhotoArr[i];
+    }
+    $scope.applyLoan.contractCreatedTime = commonUtil.getDateFromInt($scope.applyLoan.contractCreatedTime);
+
+    $scope.doReview = function (operate) {
+        var loanApply = {
+            reviewRemark:$scope.reason
+        };
+        httpService.updateLoandraft($scope.applyLoan.id, loanApply, operate).then(function () {
+            $state.go("main.signmanagement");
+        },function (err) {
+            console.error(err);
+        });
+    };
+});
 
 sign.controller("giveupListController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,commonUtil,cityJson, $stateParams, $window) {
     commonUtil.initTab($scope, $stateParams, $window, "giveupTabs", httpService);
@@ -86,7 +120,7 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
     $scope.cities = cityJson;
 
     $scope.applyLoan = $stateParams.items;
-    $scope.showGiveupDiaog =false;
+    $scope.showGiveupDialog =false;
     $scope.showAdjustDialog = false;
     $scope.AvailableRates = [1,2,3,4,5,6,7,8,9];
 
@@ -111,12 +145,22 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
     $scope.cancel = function () {
         $state.go("main.giveuplist");
     };
-    $scope.giveup=function () {
-        $scope.showGiveupDiaog =true;
-    };
-    $scope.doCancel = function () {
-        $scope.showGiveupDiaog =false;
+    $scope.giveup = function () {
+        $scope.showGiveupDialog = true;
+        $scope.showResignDialog = false;
         $scope.showAdjustDialog = false;
+    };
+
+    $scope.resign = function () {
+        $scope.showGiveupDialog = false;
+        $scope.showResignDialog = true;
+        $scope.showAdjustDialog = false;
+    }
+
+    $scope.doCancel = function () {
+        $scope.showGiveupDialog = false;
+        $scope.showAdjustDialog = false;
+        $scope.showResignDialog = true;
     };
     $scope.changeRate = function () {
         $scope.applicantLoanPrice = $scope.applyLoan.vehicleDealPrice*$scope.selectedRate/10;
@@ -132,6 +176,8 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
         httpService.getProductByCityId($scope.applyLoan.sourceCityId).then(function (res) {
             $scope.products = res.data;
             $scope.showAdjustDialog = true;
+            $scope.showGiveupDialog = false;
+            $scope.showResignDialog = false;
         },function (err) {
             console.error(err);
         })
@@ -153,13 +199,27 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
             console.error(err);
         })
     };
+
     $scope.doGiveup = function () {
         var loanApply = {
             reviewRemark:$scope.giveupReason
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loanApply,3).then(function () {
+        httpService.updateLoandraft($scope.applyLoan.id, loanApply, 3).then(function () {
+            $scope.showGiveupDialog = false;
             $state.go("main.giveuplist");
-            $scope.showGiveupDiaog =false;
+        },function (err) {
+            console.error(err);
+        });
+    };
+
+    $scope.doResign = function () {
+        var loanApply = {
+            reviewRemark:$scope.resignReason
+        };
+        httpService.updateLoandraft($scope.applyLoan.id, loanApply, 4).then(function () {
+            $scope.showGiveupDialog = false;
+            $scope.showResignDialog = false;
+            $state.go("main.signmanagement");
         },function (err) {
             console.error(err);
         });
