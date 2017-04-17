@@ -94,9 +94,7 @@
                 </div>：
 
                 <div class="inline">
-                    <div class="upload">
-                        <a href="javascript:void(0);"><img class="add " id="add" src="/resources/img/add.png" alt=""></a>
-                    </div>
+                    <div class="upload" desc="补充材料照片" uploader="materials" uploaded-urls="materials" index="0" image-url={{materialsFileIds}}></div>
                 </div>
             </div>
         </div>
@@ -104,6 +102,7 @@
 
     <div class="footer">
         <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()">提交</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="abort()">放弃贷款</button>
         <button class="comm-btn  fr footer-button" ng-click="cancel()">返回</button>
         <div class=" a fr ">
             <img class="up-logo" src="/resources/img/up.jpg" alt="">

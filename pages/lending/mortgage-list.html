@@ -78,12 +78,7 @@
         <div class="man-manage-row2">
             <div class="bd">
                 <ul class="mod-tabs clearfix">
-                    <li class="item" ng-class="{'item-on':tab==25}" ng-click="goToTab(25)"><a href=""><span>待办理</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==28}" ng-click="goToTab(28)"><a href=""><span>退回待修改</span></a></li>
-                    <li class="item " ng-class="{'item-on':tab==29}" ng-click="goToTab(29)"><a href=""><span>待审核</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==30}" ng-click="goToTab(30)"><a href=""><span>待放款</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==36}" ng-click="goToTab(36)"><a href=""><span>已放款</span></a></li>
-                    <li class="item" ng-class="{'item-on':tab==26}" ng-click="goToTab(26)"><a href=""><span>无法过户</span></a></li>
+                    <li class="item" ng-class="{'item-on':subTab.highlight}" ng-click="changeTab(i)" ng-repeat="(i, subTab) in subTabs" ng-show="subTab.show"><a href=""><span>{{subTab.name}}</span></a></li>
                 </ul>
             </div>
 
@@ -122,8 +117,7 @@
                         <a href="" class="blue" ng-click="lending(loanapply)" ng-show="loanapply.status==30">放款</a>
                         <a href="" class="blue" ng-click="checkCantMortgage(loanapply)" ng-show="loanapply.status==26">审核</a>
                         <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status==29">审核</a></td>
-                </tr>
-
+                    </tr>
                 </tbody>
 
             </table>

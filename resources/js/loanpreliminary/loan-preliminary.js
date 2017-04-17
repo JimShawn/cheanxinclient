@@ -53,124 +53,7 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
         id: 1,
         name: "不可用"
     }];
-    $scope.loanStatuses=[
-        {
-            id:0,
-            name:"已放弃"
-        },{
-            id:1,
-            name:"草稿箱",
-        },{
-            id:2,
-            name:"待初审",
-        },{
-            id:3,
-            name:"待定价",
-        },{
-            id:4,
-            name:"待复审",
-        },{
-            id:5,
-            name:"材料待补充",
-        },{
-            id:6,
-            name:"待签约",
-        },{
-            id:7,
-            name:"方案待修改",
-        },{
-            id:8,
-            name:"待过户",
-        },{
-            id:9,
-            name:"初审退回",
-        },{
-            id:10,
-            name:"待复审",
-        },{
-            id:11,
-            name:"拒绝",
-        },{
-            id:12,
-            name:"待复审",
-        },{
-            id:13,
-            name:"拒绝",
-        },{
-            id:14,
-            name:"已放弃",
-        },{
-            id:15,
-            name:"已放弃",
-        },{
-            id:16,
-            name:"已放弃",
-        },{
-            id:17,
-            name:"待审核"
-        },{
-            id:18,
-            name:"待审核"
-        },{
-            id:19,
-            name:"待确认"
-        },{
-            id:20,
-            name:"放弃贷款"
-        },{
-            id:21,
-            name:"材料待补充"
-        },{
-            id:22,
-            name:"待审核"
-        },{
-            id:23,
-            name:"待放款"
-        },{
-            id:24,
-            name:"已放款"
-        },{
-            id:25,
-            name:"待过户"
-        },{
-            id:26,
-            name:"待确认"
-        },{
-            id:27,
-            name:"放弃贷款"
-        },{
-            id:28,
-            name:"材料待补充"
-        },{
-            id:29,
-            name:"待审核"
-        },{
-            id:30,
-            name:"待放款"
-        },{
-            id:31,
-            name:"待还款"
-        },{
-            id:32,
-            name:"待审核"
-        },{
-            id:33,
-            name:"待审核"
-        },{
-            id:34,
-            name:"审核不通过"
-        },{
-            id:35,
-            name:"审核不通过"
-        },{
-            id:36,
-            name:"待还款"
-        },{
-            id:37,
-            name:"待审核"
-        }
-    ];
-
+    
     $scope.commonUtil = commonUtil;
     $scope.cityJson = cityJson;
 
@@ -183,10 +66,6 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
         } else {
             $state.go("main.loanapply", {items: draft, type: 2});
         }
-    };
-    $scope.draft = true;//默认草稿箱页面
-    $scope.goToDraft = function (i) {
-        commonUtil.changeTab($scope, i);
     };
     $scope.add = function () {
         $state.go("main.loanapply", {items: null, type: 1});
