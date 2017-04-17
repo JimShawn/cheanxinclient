@@ -1119,17 +1119,28 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
                 $scope.endIndex = j + 4;
                 if (j < 4) {
                     $scope.startIndex = 0;
-                }
-                ;
+
+                };
                 if (j > $scope.picArrays.length - 4 - 1) {
                     $scope.endIndex = $scope.picArrays.length - 1;
-                }
+
+                };
             }
-        }
-        ;
+        };
+        if($scope.selectedPicIndex ==0){
+            $scope.leftIcon = '/resources/img/left-off.png';
+        }else {
+            $scope.leftIcon = '/resources/img/left-on.png';
+        };
+        if($scope.selectedPicIndex ==$scope.picArrays.length-1){
+            $scope.rightIcon = '/resources/img/right-off.png';
+        }else{
+            $scope.rightIcon = '/resources/img/right-on.png';
+        };
         $scope.currentPage = item.id;
         $scope.showFillContent = true;
     };
+
     $scope.closeFillContent = function () {
         $scope.showFillContent = false;
     };
@@ -1244,7 +1255,7 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
                     return false;
                 };
                 loanDraft.coApplicantName = $scope.selectedDraft.coApplicantName;
-                if(!$scope.selectedDraft.coApplicantCensusCityId){
+                if(!$scope.selectedDraft.coApplicantCensusCityId ){
                     toaster.error("请选择共同申请人户籍");
                     return false;
                 };
@@ -1322,129 +1333,322 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
                 loanDraft.vehicleEmission = $scope.selectedDraft.vehicleEmission;
                 break;
             case 17:
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.applicantQualification){
+                    toaster.error("请选择教育程度");
                     return false;
                 };
                 loanDraft.applicantQualification = $scope.selectedDraft.applicantQualification;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.applicantAddress){
+                    toaster.error("请填写现居住地址");
                     return false;
                 };
                 loanDraft.applicantAddress = $scope.selectedDraft.applicantAddress;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
-                    return false;
-                };
-                loanDraft.applicantTelephone = $scope.applicantTelephone;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                loanDraft.applicantTelephone = $scope.selectedDraft.applicantTelephone;
+                if(!$scope.selectedDraft.applicantPostAddress){
+                    toaster.error("请填写邮寄地址");
                     return false;
                 };
                 loanDraft.applicantPostAddress = $scope.selectedDraft.applicantPostAddress;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.applicantPostCode){
+                    toaster.error("请填写邮政编码");
                     return false;
                 };
                 loanDraft.applicantPostCode = $scope.selectedDraft.applicantPostCode;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.coApplicantName){
+                    toaster.error("请填写共同申请人姓名");
                     return false;
                 };
                 loanDraft.coApplicantName = $scope.selectedDraft.coApplicantName;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.coApplicantRelationship){
+                    toaster.error("请填写共同申请人与申请人关系");
                     return false;
                 };
                 loanDraft.coApplicantRelationship = $scope.selectedDraft.coApplicantRelationship;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
-                    return false;
-                };
                 loanDraft.coApplicantCensusCityId = $scope.selectedDraft.coApplicantCensusCityId;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.coApplicantCertificateNumber){
+                    toaster.error("请填写共同申请人证件号码");
                     return false;
                 };
                 loanDraft.coApplicantCertificateNumber = $scope.selectedDraft.coApplicantCertificateNumber;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.coApplicantMobileNumber|| !isPhone.test($scope.selectedDraft.coApplicantMobileNumber)){
+                    toaster.error("请填写共同申请人手机号码");
                     return false;
                 };
                 loanDraft.coApplicantMobileNumber = $scope.selectedDraft.coApplicantMobileNumber;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.coApplicantQualification){
+                    toaster.error("请填写共同申请人教育程度");
                     return false;
                 };
                 loanDraft.coApplicantQualification = $scope.selectedDraft.coApplicantQualification;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.coApplicantIncomePerMonth){
+                    toaster.error("请填写共同申请人月收入");
                     return false;
                 };
                 loanDraft.coApplicantIncomePerMonth = $scope.selectedDraft.coApplicantIncomePerMonth;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.guarantorName){
+                    toaster.error("请填写担保人姓名");
                     return false;
                 };
                 loanDraft.guarantorName = $scope.selectedDraft.guarantorName;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
-                    return false;
-                };
                 loanDraft.guarantorCensusCityId = $scope.selectedDraft.guarantorCensusCityId;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.guarantorRelationship){
+                    toaster.error("请填写担保人与申请人关系");
                     return false;
                 };
                 loanDraft.guarantorRelationship = $scope.selectedDraft.guarantorRelationship;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.guarantorCertificateNumber){
+                    toaster.error("请填写担保人证件号码");
                     return false;
                 };
                 loanDraft.guarantorCertificateNumber = $scope.selectedDraft.guarantorCertificateNumber;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.guarantorMobileNumber || !isPhone.test($scope.selectedDraft.guarantorMobileNumber)){
+                    toaster.error("请填写担保人手机号码");
                     return false;
                 };
                 loanDraft.guarantorMobileNumber = $scope.selectedDraft.guarantorMobileNumber;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.guarantorRealEstateOwnType){
+                    toaster.error("请填写担保人房产属权");
                     return false;
                 };
                 loanDraft.guarantorRealEstateOwnType = $scope.selectedDraft.guarantorRealEstateOwnType;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.guarantorIncomePerMonth){
+                    toaster.error("请填写担保人月收入");
                     return false;
                 };
                 loanDraft.guarantorIncomePerMonth = $scope.selectedDraft.guarantorIncomePerMonth;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.applicantFirstEmergencyContact){
+                    toaster.error("请填写紧急联系人姓名");
                     return false;
                 };
                 loanDraft.applicantFirstEmergencyContact = $scope.selectedDraft.applicantFirstEmergencyContact;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.applicantFirstEmergencyContactRelationship){
+                    toaster.error("请填写紧急联系人与申请人关系");
                     return false;
                 };
                 loanDraft.applicantFirstEmergencyContactRelationship = $scope.selectedDraft.applicantFirstEmergencyContactRelationship;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.applicantFirstEmergencyContactMobileNumber || !isPhone.test($scope.selectedDraft.applicantFirstEmergencyContactMobileNumber)){
+                    toaster.error("请填写紧急联系人手机号码");
                     return false;
                 };
                 loanDraft.applicantFirstEmergencyContactMobileNumber = $scope.selectedDraft.applicantFirstEmergencyContactMobileNumber;
-                if(!$scope.selectedIDType){
-                    toaster.error("请选择证件种类");
+                if(!$scope.selectedDraft.applicantFirstEmergencyContactAddress){
+                    toaster.error("请填写紧急联系人先居住地址");
                     return false;
                 };
                 loanDraft.applicantFirstEmergencyContactAddress = $scope.selectedDraft.applicantFirstEmergencyContactAddress;
                 break;
         }
         ;
+        return true;
 
     };
 
 
     $scope.commit = function () {
+        var isPhone = /^1\d{10}$/;
+        var isCertificate = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+
+        if(!$scope.selectedDraft.applicantName){
+            toaster.error("请填写申请人姓名");
+            return false;
+        };
+
+        if(!$scope.selectedIDType){
+            toaster.error("请选择证件种类");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantCertificateNumber){
+            toaster.error("请填写证件号码");
+            return false;
+        };
+        if($scope.selectedIDType.id ==0 &&!isCertificate.test($scope.selectedDraft.applicantCertificateNumber)){
+            toaster.error("请输入格式正确的身份证号码");
+            return;
+        };
+        if(!$scope.selectedDraft.applicantBirthYearMonth){
+            toaster.error("请填写出生日期");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantEmployerName){
+            toaster.error("请输入公司名称");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantEmployerAddress){
+            toaster.error("请输入公司地址");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantEmployerTelephone){
+            toaster.error("请输入公司电话");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantWorkYears){
+            toaster.error("请选择工作年限");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantEmployerType){
+            toaster.error("请选择单位性质");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantEmployerIndustry){
+            toaster.error("请选择单位所属行业");
+            return false;
+        };
+        if(($scope.selectedDraft.applicantEmployerType=='党政机关'||$scope.selectedDraft.applicantEmployerType=='国有企业'||$scope.selectedDraft.applicantEmployerType=='集体'||$scope.selectedDraft.applicantEmployerType=='军队')&&!$scope.selectedDraft.applicantPosition){
+            toaster.error("请选择职务");
+            return false;
+        };
+        if(($scope.selectedDraft.applicantEmployerType=='党政机关'||$scope.selectedDraft.applicantEmployerType=='国有企业'||$scope.selectedDraft.applicantEmployerType=='集体'||$scope.selectedDraft.applicantEmployerType=='军队')&&!$scope.selectedDraft.applicantJobTitle){
+            toaster.error("请选择职称");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantOccupation){
+            toaster.error("请选择本人职业");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantPost){
+            toaster.error("请选择本人职称");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantName){
+            toaster.error("请输入共同申请人姓名");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantCensusCityId && $scope.selectedDraft.coApplicantCensusCityId !=0){
+            toaster.error("请选择共同申请人户籍");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantCertificateNumber){
+            toaster.error("请输入共同申请人证件号码");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorName){
+            toaster.error("请输入担保人姓名");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorCensusCityId && $scope.selectedDraft.guarantorCensusCityId !=0){
+            toaster.error("请选择担保人户籍");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorCertificateNumber){
+            toaster.error("请输入担保人证件号码");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleVin){
+            toaster.error("请输入车架号");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleManufacturers){
+            toaster.error("请选择生产厂家");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleBrand){
+            toaster.error("请选择车系");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleSeries){
+            toaster.error("请选择车型");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleProductionYearMonth){
+            toaster.error("请选择汽车生产年月");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleRegistrationYearMonth){
+            toaster.error("请选择首次登记年月");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleKilometers){
+            toaster.error("请输入里程");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleUtilityType){
+            toaster.error("请选择使用性质");
+            return false;
+        };
+        if(!$scope.selectedDraft.vehicleEmission){
+            toaster.error("请选择排放标准");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantQualification){
+            toaster.error("请选择教育程度");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantAddress){
+            toaster.error("请填写现居住地址");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantPostAddress){
+            toaster.error("请填写邮寄地址");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantPostCode){
+            toaster.error("请填写邮政编码");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantName){
+            toaster.error("请填写共同申请人姓名");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantRelationship){
+            toaster.error("请填写共同申请人与申请人关系");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantCertificateNumber){
+            toaster.error("请填写共同申请人证件号码");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantMobileNumber || !isPhone.test($scope.selectedDraft.coApplicantMobileNumber)){
+            toaster.error("请填写共同申请人手机号码");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantQualification){
+            toaster.error("请填写共同申请人教育程度");
+            return false;
+        };
+        if(!$scope.selectedDraft.coApplicantIncomePerMonth){
+            toaster.error("请填写共同申请人月收入");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorName){
+            toaster.error("请填写担保人姓名");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorRelationship){
+            toaster.error("请填写担保人与申请人关系");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorCertificateNumber){
+            toaster.error("请填写担保人证件号码");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorMobileNumber || !isPhone.test($scope.selectedDraft.guarantorMobileNumber)){
+            toaster.error("请填写担保人手机号码");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorRealEstateOwnType){
+            toaster.error("请填写担保人房产属权");
+            return false;
+        };
+        if(!$scope.selectedDraft.guarantorIncomePerMonth){
+            toaster.error("请填写担保人月收入");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantFirstEmergencyContact){
+            toaster.error("请填写紧急联系人姓名");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantFirstEmergencyContactRelationship){
+            toaster.error("请填写紧急联系人与申请人关系");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantFirstEmergencyContactMobileNumber || !isPhone.test($scope.selectedDraft.applicantFirstEmergencyContactMobileNumber)){
+            toaster.error("请填写紧急联系人手机号码");
+            return false;
+        };
+        if(!$scope.selectedDraft.applicantFirstEmergencyContactAddress){
+            toaster.error("请填写紧急联系人先居住地址");
+            return false;
+        };
 
 
         httpService.updateLoandraft($scope.selectedDraft.id, {}, 3).then(function (res) {//3表示初审审批通过
@@ -1455,6 +1659,11 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         });
 
     };
+    $scope.isNumber = function (val) {
+        val = val.replace(/[^0-9]/ig,"");
+        return val;
+
+    }
 
     $scope.save = function () {
         var loanDraft = {};
@@ -1509,22 +1718,21 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             return;
         };
         httpService.updateLoandraft($scope.selectedDraft.id, loanDraft, 1).then(function (res) {
-            alert("保存成功");
+            toaster.success("保存成功");
         }, function (err) {
-            alert(err);
+            toaster.error(err);
         });
 
     };
 
     $scope.returnAndUpdate = function () {
-        $scope.errMsg = "";
+        $scope.errMsgs = [];
         for (var i = 0; i < $scope.picArrays.length; i++) {
             if ($scope.picArrays[i].msg) {
-                $scope.errMsg += $scope.picTypes[$scope.picArrays[i].id].name + $scope.picArrays[i].msg + "\n";
+                $scope.errMsgs.push($scope.picTypes[$scope.picArrays[i].id].name + $scope.picArrays[i].msg);
             }
 
-        }
-        ;
+        };
         $scope.showReturnDialog = true;
     };
 
@@ -1578,11 +1786,20 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         $scope.endIndex = j + 4;
         if (j < 4) {
             $scope.startIndex = 0;
-        }
-        ;
+        };
         if (j > $scope.picArrays.length - 4 - 1) {
             $scope.endIndex = $scope.picArrays.length - 1;
-        }
+        };
+        if($scope.selectedPicIndex ==0){
+            $scope.leftIcon = '/resources/img/left-off.png';
+        }else {
+            $scope.leftIcon = '/resources/img/left-on.png';
+        };
+        if($scope.selectedPicIndex ==$scope.picArrays.length-1){
+            $scope.rightIcon = '/resources/img/right-off.png';
+        }else{
+            $scope.rightIcon = '/resources/img/right-on.png';
+        };
 
     };
 
@@ -1733,7 +1950,9 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
                 break;
         }
         ;
-        getLoanBean(loanObj);
+        if(!getLoanBean(loanObj)){
+            return;
+        };
         httpService.updateLoandraft($scope.selectedDraft.id, loanObj, 1).then(function (res) {
             $scope.currentPage = $scope.selectedType.id;
         }, function (err) {
