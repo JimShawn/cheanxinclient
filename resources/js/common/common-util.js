@@ -8,8 +8,25 @@ commonUtil.factory("commonUtil",function (cityJson) {
     var currentTab = {};
     var currentTabIndex = {};
     var currentItem = "";
-    factory.getDateFromInt=function(timeInt){
-        var time = new Date(timeInt*1000);
+    var imageHost = "http://172.16.1.14:8888/";
+
+    factory.reassembleImages = function (imageIds, withHost) {
+        if (!imageIds) {
+            return [];
+        }
+        var tmpArr = imageIds.split(",");
+        if (!withHost) {
+            return tmpArr;
+        }
+        var result = new Array(tmpArr.length);
+        for (var i in tmpArr) {
+            result[i] = imageHost + tmpArr[i];
+        }
+        return result;
+    }
+
+    factory.getDateFromInt = function(timeInt){
+        var time = new Date(timeInt * 1000);
         var y = time.getFullYear();
         var m = time.getMonth()+1;
         var d = time.getDate();

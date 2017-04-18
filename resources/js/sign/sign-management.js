@@ -18,17 +18,13 @@ sign.controller("signListController",function ($scope, $http, $location, $rootSc
     }
 });
 
-loanrecheck.controller("signEditController",['$filter','$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
+loanrecheck.controller("signEditController", function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
     $scope.cities = cityJson;
 
     $scope.applyLoan = $stateParams.items;
     $scope.contractNumber = $scope.applyLoan.contractNumber;
     $scope.singData = $scope.applyLoan.contractCreatedTime * 1000;
-    var signPhotoArr = $scope.applyLoan.contractFileIds.split(",");
-    $scope.signPhotoes = new Array(signPhotoArr.length);
-    for (var i = 0; i < signPhotoArr.length; i++) {
-        $scope.signPhotoes[i] = signPhotoArr[i];
-    }
+    $scope.signPhotoes = commonUtil.reassembleImages($scope.applyLoan.contractFileIds);
     $scope.showGiveupDialog =false;
 
 
@@ -81,7 +77,7 @@ loanrecheck.controller("signEditController",['$filter','$scope', '$http','$locat
             console.error(err);
         });
     };
-}]);
+});
 
 loanrecheck.controller("signViewController", function ($filter, $scope, $rootScope, httpService, $state, $stateParams, commonUtil) {
     $scope.applyLoan = $stateParams.items;
