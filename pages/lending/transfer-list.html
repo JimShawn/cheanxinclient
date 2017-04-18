@@ -112,12 +112,13 @@
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanStatuses[loanapply.status].name}}</td>
                     <td class="oper"><a href="" class="blue">查看</a>
-                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status==8">过户结果</a>
-                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status==21">重新上传</a>
-                        <a href="" class="blue" ng-click="lending(loanapply)" ng-show="loanapply.status==23">放款</a>
-                        <a href="" class="blue" ng-click="uploadMortgageResult(loanapply)" ng-show="loanapply.status==24">办理抵押</a>
-                        <a href="" class="blue" ng-click="checkCantTransfer(loanapply)" ng-show="loanapply.status==19">审核</a>
-                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status==22">审核</a></td>
+                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status == 8 && subTab.edit">过户</a>
+                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status == 21 && subTab.edit">重新上传</a>
+                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status == 23 && subTab.edit">放款</a>
+                        <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status == 24 && subTab.edit">办理抵押</a>
+                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status == 19 && subTab.review">审核</a>
+                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status == 22 && subTab.review">审核</a>
+                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status == 38 && subTab.review">审核</a></td>
                 </tr>
 
                 </tbody>

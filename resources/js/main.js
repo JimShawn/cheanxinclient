@@ -270,13 +270,29 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"38"
         },
         {
-            name:"无法过户",
+            name:"待还款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
+            status:"31"
+        },
+        {
+            name:"无法过户待审核",
             review:false,
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_REVIEW"],
-            status:"29"
+            status:"19"
+        },
+        {
+            name:"无法过户已确认",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_READ"],
+            status:"20"
         }
     ];
     var mortgageTabs = [

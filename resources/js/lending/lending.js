@@ -16,39 +16,29 @@ lending.controller("afterTransferListController", function ($scope,$http,$locati
     $scope.check = function (loan) {
         $state.go("main.checkTransferResult",{items:loan});
     };
-    $scope.lending = function (loan) {
-        $state.go("main.checkTransferResult",{items:loan});
-    };
-    $scope.uploadMortgageResult = function (loan) {
-        $state.go("main.checkTransferResult",{items:loan});
-    };
-    $scope.checkCantTransfer = function (loan) {
-        $state.go("main.checkTransferResult",{items:loan});
-    }
-
 });
 
-lending.controller("transferEditController",['$filter','$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
+lending.controller("transferEditController", function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
     $scope.cities = cityJson;
 
     $scope.applyLoan = $stateParams.items;
-    if($scope.applyLoan){
-        $scope.transferPhotoes = $scope.applyLoan.transferFileIds.split(",");
-        $scope.GPSPhotoes = $scope.applyLoan.transferGPSFileIds.split(",");
-        $scope.insuranceContractPhotoes = $scope.applyLoan.transferInsuranceFileIds.split(",");
+    $scope.commonUtil = commonUtil;
+    if ($scope.applyLoan) {
+        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds);
+        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
+        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
     };
-    $scope.showGiveupDiaog =false;
+    $scope.showGiveupDialog =false;
 
 
     $scope.cancel = function () {
         $state.go("main.afterTransferLoanList");
     };
     $scope.failTransfer=function () {
-        $scope.showGiveupDiaog =true;
+        $scope.showGiveupDialog =true;
     };
     $scope.commit = function () {
         var date = new Date($scope.applyLoan.transferCreatedTime);
-        console.log(date.getTime());
         var GPSPic = $filter('filter')($scope.GPSPic, '').join(",");
         var transferPic = $filter('filter')($scope.transferPic, '').join(",");
         var insuranceContractPic = $filter('filter')($scope.insuranceContractPic, '').join(",");
@@ -68,10 +58,50 @@ lending.controller("transferEditController",['$filter','$scope', '$http','$locat
         }
         var loan = {
             transferCardNumber:$scope.applyLoan.transferCardNumber,
-            transferCreatedTime:date.getTime()/1000,
+            transferCreatedTime:date.getTime() / 1000,
             transferFileIds:transferPic,
             transferGPSFileIds:GPSPic,
             transferInsuranceFileIds:insuranceContractPic
+        };
+        httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function (res) {//1表示修改
+            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//2表示提交审批
+                console.log(res);
+                $state.go("main.afterTransferLoanList");
+            },function (err) {
+                console.log(err);
+            });
+        },function (err) {
+            console.log(err);
+        })
+    };
+    $scope.doCancel = function () {
+        $scope.showGiveupDialog =false;
+    };
+    $scope.doFailTransfer = function () {
+
+        var loanApply = {
+            reviewRemark:$scope.giveupReason
+        };
+        httpService.updateLoandraft($scope.applyLoan.id,loanApply,5).then(function (res) {
+            console.log(res);
+            $state.go("main.afterTransferLoanList");
+            $scope.showGiveupDialog =false;
+        },function (err) {
+            console.log(err);
+        });
+    };
+
+    $scope.uploadMortgage = function () {
+        var date = new Date($scope.applyLoan.mortgageCreatedTime);
+        console.log(date.getTime());
+        var mortgagePic = $filter('filter')($scope.mortgagePic, '').join(",");
+        if(mortgagePic == ""){
+            alert("请上传抵押材料");
+            return;
+        };
+        var loan = {
+            mortgageCreatedTime:date.getTime() / 1000,
+            mortgageFileIds:mortgagePic
         };
         httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function (res) {//1表示修改
             console.log(res);
@@ -84,35 +114,19 @@ lending.controller("transferEditController",['$filter','$scope', '$http','$locat
         },function (err) {
             console.log(err);
         })
-    };
-    $scope.doCancel = function () {
-        $scope.showGiveupDiaog =false;
-    };
-    $scope.doFailTransfer = function () {
+    }
+});
 
-        var loanApply = {
-            reviewRemark:$scope.giveupReason
-        };
-        httpService.updateLoandraft($scope.applyLoan.id,loanApply,5).then(function (res) {//4表示放弃签约
-            console.log(res);
-            $state.go("main.afterTransferLoanList");
-            $scope.showGiveupDiaog =false;
-        },function (err) {
-            console.log(err);
-        });
-    };
-}]);
-
-lending.controller("transferDetailController",['$filter','$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams','commonUtil',function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
+lending.controller("transferDetailController", function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
     $scope.cities = cityJson;
 
     $scope.applyLoan = $stateParams.items;
     $scope.commonUtil = commonUtil;
-    $scope.showGiveupDiaog =false;
-    if($scope.applyLoan.status == 19){
+    $scope.showGiveupDialog =false;
+    if ($scope.applyLoan && $scope.applyLoan.status == 19) {
         httpService.getOperateLog($scope.applyLoan.id,8,19).then(function (res) {
             var data = res.data;
-            if (data.length>0){
+            if (data.length > 0){
                 $scope.cantTransferReason = data[0].remark;
 
             }
@@ -120,21 +134,21 @@ lending.controller("transferDetailController",['$filter','$scope', '$http','$loc
 
         })
     };
-    if($scope.applyLoan.status ==22){
-            $scope.transferPhotoes = $scope.applyLoan.transferFileIds.split(",");
-            $scope.GPSPhotoes = $scope.applyLoan.transferGPSFileIds.split(",");
-            $scope.insuranceContractPhotoes = $scope.applyLoan.transferInsuranceFileIds.split(",");
-    }
 
+    if ($scope.applyLoan) {
+        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds);
+        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
+        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
+        $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds);
+    }
 
     $scope.cancel = function () {
         $state.go("main.afterTransferLoanList");
     };
     $scope.failTransfer=function () {
-        $scope.showGiveupDiaog =true;
+        $scope.showGiveupDialog =true;
     };
     $scope.checkPass = function () {
-
             httpService.updateLoandraft($scope.applyLoan.id,{},3).then(function (res) {//3
                 console.log(res);
                 $state.go("main.afterTransferLoanList");
@@ -143,8 +157,8 @@ lending.controller("transferDetailController",['$filter','$scope', '$http','$loc
             });
     };
     $scope.doCancel = function () {
-        $scope.showGiveupDiaog =false;
-        $scope.showTransferDiaog = false;
+        $scope.showGiveupDialog =false;
+        $scope.showTransferDialog = false;
     };
     $scope.doOperateTransfer = function () {
         if(!$scope.transferReason){
@@ -165,18 +179,18 @@ lending.controller("transferDetailController",['$filter','$scope', '$http','$loc
             $state.go("main.afterTransferLoanList");
             $scope.confirmCantTransfer = false;
             $scope.confirmCanTransfer = false;
-            $scope.showTransferDiaog = false;
+            $scope.showTransferDialog = false;
         },function (err) {
             console.log(err);
         });
     };
     $scope.doCantTransfer = function () {
-        $scope.showTransferDiaog = true;
+        $scope.showTransferDialog = true;
         $scope.confirmCantTransfer = true;
         $scope.confirmCanTransfer = false;
     };
     $scope.continueTransfer = function () {
-        $scope.showTransferDiaog = true;
+        $scope.showTransferDialog = true;
         $scope.confirmCantTransfer = false;
         $scope.confirmCanTransfer = true;
     };
@@ -191,13 +205,12 @@ lending.controller("transferDetailController",['$filter','$scope', '$http','$loc
         httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {//4表示放弃签约
             console.log(res);
             $state.go("main.afterTransferLoanList");
-            $scope.showGiveupDiaog =false;
+            $scope.showGiveupDialog =false;
         },function (err) {
             console.log(err);
         });
     };
     $scope.lendingConfirm = function () {
-
         var date = new Date($scope.applyLoan.releaseCreatedTime);
         console.log(date.getTime());
         var lendingPic = $filter('filter')($scope.lendingPic, '').join(",");
@@ -222,28 +235,4 @@ lending.controller("transferDetailController",['$filter','$scope', '$http','$loc
             console.log(err);
         })
     };
-    $scope.uploadMortgage = function () {
-        var date = new Date($scope.applyLoan.mortgageCreatedTime);
-        console.log(date.getTime());
-        var mortgagePic = $filter('filter')($scope.mortgagePic, '').join(",");
-        if(mortgagePic == ""){
-            alert("请上传抵押材料");
-            return;
-        };
-        var loan = {
-            mortgageCreatedTime:date.getTime()/1000,
-            mortgageFileIds:mortgagePic
-        };
-        httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function (res) {//1表示修改
-            console.log(res);
-            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//2表示提交审批
-                console.log(res);
-                $state.go("main.afterTransferLoanList");
-            },function (err) {
-                console.log(err);
-            });
-        },function (err) {
-            console.log(err);
-        })
-    }
-}]);
+});
