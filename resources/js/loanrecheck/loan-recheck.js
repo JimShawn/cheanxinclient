@@ -84,18 +84,19 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
     };
     $scope.showRefuseDialog = false;
     $scope.showPassDialog = false;
+    $scope.creditRemark = "";
+    $scope.paybackRemark = "";
     $scope.refuse = function () {
-        var refuseStr = "";
+        $scope.mainRefuseReasons = [];
         if($scope.materialFake){
-            refuseStr +="材料虚假\n";
+            $scope.mainRefuseReasons.push("材料虚假");
         };
         if($scope.creditBad){
-            refuseStr +="客户信用不良\n";
+            $scope.mainRefuseReasons.push("客户信用不良"+$scope.creditRemark);
         };
         if($scope.paybackBad){
-            refuseStr +="客户还款能力不足\n";
+            $scope.mainRefuseReasons.push("客户还款能力不足"+$scope.paybackRemark);
         };
-        $scope.mainRefuseReason = refuseStr;
 
         $scope.showRefuseDialog = true;
     };
@@ -121,8 +122,13 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         $scope.payPerMonth = $scope.reviewLoanPrice*($scope.applyLoan.productLoanMonthlyInterestRate/100+1/$scope.selectedTerm);
     }
     $scope.doRefuse = function () {
+        var errMsg = "";
+        for(var i;i<$scope.mainRefuseReasons.length;i++){
+            errMsg += $scope.mainRefuseReasons[i]+"*`*";
+        };
+        errMsg = errMsg+$scope.otherRefuseReason;
         var loanApply = {
-            reviewRemark:$scope.mainRefuseReason+$scope.otherRefuseReason
+            reviewRemark:errMsg
         };
         httpService.updateLoandraft($scope.applyLoan.id,loanApply,4).then(function (res) {
             console.log(res);

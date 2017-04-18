@@ -377,18 +377,5 @@ httpservice.factory('httpService',function ($http, $q, $window, $rootScope, $inj
         });
         return deferd.promise;
     };
-    api.getChekuangbaoDetailTest = function () {
-        var deferd = $q.defer();
-        var timestamp = Date.parse(new Date());
-        timestamp = timestamp / 1000;
-
-        var secretKey = hex_md5("0f6a57a943273460f9712ee79b0a8dfb" + timestamp);
-        var url = "https://192.168.5.31/1.0/auth.getAccessToken?jsonp=JSON_CALLBACK&_api_time=" + timestamp + "&_api_key=fa1f58046f169f08d3ebf086a11399e4&_api_secret=" + secretKey;
-        // $http.jsonp(url).success(function (result) {
-        //     deferd.resolve(result);
-        // });
-        $http.jsonp(url).success(function(data){ console.log(data) });
-        return deferd.promise;
-    };
     return api;
 });

@@ -69,6 +69,13 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
     };
     $scope.add = function () {
         $state.go("main.loanapply", {items: null, type: 1});
+    };
+    $scope.test = function () {
+        httpService.getChekuangbaoDetailTest().then(function (res) {
+            console.log(res);
+        },function (err) {
+           console.log(err);
+        });
     }
 
 });

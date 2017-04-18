@@ -4,7 +4,7 @@
         <div class="login" >
             <div class="login-title">拒绝原因：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
             <div class="login-input-content">
-                <div class="login-input">
+                <div class="login-input" ng-repeat="mainRefuseReason in mainRefuseReasons">
                     <span class="main-reason">{{mainRefuseReason}}</span>
                 </div>
                 <div class="login-input">
