@@ -46,7 +46,7 @@
         </table>
     </div>
 
-    <div class="loan-application-row2"  ng-show="applyLoan.status == 8">
+    <div class="loan-application-row2"  ng-show="applyLoan.status == 8 || applyLoan.status == 21">
         <div class="mod-hd">
             <h2>上传过户材料</h2>
         </div>
@@ -149,7 +149,7 @@
 
     <div class="footer">
         <button class="comm-btn comm-btn-blue fr footer-button" ng-click="uploadMortgage()" ng-show="applyLoan.status == 24">提交</button>
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()" ng-show="applyLoan.status == 8">提交</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()" ng-show="applyLoan.status == 8 || applyLoan.status == 21">提交</button>
         <button class="comm-btn  fr footer-button" ng-click="failTransfer()" ng-show="applyLoan.status == 8">无法过户</button>
         <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
 

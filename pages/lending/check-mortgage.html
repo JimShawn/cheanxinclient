@@ -46,7 +46,7 @@
         </table>
     </div>
 
-    <div class="loan-application-row2" ng-show="applyLoan.status ==29">
+    <div class="loan-application-row2" ng-show="applyLoan.status == 29 || applyLoan.status == 33">
         <div class="mod-hd">
             <h2>过户结果</h2>
         </div>
@@ -63,13 +63,13 @@
                 <td width="15%"><span class="red">*</span>过户完成日期：</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <span>{{applyLoan.transferCardNumber}}</span>
+                        <span>{{commonUtil.getDateFromInt(applyLoan.transferCreatedTime)}}</span>
                     </div>
                 </td>
                 <td width="15%"><span class="red">*</span>过户后车牌号：</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <span>{{commonUtil.getDateFromInt(applyLoan.transferCreatedTime)}}</span>
+                        <span>{{applyLoan.transferCardNumber}}</span>
                     </div>
                 </td>
 
@@ -81,8 +81,8 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="pic-container" ng-repeat="transferPhoto in transferPhotoes">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+transferPhoto}}" alt=""></a>
+                    <div class="pic-container" ng-repeat="transferPhoto in transferPhotos">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{transferPhoto}}" alt=""></a>
                     </div>
 
                 </td>
@@ -93,8 +93,8 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="pic-container" ng-repeat="GPSPhoto in GPSPhotoes">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+GPSPhoto}}" alt=""></a>
+                    <div class="pic-container" ng-repeat="GPSPhoto in GPSPhotos">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{GPSPhoto}}" alt=""></a>
                     </div>
 
                 </td>
@@ -105,8 +105,8 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="pic-container" ng-repeat="insuranceContractPhoto in insuranceContractPhotoes">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+insuranceContractPhoto}}" alt=""></a>
+                    <div class="pic-container" ng-repeat="insuranceContractPhoto in insuranceContractPhotos">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{insuranceContractPhoto}}" alt=""></a>
                     </div>
 
                 </td>
@@ -127,7 +127,7 @@
                 <td width="15%"><span class="red">*</span>抵押日期：</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
-                        <span>{{applyLoan.mortgageCreatedTime}}</span>
+                        <span>{{commonUtil.getDateFromInt(applyLoan.mortgageCreatedTime)}}</span>
                     </div>
                 </td>
 
@@ -139,8 +139,8 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="pic-container" ng-repeat="mortgagePhoto in mortgagePhotoes">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+mortgagePhoto}}" alt=""></a>
+                    <div class="pic-container" ng-repeat="mortgagePhoto in mortgagePhotos">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{mortgagePhoto}}" alt=""></a>
                     </div>
 
 
@@ -153,7 +153,7 @@
 
     </div>
 
-    <div class="loan-application-row2" ng-show="applyLoan.status ==30">
+    <div class="loan-application-row2" ng-show="applyLoan.status == 30">
         <div class="mod-hd">
             <h2>放款结果</h2>
         </div>
@@ -186,9 +186,9 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="upload" desc="请上传放款材料" uploader="lendingPic1" uploaded-urls="lendingPic" index="0" image-url={{lendingPhotoes[0]}}></div>
-                    <div class="upload" desc="请上传放款材料" uploader="lendingPic2" uploaded-urls="lendingPic" index="1" image-url={{lendingPhotoes[1]}}></div>
-                    <div class="upload" desc="请上传放款材料" uploader="lendingPic3" uploaded-urls="lendingPic" index="2" image-url={{lendingPhotoes[2]}}></div>
+                    <div class="upload" desc="请上传放款材料" uploader="lendingPic1" uploaded-urls="lendingPic" index="0" image-url={{lendingPhotos[0]}}></div>
+                    <div class="upload" desc="请上传放款材料" uploader="lendingPic2" uploaded-urls="lendingPic" index="1" image-url={{lendingPhotos[1]}}></div>
+                    <div class="upload" desc="请上传放款材料" uploader="lendingPic3" uploaded-urls="lendingPic" index="2" image-url={{lendingPhotos[2]}}></div>
 
 
                 </td>
@@ -225,9 +225,9 @@
     </div>
 
     <div class="footer">
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="checkPass()" ng-show="applyLoan.status ==29">审核通过</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="checkPass()" ng-show="applyLoan.status == 29 || applyLoan.status == 33">审核通过</button>
+        <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status == 29 || applyLoan.status == 33"><a href="javascript:void(0);" ng-click="failTransfer()">退回修改</a></button>
         <button class="comm-btn comm-btn-blue fr footer-button" ng-click="lendingConfirm()" ng-show="applyLoan.status ==30">确定放款</button>
-        <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status ==29"><a href="javascript:void(0);" ng-click="failTransfer()">退回修改</a></button>
         <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status ==26"><a href="javascript:void(0);" ng-click="doCantTransfer()">确认</a></button>
         <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status ==26"><a href="javascript:void(0);" ng-click="continueTransfer()">继续办理</a></button>
         <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
@@ -237,7 +237,7 @@
             <span>更多操作</span>
         </div>
 
-        <div class="login" ng-show="showGiveupDiaog">
+        <div class="login" ng-show="showGiveupDialog">
             <div class="login-title">退回：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
             <div class="login-input-content">
                 <div class="login-input">
@@ -253,7 +253,7 @@
 
         </div>
 
-        <div class="login" ng-show="showTransferDiaog">
+        <div class="login" ng-show="showTransferDialog">
             <div class="login-title" ng-show="confirmCantTransfer">确认无法办理：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close1" src="/resources/img/close.png" alt=""/></a></div></div>
             <div class="login-title" ng-show="confirmCanTransfer">可办理原因：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close2" src="/resources/img/close.png" alt=""/></a></div></div>
             <div class="login-input-content">

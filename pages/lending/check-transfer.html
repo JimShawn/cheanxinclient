@@ -46,7 +46,7 @@
         </table>
     </div>
 
-    <div class="loan-application-row2" ng-show="applyLoan.status == 22">
+    <div class="loan-application-row2" ng-show="applyLoan.status == 22 || 32">
         <div class="mod-hd">
             <h2>过户结果</h2>
         </div>
@@ -188,7 +188,7 @@
     </div>
 
     <div class="footer">
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="checkPass()" ng-show="applyLoan.status == 22 || applyLoan.status == 38">审核通过</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="checkPass()" ng-show="applyLoan.status == 22 || applyLoan.status == 32 || applyLoan.status == 38">审核通过</button>
         <button class="comm-btn comm-btn-blue fr footer-button" ng-click="lendingConfirm()" ng-show="applyLoan.status == 23">确定放款</button>
         <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status == 22"><a href="javascript:void(0);" ng-click="failTransfer()">退回修改</a></button>
         <button class="comm-btn  fr footer-button"  ng-show="applyLoan.status == 19"><a href="javascript:void(0);" ng-click="doCantTransfer()">确认</a></button>

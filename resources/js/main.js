@@ -240,7 +240,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_REVIEW"],
-            status:"22"
+            status:"22,32"
         },
         {
             name:"待放款",
@@ -270,14 +270,6 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"38"
         },
         {
-            name:"待还款",
-            review:false,
-            edit:false,
-            show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
-            status:"31"
-        },
-        {
             name:"无法过户待审核",
             review:false,
             edit:false,
@@ -293,6 +285,14 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_ABORT_READ"],
             status:"20"
+        },
+        {
+            name:"待还款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
+            status:"31"
         }
     ];
     var mortgageTabs = [
@@ -321,7 +321,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW"],
-            status:"29"
+            status:"29,33"
         },
         {
             name:"待放款",
@@ -341,13 +341,21 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"36"
         },
         {
-            name:"无法办理",
+            name:"无法办理待审核",
             review:false,
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_REVIEW"],
             status:"26"
+        },
+        {
+            name:"无法办理已确认",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_READ"],
+            status:"27"
         }
     ];
     var productTabs = [
