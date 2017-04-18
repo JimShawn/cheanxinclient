@@ -29,7 +29,7 @@
             <tr>
                 <td width="15%">首次登记日期：</td>
                 <td width="30%" ><span class="fl">{{applyLoan.vehicleRegistrationYearMonth}}</span></td>
-                <td width="15%">二手车里程数（公里）</td>
+                <td width="15%">二手车里程数（万公里）</td>
                 <td width="30%"><span class="fl">{{applyLoan.vehicleKilometers}}</span></td>
             </tr>
             <tr>
@@ -154,7 +154,7 @@
                         <adm-dtp ng-model='applyLoan.vehicleRegistrationYearMonth' options='{calType: "gregorian", format: "YYYY-MM-DD",freezeInput:"true"}'></adm-dtp>
                     </div>
                 </td>
-                <td width="20%"><span>*</span>二手车里程数（公里）：</td>
+                <td width="20%"><span>*</span>二手车里程数（万公里）：</td>
                 <td width="30%">
                     <div class="comm-inp-wp  ">
                         <input type="text" class="comm-input1" ng-model="applyLoan.vehicleKilometers" ng-disabled="isRight">
