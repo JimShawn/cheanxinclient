@@ -46,7 +46,7 @@
         </table>
     </div>
 
-    <div class="loan-application-row2">
+    <div class="loan-application-row2"  ng-show="applyLoan.status == 8 || applyLoan.status == 21">
         <div class="mod-hd">
             <h2>上传过户材料</h2>
         </div>
@@ -81,9 +81,9 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="upload" desc="请上传过户材料" uploader="transferPic1" uploaded-urls="transferPic" index="0" image-url={{transferPhotoes[0]}}></div>
-                    <div class="upload" desc="请上传过户材料" uploader="transferPic2" uploaded-urls="transferPic" index="1" image-url={{transferPhotoes[1]}}></div>
-                    <div class="upload" desc="请上传过户材料" uploader="transferPic3" uploaded-urls="transferPic" index="2" image-url={{transferPhotoes[2]}}></div>
+                    <div class="upload" desc="请上传过户材料" uploader="transferPic1" uploaded-urls="transferPic" index="0" image-url={{transferPhotos[0]}}></div>
+                    <div class="upload" desc="请上传过户材料" uploader="transferPic2" uploaded-urls="transferPic" index="1" image-url={{transferPhotos[1]}}></div>
+                    <div class="upload" desc="请上传过户材料" uploader="transferPic3" uploaded-urls="transferPic" index="2" image-url={{transferPhotos[2]}}></div>
 
                 </td>
             </tr>
@@ -93,9 +93,9 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="upload" desc="请上传GPS安装材料" uploader="GPSPic1" uploaded-urls="GPSPic" index="0" image-url={{GPSPhotoes[0]}}></div>
-                    <div class="upload" desc="请上传GPS安装材料" uploader="GPSPic2" uploaded-urls="GPSPic" index="1" image-url={{GPSPhotoes[1]}}></div>
-                    <div class="upload" desc="请上传GPS安装材料" uploader="GPSPic3" uploaded-urls="GPSPic" index="2" image-url={{GPSPhotoes[2]}}></div>
+                    <div class="upload" desc="请上传GPS安装材料" uploader="GPSPic1" uploaded-urls="GPSPic" index="0" image-url={{GPSPhotos[0]}}></div>
+                    <div class="upload" desc="请上传GPS安装材料" uploader="GPSPic2" uploaded-urls="GPSPic" index="1" image-url={{GPSPhotos[1]}}></div>
+                    <div class="upload" desc="请上传GPS安装材料" uploader="GPSPic3" uploaded-urls="GPSPic" index="2" image-url={{GPSPhotos[2]}}></div>
 
                 </td>
             </tr>
@@ -105,10 +105,9 @@
                 </td>
 
                 <td colspan="3">
-                    <div class="upload" desc="请上传保险合同材料" uploader="insuranceContractPic1" uploaded-urls="insuranceContractPic" index="0" image-url={{insuranceContractPhotoes[0]}}></div>
-                    <div class="upload" desc="请上传保险合同材料" uploader="insuranceContractPic2" uploaded-urls="insuranceContractPic" index="1" image-url={{insuranceContractPhotoes[1]}}></div>
-                    <div class="upload" desc="请上传保险合同材料" uploader="insuranceContractPic3" uploaded-urls="insuranceContractPic" index="2" image-url={{insuranceContractPhotoes[2]}}></div>
-
+                    <div class="upload" desc="请上传保险合同材料" uploader="insuranceContractPic1" uploaded-urls="insuranceContractPic" index="0" image-url={{insuranceContractPhotos[0]}}></div>
+                    <div class="upload" desc="请上传保险合同材料" uploader="insuranceContractPic2" uploaded-urls="insuranceContractPic" index="1" image-url={{insuranceContractPhotos[1]}}></div>
+                    <div class="upload" desc="请上传保险合同材料" uploader="insuranceContractPic3" uploaded-urls="insuranceContractPic" index="2" image-url={{insuranceContractPhotos[2]}}></div>
                 </td>
             </tr>
 
@@ -117,9 +116,41 @@
         </table>
 
     </div>
+
+    <div class="loan-application-row2" ng-show="applyLoan.status == 24">
+        <div class="mod-hd">
+            <h2>上传抵押材料</h2>
+        </div>
+
+        <table class="mod-table1">
+            <tbody>
+            <tr>
+                <td width="15%"><span class="red">*</span>抵押日期：</td>
+                <td width="35%">
+                    <div class="comm-inp-wp">
+                        <adm-dtp ng-model='applyLoan.mortgageCreatedTime' options='{calType: "gregorian", format: "YYYY-MM-DD"}'></adm-dtp>
+                    </div>
+                </td>
+            </tr>
+
+            <tr height="300px">
+                <td >
+                    <span class="red">*</span>抵押材料
+                </td>
+                <td colspan="3">
+                    <div class="upload" desc="请上传抵押材料" uploader="mortggePic1" uploaded-urls="mortgagePic" index="0" image-url={{mortgagePhotos[0]}}></div>
+                    <div class="upload" desc="请上传抵押材料" uploader="mortgagePic2" uploaded-urls="mortgagePic" index="1" image-url={{mortgagePhotos[1]}}></div>
+                    <div class="upload" desc="请上传抵押材料" uploader="mortgagePic3" uploaded-urls="mortgagePic" index="2" image-url={{mortgagePhotos[2]}}></div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
     <div class="footer">
-        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()">提交</button>
-        <button class="comm-btn  fr footer-button"><a href="javascript:void(0);" ng-click="failTransfer()">无法过户</a></button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="uploadMortgage()" ng-show="applyLoan.status == 24">提交</button>
+        <button class="comm-btn comm-btn-blue fr footer-button" ng-click="commit()" ng-show="applyLoan.status == 8 || applyLoan.status == 21">提交</button>
+        <button class="comm-btn  fr footer-button" ng-click="failTransfer()" ng-show="applyLoan.status == 8">无法过户</button>
         <button class="comm-btn  fr footer-button" ng-click="cancel()">返回列表</button>
 
         <div class=" a fr ">
@@ -127,12 +158,12 @@
             <span>更多操作</span>
         </div>
 
-        <div class="login" ng-show="showGiveupDiaog">
+        <div class="login" ng-show="showGiveupDialog">
             <div class="login-title">无法过户：<div class="close"><a href="javascript:void(0);"class="close-login" ng-click="doCancel()"><img id="close" src="/resources/img/close.png" alt=""/></a></div></div>
             <div class="login-input-content">
                 <div class="login-input">
-                    <label><span class="red"> *</span>无法过户原因：</label>
-                    <input type="text" placeholder="请输入无法过户原因"  name="info[username]" id="username" class="list-input" ng-model="giveupReason"/>
+                    <label><span class="red"> *</span>原因：</label>
+                    <input type="text" placeholder="请输入无法过户原因" class="list-input" ng-model="giveupReason"/>
                 </div>
             </div>
 
