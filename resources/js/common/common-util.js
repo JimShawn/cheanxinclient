@@ -8,7 +8,17 @@ commonUtil.factory("commonUtil",function (cityJson) {
     var currentTab = {};
     var currentTabIndex = {};
     var currentItem = "";
+
     var imageHost = "http://172.16.1.14:8888/";
+    var serverHost = "http://localhost:8081/cheanxin/";
+
+    factory.getServerHost = function () {
+        return serverHost;
+    }
+
+    factory.getImageHost = function () {
+        return imageHost;
+    }
 
     factory.reassembleImages = function (imageIds, withHost) {
         if (!imageIds) {
