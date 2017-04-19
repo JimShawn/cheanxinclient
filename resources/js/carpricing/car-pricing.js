@@ -29,7 +29,7 @@ carpricing.controller("carPricingListController", function ($scope,$http,$locati
     };
 });
 
-product.controller("setPriceController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
+product.controller("setPriceController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil, toaster) {
     $scope.cities = cityJson;
 
     $scope.brands = [
@@ -53,6 +53,46 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
 
     $scope.isRight = true;
     $scope.commit = function () {
+        if(!$scope.predictPrice){
+            toaster.error("评估价不能为空");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleVin || $scope.applyLoan.vehicleVin.length !=17){
+            toaster.error("车架号位17位字符");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleManufacturers){
+            toaster.error("请选择厂家");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleBrand){
+            toaster.error("请选择品牌");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleSeries){
+            toaster.error("请选择车系");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleProductionYearMonth){
+            toaster.error("请选择生产年月");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleRegistrationYearMonth){
+            toaster.error("请选择首次登记日期");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleKilometers){
+            toaster.error("请填写里程数");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleUtilityType){
+            toaster.error("请选择使用类型");
+            return;
+        };
+        if(!$scope.applyLoan.vehicleEmission){
+            toaster.error("请选择排放标准");
+            return;
+        };
         var applyLoantwo = {
                 vehiclePredictPrice:$scope.predictPrice,
                 vehicleVin:$scope.applyLoan.vehicleVin,
