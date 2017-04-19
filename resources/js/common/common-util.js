@@ -25,6 +25,30 @@ commonUtil.factory("commonUtil",function (cityJson) {
         return result;
     }
 
+    factory.joinImages = function (picArray, filterHost) {
+        var emptyString = "";
+        if (!picArray || picArray.length == 0) {
+            return emptyString;
+        }
+        if (!filterHost) {
+            return picArray.join(",");
+        }
+        var resultArray = [];
+        if (filterHost) {
+            for (var i = 0; i < picArray.length; i++) {
+                if (!picArray[i]) {
+                    continue;
+                }
+                picArray[i] = picArray[i].replace(imageHost, emptyString);
+                if (picArray[i].length == 0) {
+                    continue;
+                }
+                resultArray.push(picArray[i]);
+            }
+        }
+        return resultArray.join(",");
+    }
+
     factory.getDateFromInt = function(timeInt){
         var time = new Date(timeInt * 1000);
         var y = time.getFullYear();
