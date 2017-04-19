@@ -80,7 +80,12 @@
                     <td>{{product.availableTerms}}</td>
                     <td id="accrual">{{product.loanMonthlyInterestRate}}</td>
                     <td>{{product.maxAvailableVehicleYear}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="edit(product)" ng-show="showEdit">编辑</a><a href="" class="blue" ng-show="showReview" ng-click="review(product)">审核</a>
+                    <td class="oper">
+                        <a href="" class="blue" ng-click="edit(product)" ng-show="showEdit">编辑</a>
+                        <a href="" class="blue" ng-show="showReview" ng-click="review(product)">审核</a>
+                        <a href="" class="blue" ng-show="product.status == 1 && product.enabled" ng-click="enableOrDisable(product)">禁用</a>
+                        <a href="" class="blue" ng-show="product.status == 1 && !product.enabled" ng-click="enableOrDisable(product)">启用</a>
+                    </td>
                 </tr>
 
                 </tbody>
