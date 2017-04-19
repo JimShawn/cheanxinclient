@@ -53,7 +53,7 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
         id: 1,
         name: "不可用"
     }];
-    
+
     $scope.commonUtil = commonUtil;
     $scope.cityJson = cityJson;
 
@@ -361,8 +361,8 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                 return;
             };
             if(!$scope.applicantCertificateNumber){
-                    toaster.error("请输入证件号码");
-                    return;
+                toaster.error("请输入证件号码");
+                return;
             };
             if($scope.selectedIDType.id ==0 &&!isCertificate.test($scope.applicantCertificateNumber)){
                 toaster.error("请输入格式正确的身份证号码");
@@ -602,8 +602,7 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
     };
 }]);
 
-loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$location', '$rootScope', 'httpService', '$state', '$window', 'cityJson', '$stateParams', 'commonUtil','toaster', function ($scope, $http, $location, $rootScope, httpService, $state, $window, cityJson, $stateParams, commonUtil,toaster) {
-
+loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $location, $rootScope, httpService, $state, $window, cityJson, $stateParams, commonUtil, toaster) {
 
     $scope.sources = [
         {
@@ -791,15 +790,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         //初始化图片
         if ($scope.selectedDraft) {
             if ($scope.selectedDraft.applicantCertificateFileIds) {
-                var fileArray = $scope.selectedDraft.applicantCertificateFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.applicantCertificateFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 0,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     appId.push({
                         id: 0,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
 
                 }
@@ -810,15 +809,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(appId);
 
             if ($scope.selectedDraft.applicantQualificationFileIds) {
-                var fileArray = $scope.selectedDraft.applicantQualificationFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.applicantQualificationFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 1,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     appQua.push({
                         id: 1,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -828,15 +827,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(appQua);
 
             if ($scope.selectedDraft.applicantIncomeFileIds) {
-                var fileArray = $scope.selectedDraft.applicantIncomeFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.applicantIncomeFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 2,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     appInc.push({
                         id: 2,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -846,15 +845,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(appInc);
 
             if ($scope.selectedDraft.applicantEstateFileIds) {
-                var fileArray = $scope.selectedDraft.applicantEstateFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.applicantEstateFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 3,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     appEst.push({
                         id: 3,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -864,15 +863,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(appEst);
 
             if ($scope.selectedDraft.applicantVehicleFileIds) {
-                var fileArray = $scope.selectedDraft.applicantVehicleFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.applicantVehicleFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 4,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     appVeh.push({
                         id: 4,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -882,15 +881,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(appVeh);
 
             if ($scope.selectedDraft.applicantOtherFileIds) {
-                var fileArray = $scope.selectedDraft.applicantOtherFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.applicantOtherFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 5,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     appOth.push({
                         id: 5,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -900,15 +899,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(appOth);
 
             if ($scope.selectedDraft.coApplicantCertificateFileIds) {
-                var fileArray = $scope.selectedDraft.coApplicantCertificateFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.coApplicantCertificateFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 6,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     coAppId.push({
                         id: 6,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -917,15 +916,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             ;
             $scope.picArrayTwo.push(coAppId);
             if ($scope.selectedDraft.coApplicantIncomeFileIds) {
-                var fileArray = $scope.selectedDraft.coApplicantIncomeFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.coApplicantIncomeFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 7,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     coAppInc.push({
                         id: 7,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -935,15 +934,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(coAppInc);
 
             if ($scope.selectedDraft.coApplicantEstateFileIds) {
-                var fileArray = $scope.selectedDraft.coApplicantEstateFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.coApplicantEstateFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 8,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     coAppEst.push({
                         id: 8,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -953,15 +952,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(coAppEst);
 
             if ($scope.selectedDraft.coApplicantOtherFileIds) {
-                var fileArray = $scope.selectedDraft.coApplicantOtherFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.coApplicantOtherFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 9,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     coAppOth.push({
                         id: 9,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -970,15 +969,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             ;
             $scope.picArrayTwo.push(coAppOth);
             if ($scope.selectedDraft.guarantorCertificateFileIds) {
-                var fileArray = $scope.selectedDraft.guarantorCertificateFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.guarantorCertificateFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 10,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     guaID.push({
                         id: 10,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -988,15 +987,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(guaID);
 
             if ($scope.selectedDraft.guarantorIncomeFileIds) {
-                var fileArray = $scope.selectedDraft.guarantorIncomeFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.guarantorIncomeFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 11,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     guaInc.push({
                         id: 11,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -1006,15 +1005,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(guaInc);
 
             if ($scope.selectedDraft.guarantorEstateFileIds) {
-                var fileArray = $scope.selectedDraft.guarantorEstateFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.guarantorEstateFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 12,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     guaEst.push({
                         id: 12,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -1024,15 +1023,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(guaEst);
 
             if ($scope.selectedDraft.guarantorOtherFileIds) {
-                var fileArray = $scope.selectedDraft.guarantorOtherFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.guarantorOtherFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 13,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     guaOth.push({
                         id: 13,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -1042,15 +1041,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             $scope.picArrayTwo.push(guaOth);
 
             if ($scope.selectedDraft.vehicleRegistrationCertificateFileIds) {
-                var fileArray = $scope.selectedDraft.vehicleRegistrationCertificateFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.vehicleRegistrationCertificateFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 14,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     vehReg.push({
                         id: 14,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -1059,15 +1058,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             ;
             $scope.picArrayTwo.push(vehReg);
             if ($scope.selectedDraft.vehicleLicenseFileIds) {
-                var fileArray = $scope.selectedDraft.vehicleLicenseFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.vehicleLicenseFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 15,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     vehLic.push({
                         id: 15,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -1076,15 +1075,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             ;
             $scope.picArrayTwo.push(vehLic);
             if ($scope.selectedDraft.vehicleFileIds) {
-                var fileArray = $scope.selectedDraft.vehicleFileIds.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.vehicleFileIds, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 16,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     vehPic.push({
                         id: 16,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -1093,15 +1092,15 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
             ;
             $scope.picArrayTwo.push(vehPic);
             if ($scope.selectedDraft.applicationPicUrl) {
-                var fileArray = $scope.selectedDraft.applicationPicUrl.split(",");
+                var fileArray = commonUtil.reassembleImages($scope.selectedDraft.applicationPicUrl, true);
                 for (var i = 0; i < fileArray.length; i++) {
                     $scope.picArrays.push({
                         id: 17,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                     applicationFile.push({
                         id: 17,
-                        url: "http://172.16.1.14:8888/" + fileArray[i]
+                        url: fileArray[i]
                     });
                 }
                 ;
@@ -1779,12 +1778,9 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
 
 
     $scope.move = function (j) {
-
-
         if (j < 0 || j > $scope.picArrays.length - 1) {
             return;
         }
-        ;
         $scope.selectedType = $scope.picTypes[$scope.picArrays[j].id];
         $scope.currentPage = $scope.picArrays[j].id;
 
@@ -1793,36 +1789,23 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         $scope.endIndex = j + 4;
         if (j < 4) {
             $scope.startIndex = 0;
-        };
+        }
         if (j > $scope.picArrays.length - 4 - 1) {
             $scope.endIndex = $scope.picArrays.length - 1;
-        };
-        if($scope.selectedPicIndex ==0){
+        }
+        if ($scope.selectedPicIndex == 0) {
             $scope.leftIcon = '/resources/img/left-off.png';
-        }else {
+        } else {
             $scope.leftIcon = '/resources/img/left-on.png';
         };
-        if($scope.selectedPicIndex ==$scope.picArrays.length-1){
+        if ($scope.selectedPicIndex ==$scope.picArrays.length-1) {
             $scope.rightIcon = '/resources/img/right-off.png';
-        }else{
+        } else {
             $scope.rightIcon = '/resources/img/right-on.png';
         };
-
     };
 
-    var getStringFromArray = function (picArray) {
-        var picStr = "";
-        for (var i = 0; i < picArray.length; i++) {
-            if (i == 0) {
-                picStr += picArray[i].url.replace("http://172.16.1.14:8888/", "");
-            } else {
-                picStr += "," + picArray[i].url.replace("http://172.16.1.14:8888/", "");
-            }
-
-        }
-        ;
-        return picStr;
-    }
+    
 
     //修改图片类型
     $scope.changeType = function () {
@@ -1838,8 +1821,16 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         //修改id
         $scope.picArrays[$scope.selectedPicIndex].id = $scope.selectedType.id;
         $scope.picArrayTwo[$scope.selectedType.id].push($scope.picArrays[$scope.selectedPicIndex]);
-        var preString = getStringFromArray($scope.picArrayTwo[$scope.currentPage]);
-        var postString = getStringFromArray($scope.picArrayTwo[$scope.selectedType.id]);
+        var preImageUrlArray = [];
+        for (var i in $scope.picArrayTwo[$scope.currentPage]) {
+            preImageUrlArray.push($scope.picArrayTwo[$scope.currentPage][i].url);
+        }
+        var postImageUrlArray = [];
+        for (var i in $scope.picArrayTwo[$scope.selectedType.id]) {
+            postImageUrlArray.push($scope.picArrayTwo[$scope.selectedType.id][i].url);
+        }
+        var preString = commonUtil.joinImages(preImageUrlArray, true);
+        var postString = commonUtil.joinImages(postImageUrlArray, true);
 
         var loanObj = {};
         switch ($scope.currentPage) {
@@ -2009,4 +2000,4 @@ loanpreliminary.controller("editLoanapplyController", ['$scope', '$http', '$loca
         }
     }
 
-}]);
+});

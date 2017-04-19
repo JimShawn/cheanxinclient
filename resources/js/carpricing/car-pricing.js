@@ -29,7 +29,7 @@ carpricing.controller("carPricingListController", function ($scope,$http,$locati
     };
 });
 
-product.controller("setPriceController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams','toaster',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,toaster) {
+product.controller("setPriceController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil, toaster) {
     $scope.cities = cityJson;
 
     $scope.brands = [
@@ -44,13 +44,12 @@ product.controller("setPriceController",['$scope', '$http','$location','$rootSco
 
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
     $scope.applyLoan = $stateParams.items;
-    if($scope.applyLoan!=null){
+    if ($scope.applyLoan != null) {
         $scope.applyLoan.vehicleProductionYearMonth = parseInt($scope.applyLoan.vehicleProductionYearMonth);
-        $scope.vehicleRegistrationCertificateFileIds = $scope.applyLoan.vehicleRegistrationCertificateFileIds.split(",");
-        $scope.vehicleLicenseFileIds = $scope.applyLoan.vehicleLicenseFileIds.split(",");
-        $scope.vehicleFileIds = $scope.applyLoan.vehicleFileIds.split(",");
+        $scope.vehicleRegistrationCertificateFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleRegistrationCertificateFileIds, true);
+        $scope.vehicleLicenseFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleLicenseFileIds, true);
+        $scope.vehicleFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleFileIds, true);
     }
-
 
     $scope.isRight = true;
     $scope.commit = function () {
@@ -125,4 +124,4 @@ product.controller("setPriceController",['$scope', '$http','$location','$rootSco
     $scope.cancel = function () {
 
     }
-}]);
+});

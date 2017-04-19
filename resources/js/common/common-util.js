@@ -8,7 +8,17 @@ commonUtil.factory("commonUtil",function (cityJson) {
     var currentTab = {};
     var currentTabIndex = {};
     var currentItem = "";
+
     var imageHost = "http://172.16.1.14:8888/";
+    var serverHost = "http://localhost:8081/cheanxin/";
+
+    factory.getServerHost = function () {
+        return serverHost;
+    }
+
+    factory.getImageHost = function () {
+        return imageHost;
+    }
 
     factory.reassembleImages = function (imageIds, withHost) {
         if (!imageIds) {
@@ -23,6 +33,30 @@ commonUtil.factory("commonUtil",function (cityJson) {
             result[i] = imageHost + tmpArr[i];
         }
         return result;
+    }
+
+    factory.joinImages = function (picArray, filterHost) {
+        var emptyString = "";
+        if (!picArray || picArray.length == 0) {
+            return emptyString;
+        }
+        if (!filterHost) {
+            return picArray.join(",");
+        }
+        var resultArray = [];
+        if (filterHost) {
+            for (var i = 0; i < picArray.length; i++) {
+                if (!picArray[i]) {
+                    continue;
+                }
+                picArray[i] = picArray[i].replace(imageHost, emptyString);
+                if (picArray[i].length == 0) {
+                    continue;
+                }
+                resultArray.push(picArray[i]);
+            }
+        }
+        return resultArray.join(",");
     }
 
     factory.getDateFromInt = function(timeInt){

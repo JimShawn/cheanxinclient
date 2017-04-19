@@ -5,8 +5,6 @@
 'use strict';
 var imageUpload = angular.module('image-upload',[]);
 imageUpload.directive('upload',[function () {
-    var imageHost = "http://172.16.1.14:8888/";
-    var serverHost = "http://localhost:8081/cheanxin/";
     return {
         restrict: 'AC',
         scope: {
@@ -17,7 +15,7 @@ imageUpload.directive('upload',[function () {
             imageUrl:'@'
         },
         templateUrl:'/pages/directive/image-upload.html',
-        controller: function ($scope, FileUploader, $window) {
+        controller: function ($scope, FileUploader, $window, commonUtil) {
             if ($scope.index > 9) {
                 console.error("index error.");
                 return;
@@ -29,13 +27,13 @@ imageUpload.directive('upload',[function () {
             } else {
                 $scope.uploadedUrls[$scope.index] = $scope.imageUrl;
                 $scope.imageSize = "cover";
-                $scope.backUrl = imageHost + $scope.imageUrl;
+                $scope.backUrl = commonUtil.getImageHost() + $scope.imageUrl;
             }
             if (!$scope.desc) {
                 $scope.desc = "上传图片";
             }
             var imageUploader = $scope.imageUploader = new FileUploader({
-                url: serverHost + "image/upload?access_token=" + $window.sessionStorage["access_token"],
+                url: commonUtil.getServerHost() + "image/upload?access_token=" + $window.sessionStorage["access_token"],
                 queueLimit: 1, //文件个数
                 removeAfterUpload: false //上传后不删除文件
             });
@@ -65,7 +63,7 @@ imageUpload.directive('upload',[function () {
             };
             imageUploader.onSuccessItem = function(fileItem, response, status, headers) {
                 $scope.uploadStatus = true; //上传成功则把状态改为true
-                $scope.backUrl = imageHost + response;
+                $scope.backUrl = commonUtil.getImageHost() + response;
                 $scope.imageSize = "cover";
                 $scope.desc = fileItem.file.name;
                 $scope.uploadedUrls[$scope.index] = response;
