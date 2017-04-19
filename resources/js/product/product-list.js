@@ -187,7 +187,7 @@ product.controller("productTemplateController", function($scope, $http, $locatio
     $scope.getTemplateList();
 });
 
-product.controller("subProductController",function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, productFactory) {
+product.controller("subProductController",function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, productFactory, toaster) {
     productFactory.initScope($scope, httpService);
 
     $scope.QueryPositonName = "";
@@ -206,6 +206,15 @@ product.controller("subProductController",function ($scope, $http, $location, $r
     $scope.review = function (subproduct) {
         $state.go("main.reviewsubproduct",{items:subproduct});
     };
+    
+    $scope.enableOrDisable = function (subproduct) {
+        httpService.enableOrDisableProduct(subproduct.id, !subproduct.enabled).then(function () {
+            toaster.success("操作成功");
+            $scope.getList(1, -1);
+        },function (err) {
+            toaster.error(err.data.errorMessage);
+        })
+    }
 });
 
 product.controller("addProductTemplateController", function ($scope, $http, $location, $rootScope,httpService, $state, $timeout,cityJson, $stateParams, productFactory, toaster) {

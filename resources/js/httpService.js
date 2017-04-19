@@ -200,6 +200,20 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
+    api.enableOrDisableProduct = function (id, enabled) {
+        var deferd = $q.defer();
+        var operate = "enable";
+        if (!enabled) {
+            operate = "disable";
+        }
+        var enableProductUrl = commonUtil.getServerHost() + "products/" + id + "/" + operate + "?access_token=" + $window.sessionStorage["access_token"];
+        $http.patch(enableProductUrl, product).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
 
     api.getAllPosition = function (query) {
         var queryParams = "";
