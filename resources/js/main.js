@@ -256,7 +256,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ", "ROLE_LOAN_RELEASE_COMPLETE_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_UPDATE"],
             status:"24"
         },
@@ -337,7 +337,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_LOAN_RELEASE_COMPLETE_READ"],
             status:"36"
         },
         {

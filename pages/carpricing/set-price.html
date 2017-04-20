@@ -41,24 +41,24 @@
             <tr>
                 <td>车辆登记证书：</td>
                 <td colspan="4">
-                    <div class="pic-container" ng-repeat="item15 in vehicleRegistrationCertificateFileIds">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+item15}}" alt=""></a>
+                    <div class="pic-container" ng-repeat="vehicleRegistrationCertificateFile in vehicleRegistrationCertificateFileIds">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleRegistrationCertificateFile}}" alt=""></a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>车辆登记证书：</td>
                 <td colspan="4">
-                    <div class="pic-container" ng-repeat="item16 in vehicleLicenseFileIds">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+item16}}" alt=""></a>
+                    <div class="pic-container" ng-repeat="vehicleLicenseFile in vehicleLicenseFileIds">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleLicenseFile}}" alt=""></a>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>车辆登记证书：</td>
                 <td colspan="4">
-                    <div class="pic-container" ng-repeat="item17 in vehicleFileIds">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{'http://172.16.1.14:8888/'+item17}}" alt=""></a>
+                    <div class="pic-container" ng-repeat="vehicleFile in vehicleFileIds">
+                        <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleFile}}" alt=""></a>
                     </div>
                 </td>
             </tr>
@@ -117,14 +117,14 @@
                 <td width="20%"><span>*</span>生产厂家：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleManufacturers" ng-options = "factory for factory in factories" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleManufacturers" ng-options="factory for factory in factories" ng-disabled="isRight">
                         </select>
                     </div>
                 </td>
                 <td width="20%"><span>*</span>汽车品牌：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleBrand" ng-options = "brand for brand in brands" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleBrand" ng-options="brand for brand in brands" ng-disabled="isRight">
                         </select>
                     </div>
                 </td>
@@ -134,14 +134,14 @@
                 <td width="20%"><span>*</span>生产年份：</td>
                 <td width="30%">
                     <div class="comm-inp-wp  ">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleProductionYearMonth" ng-options = "produceYear+'年' for produceYear in produceYears" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleProductionYearMonth" ng-options="produceYear+'年' for produceYear in produceYears" ng-disabled="isRight">
                         </select>
                     </div>
                 </td>
                 <td width="20%"><span>*</span>汽车款式：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleSeries" ng-options = "serie for serie in series" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleSeries" ng-options="serie for serie in series" ng-disabled="isRight">
                         </select>
                     </div>
                 </td>
@@ -171,7 +171,7 @@
                 <td width="20%"><span>*</span>排放标准：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleEmission" ng-options = "emission for emission in emissiones" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="applyLoan.vehicleEmission" ng-options="emission for emission in emissiones" ng-disabled="isRight">
                         </select>
                     </div>
                 </td>
