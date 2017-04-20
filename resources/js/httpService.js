@@ -390,5 +390,35 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
+    api.getCarBrand = function () {
+        var deferd = $q.defer();
+        var getCarBrandUrl = serverHost + "273data/brand?access_token=" + $window.sessionStorage["access_token"];
+        $http.get(getCarBrandUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+    api.getCarSeriesByBrand = function (brandId) {
+        var deferd = $q.defer();
+        var getCarSeriesByBrandUrl = serverHost + "273data/series?access_token=" + $window.sessionStorage["access_token"]+"&brandId="+brandId;
+        $http.get(getCarSeriesByBrandUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+    api.getCarTypeBySerie = function (serieId) {
+        var deferd = $q.defer();
+        var getCarTypeBySerieUrl = serverHost + "273data/types?access_token=" + $window.sessionStorage["access_token"]+"&seriesId="+serieId;
+        $http.get(getCarTypeBySerieUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
     return api;
 });

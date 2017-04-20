@@ -11,13 +11,6 @@ loanrecheck.controller("loanRecheckListController", function ($scope,$http,$loca
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement",{items:null});
     };
-    $scope.test = function () {
-        httpService.getChekuangbaoDetailTest().then(function (res) {
-            console.log(res);
-        },function (err) {
-            console.log(err);
-        })
-    };
     $scope.showDetail = function (loan) {
 
     };
