@@ -347,29 +347,31 @@
 
             </tr>
             <tr>
-                <td><span class="star">*</span>生产厂家</td>
-                <td>
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedFactory" ng-options = "factory for factory in factories">
-                            <option value="">请选择</option>
-                        </select>
-                    </div>
-                </td>
                 <td><span class="star">*</span>汽车品牌</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedBrand" ng-options = "brand for brand in brands">
+                        <select class="comm-select1" ng-model="selectedBrand" ng-options = "brand.name for brand in brands" ng-change="changeCarBrand()">
                             <option value="">请选择</option>
                         </select>
                     </div>
                 </td>
-            </tr>
-
-            <tr>
                 <td><span class="star">*</span>汽车款式</td>
                 <td>
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedSeries" ng-options = "serie for serie in series">
+                        <select class="comm-select1" ng-model="selectedSeries" ng-options = "serie.name for serie in series" ng-change="changeCarSeries()">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </td>
+
+
+            </tr>
+
+            <tr>
+                <td><span class="star">*</span>汽车型号</td>
+                <td>
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedCarType" ng-options = "vehicleType.model_name+'     '+vehicleType.model_year+'     '+vehicleType.sale_name for vehicleType in carTypes">
                             <option value="">请选择</option>
                         </select>
                     </div>
