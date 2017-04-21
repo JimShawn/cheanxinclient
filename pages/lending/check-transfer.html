@@ -46,7 +46,7 @@
         </table>
     </div>
 
-    <div class="loan-application-row2" ng-show="applyLoan.status == 22 || 32">
+    <div class="loan-application-row2" ng-show="applyLoan.status == 22 || applyLoan.status == 32">
         <div class="mod-hd">
             <h2>过户结果</h2>
         </div>
@@ -101,7 +101,7 @@
         </table>
     </div>
 
-    <div class="loan-application-row2" ng-show="applyLoan.status == 23">
+    <div class="loan-application-row2" ng-show="applyLoan.status == 23 || applyLoan.status == 24">
         <div class="mod-hd">
             <h2>放款结果</h2>
         </div>
@@ -170,7 +170,7 @@
             </tbody>
         </table>
     </div>
-    <div class="loan-application-row2" ng-show="applyLoan.status ==19">
+    <div class="loan-application-row2" ng-show="applyLoan.status == 19">
         <div class="mod-hd">
             <h2>无法过户</h2>
         </div>
