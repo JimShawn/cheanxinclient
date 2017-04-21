@@ -67,14 +67,6 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
             $state.go("main.loanapply", {items: draft, type: 2});
         }
     };
-    $scope.test = function () {
-        httpService.getChekuangbaoDetailTest().then(function (res) {
-            console.log(res);
-        },function (err) {
-           console.log(err);
-        });
-    }
-
 });
 
 loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http', '$location', '$rootScope', 'httpService', '$state', '$window', 'cityJson', '$stateParams','toaster', function ($filter, $scope, $http, $location, $rootScope, httpService, $state, $window, cityJson, $stateParams,toaster) {
@@ -146,7 +138,45 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
             if(selectedItem.applicationPicUrl){
                 $scope.applicationPicPhotos = selectedItem.applicationPicUrl.split(",");
             };
-        }
+        };
+        //获取汽车品牌
+        httpService.getCarBrand().then(function (res) {
+            $scope.brands = res.data;
+            if($scope.type ==2){
+                if(selectedItem.vehicleBrand){
+                    for(var i=0;i<$scope.brands.length;i++){
+                        if(selectedItem.vehicleBrand == $scope.brands[i].id){
+                            $scope.selectedBrand = $scope.brands[i];
+                        }
+                    };
+                    //获取车系
+                    if(selectedItem.vehicleSeries){
+                        httpService.getCarSeriesByBrand(selectedItem.vehicleBrand).then(function (res) {
+                            $scope.series = res.data;
+                            for(var j=0;j<$scope.series.length;j++){
+                                if(selectedItem.vehicleSeries == $scope.series[j].id){
+                                    $scope.selectedSeries = $scope.series[j];
+                                }
+                            }
+                            httpService.getCarTypeBySerie(selectedItem.vehicleSeries).then(function (res) {
+                                $scope.carTypes = res.data;
+                                for(var k=0;k<$scope.carTypes.length;k++){
+                                    if(selectedItem.vehicleType == $scope.carTypes[k].id){
+                                        $scope.selectedCarType = $scope.carTypes[k];
+                                    }
+                                }
+                            },function (err) {
+
+                            })
+                        },function (err) {
+
+                        })
+                    }
+                }
+            };
+        },function (err) {
+            console.log(err);
+        });
 
 
         //获取当前城市的收单员
@@ -178,9 +208,6 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                 $scope.applicantCertificateNumber = selectedItem.applicantCertificateNumber;
                 $scope.applicantIncomePerMonth = selectedItem.applicantIncomePerMonth;
                 $scope.vehicleVin = selectedItem.vehicleVin;
-                $scope.selectedFactory = selectedItem.vehicleManufacturers;
-                $scope.selectedBrand = selectedItem.vehicleBrand;
-                $scope.selectedSeries = selectedItem.vehicleSeries;
                 $scope.vehicleKilometers = selectedItem.vehicleKilometers;
                 $scope.vehicleDealPrice = selectedItem.vehicleDealPrice;
                 $scope.selectedRate = selectedItem.applicantLoanRate;
@@ -223,13 +250,7 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
             name: "未婚"
         }
     ];
-    $scope.brands = [
-        "奥迪", "奔驰", "宝马", "丰田", "本田", "铃木", "比亚迪", "吉利", "雪佛兰", "现代", "大众", "福特"
-    ];
-    $scope.factories = [
-        "广汽", "上汽", "北汽", "一汽"
-    ];
-    $scope.series = ["福克斯", "科鲁兹", "yalris", "雷凌", "宋", "元"];
+
     $scope.productTypes = [{
         id: 0,
         name: "二手车贷款"
@@ -258,6 +279,25 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
 
         })
     };
+
+    $scope.changeCarBrand = function () {
+        if(!$scope.selectedBrand)return;
+        httpService.getCarSeriesByBrand($scope.selectedBrand.id).then(function (res) {
+            $scope.series = res.data;
+        },function (err) {
+
+        })
+    };
+    $scope.changeCarSeries = function () {
+
+        if(!$scope.selectedSeries)return;
+        httpService.getCarTypeBySerie($scope.selectedSeries.id).then(function (res) {
+            $scope.carTypes = res.data;
+        },function (err) {
+
+        })
+    };
+
     $scope.selectProduct = function () {
         var termsStr = $scope.selectedProduct.availableTerms;
         $scope.availableTerms = termsStr.split(",");
@@ -369,16 +409,17 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                 toaster.error("请输入17位车架号");
                 return;
             };
-            if(!$scope.selectedFactory){
-                toaster.error("请选择汽车生产厂家");
-                return;
-            };
+
             if(!$scope.selectedBrand){
                 toaster.error("请选择汽车生产品牌");
                 return;
             };
             if(!$scope.selectedSeries){
                 toaster.error("请选择汽车款式");
+                return;
+            };
+            if(!$scope.selectedCarType){
+                toaster.error("请选择汽车型号");
                 return;
             };
 
@@ -449,9 +490,6 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
             applicantMobileNumber: $scope.applicantMobileNumber,
             applicantIncomePerMonth: $scope.applicantIncomePerMonth,
             vehicleVin: $scope.vehicleVin,
-            vehicleManufacturers: $scope.selectedFactory,
-            vehicleBrand: $scope.selectedBrand,
-            vehicleSeries: $scope.selectedSeries,
             vehicleKilometers: $scope.vehicleKilometers,
             status: 1,
             creatorUsername: $scope.userInfo.data.username
@@ -531,6 +569,20 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         if($scope.selectedIDType){
             loanDraft.applicantCertificateType = $scope.selectedIDType.id;
         };
+        if($scope.selectedBrand){
+            loanDraft.vehicleBrand = $scope.selectedBrand.id;
+            loanDraft.vehicleDesc = $scope.selectedBrand.name+"/";
+        };
+
+        if($scope.selectedSeries){
+            loanDraft.vehicleSeries = $scope.selectedSeries.id;
+            loanDraft.vehicleDesc += $scope.selectedSeries.name+"/";
+        };
+        if($scope.selectedCarType){
+            loanDraft.vehicleType = $scope.selectedCarType.id;
+            loanDraft.vehicleDesc += $scope.selectedSeries.model_name+$scope.selectedSeries.model_year+$scope.selectedSeries.sale_name;
+        };
+
         if($scope.type == 1){
             httpService.addLoandraft(loanDraft).then(function (res) {
                 if (operateType == 2) {
@@ -733,8 +785,55 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
             $scope.draftProduct = res.data;
         }, function (err) {
 
-        })
+        });
+        httpService.getCarBrand().then(function (res) {
+                $scope.brands = res.data;
+                for(var i=0;i<$scope.brands.length;i++){
+                    if($scope.selectedDraft.vehicleBrand == $scope.brands[i].id){
+                        $scope.selectedBrand = $scope.brands[i];
+                    }
+                }
+            },function (err) {
 
+        });
+        httpService.getCarSeriesByBrand($scope.selectedDraft.vehicleBrand).then(function (res) {
+            $scope.series = res.data;
+            for(var i=0;i<$scope.series.length;i++){
+                if($scope.selectedDraft.vehicleSeries == $scope.series[i].id){
+                    $scope.selectedSeries = $scope.series[i];
+                }
+            }
+        },function (err) {
+
+        });
+        httpService.getCarTypeBySerie($scope.selectedDraft.vehicleSeries).then(function (res) {
+            $scope.vehicleTypes = res.data;
+            for(var i=0;i<$scope.vehicleTypes.length;i++){
+                if($scope.selectedDraft.vehicleType == $scope.vehicleTypes[i].id){
+                    $scope.selectedCarType = $scope.vehicleTypes[i];
+                }
+            }
+        },function (err) {
+
+        });
+
+
+    };
+
+    $scope.getCarSeries = function () {
+        httpService.getCarSeriesByBrand($scope.selectedBrand.id).then(function (res) {
+            $scope.series = res.data;
+        },function (err) {
+
+        })
+    };
+    $scope.getCarTypes = function () {
+
+        httpService.getCarTypeBySerie($scope.selectedSeries.id).then(function (res) {
+            $scope.carTypes = res.data;
+        },function (err) {
+
+        })
     };
 
     //将照片分类
@@ -1269,21 +1368,22 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
                     return false;
                 };
                 loanDraft.vehicleVin = $scope.selectedDraft.vehicleVin;
-                if(!$scope.selectedDraft.vehicleManufacturers){
-                    toaster.error("请选择生产厂家");
+                if(!$scope.selectedDraft.vehicleBrand){
+                    toaster.error("请选择品牌");
                     return false;
                 };
-                loanDraft.vehicleManufacturers = $scope.selectedDraft.vehicleManufacturers;
-                if(!$scope.selectedDraft.vehicleBrand){
+                loanDraft.vehicleBrand = $scope.selectedDraft.vehicleBrand.id;
+                if(!$scope.selectedDraft.vehicleSeries){
                     toaster.error("请选择车系");
                     return false;
                 };
-                loanDraft.vehicleBrand = $scope.selectedDraft.vehicleBrand;
-                if(!$scope.selectedDraft.vehicleSeries){
+                loanDraft.vehicleSeries = $scope.selectedDraft.vehicleSeries.id;
+                if(!$scope.selectedDraft.vehicleType){
                     toaster.error("请选择车型");
                     return false;
                 };
-                loanDraft.vehicleSeries = $scope.selectedDraft.vehicleSeries;
+                loanDraft.vehicleManufacturers = $scope.selectedDraft.vehicleType.id;
+                loanDraft.vehicleDesc = $scope.selectedDraft.vehicleBrand.name+"/"+$scope.selectedDraft.vehicleSeries+"/"+$scope.selectedDraft.vehicleType.model_name+$scope.selectedDraft.vehicleType.model_year+$scope.selectedDraft.vehicleType.sale_name;
                 if(!$scope.selectedDraft.vehicleProductionYearMonth){
                     toaster.error("请选择汽车生产年月");
                     return false;
@@ -1515,15 +1615,16 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
             toaster.error("请输入车架号");
             return false;
         };
-        if(!$scope.selectedDraft.vehicleManufacturers){
-            toaster.error("请选择生产厂家");
-            return false;
-        };
         if(!$scope.selectedDraft.vehicleBrand){
             toaster.error("请选择车系");
             return false;
         };
         if(!$scope.selectedDraft.vehicleSeries){
+            toaster.error("请选择车系");
+            return false;
+        };
+
+        if(!$scope.selectedDraft.vehicleType){
             toaster.error("请选择车型");
             return false;
         };
