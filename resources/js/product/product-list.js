@@ -5,8 +5,10 @@
 'use strict';
 var product = angular.module('product',['httpservice']);
 
-product.factory("productFactory", function (toaster) {
+product.factory("productFactory", function (toaster, $window) {
     var productFactoryApi = {};
+    var curTab = null;
+    var curTabIndex = 0;
 
     productFactoryApi.initScope = function ($scope, httpService) {
         $scope.AvailableRates = [1,2,3,4,5,6,7,8,9];
@@ -51,16 +53,67 @@ product.factory("productFactory", function (toaster) {
         $scope.productStatus = [{
             id:0,
             name:"待审核",
-            on:true
+            on:false,
+            review:false,
+            edit:false,
+            show:false,
+            editRoles:["ROLE_ADMIN", "ROLE_PRODUCT_UPDATE"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_PRODUCT_REVIEW"],
+            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"]
         },{
             id:1,
             name:"审核通过",
-            on:false
+            on:false,
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ", "ROLE_PRODUCT_CITY_READ", "ROLE_FIRST_REVIEWER", "ROLE_SECOND_REVIEWER"]
         },{
             id:2,
             name:"审核拒绝",
-            on:false
+            on:false,
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"]
         }];
+
+        var hasRoleAuthority = function (roles, postAuthorities) {
+            if (!roles) {
+                return false;
+            }
+            if (!postAuthorities) {
+                return false;
+            }
+            for (var i in postAuthorities) {
+                if (roles.indexOf(postAuthorities[i].authority) >= 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        var user = JSON.parse($window.sessionStorage["userInfo"]);
+        for (var i = 0; i < $scope.productStatus.length; i++) {
+            var hasTabShowAuthority = hasRoleAuthority($scope.productStatus[i].showRoles, user.data.postAuthorities);
+            $scope.productStatus[i].show = hasTabShowAuthority;
+            var hasTabEditAuthority = hasRoleAuthority($scope.productStatus[i].editRoles, user.data.postAuthorities);
+            $scope.productStatus[i].edit = hasTabEditAuthority;
+            var hasTabReviewAuthority = hasRoleAuthority($scope.productStatus[i].reviewRoles, user.data.postAuthorities);
+            $scope.productStatus[i].review = hasTabReviewAuthority;
+        }
+
+        if (!curTab) {
+            for (var i in $scope.productStatus) {
+                if ($scope.productStatus[i].show) {
+                    $scope.productStatus[i].on = true;
+                    curTab = $scope.productStatus[i];
+                    curTabIndex = i;
+                    break;
+                }
+            }
+        }
+        $scope.curTab = curTab;
 
         $scope.init = function() {
             if (!$scope.query) {
@@ -80,14 +133,6 @@ product.factory("productFactory", function (toaster) {
             }
             if (productTemplateId != undefined) {
                 $scope.query.productTemplateId = productTemplateId;
-            }
-            $scope.showReview = false;
-            if ($scope.query.status == 0 && $scope.query.productTemplateId < 0) {
-                $scope.showReview = true;
-            }
-            $scope.showEdit = false;
-            if ($scope.query.status == 0) {
-                $scope.showEdit = true;
             }
             if ($scope.selectCity && $scope.selectCity.Id) {
                 $scope.query.cityId = $scope.selectCity.Id;
@@ -193,7 +238,7 @@ product.controller("subProductController",function ($scope, $http, $location, $r
     $scope.QueryPositonName = "";
     $scope.cities = cityJson;
 
-    $scope.getList(0, -1);
+    $scope.getList($scope.curTab.id, -1);
 
     $scope.add = function () {
         $state.go("main.addsubproduct");

@@ -129,8 +129,8 @@
                     <td>{{loanStatuses[loanapply.status].name}}</td>
                     <td class="oper">
                         <a href="" class="blue" ng-show="subTab.show">查看</a>
-                        <a href="" class="blue" ng-click="operate(loanapply)" ng-show="subTab.review && subTab.status == 6">签约</a>
-                        <a href="" class="blue" ng-click="review(loanapply)" ng-show="subTab.review && subTab.status == 37">审核</a>
+                        <a href="" class="blue" ng-click="operate(loanapply)" ng-show="subTab.review && loanapply.status == 6">签约</a>
+                        <a href="" class="blue" ng-click="review(loanapply)" ng-show="subTab.review && loanapply.status == 37">审核</a>
                     </td>
                 </tr>
 

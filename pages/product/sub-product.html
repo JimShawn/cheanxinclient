@@ -50,7 +50,8 @@
         <div class="man-manage-row2">
             <div class="bd">
                 <ul class="mod-tabs clearfix">
-                    <li class="item" ng-class="{'item-on':status.on}" ng-repeat="status in productStatus"><a href="" ng-click="getList(status.id)"><span>{{status.name}}</span></a></li>
+                    <li class="item" ng-class="{'item-on':status.on}" ng-repeat="status in productStatus" ng-show="status.show"><a href="" ng-click="getList(status.id)"><span>{{status.name}}</span></a></li>
+                    <!--<li class="item" ng-class="{'item-on':subTab.highlight}" ng-click="changeTab(i)" ng-repeat="(i, subTab) in subTabs" ng-show="subTab.show"><a href=""><span>{{subTab.name}}</span></a></li>-->
                 </ul>
             </div>
 
@@ -81,10 +82,10 @@
                     <td id="accrual">{{product.loanMonthlyInterestRate}}</td>
                     <td>{{product.maxAvailableVehicleYear}}</td>
                     <td class="oper">
-                        <a href="" class="blue" ng-click="edit(product)" ng-show="showEdit">编辑</a>
-                        <a href="" class="blue" ng-show="showReview" ng-click="review(product)">审核</a>
-                        <a href="" class="blue" ng-show="product.status == 1 && product.enabled" ng-click="enableOrDisable(product)">禁用</a>
-                        <a href="" class="blue" ng-show="product.status == 1 && !product.enabled" ng-click="enableOrDisable(product)">启用</a>
+                        <a href="" class="blue" ng-click="edit(product)" ng-show="product.status == 0">编辑</a>
+                        <a href="" class="blue" ng-show="curTab.review && product.status == 0" ng-click="review(product)">审核</a>
+                        <a href="" class="blue" ng-show="curTab.review && product.status == 1 && product.enabled" ng-click="enableOrDisable(product)">禁用</a>
+                        <a href="" class="blue" ng-show="curTab.review && product.status == 1 && !product.enabled" ng-click="enableOrDisable(product)">启用</a>
                     </td>
                 </tr>
 
