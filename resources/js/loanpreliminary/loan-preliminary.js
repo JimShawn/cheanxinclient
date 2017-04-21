@@ -67,9 +67,6 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
             $state.go("main.loanapply", {items: draft, type: 2});
         }
     };
-    $scope.add = function () {
-        $state.go("main.loanapply", {items: null, type: 1});
-    };
     $scope.test = function () {
         httpService.getChekuangbaoDetailTest().then(function (res) {
             console.log(res);
@@ -202,29 +199,6 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
 
     };
 
-
-    $scope.sources = [
-        {
-            id: 0,
-            name: "门店"
-        },
-        {
-            id: 1,
-            name: "车商"
-        },
-        {
-            id: 2,
-            name: "273网站"
-        },
-        {
-            id: 3,
-            name: "273业管"
-        },
-        {
-            id: 4,
-            name: "其他"
-        }
-    ];
     $scope.IDTypes = [
         {
             id: 0,
@@ -277,8 +251,6 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                         $scope.selectProduct();
                         $scope.selectedTerm = $scope.productLoanTerms + "";
                         $scope.changeTerms();
-
-
                     }
                 }
             }

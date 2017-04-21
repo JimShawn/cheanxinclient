@@ -1,5 +1,4 @@
 /**
- * Created by 向麒 on 2017/1/14.
  * 图片上传指令
  */
 'use strict';

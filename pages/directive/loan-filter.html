@@ -1,0 +1,65 @@
+<div class="loan-intention-row1">
+    <table class="mod-table1 mod-table1-ex">
+        <tr>
+            <td width="33.333333%">
+                <table class="mod-subtable">
+                    <tr>
+                        <td width="25%"><label class="comm-field-t">姓名:</label></td>
+                        <td width="75%">
+                            <div class="comm-inp-wp name_cell">
+                                <input type="text" class="comm-input1" ng-model="query.applicantName" ng-keyup="$event.keyCode == 13 && getList()">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="33.333333%">
+                <table class="mod-subtable">
+                    <tr>
+                        <td width="25%"><label class="comm-field-t">申请人手机:</label></td>
+                        <td width="75%">
+                            <div class="comm-inp-wp">
+                                <input type="text" class="comm-input1" ng-model="query.applicantMobileNumber" ng-keyup="$event.keyCode == 13 && getList()">
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td width="33.333333%">
+                <table class="mod-subtable">
+                    <tr>
+                        <td width="25%"><label class="comm-field-t">来源：</label></td>
+                        <td width="75%">
+
+                            <div class="comm-inp-wp">
+                                <select class="comm-select1" ng-model="sourceChannel" ng-options="source.name for source in sources" ng-change="getList()">
+                                    <option value="">请选择</option>
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table class="mod-subtable">
+                    <tr>
+                        <td width="12.5%"><label class="comm-field-t">提交日期：</label></td>
+                        <td>
+                            <adm-dtp ng-model='createdTimeFrom' options='{calType: "gregorian", format: "YYYY-MM-DD", default: ""}' style='width: 40%; display: inline-block; float: left;'></adm-dtp>
+                            <div style="display: inline-block; float: left; margin-left: 20px; margin-right: 20px; line-height: 30px;">——</div>
+                            <adm-dtp ng-model='createdTimeTo' options='{calType: "gregorian", format: "YYYY-MM-DD", default: ""}' style='width: 40%; display: inline-block; float: left;'></adm-dtp>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan="2">
+                <div class="mod-state" style="margin-left: 20px;">
+                    <button class="comm-btn comm-btn-blue fl" ng-click="getList()">查询</button>
+                    <button class="comm-btn comm-btn-blue fl" ng-click="initQuery()">清除</button>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

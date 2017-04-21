@@ -105,24 +105,52 @@ commonUtil.factory("commonUtil",function (cityJson) {
         }
         $scope.subTabs[currentTabIndex[name]].highlight = true;
 
+        $scope.initQuery = function() {
+            if (!$scope.query) {
+                $scope.query = {};
+            }
+            $scope.query.page = 0;
+            $scope.query.size = 10;
+            $scope.query.status = $scope.subTab.status;
+            $scope.query.createdTimeFrom = 0;
+            $scope.query.createdTimeTo = 0;
+            $scope.query.sourceChannel = 0;
+            $scope.createdTimeFrom = null;
+            $scope.createdTimeTo = null;
+            $scope.sourceChannel = null;
+        }
+        $scope.initQuery();
 
-        $scope.getList = function (page, size, status) {
-            httpService.getLoanPreliminary(page, size, status).then(function (result) {
+        $scope.getList = function () {
+            if (typeof($scope.createdTimeFrom) == "string" && $scope.createdTimeFrom.length > 0) {
+                $scope.query.createdTimeFrom = new Date($scope.createdTimeFrom).getTime() / 1000;
+            }
+            if (typeof($scope.createdTimeTo) == "string" && $scope.createdTimeTo.length > 0) {
+                $scope.query.createdTimeTo = new Date($scope.createdTimeTo).getTime() / 1000;
+            }
+            if ($scope.sourceChannel) {
+                $scope.query.sourceChannel = $scope.sourceChannel.id;
+            }
+            httpService.getLoanPreliminary($scope.query).then(function (result) {
                 $scope.data = result.data;
             }, function (error) {
                 console.error(error);
             });
-
         };
-
-        $scope.getList(0, 10, $scope.subTab.status);
+        $scope.getList();
 
         $scope.changePageSizeFun = function (size) {
-            $scope.getList($scope.data.number, size, $scope.subTab.status);
+            $scope.query.page = $scope.data.number;
+            $scope.query.size = size;
+            $scope.query.status = $scope.subTab.status;
+            $scope.getList();
         };
 
         $scope.gotoPageFun = function (x) {
-            $scope.getList(x, $scope.data.size, $scope.subTab.status);
+            $scope.query.page = x;
+            $scope.query.size = $scope.data.size;
+            $scope.query.status = $scope.subTab.status;
+            $scope.getList();
         };
 
         $scope.changeTab = function(i) {
@@ -130,7 +158,8 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 if (key == i) {
                     $scope.subTabs[key].highlight = true;
                     $scope.subTab = $scope.subTabs[key];
-                    $scope.getList(0, 10, $scope.subTabs[key].status)
+                    $scope.query.status = $scope.subTabs[key].status;
+                    $scope.getList();
                     currentTab[currentItem] = $scope.subTab;
                     currentTabIndex[currentItem] = i;
                 } else {
@@ -138,6 +167,29 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 }
             }
         }
+
+        $scope.sources = [
+            {
+                id: 0,
+                name: "门店"
+            },
+            {
+                id: 1,
+                name: "车商"
+            },
+            {
+                id: 2,
+                name: "273网站"
+            },
+            {
+                id: 3,
+                name: "273业管"
+            },
+            {
+                id: 4,
+                name: "其他"
+            }
+        ];
 
         $scope.loanStatuses=[
             {

@@ -330,9 +330,13 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
-    api.getLoanPreliminary = function(page,size,status){
+    api.getLoanPreliminary = function(query) {
+        var queryParams = "";
+        for (var key in query) {
+            queryParams += "&" + key + "=" + query[key];
+        }
         var deferd = $q.defer();
-        var allDeptUrl = commonUtil.getServerHost() + "loans?access_token=" + $window.sessionStorage["access_token"] + "&page=" + page + "&size=" + size + "&status=" + status;
+        var allDeptUrl = commonUtil.getServerHost() + "loans?access_token=" + $window.sessionStorage["access_token"] + queryParams;
         $http.get(allDeptUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
