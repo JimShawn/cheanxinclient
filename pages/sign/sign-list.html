@@ -119,11 +119,11 @@
                     <td>{{loanapply.id}}</td>
                     <td>{{loanapply.applicantName}}</td>
                     <td>{{loanapply.applicantMobileNumber}}</td>
-                    <td>{{loanapply.vehicleSeries}}</td>
+                    <td>{{commonUtil.getArrayFromString(loanapply.vehicleDesc,"/")[2]}}</td>
                     <td>{{cityJson.provincesList[cityJson.Citys[loanapply.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[loanapply.sourceCityId-1].Name}}</td>
                     <td>{{loanapply.productName}}</td>
-                    <td>{{loanapply.vehiclePredictPrice}}（{{loanapply.loanTerms}}期）</td>
-                    <td class="red">{{loanapply.vehiclePredictPrice}}（{{loanapply.loanTerms}}期）</td>
+                    <td id="red">{{loanapply.reviewLoanPrice}}（{{loanapply.reviewLoanTerms}}期）</td>
+                    <td class="red">{{loanapply.reviewLoanPrice}}（{{loanapply.reviewLoanTerms}}期）</td>
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanStatuses[loanapply.status].name}}</td>

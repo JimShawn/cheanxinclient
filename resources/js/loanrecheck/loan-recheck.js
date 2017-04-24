@@ -22,8 +22,9 @@ loanrecheck.controller("loanRecheckListController", function ($scope,$http,$loca
     };
 });
 
-loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
+loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams','commonUtil',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
     $scope.cities = cityJson;
+    $scope.commonUtil = commonUtil;
 
     $scope.brands = [
         "奥迪","奔驰","宝马","丰田","本田","铃木","比亚迪","吉利","雪佛兰","现代","大众","福特"
@@ -52,7 +53,7 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
 
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
     $scope.applyLoan = $stateParams.items;
-    if ($scope.applyLoan.materialsFileIds) {
+    if ($scope.applyLoan && $scope.applyLoan.materialsFileIds) {
         $scope.materialsFileIds = $scope.applyLoan.materialsFileIds;
     }
 
@@ -61,7 +62,7 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
             console.log(res);
             var data = res.data;
             if (data.length>0){
-                    $scope.refuseReason = data[0].remark;
+                    $scope.refuseReason = data[0].remark.replace(/&/g,"  ");
                     $scope.operateUserName = data[0].operatorUsername;
                     $scope.createdTime = data[0].createdTime;
 
@@ -116,8 +117,8 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
     }
     $scope.doRefuse = function () {
         var errMsg = "";
-        for(var i;i<$scope.mainRefuseReasons.length;i++){
-            errMsg += $scope.mainRefuseReasons[i]+"*`*";
+        for(var i=0;i<$scope.mainRefuseReasons.length;i++){
+            errMsg += $scope.mainRefuseReasons[i]+"&";
         };
         errMsg = errMsg+$scope.otherRefuseReason;
         var loanApply = {
@@ -156,8 +157,9 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
     }
 }]);
 
-loanrecheck.controller("reApplyLoanController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,$filter) {
+loanrecheck.controller("reApplyLoanController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,$filter,commonUtil) {
     $scope.cities = cityJson;
+    $scope.commonUtil = commonUtil;
 
     $scope.brands = [
         "奥迪","奔驰","宝马","丰田","本田","铃木","比亚迪","吉利","雪佛兰","现代","大众","福特"
@@ -176,7 +178,7 @@ loanrecheck.controller("reApplyLoanController", function ($scope,$http,$location
             console.log(res);
             var data = res.data;
             if (data.length>0){
-                $scope.refuseReason = data[0].remark;
+                $scope.refuseReason = data[0].remark.replace(/&/g,"  ");
             }
         },function (err) {
             console.log(err);

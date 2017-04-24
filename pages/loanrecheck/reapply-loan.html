@@ -13,16 +13,16 @@
                 <td colspan="3" width="30%" ><span class="fl ">{{applyLoan.vehicleVin}}</span></td>
             </tr>
             <tr>
-                <td width="15%">生产厂家：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.vehicleManufacturers}}</span></td>
                 <td width="15%">汽车品牌：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.vehicleBrand}}</span></td>
+                <td width="30%" ><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,"/")[0]}}</span></td>
+                <td width="15%">汽车车系：</td>
+                <td width="30%" ><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,"/")[1]}}</span></td>
             </tr>
             <tr>
                 <td width="15%">生产年份：</td>
                 <td width="30%" ><span class="fl">{{applyLoan.vehicleProductionYearMonth}}</span></td>
                 <td width="15%">汽车款式：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.vehicleSeries}}</span></td>
+                <td width="30%" ><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,"/")[2]}}</span></td>
             </tr>
             <tr>
                 <td width="15%">首次登记日期：</td>

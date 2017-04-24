@@ -259,6 +259,12 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 name:"待审核"
             }
         ];
+
+    };
+    factory.getArrayFromString = function (oriStr,separator) {
+        if(!oriStr)return;
+        return oriStr.split(separator);
+
     }
 
     return factory;

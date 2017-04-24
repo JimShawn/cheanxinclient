@@ -19,7 +19,7 @@
             </tr>
             <tr>
                 <td width="15%">车辆名称：</td>
-                <td width="35%"><span class="fl">{{applyLoan.vehicleSeries}}</span></td>
+                <td width="35%"><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,'/')[2]}}</span></td>
                 <td width="15%">车架号：</td>
                 <td width="35%"><span class="fl">{{applyLoan.vehicleVin}}</span></td>
 
@@ -30,7 +30,7 @@
                 <td width="15%">产品名称：</td>
                 <td width="35%"><span class="fl">{{applyLoan.productName}}</span></td>
                 <td width="15%">贷款金额（元）：</td>
-                <td width="35%"><span class="fl red">{{applyLoan.applicantLoanPrice}}</span></td>
+                <td width="35%"><span class="fl red">{{applyLoan.reviewLoanPrice}}</span></td>
 
             </tr>
 
@@ -38,7 +38,7 @@
                 <td width="15%">利率：</td>
                 <td width="35%"><span class="fl">{{applyLoan.productLoanMonthlyInterestRate}}</span></td>
                 <td width="15%">期数：</td>
-                <td width="35%"><span class="fl">{{applyLoan.loanTerms}}</span></td>
+                <td width="35%"><span class="fl">{{applyLoan.reviewLoanTerms}}</span></td>
 
             </tr>
             </tbody>

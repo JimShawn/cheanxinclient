@@ -31,6 +31,8 @@ carpricing.controller("carPricingListController", function ($scope,$http,$locati
 
 product.controller("setPriceController", function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil, toaster) {
     $scope.cities = cityJson;
+    $scope.commonUtil = commonUtil;
+
 
     $scope.brands = [
         "奥迪","奔驰","宝马","丰田","本田","铃木","比亚迪","吉利","雪佛兰","现代","大众","福特"
@@ -49,6 +51,42 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
         $scope.vehicleRegistrationCertificateFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleRegistrationCertificateFileIds, true);
         $scope.vehicleLicenseFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleLicenseFileIds, true);
         $scope.vehicleFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleFileIds, true);
+        //获取汽车品牌
+        httpService.getCarBrand().then(function (res) {
+            $scope.brands = res.data;
+                if($scope.applyLoan.vehicleBrand){
+                    for(var i=0;i<$scope.brands.length;i++){
+                        if($scope.applyLoan.vehicleBrand == $scope.brands[i].id){
+                            $scope.selectedBrand = $scope.brands[i];
+                        }
+                    };
+                    //获取车系
+                    if($scope.applyLoan.vehicleSeries){
+                        httpService.getCarSeriesByBrand($scope.applyLoan.vehicleBrand).then(function (res) {
+                            $scope.series = res.data;
+                            for(var j=0;j<$scope.series.length;j++){
+                                if($scope.applyLoan.vehicleSeries == $scope.series[j].id){
+                                    $scope.selectedSeries = $scope.series[j];
+                                }
+                            }
+                            httpService.getCarTypeBySerie($scope.applyLoan.vehicleSeries).then(function (res) {
+                                $scope.carTypes = res.data;
+                                for(var k=0;k<$scope.carTypes.length;k++){
+                                    if($scope.applyLoan.vehicleType == $scope.carTypes[k].id){
+                                        $scope.selectedCarType = $scope.carTypes[k];
+                                    }
+                                }
+                            },function (err) {
+
+                            })
+                        },function (err) {
+
+                        })
+                    }
+                }
+        },function (err) {
+            console.log(err);
+        });
     }
 
     $scope.isRight = true;
@@ -96,15 +134,15 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
         var applyLoantwo = {
                 vehiclePredictPrice:$scope.predictPrice,
                 vehicleVin:$scope.applyLoan.vehicleVin,
-                vehicleManufacturers:$scope.applyLoan.vehicleManufacturers,
-                vehicleBrand:$scope.applyLoan.vehicleBrand,
-                vehicleSeries:$scope.applyLoan.vehicleSeries,
+                vehicleBrand:$scope.selectedBrand.id,
+                vehicleSeries:$scope.selectedSeries.id,
+                vehicleType:$scope.selectedCarType.id,
+                vehicleDesc:$scope.selectedBrand.name+"/"+$scope.selectedSeries.name+"/"+$scope.selectedCarType.model_name+$scope.selectedCarType.model_year+$scope.selectedCarType.sale_name,
                 vehicleProductionYearMonth:$scope.applyLoan.vehicleProductionYearMonth,
                 vehicleRegistrationYearMonth:$scope.applyLoan.vehicleRegistrationYearMonth,
                 vehicleKilometers:$scope.applyLoan.vehicleKilometers,
                 vehicleUtilityType:$scope.applyLoan.vehicleUtilityType,
-                vehicleEmission:$scope.applyLoan.vehicleEmission,
-                vehicleType:"中型车"
+                vehicleEmission:$scope.applyLoan.vehicleEmission
             };
 
 
