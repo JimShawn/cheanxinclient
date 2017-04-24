@@ -396,7 +396,7 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     };
     api.getCarBrand = function () {
         var deferd = $q.defer();
-        var getCarBrandUrl = serverHost + "273data/brand?access_token=" + $window.sessionStorage["access_token"];
+        var getCarBrandUrl = commonUtil.getServerHost() + "273data/brand?access_token=" + $window.sessionStorage["access_token"];
         $http.get(getCarBrandUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
@@ -406,7 +406,7 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     };
     api.getCarSeriesByBrand = function (brandId) {
         var deferd = $q.defer();
-        var getCarSeriesByBrandUrl = serverHost + "273data/series?access_token=" + $window.sessionStorage["access_token"]+"&brandId="+brandId;
+        var getCarSeriesByBrandUrl = commonUtil.getServerHost() + "273data/series?access_token=" + $window.sessionStorage["access_token"]+"&brandId="+brandId;
         $http.get(getCarSeriesByBrandUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
@@ -416,7 +416,7 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     };
     api.getCarTypeBySerie = function (serieId) {
         var deferd = $q.defer();
-        var getCarTypeBySerieUrl = serverHost + "273data/types?access_token=" + $window.sessionStorage["access_token"]+"&seriesId="+serieId;
+        var getCarTypeBySerieUrl = commonUtil.getServerHost() + "273data/types?access_token=" + $window.sessionStorage["access_token"]+"&seriesId="+serieId;
         $http.get(getCarTypeBySerieUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
