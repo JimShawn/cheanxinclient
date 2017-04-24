@@ -1,6 +1,6 @@
 'use strict';
 
-var app = angular.module('app', ['image-upload', 'ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept',
+var app = angular.module('app', ['loan-filter', 'image-upload', 'ui.router','angularFileUpload','angularTreeview','city','login','main','man','footer','ngThumb','product','positon','dept',
     'lending','loanpreliminary','ADM-dateTimePicker','commonUtil','carpricing','loanrecheck','sign','toaster','mortgage','ncy-angular-breadcrumb','car']);
 
 app.config(function ($stateProvider,$urlRouterProvider) {

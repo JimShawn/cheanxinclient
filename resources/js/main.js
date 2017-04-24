@@ -82,7 +82,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             highlight:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_FIRST_READ", "ROLE_FIRST_REVIEWER"],
             status:"3"
         },
         {
@@ -102,7 +102,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             edit:false,
             show:false,
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_UPDATE"],
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ", "ROLE_APPRAISER"],
             status:"3"
         },
         {
@@ -110,7 +110,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ", "ROLE_APPRAISER"],
             status:"4"
         }
     ];
@@ -191,7 +191,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_CONTRACT_ACCEPT_READ", "ROLE_FIRST_REVIEWER"],
             status:"8,25"
         }
     ];
@@ -234,11 +234,11 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"21"
         },
         {
-            name:"待审核",
+            name:"过户待审核",
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_READ", "ROLE_FIRST_REVIEWER"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_REVIEW"],
             status:"22,32"
         },
@@ -247,7 +247,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE_READ", "ROLE_FIRST_REVIEWER"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE"],
             status:"23"
         },
@@ -256,16 +256,17 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ", "ROLE_LOAN_RELEASE_COMPLETE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ", "ROLE_FINANCE"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_UPDATE"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE"],
             status:"24"
         },
         {
-            name:"抵押材料待审核",
+            name:"抵押待审核",
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_REVIEW"],
             status:"38"
         },
@@ -291,7 +292,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
             status:"31"
         }
     ];
@@ -315,11 +316,11 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"28"
         },
         {
-            name:"待审核",
+            name:"过户抵押待审核",
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ", "ROLE_FIRST_REVIEWER"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW"],
             status:"29,33"
         },
@@ -328,7 +329,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
             status:"30"
         },
@@ -337,7 +338,8 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_LOAN_RELEASE_COMPLETE_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_FINANCE"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
             status:"36"
         },
         {
@@ -374,7 +376,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ"],
+            showRoles:["ROLE_ADMIN", "ROLE_PRODUCT_READ", "ROLE_PRODUCT_CITY_READ", "ROLE_FIRST_REVIEWER", "ROLE_SECOND_REVIEWER"],
             status:"1"
         },
         {
@@ -424,7 +426,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                 {
                     name:"车辆定价",
                     show:false,
-                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ"],
+                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_PRICE_READ", "ROLE_APPRAISER"],
                     highlight:false,
                     page:"main.carpricinglist",
                     subTabs:priceTabs
@@ -469,7 +471,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             subItems:[
                 {
                     name:"过户后放款",
-                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ", "ROLE_LOAN_RELEASE_READ", "ROLE_LOAN_TRANSFER_ABORT_READ", "ROLE_LOAN_RELEASE_UPDATE_READ", "ROLE_LOAN_RELEASE_MORTGAGE_READ"],
+                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ", "ROLE_LOAN_RELEASE_READ", "ROLE_LOAN_TRANSFER_ABORT_READ", "ROLE_LOAN_RELEASE_UPDATE_READ", "ROLE_LOAN_RELEASE_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
                     show:false,
                     highlight:false,
                     page:"main.afterTransferLoanList",
@@ -477,7 +479,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                 },
                 {
                     name:"抵押后放款",
-                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ", "ROLE_LOAN_MORTGAGE_ABORT_READ", "ROLE_LOAN_MORTGAGE_RELEASE_READ"],
+                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ", "ROLE_LOAN_MORTGAGE_ABORT_READ", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_FIRST_REVIEWER"],
                     show:false,
                     highlight:false,
                     page:"main.afterMortgageLoanList",
@@ -558,7 +560,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                 {
                     name:"产品地域策略",
                     show:false,
-                    showRoles:["ROLE_PRODUCT_READ", "ROLE_ADMIN"],
+                    showRoles:["ROLE_PRODUCT_READ", "ROLE_ADMIN", "ROLE_PRODUCT_CITY_READ", "ROLE_FIRST_REVIEWER", "ROLE_SECOND_REVIEWER"],
                     highlight:false,
                     page:"main.subproductmanagement",
                     subTabs:productTabs

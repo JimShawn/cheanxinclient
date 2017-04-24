@@ -1,10 +1,11 @@
 /**
- * Created by 向麒 on 2017/1/14.
  * 图片上传指令
  */
 'use strict';
 var imageUpload = angular.module('image-upload',[]);
 imageUpload.directive('upload',[function () {
+    var addImage = "/resources/img/add.png";
+    var initDesc = "上传图片";
     return {
         restrict: 'AC',
         scope: {
@@ -22,26 +23,36 @@ imageUpload.directive('upload',[function () {
             }
             $scope.uploadedUrls = new Array(10);
             if (!$scope.imageUrl) {
-                $scope.backUrl = "/resources/img/add.png";
-                $scope.imageSize = "auto";
+                $scope.uploadStatus = false;
+                $scope.backUrl = addImage;
             } else {
+                $scope.uploadStatus = true;
                 $scope.uploadedUrls[$scope.index] = $scope.imageUrl;
-                $scope.imageSize = "cover";
                 $scope.backUrl = commonUtil.getImageHost() + $scope.imageUrl;
             }
+            var oldDesc = initDesc;
             if (!$scope.desc) {
-                $scope.desc = "上传图片";
+                $scope.desc = oldDesc;
+            } else {
+                oldDesc = $scope.desc;
             }
             var imageUploader = $scope.imageUploader = new FileUploader({
                 url: commonUtil.getServerHost() + "image/upload?access_token=" + $window.sessionStorage["access_token"],
                 queueLimit: 1, //文件个数
-                removeAfterUpload: false //上传后不删除文件
+                removeAfterUpload: true
             });
 
-            $scope.clearPhotoItems = function(){ //重新选择文件时，清空队列，达到覆盖文件的效果
-                imageUploader.clearQueue();
+            $scope.init = function(){ //重新选择文件时，清空队列，达到覆盖文件的效果
+                $scope.uploadStatus = false;
+                $scope.backUrl = addImage;
+                $scope.desc = oldDesc;
+                $scope.uploadedUrls[$scope.index] = null;
             };
 
+            $scope.zoom = function (isZoom) {
+                $scope.isZoom = isZoom;
+            }
+            
             // a sync filter
             imageUploader.filters.push({
                 name: 'syncFilter',
@@ -59,17 +70,16 @@ imageUpload.directive('upload',[function () {
             // });
             imageUploader.onAfterAddingFile = function(fileItem) {
                 $scope.fileItem = fileItem._file; //添加文件之后，把文件信息赋给scope
-                imageUploader.uploadAll();
+                imageUploader.uploadItem(fileItem);
             };
             imageUploader.onSuccessItem = function(fileItem, response, status, headers) {
                 $scope.uploadStatus = true; //上传成功则把状态改为true
                 $scope.backUrl = commonUtil.getImageHost() + response;
-                $scope.imageSize = "cover";
                 $scope.desc = fileItem.file.name;
                 $scope.uploadedUrls[$scope.index] = response;
             };
             imageUploader.onErrorItem = function(fileItem, response, status, headers) {
-                $scope.uploadStatus = false; //上传成功则把状态改为true
+                $scope.uploadStatus = false;
             };
         }
     }
