@@ -12,6 +12,7 @@ imageUpload.directive('upload',[function () {
             desc: '@',
             uploader: '@',
             index:'@',
+            readOnly:'@',
             uploadedUrls: '=',
             imageUrl:'@'
         },
@@ -22,6 +23,7 @@ imageUpload.directive('upload',[function () {
                 return;
             }
             $scope.uploadedUrls = new Array(10);
+            $scope.uploadStatus = false;
             if (!$scope.imageUrl) {
                 $scope.uploadStatus = false;
                 $scope.backUrl = addImage;
@@ -49,8 +51,10 @@ imageUpload.directive('upload',[function () {
                 $scope.uploadedUrls[$scope.index] = null;
             };
 
+            $scope.zoom = false;
             $scope.zoom = function (isZoom) {
                 $scope.isZoom = isZoom;
+                $scope.zIndex = 99 * isZoom;
             }
             
             // a sync filter

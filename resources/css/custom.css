@@ -128,6 +128,3 @@
 .upload {
     position: relative;
 }
-.upload:hover {
-    z-index:3;
-}
