@@ -18,13 +18,17 @@ sign.controller("signListController",function ($scope, $http, $location, $rootSc
     }
 });
 
-loanrecheck.controller("signEditController", function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
+loanrecheck.controller("signEditController", function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil,toaster) {
     $scope.cities = cityJson;
+    $scope.commonUtil = commonUtil;
 
     $scope.applyLoan = $stateParams.items;
-    $scope.contractNumber = $scope.applyLoan.contractNumber;
-    $scope.singData = $scope.applyLoan.contractCreatedTime * 1000;
-    $scope.signPhotoes = commonUtil.reassembleImages($scope.applyLoan.contractFileIds);
+    if($scope.applyLoan){
+        $scope.contractNumber = $scope.applyLoan.contractNumber;
+        $scope.singData = $scope.applyLoan.contractCreatedTime * 1000;
+        $scope.signPhotoes = commonUtil.reassembleImages($scope.applyLoan.contractFileIds);
+    }
+
     $scope.showGiveupDialog =false;
 
 
@@ -37,10 +41,18 @@ loanrecheck.controller("signEditController", function ($filter,$scope,$http,$loc
     };
 
     $scope.commit = function () {
+        if(!$scope.contractNumber){
+            toaster.error("请填写合同编号");
+            return;
+        };
+        if(!$scope.singData){
+            toaster.error("请选择签约日期");
+            return;
+        };
         var date = new Date($scope.singData);
         var signPicFileIds = $filter('filter')($scope.signPic, '').join(",");
         if(signPicFileIds == ""){
-            alert("请添加签约材料");
+            toaster.error("请添加签约材料");
             return;
         }
         var loan = {
@@ -66,6 +78,10 @@ loanrecheck.controller("signEditController", function ($filter,$scope,$http,$loc
     };
 
     $scope.doGiveup = function () {
+        if(!$scope.giveupReason){
+            toaster.error("请填写放弃理由");
+            return;
+        }
         var loanApply = {
             reviewRemark:$scope.giveupReason
         };
@@ -81,6 +97,7 @@ loanrecheck.controller("signEditController", function ($filter,$scope,$http,$loc
 
 loanrecheck.controller("signViewController", function ($filter, $scope, $rootScope, httpService, $state, $stateParams, commonUtil) {
     $scope.applyLoan = $stateParams.items;
+    $scope.commonUtil = commonUtil;
     var signPhotoArr = $scope.applyLoan.contractFileIds.split(",");
     $scope.signPhotoes = new Array(signPhotoArr.length);
     for (var i = 0; i < signPhotoArr.length; i++) {
@@ -112,8 +129,9 @@ sign.controller("giveupListController", function ($scope,$http,$location,$rootSc
 
 });
 
-loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams) {
+loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams','commonUtil',function ($scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
     $scope.cities = cityJson;
+    $scope.commonUtil = commonUtil;
 
     $scope.applyLoan = $stateParams.items;
     $scope.showGiveupDialog =false;
@@ -135,7 +153,7 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
         })
     };
     if($scope.applyLoan != null){
-        $scope.getOperateLog($scope.applyLoan.id,6,7);
+        $scope.getOperateLog($scope.applyLoan.id,6,17);
     }
 
     $scope.cancel = function () {
@@ -156,7 +174,7 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
     $scope.doCancel = function () {
         $scope.showGiveupDialog = false;
         $scope.showAdjustDialog = false;
-        $scope.showResignDialog = true;
+        $scope.showResignDialog = false;
     };
     $scope.changeRate = function () {
         $scope.applicantLoanPrice = $scope.applyLoan.vehicleDealPrice*$scope.selectedRate/10;

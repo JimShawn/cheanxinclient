@@ -580,7 +580,7 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         };
         if($scope.selectedCarType){
             loanDraft.vehicleType = $scope.selectedCarType.id;
-            loanDraft.vehicleDesc += $scope.selectedSeries.model_name+$scope.selectedSeries.model_year+$scope.selectedSeries.sale_name;
+            loanDraft.vehicleDesc += $scope.selectedCarType.model_name+$scope.selectedCarType.model_year+$scope.selectedCarType.sale_name;
         };
 
         if($scope.type == 1){
@@ -1368,22 +1368,22 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
                     return false;
                 };
                 loanDraft.vehicleVin = $scope.selectedDraft.vehicleVin;
-                if(!$scope.selectedDraft.vehicleBrand){
+                if(!$scope.selectedBrand){
                     toaster.error("请选择品牌");
                     return false;
                 };
-                loanDraft.vehicleBrand = $scope.selectedDraft.vehicleBrand.id;
-                if(!$scope.selectedDraft.vehicleSeries){
+                loanDraft.vehicleBrand = $scope.selectedBrand.id;
+                if(!$scope.selectedSeries){
                     toaster.error("请选择车系");
                     return false;
                 };
-                loanDraft.vehicleSeries = $scope.selectedDraft.vehicleSeries.id;
-                if(!$scope.selectedDraft.vehicleType){
+                loanDraft.vehicleSeries = $scope.selectedSeries.id;
+                if(!$scope.selectedCarType){
                     toaster.error("请选择车型");
                     return false;
                 };
-                loanDraft.vehicleManufacturers = $scope.selectedDraft.vehicleType.id;
-                loanDraft.vehicleDesc = $scope.selectedDraft.vehicleBrand.name+"/"+$scope.selectedDraft.vehicleSeries+"/"+$scope.selectedDraft.vehicleType.model_name+$scope.selectedDraft.vehicleType.model_year+$scope.selectedDraft.vehicleType.sale_name;
+                loanDraft.vehicleManufacturers = $scope.selectedCarType.id;
+                loanDraft.vehicleDesc = $scope.selectedBrand.name+"/"+$scope.selectedSeries.name+"/"+$scope.selectedCarType.model_name+$scope.selectedCarType.model_year+$scope.selectedCarType.sale_name;
                 if(!$scope.selectedDraft.vehicleProductionYearMonth){
                     toaster.error("请选择汽车生产年月");
                     return false;
@@ -1615,16 +1615,16 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
             toaster.error("请输入车架号");
             return false;
         };
-        if(!$scope.selectedDraft.vehicleBrand){
-            toaster.error("请选择车系");
+        if(!$scope.selectedBrand){
+            toaster.error("请选择品牌");
             return false;
         };
-        if(!$scope.selectedDraft.vehicleSeries){
+        if(!$scope.selectedSeries){
             toaster.error("请选择车系");
             return false;
         };
 
-        if(!$scope.selectedDraft.vehicleType){
+        if(!$scope.selectedCarType){
             toaster.error("请选择车型");
             return false;
         };

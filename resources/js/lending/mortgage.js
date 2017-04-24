@@ -25,8 +25,9 @@ mortgage.controller("afterMortgageListController", function ($scope,$http,$locat
 });
 
 
-lending.controller("mortgageEditController", function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
+lending.controller("mortgageEditController", function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil,toaster) {
     $scope.cities = cityJson;
+    $scope.commonUtil = commonUtil;
 
     $scope.applyLoan = $stateParams.items;
     if ($scope.applyLoan) {
@@ -45,6 +46,15 @@ lending.controller("mortgageEditController", function ($filter,$scope,$http,$loc
         $scope.showGiveupDialog =true;
     };
     $scope.commit = function () {
+        if(!$scope.applyLoan.transferCreatedTime){
+            toaster.error("请选择过户日期");
+            return;
+        };
+        if(!$scope.applyLoan.transferCardNumber){
+            toaster.error("请填写过户后车牌号");
+            return;
+        }
+
         var date = new Date($scope.applyLoan.transferCreatedTime);
         var date1 = new Date($scope.applyLoan.mortgageCreatedTime);
         console.log(date.getTime());
@@ -66,7 +76,11 @@ lending.controller("mortgageEditController", function ($filter,$scope,$http,$loc
             errMsg += "请上传抵押材料"+"\n";
         }
         if(errMsg != ""){
-            alert(errMsg);
+            toaster.error(errMsg);
+            return;
+        };
+        if(!$scope.applyLoan.mortgageCreatedTime){
+            toaster.error("请选择抵押日期");
             return;
         }
         var loan = {
@@ -108,7 +122,7 @@ lending.controller("mortgageEditController", function ($filter,$scope,$http,$loc
     };
 });
 
-lending.controller("mortgageDetailController",['$filter','$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams','commonUtil',function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil) {
+lending.controller("mortgageDetailController",['$filter','$scope', '$http','$location','$rootScope', 'httpService','$state','$timeout','cityJson','$stateParams','commonUtil','toaster',function ($filter,$scope,$http,$location,$rootScope,httpService,$state,$timeout,cityJson,$stateParams,commonUtil,toaster) {
     $scope.cities = cityJson;
 
     $scope.applyLoan = $stateParams.items;
@@ -154,7 +168,7 @@ lending.controller("mortgageDetailController",['$filter','$scope', '$http','$loc
     };
     $scope.doOperateTransfer = function () {
         if(!$scope.transferReason){
-            alert('请输入原因');
+            toaster.error('请输入原因');
             return;
         }
         var loanApply = {
@@ -188,7 +202,7 @@ lending.controller("mortgageDetailController",['$filter','$scope', '$http','$loc
     };
     $scope.doFailTransfer = function () {
         if(!$scope.giveupReason){
-            alert('请输入原因');
+            toaster.error('请输入原因');
             return;
         }
         var loanApply = {
@@ -208,7 +222,7 @@ lending.controller("mortgageDetailController",['$filter','$scope', '$http','$loc
         console.log(date.getTime());
         var lendingPic = $filter('filter')($scope.lendingPic, '').join(",");
         if(lendingPic == ""){
-            alert("请上传放款材料");
+            toaster.error("请上传放款材料");
             return;
         };
         var loan = {
@@ -233,7 +247,7 @@ lending.controller("mortgageDetailController",['$filter','$scope', '$http','$loc
         console.log(date.getTime());
         var mortgagePic = $filter('filter')($scope.mortgagePic, '').join(",");
         if(mortgagePic == ""){
-            alert("请上传抵押材料");
+            toaster.error("请上传抵押材料");
             return;
         };
         var loan = {

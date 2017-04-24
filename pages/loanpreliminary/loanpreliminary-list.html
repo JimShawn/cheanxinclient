@@ -30,7 +30,7 @@
                     <td>{{draft.id}}</td>
                     <td>{{draft.applicantName}}</td>
                     <td>{{draft.applicantMobileNumber}}</td>
-                    <td>{{draft.vehicleSeries}}</td>
+                    <td>{{commonUtil.getArrayFromString(draft.vehicleDesc,'/')[2]}}</td>
                     <td>{{cityJson.provincesList[cityJson.Citys[draft.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[draft.sourceCityId-1].Name}}</td>
                     <td>{{draft.productName}}</td>
                     <td>{{draft.applicantLoanPrice}}</td>

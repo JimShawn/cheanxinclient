@@ -14,17 +14,18 @@
 
             </tr>
             <tr>
-                <td width="15%">生产厂家：</td>
-                <td width="30%" ><span class="fl">{{applyLoan.vehicleManufacturers}}</span></td>
-                <td width="15%">汽车品牌：</td>
-                <td width="30%"><span class="fl">{{applyLoan.vehicleBrand}}</span></td>
 
+                <td width="15%">汽车品牌：</td>
+                <td width="30%"><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,'/')[0]}}</span></td>
+                <td width="15%">汽车款式</td>
+                <td width="30%"><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,'/')[1]}}</span></td>
             </tr>
             <tr>
+                <td width="15%">汽车型号：</td>
+                <td width="30%" ><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,'/')[2]}}</span></td>
                 <td width="15%">生产年份：</td>
                 <td width="30%" ><span class="fl">{{applyLoan.vehicleProductionYearMonth}}</span></td>
-                <td width="15%">汽车款式</td>
-                <td width="30%"><span class="fl">{{applyLoan.vehicleSeries}}</span></td>
+
             </tr>
             <tr>
                 <td width="15%">首次登记日期：</td>
@@ -114,23 +115,31 @@
                 </td>
             </tr>
             <tr>
-                <td width="20%"><span>*</span>生产厂家：</td>
-                <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleManufacturers" ng-options="factory for factory in factories" ng-disabled="isRight">
-                        </select>
-                    </div>
-                </td>
+
                 <td width="20%"><span>*</span>汽车品牌：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleBrand" ng-options="brand for brand in brands" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="selectedBrand" ng-options="brand.name for brand in brands" ng-disabled="isRight">
+                        </select>
+                    </div>
+                </td>
+                <td width="20%"><span>*</span>汽车款式：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedSeries" ng-options="serie.name for serie in series" ng-disabled="isRight">
                         </select>
                     </div>
                 </td>
 
             </tr>
             <tr>
+                <td width="20%"><span>*</span>汽车型号：</td>
+                <td width="30%">
+                    <div class="comm-inp-wp">
+                        <select class="comm-select1" ng-model="selectedCarType" ng-options="vehicleType.model_name+'     '+vehicleType.model_year+'     '+vehicleType.sale_name for vehicleType in carTypes" ng-disabled="isRight">
+                        </select>
+                    </div>
+                </td>
                 <td width="20%"><span>*</span>生产年份：</td>
                 <td width="30%">
                     <div class="comm-inp-wp  ">
@@ -138,13 +147,7 @@
                         </select>
                     </div>
                 </td>
-                <td width="20%"><span>*</span>汽车款式：</td>
-                <td width="30%">
-                    <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="applyLoan.vehicleSeries" ng-options="serie for serie in series" ng-disabled="isRight">
-                        </select>
-                    </div>
-                </td>
+
 
             </tr>
             <tr>
