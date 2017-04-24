@@ -125,3 +125,9 @@
     width: 46px;
     height: 65px;
 }
+.upload {
+    position: relative;
+}
+.upload:hover {
+    z-index:3;
+}

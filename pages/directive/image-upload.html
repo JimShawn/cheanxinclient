@@ -1,5 +1,9 @@
-<a href="javascript:void(0);">
-    <label style="display: inline-block; min-width: 50px; outline: 0 none; cursor: pointer; overflow: visible; background:url({{backUrl}}) no-repeat; background-size: {{imageSize}}; height: 228px; width: 200px; margin-top: 0px;background-position: center;" for={{uploader}}></label>
-    <input type="file" name={{uploader}} id={{uploader}} style="position:absolute;clip:rect(0 0 0 0);" accept="image/*" nv-file-select="" uploader="imageUploader" ng-click="clearPhotoItems()" class="add">
+<a href="javascript:void(0);" ng-show="!uploadStatus">
+    <label style="display: inline-block; min-width: 50px; outline: 0 none; cursor: pointer; overflow: visible; background:url({{backUrl}}) no-repeat center; background-size: auto; height: 228px; width: 205px; margin-top: 0px;" for={{uploader}}></label>
+    <input type="file" name={{uploader}} id={{uploader}} style="position:absolute;clip:rect(0 0 0 0);" accept="image/*" nv-file-select="" uploader="imageUploader" class="add">
 </a>
+<div id="image-display" style="cursor:pointer; background: url({{backUrl}}) no-repeat center; background-size: cover; height: 228px; width: 205px;" ng-show="uploadStatus" ng-mouseover="zoom(true)" ng-mouseleave="zoom(false)"></div>
+<div role="button" title="删除" style="height: 20px; width: 20px; background: url(/resources/img/close.png) gray round; position: absolute; top: 0px; right: 0px; cursor:pointer; z-index: 1;" ng-show="uploadStatus" ng-click="init()"></div>
 <div class="upload_1" style="margin-top: 0px; margin-left: -1px;">{{desc}}</div>
+
+<img src="{{backUrl}}" style=" position: absolute; left: 215px; top: 0;" ng-show="isZoom">
