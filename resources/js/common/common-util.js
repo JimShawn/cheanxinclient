@@ -10,7 +10,7 @@ commonUtil.factory("commonUtil",function (cityJson) {
     var currentItem = "";
 
     var imageHost = "http://106.14.3.254:80/";
-    var serverHost = "http://106.14.3.254:8080/cheanxin/";
+    var serverHost = "/cheanxin/";
 
     factory.getServerHost = function () {
         return serverHost;
