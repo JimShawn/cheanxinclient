@@ -114,12 +114,12 @@ commonUtil.factory("commonUtil",function (cityJson) {
             $scope.query.status = $scope.subTab.status;
             $scope.query.createdTimeFrom = 0;
             $scope.query.createdTimeTo = 0;
-            $scope.query.applicantName = null;
-            $scope.query.applicantMobileNumber = null;
+            $scope.query.applicantName = "";
+            $scope.query.applicantMobileNumber = "";
             $scope.query.sourceChannel = 0;
-            $scope.createdTimeFrom = null;
-            $scope.createdTimeTo = null;
-            $scope.sourceChannel = null;
+            $scope.createdTimeFrom = 0;
+            $scope.createdTimeTo = 0;
+            $scope.sourceChannel = 0;
         }
         $scope.initQuery();
 
