@@ -40,12 +40,8 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     }
 
     api.listUsers = function (query) {
-        var queryParams = "";
-        for (var key in query) {
-            queryParams += "&" + key + "=" + query[key];
-        }
         var deferd = $q.defer();
-        var listUsersUrl = commonUtil.getServerHost() + "users?access_token=" + $window.sessionStorage["access_token"]+queryParams;
+        var listUsersUrl = commonUtil.getServerHost() + "users?access_token=" + $window.sessionStorage["access_token"] + commonUtil.parseQueryArrayToString(query);
         $http.get(listUsersUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
@@ -106,12 +102,8 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     };
 
     api.listProduct = function (query) {
-        var queryParams = "";
-        for (var key in query) {
-            queryParams += "&" + key + "=" + query[key];
-        }
         var deferd = $q.defer();
-        var listProductUrl = commonUtil.getServerHost() + "products?access_token=" + $window.sessionStorage["access_token"] + queryParams;
+        var listProductUrl = commonUtil.getServerHost() + "products?access_token=" + $window.sessionStorage["access_token"] + commonUtil.parseQueryArrayToString(query);
         $http.get(listProductUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
@@ -121,12 +113,8 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     };
 
     api.listProductTemplate = function (query) {
-        var queryParams = "";
-        for (var key in query) {
-            queryParams += "&" + key + "=" + query[key];
-        }
         var deferd = $q.defer();
-        var listProductTemplateUrl = commonUtil.getServerHost() + "product_templates?access_token=" + $window.sessionStorage["access_token"] + queryParams;
+        var listProductTemplateUrl = commonUtil.getServerHost() + "product_templates?access_token=" + $window.sessionStorage["access_token"] + commonUtil.parseQueryArrayToString(query);
         $http.get(listProductTemplateUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
@@ -216,12 +204,8 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     };
 
     api.getAllPosition = function (query) {
-        var queryParams = "";
-        for (var key in query) {
-            queryParams += "&" + key + "=" + query[key];
-        }
         var deferd = $q.defer();
-        var allPostsUrl = commonUtil.getServerHost() + "posts?access_token=" + $window.sessionStorage["access_token"] + queryParams;
+        var allPostsUrl = commonUtil.getServerHost() + "posts?access_token=" + $window.sessionStorage["access_token"] + commonUtil.parseQueryArrayToString(query);
         $http.get(allPostsUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
@@ -331,12 +315,8 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         return deferd.promise;
     };
     api.getLoanPreliminary = function(query) {
-        var queryParams = "";
-        for (var key in query) {
-            queryParams += "&" + key + "=" + query[key];
-        }
         var deferd = $q.defer();
-        var allDeptUrl = commonUtil.getServerHost() + "loans?access_token=" + $window.sessionStorage["access_token"] + queryParams;
+        var allDeptUrl = commonUtil.getServerHost() + "loans?access_token=" + $window.sessionStorage["access_token"] + commonUtil.parseQueryArrayToString(query);
         $http.get(allDeptUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {
@@ -367,6 +347,16 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
     api.updateLoandraft = function (id,loan,loanOperate) {
         var deferd = $q.defer();
         var updateLoandraftUrl = commonUtil.getServerHost() + "loans/" + id + "?access_token=" + $window.sessionStorage["access_token"] + "&loanOperate=" + loanOperate;
+        $http.patch(updateLoandraftUrl,loan).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+    api.release = function (id,loan) {
+        var deferd = $q.defer();
+        var updateLoandraftUrl = commonUtil.getServerHost() + "loans/" + id + "/release?access_token=" + $window.sessionStorage["access_token"];
         $http.patch(updateLoandraftUrl,loan).then(function (result) {
             deferd.resolve(result);
         },function (error) {

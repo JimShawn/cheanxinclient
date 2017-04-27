@@ -243,16 +243,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"22,32"
         },
         {
-            name:"待放款",
-            review:false,
-            edit:false,
-            show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE_READ", "ROLE_FIRST_REVIEWER"],
-            editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE"],
-            status:"23"
-        },
-        {
-            name:"已放款",
+            name:"待抵押",
             review:false,
             edit:false,
             show:false,
@@ -288,17 +279,37 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"20"
         },
         {
-            name:"待还款",
+            name:"已过户抵押",
             review:false,
             edit:false,
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
             status:"31"
+        },
+        {
+            name:"待放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
+            status:"",
+            releaseStatus:"1"
+        },
+        {
+            name:"已放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
+            status:"",
+            releaseStatus:"3"
         }
     ];
     var mortgageTabs = [
         {
-            name:"待办理",
+            name:"待过户抵押",
             review:false,
             edit:false,
             show:false,
@@ -325,24 +336,6 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             status:"29,33"
         },
         {
-            name:"待放款",
-            review:false,
-            edit:false,
-            show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
-            editRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
-            status:"30"
-        },
-        {
-            name:"已放款",
-            review:false,
-            edit:false,
-            show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_FINANCE"],
-            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
-            status:"36"
-        },
-        {
             name:"无法办理待审核",
             review:false,
             edit:false,
@@ -358,6 +351,35 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             show:false,
             showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_ABORT_READ"],
             status:"27"
+        },
+        {
+            name:"已过户抵押",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_FINANCE"],
+            reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
+            status:"36"
+        },
+        {
+            name:"待放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
+            status:"",
+            releaseStatus:"2"
+        },
+        {
+            name:"已放款",
+            review:false,
+            edit:false,
+            show:false,
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
+            status:"",
+            releaseStatus:"4"
         }
     ];
     var productTabs = [
@@ -465,13 +487,13 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             ]
         },
         {
-            name: "放款管理",
+            name: "过户抵押",
             show:false,
             expand:false,
             subItems:[
                 {
                     name:"过户后放款",
-                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ", "ROLE_LOAN_RELEASE_READ", "ROLE_LOAN_TRANSFER_ABORT_READ", "ROLE_LOAN_RELEASE_UPDATE_READ", "ROLE_LOAN_RELEASE_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
+                    showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_LOAN_TRANSFER_READ", "ROLE_LOAN_RELEASE_READ", "ROLE_LOAN_TRANSFER_ABORT_READ", "ROLE_LOAN_RELEASE_UPDATE_READ", "ROLE_LOAN_RELEASE_MORTGAGE_READ", "ROLE_FIRST_REVIEWER"],
                     show:false,
                     highlight:false,
                     page:"main.afterTransferLoanList",
@@ -479,7 +501,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                 },
                 {
                     name:"抵押后放款",
-                    showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_READ", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ", "ROLE_LOAN_MORTGAGE_ABORT_READ", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_FIRST_REVIEWER"],
+                    showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_LOAN_MORTGAGE_READ", "ROLE_LOAN_MORTGAGE_RELEASE_REVIEW_READ", "ROLE_LOAN_MORTGAGE_ABORT_READ", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_FIRST_REVIEWER"],
                     show:false,
                     highlight:false,
                     page:"main.afterMortgageLoanList",

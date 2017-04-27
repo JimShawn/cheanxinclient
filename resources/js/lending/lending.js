@@ -10,10 +10,12 @@ lending.controller("afterTransferListController", function ($scope,$http,$locati
     $scope.cityJson = cityJson;
     $scope.commonUtil = commonUtil;
 
-    $scope.uploadLendingResult = function (loan) {
+    $scope.uploadLendingResult = function (loan, operate) {
+        loan.operate = operate;
         $state.go("main.uploadTransferResult",{items:loan});
     };
-    $scope.check = function (loan) {
+    $scope.check = function (loan, operate) {
+        loan.operate = operate;
         $state.go("main.checkTransferResult",{items:loan});
     };
 });
@@ -218,29 +220,22 @@ lending.controller("transferDetailController", function ($filter,$scope,$http,$l
             console.log(err);
         });
     };
+
     $scope.lendingConfirm = function () {
         var date = new Date($scope.applyLoan.releaseCreatedTime);
-        console.log(date.getTime());
         var lendingPic = $filter('filter')($scope.lendingPic, '').join(",");
         if(lendingPic == ""){
             toaster.error("请上传放款材料");
             return;
         };
         var loan = {
-            releaseAmount:$scope.applyLoan.applicantLoanPrice,
-            releaseCreatedTime:date.getTime()/1000,
+            releaseCreatedTime:date.getTime() / 1000,
             releaseFileIds:lendingPic
         };
-        httpService.updateLoandraft($scope.applyLoan.id,loan,1).then(function (res) {//1表示修改
-            console.log(res);
-            httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//2表示提交审批
-                console.log(res);
-                $state.go("main.afterTransferLoanList");
-            },function (err) {
-                console.log(err);
-            });
+        httpService.release($scope.applyLoan.id,loan).then(function () {
+            $state.go("main.afterTransferLoanList");
         },function (err) {
-            console.log(err);
+            toaster.error(error.data.errorMessage);
         })
     };
 });
