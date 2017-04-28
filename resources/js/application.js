@@ -342,7 +342,7 @@ app.config(function ($stateProvider,$urlRouterProvider) {
 });
 app.config(function($breadcrumbProvider) {
     $breadcrumbProvider.setOptions({
-        template: '<div class="bread"><a href="{{step.ncyBreadcrumbLink}}" ng-repeat="step in steps">{{step.ncyBreadcrumbLabel}}</a>&gt;</div>'
+        template: '<div class="bread"><a href="{{step.ncyBreadcrumbLink}}" ng-repeat="step in steps">{{step.ncyBreadcrumbLabel}}<span ng-hide="$last">&nbsp;&nbsp;&gt;</span></a></div>'
 
     });
 });

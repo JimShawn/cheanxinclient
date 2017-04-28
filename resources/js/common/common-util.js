@@ -112,6 +112,7 @@ commonUtil.factory("commonUtil",function (cityJson) {
             $scope.query.page = 0;
             $scope.query.size = 10;
             $scope.query.status = $scope.subTab.status;
+            $scope.query.releaseStatus = $scope.subTab.releaseStatus;
             $scope.query.createdTimeFrom = 0;
             $scope.query.createdTimeTo = 0;
             $scope.query.applicantName = "";
@@ -145,6 +146,7 @@ commonUtil.factory("commonUtil",function (cityJson) {
             $scope.query.page = $scope.data.number;
             $scope.query.size = size;
             $scope.query.status = $scope.subTab.status;
+            $scope.query.releaseStatus = $scope.subTab.releaseStatus;
             $scope.getList();
         };
 
@@ -152,6 +154,7 @@ commonUtil.factory("commonUtil",function (cityJson) {
             $scope.query.page = x;
             $scope.query.size = $scope.data.size;
             $scope.query.status = $scope.subTab.status;
+            $scope.query.releaseStatus = $scope.subTab.releaseStatus;
             $scope.getList();
         };
 
@@ -161,6 +164,7 @@ commonUtil.factory("commonUtil",function (cityJson) {
                     $scope.subTabs[key].highlight = true;
                     $scope.subTab = $scope.subTabs[key];
                     $scope.query.status = $scope.subTabs[key].status;
+                    $scope.query.releaseStatus = $scope.subTab.releaseStatus;
                     $scope.getList();
                     currentTab[currentItem] = $scope.subTab;
                     currentTabIndex[currentItem] = i;
@@ -247,13 +251,13 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 name:"已放弃",
             },{
                 id:17,
-                name:"待审核"
+                name:"放弃签约待审核"
             },{
                 id:18,
                 name:"待审核"
             },{
                 id:19,
-                name:"待确认"
+                name:"无法过户待确认"
             },{
                 id:20,
                 name:"放弃贷款"
@@ -262,19 +266,19 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 name:"材料待补充"
             },{
                 id:22,
-                name:"待审核"
+                name:"过户待审核"
             },{
                 id:23,
                 name:"待放款"
             },{
                 id:24,
-                name:"已放款"
+                name:"待抵押"
             },{
                 id:25,
-                name:"待过户"
+                name:"待过户抵押"
             },{
                 id:26,
-                name:"待确认"
+                name:"无法过户抵押待确认"
             },{
                 id:27,
                 name:"放弃贷款"
@@ -283,19 +287,19 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 name:"材料待补充"
             },{
                 id:29,
-                name:"待审核"
+                name:"过户抵押待审核"
             },{
                 id:30,
                 name:"待放款"
             },{
                 id:31,
-                name:"待还款"
+                name:"已过户抵押"
             },{
                 id:32,
-                name:"待审核"
+                name:"过户待审核"
             },{
                 id:33,
-                name:"待审核"
+                name:"过户抵押待审核"
             },{
                 id:34,
                 name:"审核不通过"
@@ -304,22 +308,33 @@ commonUtil.factory("commonUtil",function (cityJson) {
                 name:"审核不通过"
             },{
                 id:36,
-                name:"待还款"
+                name:"已过户抵押"
             },{
                 id:37,
-                name:"待审核"
+                name:"签约待审核"
             },{
                 id:38,
-                name:"待审核"
+                name:"抵押待审核"
             }
         ];
 
     };
+
     factory.getArrayFromString = function (oriStr,separator) {
         if(!oriStr)return;
         return oriStr.split(separator);
+    };
 
-    }
+    factory.parseQueryArrayToString = function (query) {
+        var queryParams = "";
+        for (var key in query) {
+            if (query[key] == undefined || query[key] == null) {
+                continue;
+            }
+            queryParams += "&" + key + "=" + query[key];
+        }
+        return queryParams;
+    };
 
     return factory;
 });

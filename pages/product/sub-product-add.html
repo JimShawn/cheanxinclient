@@ -8,7 +8,7 @@
         <table class="mod-table1">
             <tbody>
             <tr>
-                <td width="15%"><span class="star">*</span>产品名称</td>
+                <td width="15%"><span class="star">*</span>产品选择</td>
                 <td width="35%">
                     <div class="comm-inp-wp">
                         <select class="comm-select1" ng-model="selectedProduct" ng-options="product.name for product in data.content" ng-change="selectProduct()" required>
@@ -89,12 +89,12 @@
                     <div class="labe3">
                         %/月
                     </div>
-                    <div id="accrual">参考利率:{{selectedProduct.loanMonthlyInterestRate}}%/月</div>
+                    <div id="accrual">基准利率:{{selectedProduct.loanMonthlyInterestRate}}%/月</div>
 
                 </td>
             </tr>
             <tr>
-                <td width="15%"><span class="star">*</span>可贷车辆年限</td>
+                <td width="15%"><span class="star">*</span>综合年限</td>
                 <td width="35%">
                     <div class="comm-inp-wp labe2">
                         <input type="text" class="comm-input1" ng-model="maxAvailableVehicleYear" required>
