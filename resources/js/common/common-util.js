@@ -328,7 +328,7 @@ commonUtil.factory("commonUtil",function (cityJson) {
     factory.parseQueryArrayToString = function (query) {
         var queryParams = "";
         for (var key in query) {
-            if (!query[key]) {
+            if (query[key] == undefined || query[key] == null) {
                 continue;
             }
             queryParams += "&" + key + "=" + query[key];
