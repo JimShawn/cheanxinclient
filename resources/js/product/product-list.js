@@ -5,7 +5,7 @@
 'use strict';
 var product = angular.module('product',['httpservice']);
 
-product.factory("productFactory", function (toaster, $window) {
+product.factory("productFactory", function (toaster, $window,$state) {
     var productFactoryApi = {};
     var curTab = null;
     var curTabIndex = 0;
@@ -92,7 +92,10 @@ product.factory("productFactory", function (toaster, $window) {
             }
             return false;
         }
-
+        if(!$window.sessionStorage["userInfo"]){
+            $state.go("login");//跳转到登录界面
+            return;
+        }
         var user = JSON.parse($window.sessionStorage["userInfo"]);
         for (var i = 0; i < $scope.productStatus.length; i++) {
             var hasTabShowAuthority = hasRoleAuthority($scope.productStatus[i].showRoles, user.data.postAuthorities);
