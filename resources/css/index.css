@@ -3,7 +3,7 @@ html, body { overflow: hidden; }
 .mainContent { position: relative; overflow: hidden; }
 .frameLeft { width: 195px; height: 100%; background: #68ade7; float: left; overflow-y: auto; }
 .frameRight { float: left; height: 100%; }
-.bread { height: 40px; line-height: 40px; background: #efefef; font-size: 14px; color: #4d4d4d; padding: 0 0 0 17px; }
+.bread { height: 40px; line-height: 40px; background: #efefef; font-size: 14px; color: #4d4d4d; padding: 0 0 0 17px;width: 100%;position: absolute; }
 .frameBox { background: #fff; }
 
 .header a { color: #fff; }

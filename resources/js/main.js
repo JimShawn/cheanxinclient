@@ -37,7 +37,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
         var frameLeftWid=$('.frameLeft').width();
         var headerHei=$('.header').height();
         var breadHei=$('.bread').height();
-        $('.frameRight').css({'width':(winWid-frameLeftWid)+'px'});
+        // $('.frameRight').css({'width':(winWid-frameLeftWid)+'px'});
         $('.mainContent').css({'height':(winHei-headerHei)+'px'});
         $('.frameBox').css({'height':(winHei-headerHei-breadHei)+'px'});
     });
