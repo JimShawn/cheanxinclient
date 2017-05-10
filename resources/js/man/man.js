@@ -10,7 +10,7 @@ man.factory('deptService', function (httpService, toaster) {
         httpService.getAllDept().then(function (result) {
             $scope.depts = result.data;
             if (!selectedItem) {
-                $scope.dept = $scope.depts[0];
+                // $scope.dept = $scope.depts[0];
                 return;
             }
             for (var i = 0; i < $scope.depts.length; i++) {
