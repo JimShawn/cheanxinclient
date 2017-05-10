@@ -7,7 +7,7 @@
                         <td width="25%"><label class="comm-field-t">姓名:</label></td>
                         <td width="75%">
                             <div class="comm-inp-wp name_cell">
-                                <input type="text" class="comm-input1" ng-model="query.applicantName" ng-keyup="$event.keyCode == 13 && getList()">
+                                <input type="text" class="comm-input1" ng-model="query.applicantName" ng-keyup="$event.keyCode == 13 && queryByCondition()">
                             </div>
                         </td>
                     </tr>
@@ -19,7 +19,7 @@
                         <td width="25%"><label class="comm-field-t">申请人手机:</label></td>
                         <td width="75%">
                             <div class="comm-inp-wp">
-                                <input type="text" class="comm-input1" ng-model="query.applicantMobileNumber" ng-keyup="$event.keyCode == 13 && getList()">
+                                <input type="text" class="comm-input1" ng-model="query.applicantMobileNumber" ng-keyup="$event.keyCode == 13 && queryByCondition()">
                             </div>
                         </td>
                     </tr>
@@ -32,7 +32,7 @@
                         <td width="75%">
 
                             <div class="comm-inp-wp">
-                                <select class="comm-select1" ng-model="sourceChannel" ng-options="source.name for source in sources" ng-change="getList()">
+                                <select class="comm-select1" ng-model="sourceChannel" ng-options="source.name for source in sources" ng-change="queryByCondition()">
                                     <option value="">请选择</option>
                                 </select>
                             </div>
@@ -56,7 +56,7 @@
             </td>
             <td colspan="2">
                 <div class="mod-state" style="margin-left: 20px;">
-                    <button class="comm-btn comm-btn-blue fl" ng-click="getList()">查询</button>
+                    <button class="comm-btn comm-btn-blue fl" ng-click="queryByCondition()">查询</button>
                     <button class="comm-btn comm-btn-blue fl" ng-click="initQuery()">清除</button>
                 </div>
             </td>

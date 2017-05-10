@@ -10,7 +10,7 @@
                                 <td width="25%"><label class="comm-field-t">产品名称：</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.name" ng-keyup="$event.keyCode == 13 && getTemplateList()">
+                                        <input type="text" class="comm-input1" ng-model="query.name" ng-keyup="$event.keyCode == 13 && queryTemplateByCondition()">
                                     </div>
                                 </td>
                             </tr>
@@ -18,7 +18,7 @@
                     </td>
                     <td>
                         <div class="mod-state">
-                            <button id="button" class="comm-btn comm-btn-blue fl" ng-click="getTemplateList()">查询</button>
+                            <button id="button" class="comm-btn comm-btn-blue fl" ng-click="queryTemplateByCondition()">查询</button>
                             <button  class="comm-btn comm-btn-blue fl" ng-click="init()">清除</button>
                             <button class="comm-btn comm-btn-blue fr" ng-click="addProduct()">添加</button>
                         </div>

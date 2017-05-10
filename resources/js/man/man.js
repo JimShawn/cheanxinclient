@@ -85,6 +85,11 @@ man.controller("manController", function ($scope, $http, $location, $rootScope,h
 
     };
     $scope.getList();
+    $scope.queryByCondition= function () {
+        $scope.query.page = 0;
+        $scope.query.size = 10;
+        $scope.getList();
+    };
 
     $scope.changePageSizeFun = function (size) {
         $scope.query.page = $scope.data.number;

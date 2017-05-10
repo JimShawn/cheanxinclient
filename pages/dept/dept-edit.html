@@ -27,8 +27,8 @@
             </td>
         </tr>
         <tr>
-            <td><span class="star">*</span>适用地区</td>
-            <td>
+            <td width="15%"><span class="star">*</span>适用地区</td>
+            <td width="35%">
                 <div class="comm-inp-wp labe2">
                     <select class="comm-select1" ng-model="selectProvince" ng-options="province.Name for province in cities.provincesList" required>
                     </select>
@@ -37,7 +37,7 @@
                     <input type="checkbox" value="{{city.Id}}" ng-click="updateSelection($event, city)" ng-checked="isSelected(city.Id)" /> {{city.Name}}
                 </div>
             </td>
-            <td>
+            <td width="23%">
                 <div>
                     <ul>
                         <li><h3 style="font-weight: bolder;">已选城市</h3></li>
