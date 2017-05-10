@@ -27,7 +27,7 @@
             </tr>
             <tr>
                 <td><span class="star">*</span>照片</td>
-                <td>
+                <td ng-init="avatar=[]">
                     <div class="upload" desc="头像照片" uploader="avatar" uploaded-urls="avatar" index="0" image-url={{photo}}></div>
                 </td>
             </tr>
@@ -66,9 +66,9 @@
 
             <tr>
                 <td><span class="star">*</span>身份证照片</td>
-                <td>
-                    <div class="upload" desc="身份证正面照片" uploader="identification1" uploaded-urls="identification" index="0" image-url={{identityPhotos[0]}}></div>
-                    <div class="upload" desc="身份证反面照片" uploader="identification2" uploaded-urls="identification" index="1" image-url={{identityPhotos[1]}}></div>
+                <td ng-init="identification=[]">
+                    <div class="upload" desc="身份证正面照片" uploader="identification0" uploaded-urls="identification" index="0" image-url={{identityPhotos[0]}} ></div>
+                    <div class="upload" desc="身份证反面照片" uploader="identification1" uploaded-urls="identification" index="1" image-url={{identityPhotos[1]}}></div>
                 </td>
             </tr>
             <tr>

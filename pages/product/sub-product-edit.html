@@ -40,6 +40,15 @@
                     </div>
                 </td>
             </tr>
+            <tr>
+                <td width="15%"><span class="star">*</span>综合年限</td>
+                <td width="35%">
+                    <div class="comm-inp-wp labe2">
+                        {{selectedProduct.maxAvailableVehicleYear}}年
+                    </div>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">（车龄+加贷款期限）</span>
+                </td>
+            </tr>
 
             </tbody>
 
@@ -101,20 +110,13 @@
 
                 </td>
             </tr>
-            <tr>
-                <td width="15%"><span class="star">*</span>可贷车辆年限</td>
-                <td width="35%">
-                    <div class="comm-inp-wp labe2">
-                        <input type="text" class="comm-input1" ng-model="selectedProduct.maxAvailableVehicleYear">
-                    </div>
-                </td>
-            </tr>
+
             <tr>
                 <td width="15%"><span class="star">*</span>适用地区</td>
                 <td width="35%">
                     <div class="comm-inp-wp labe2">
 
-                        <select class="comm-select1" ng-model="selectProvinces" ng-options="provinces.Name for provinces in cities.provincesList">
+                        <select class="comm-select1" ng-model="selectProvince" ng-options="provinces.Name for provinces in cities.provincesList">
                         </select>
                     </div>
                     <div class="comm-inp-wp distance">

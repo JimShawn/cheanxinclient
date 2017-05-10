@@ -9,7 +9,7 @@
                                 <td width="25%"><label class="comm-field-t">产品名称：</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.name" ng-keyup="$event.keyCode == 13 && getList()">
+                                        <input type="text" class="comm-input1" ng-model="query.name" ng-keyup="$event.keyCode == 13 && queryByCondition()">
                                     </div>
                                 </td>
                             </tr>
@@ -27,7 +27,7 @@
                                         </select>
                                     </div>
                                     <div class="comm-inp-wp distance">
-                                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvince.Id}:true" ng-change="getList()">
+                                        <select class="comm-select1" ng-model="selectCity" ng-options="city.Name for city in cities.Citys | filter:{ProvinceId:selectProvince.Id}:true" ng-change="queryByCondition()">
                                             <option value="">城市</option>
                                         </select>
                                     </div>
@@ -38,7 +38,7 @@
                     </td>
                     <td>
                         <div class="mod-state">
-                            <button id="button" class="comm-btn comm-btn-blue fl" ng-click="getList()">查询</button>
+                            <button id="button" class="comm-btn comm-btn-blue fl" ng-click="queryByCondition()">查询</button>
                             <button  class="comm-btn comm-btn-blue fl" ng-click="init()">清除</button>
                             <button class="comm-btn comm-btn-blue fr" ng-click="add()">添加</button>
                         </div>
@@ -66,7 +66,7 @@
                     <th width="10%">可贷成数</th>
                     <th width="10%">可贷期数</th>
                     <th width="10%">贷利率/月</th>
-                    <th width="10%">可贷车辆年限</th>
+                    <th width="10%">综合年限</th>
                     <th width="10%">操作</th>
                 </tr>
                 </thead>
