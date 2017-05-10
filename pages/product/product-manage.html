@@ -36,6 +36,7 @@
                     <th>贷款类型</th>
                     <th>还款方式</th>
                     <th>可贷成数</th>
+                    <th>贷款政策</th>
                     <th>可贷期数</th>
                     <th>贷款利率/月</th>
                     <th>操作</th>
@@ -48,6 +49,7 @@
                     <td>{{productTypes[product.productType].name}}</td>
                     <td>{{paybackTypes[product.repaymentMethod].name}}</td>
                     <td>{{product.minAvailableRate}}成-{{product.maxAvailableRate}}成</td>
+                    <td>{{loanPolicies[product.loanPolicy].name}}</td>
                     <td>{{product.availableTerms}}</td>
                     <td id="accrual">{{product.loanMonthlyInterestRate}}</td>
                     <td class="oper"><a href="" class="blue" ng-click="edit(product)">编辑</a>

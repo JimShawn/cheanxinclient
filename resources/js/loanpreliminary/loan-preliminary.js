@@ -70,7 +70,28 @@ loanpreliminary.controller("loanpreliminaryListController", function ($scope, $h
 });
 
 loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http', '$location', '$rootScope', 'httpService', '$state', '$window', 'cityJson', '$stateParams','toaster', function ($filter, $scope, $http, $location, $rootScope, httpService, $state, $window, cityJson, $stateParams,toaster) {
-
+    $scope.sources = [
+        {
+            id: 0,
+            name: "门店"
+        },
+        {
+            id: 1,
+            name: "车商"
+        },
+        {
+            id: 2,
+            name: "273网站"
+        },
+        {
+            id: 3,
+            name: "273业管"
+        },
+        {
+            id: 4,
+            name: "其他"
+        }
+    ];
 
     $scope.init = function () {
         var userInfo = $window.sessionStorage['userInfo'];

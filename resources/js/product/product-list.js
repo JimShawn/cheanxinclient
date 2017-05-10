@@ -285,6 +285,7 @@ product.controller("addProductTemplateController", function ($scope, $http, $loc
         $scope.loanMonthlyInterestRate = selectedItem.loanMonthlyInterestRate;
         $scope.loanPolicy = $scope.loanPolicies[selectedItem.loanPolicy];
         $scope.availableTerms = productFactory.checkTerms(selectedItem.availableTerms);
+        $scope.maxAvailableVehicleYear =selectedItem.maxAvailableVehicleYear;
     }
 
     $scope.commit = function () {
@@ -296,7 +297,9 @@ product.controller("addProductTemplateController", function ($scope, $http, $loc
             maxAvailableRate:$scope.maxAvailableRate,
             availableTerms:productFactory.setTerms($scope.availableTerms),
             loanPolicy:$scope.loanPolicy.id,
-            loanMonthlyInterestRate:$scope.loanMonthlyInterestRate
+            loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
+            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
+            enabled:true
         };
         var response;
         if (selectedItem) {
@@ -342,7 +345,8 @@ product.controller("addSubProductController",function ($scope, $http, $location,
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
-            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
+            maxAvailableVehicleYear:$scope.selectedProduct.maxAvailableVehicleYear,
+            enabled:true,
             status:0
         };
         httpService.addProduct($scope.product).then(function () {
@@ -382,6 +386,7 @@ product.controller("editSubProductController", function ($scope, $http, $locatio
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
             maxAvailableVehicleYear:$scope.selectedProduct.maxAvailableVehicleYear,
+            enabled:true,
             status:0
         };
         httpService.editProduct($scope.product).then(function () {
@@ -404,6 +409,10 @@ product.controller("reviewSubProductController", function ($scope, $http, $locat
     $scope.selectedProduct = $stateParams.items;
 
     $scope.reviewSubProduct = function (status) {
+        if(status==2 && !$scope.remark){
+            toaster.error("请填写备注");
+            return;
+        }
         var subProductStatus = {
             id: $scope.selectedProduct.id,
             status: status,
