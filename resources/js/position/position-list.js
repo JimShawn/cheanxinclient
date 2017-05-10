@@ -25,6 +25,12 @@ positon.controller("positionController", function ($scope, $http, $location, $ro
 
     $scope.init();
 
+    $scope.queryByCondition= function () {
+        $scope.query.page = 0;
+        $scope.query.size = 10;
+        $scope.getList();
+    };
+
     $scope.getList = function () {
         if ($scope.selectPositionStatus) {
             $scope.query.enabled = $scope.selectPositionStatus.id;

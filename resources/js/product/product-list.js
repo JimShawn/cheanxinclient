@@ -177,8 +177,18 @@ product.factory("productFactory", function (toaster, $window,$state) {
             $scope.query.name = "";
             $scope.query.page = "0";
             $scope.query.size = "10";
-        }
+        };
+        $scope.queryByCondition= function () {
+            $scope.query.page = 0;
+            $scope.query.size = 10;
+            $scope.getList();
+        };
         $scope.initTemplate();
+        $scope.queryTemplateByCondition= function () {
+            $scope.query.page = 0;
+            $scope.query.size = 10;
+            $scope.getTemplateList();
+        };
 
         $scope.getTemplateList = function () {
             $scope.showEdit = true;
@@ -190,7 +200,8 @@ product.factory("productFactory", function (toaster, $window,$state) {
         };
 
         return $scope;
-    }
+    };
+
 
     productFactoryApi.checkTerms = function(availableTerms) {
         var availableTermsArr = {"6":false, "12":false, "18":false, "24":false, "36":false, "48":false, "60":false}
