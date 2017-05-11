@@ -459,7 +459,8 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                             edit:false,
                             show:false
                         }
-                    ]
+                    ],
+                    type:1
                 }
             ]
         },
@@ -678,7 +679,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
     }
     $scope.subItem = $scope.menuItems[$window.sessionStorage.currentItemIndex].subItems[$window.sessionStorage.currentSubItemIndex];
     $scope.subItem.highlight = true;
-    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
+    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs,type:$scope.subItem.type});
 
     $window.sessionStorage['preliminaryTabs'] = JSON.stringify(preliminaryTabs);
     $window.sessionStorage['priceTabs'] = JSON.stringify(priceTabs);
