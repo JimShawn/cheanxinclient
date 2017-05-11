@@ -30,6 +30,9 @@
                 <div class="comm-inp-wp labe2" ng-repeat="city in cities.Citys | filter:{ProvinceId:selectProvince.Id}:true">
                     <input type="checkbox" value="{{city.Id}}" ng-click="updateSelection($event, city)" ng-checked="isSelected(city.Id)" /> {{city.Name}}
                 </div>
+
+            </td>
+            <td width="23%">
                 <div>
                     <ul>
                         <li><h3 style="font-weight: bolder;">已选城市</h3></li>

@@ -123,6 +123,11 @@ commonUtil.factory("commonUtil",function (cityJson) {
             $scope.sourceChannel = 0;
         }
         $scope.initQuery();
+        $scope.queryByCondition= function () {
+            $scope.query.page = 0;
+            $scope.query.size = 10;
+            $scope.getList();
+        };
 
         $scope.getList = function () {
             if (typeof($scope.createdTimeFrom) == "string" && $scope.createdTimeFrom.length > 0) {

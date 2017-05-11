@@ -14,15 +14,19 @@ imageUpload.directive('upload',[function () {
             index:'@',
             readOnly:'@',
             uploadedUrls: '=',
+            outputUrl:'=',
             imageUrl:'@'
         },
         templateUrl:'/pages/directive/image-upload.html',
-        controller: function ($scope, FileUploader, $window, commonUtil) {
+        controller: function ($scope, FileUploader, $window, commonUtil,$timeout) {
             if ($scope.index > 9) {
                 console.error("index error.");
                 return;
             }
-            $scope.uploadedUrls = new Array(10);
+            if (!$scope.uploadedUrls){
+                $scope.uploadedUrls =[];
+            }
+
             $scope.uploadStatus = false;
             if (!$scope.imageUrl) {
                 $scope.uploadStatus = false;

@@ -10,7 +10,7 @@ man.factory('deptService', function (httpService, toaster) {
         httpService.getAllDept().then(function (result) {
             $scope.depts = result.data;
             if (!selectedItem) {
-                $scope.dept = $scope.depts[0];
+                // $scope.dept = $scope.depts[0];
                 return;
             }
             for (var i = 0; i < $scope.depts.length; i++) {
@@ -85,6 +85,11 @@ man.controller("manController", function ($scope, $http, $location, $rootScope,h
 
     };
     $scope.getList();
+    $scope.queryByCondition= function () {
+        $scope.query.page = 0;
+        $scope.query.size = 10;
+        $scope.getList();
+    };
 
     $scope.changePageSizeFun = function (size) {
         $scope.query.page = $scope.data.number;

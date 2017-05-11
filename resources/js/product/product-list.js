@@ -5,7 +5,7 @@
 'use strict';
 var product = angular.module('product',['httpservice']);
 
-product.factory("productFactory", function (toaster, $window) {
+product.factory("productFactory", function (toaster, $window,$state) {
     var productFactoryApi = {};
     var curTab = null;
     var curTabIndex = 0;
@@ -92,7 +92,10 @@ product.factory("productFactory", function (toaster, $window) {
             }
             return false;
         }
-
+        if(!$window.sessionStorage["userInfo"]){
+            $state.go("login");//跳转到登录界面
+            return;
+        }
         var user = JSON.parse($window.sessionStorage["userInfo"]);
         for (var i = 0; i < $scope.productStatus.length; i++) {
             var hasTabShowAuthority = hasRoleAuthority($scope.productStatus[i].showRoles, user.data.postAuthorities);
@@ -174,8 +177,18 @@ product.factory("productFactory", function (toaster, $window) {
             $scope.query.name = "";
             $scope.query.page = "0";
             $scope.query.size = "10";
-        }
+        };
+        $scope.queryByCondition= function () {
+            $scope.query.page = 0;
+            $scope.query.size = 10;
+            $scope.getList();
+        };
         $scope.initTemplate();
+        $scope.queryTemplateByCondition= function () {
+            $scope.query.page = 0;
+            $scope.query.size = 10;
+            $scope.getTemplateList();
+        };
 
         $scope.getTemplateList = function () {
             $scope.showEdit = true;
@@ -187,7 +200,8 @@ product.factory("productFactory", function (toaster, $window) {
         };
 
         return $scope;
-    }
+    };
+
 
     productFactoryApi.checkTerms = function(availableTerms) {
         var availableTermsArr = {"6":false, "12":false, "18":false, "24":false, "36":false, "48":false, "60":false}
@@ -282,6 +296,7 @@ product.controller("addProductTemplateController", function ($scope, $http, $loc
         $scope.loanMonthlyInterestRate = selectedItem.loanMonthlyInterestRate;
         $scope.loanPolicy = $scope.loanPolicies[selectedItem.loanPolicy];
         $scope.availableTerms = productFactory.checkTerms(selectedItem.availableTerms);
+        $scope.maxAvailableVehicleYear =selectedItem.maxAvailableVehicleYear;
     }
 
     $scope.commit = function () {
@@ -293,7 +308,9 @@ product.controller("addProductTemplateController", function ($scope, $http, $loc
             maxAvailableRate:$scope.maxAvailableRate,
             availableTerms:productFactory.setTerms($scope.availableTerms),
             loanPolicy:$scope.loanPolicy.id,
-            loanMonthlyInterestRate:$scope.loanMonthlyInterestRate
+            loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
+            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
+            enabled:true
         };
         var response;
         if (selectedItem) {
@@ -339,7 +356,8 @@ product.controller("addSubProductController",function ($scope, $http, $location,
             loanMonthlyInterestRate:$scope.loanMonthlyInterestRate,
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
-            maxAvailableVehicleYear:$scope.maxAvailableVehicleYear,
+            maxAvailableVehicleYear:$scope.selectedProduct.maxAvailableVehicleYear,
+            enabled:true,
             status:0
         };
         httpService.addProduct($scope.product).then(function () {
@@ -379,6 +397,7 @@ product.controller("editSubProductController", function ($scope, $http, $locatio
             cityId:$scope.selectCity.Id,
             productTemplateId:$scope.selectedProduct.id,
             maxAvailableVehicleYear:$scope.selectedProduct.maxAvailableVehicleYear,
+            enabled:true,
             status:0
         };
         httpService.editProduct($scope.product).then(function () {
@@ -401,6 +420,10 @@ product.controller("reviewSubProductController", function ($scope, $http, $locat
     $scope.selectedProduct = $stateParams.items;
 
     $scope.reviewSubProduct = function (status) {
+        if(status==2 && !$scope.remark){
+            toaster.error("请填写备注");
+            return;
+        }
         var subProductStatus = {
             id: $scope.selectedProduct.id,
             status: status,

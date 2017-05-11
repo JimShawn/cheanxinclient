@@ -9,7 +9,7 @@
                                 <td width="25%"><label class="comm-field-t">姓名</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.realName" ng-keyup="$event.keyCode == 13 && getList()">
+                                        <input type="text" class="comm-input1" ng-model="query.realName" ng-keyup="$event.keyCode == 13 && queryByCondition()">
                                     </div>
                                 </td>
                             </tr>
@@ -21,7 +21,7 @@
                                 <td width="25%"><label class="comm-field-t">手机号码</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.mobileNumber" ng-keyup="$event.keyCode == 13 && getList()">
+                                        <input type="text" class="comm-input1" ng-model="query.mobileNumber" ng-keyup="$event.keyCode == 13 && queryByCondition()">
                                     </div>
                                 </td>
                             </tr>
@@ -33,7 +33,7 @@
                                 <td width="25%"><label class="comm-field-t">部门</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <select class="comm-select1" name="dept" ng-model="dept" ng-options="d.name for d in depts" ng-change="getList()">
+                                        <select class="comm-select1" name="dept" ng-model="dept" ng-options="d.name for d in depts" ng-change="queryByCondition()">
                                             <option value="">人员部门</option>
                                         </select>
                                     </div>
@@ -49,7 +49,7 @@
                                 <td width="25%"><label class="comm-field-t">邮箱</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.email" ng-keyup="$event.keyCode == 13 && getList()">
+                                        <input type="text" class="comm-input1" ng-model="query.email" ng-keyup="$event.keyCode == 13 && queryByCondition()">
                                     </div>
                                 </td>
                             </tr>
@@ -62,14 +62,14 @@
                                     <td width="25%"><label class="comm-field-t">状态</label></td>
                                     <td width="75%">
                                         <div class="comm-inp-wp">
-                                            <select class="comm-select1" ng-model="statusObject" ng-options="queryStatus.value for queryStatus in queryStatuses" ng-change="getList()">
+                                            <select class="comm-select1" ng-model="statusObject" ng-options="queryStatus.value for queryStatus in queryStatuses" ng-change="queryByCondition()">
                                                 <option value="">人员状态</option>
                                             </select>
                                         </div>
                                     </td>
                                 </tr>
                             </table>
-                            <button class="comm-btn comm-btn-blue fl" ng-click="getList()">查询</button>
+                            <button class="comm-btn comm-btn-blue fl" ng-click="queryByCondition()">查询</button>
                             <button class="comm-btn comm-btn-blue fl" ng-click="init()">清除</button>
                             <button class="comm-btn comm-btn-blue fr" ng-click="add()">添加</button>
                         </div>

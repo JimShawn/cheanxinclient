@@ -1,6 +1,30 @@
 var authors = angular.module('main', []);
 
 authors.controller('MainController', function($scope, $http, $location, $rootScope, $state, httpService, $window, $interval, toaster) {
+    $scope.logout = function () {
+        httpService.logout().then(function () {
+            toaster.success("您已安全退出");
+            $state.go("login");
+        },function (err) {
+            toaster.error(err.data.errorMessage);
+        });
+    };
+    $rootScope.$on('$stateChangeStart',function(event, toState, toParams, fromState, fromParams){
+        if(toState.name=='login')return;// 如果是进入登录界面则允许
+        // 如果用户不存在
+        if(!$window.sessionStorage["userInfo"]){
+            event.preventDefault();// 取消默认跳转行为
+            $state.go("login");//跳转到登录界面
+        }
+    });
+    $rootScope.$on('stateChangeError',function(event, toState, toParams, fromState, fromParams){
+        if(toState.name=='login')return;// 如果是进入登录界面则允许
+        // 如果用户不存在
+        if(!$window.sessionStorage["userInfo"]){
+            event.preventDefault();// 取消默认跳转行为
+            $state.go("login");//跳转到登录界面
+        }
+    });
     if (!window.sessionStorage.currentItemIndex) {
         window.sessionStorage.currentItemIndex = 0;
     }
@@ -13,11 +37,18 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
         var frameLeftWid=$('.frameLeft').width();
         var headerHei=$('.header').height();
         var breadHei=$('.bread').height();
-        $('.frameRight').css({'width':(winWid-frameLeftWid)+'px'});
+        // $('.frameRight').css({'width':(winWid-frameLeftWid)+'px'});
         $('.mainContent').css({'height':(winHei-headerHei)+'px'});
         $('.frameBox').css({'height':(winHei-headerHei-breadHei)+'px'});
     });
+    if(!$window.sessionStorage["userInfo"]){
+        return;
+    }
     var user = JSON.parse($window.sessionStorage["userInfo"]);
+    if(user.data.hasNotModifyPassWord){
+        $state.go("main.manpassword");
+        return;
+    }
     $scope.userName = user.data.realName;
     $interval(function(){
         var now=new Date();
@@ -658,12 +689,5 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
     $window.sessionStorage['mortgageTabs'] = JSON.stringify(mortgageTabs);
     $window.sessionStorage['productTabs'] = JSON.stringify(productTabs);
 
-    $scope.logout = function () {
-        httpService.logout().then(function () {
-            toaster.success("您已安全退出");
-            $state.go("login");
-        },function (err) {
-            toaster.error(err.data.errorMessage);
-        });
-    };
+
 });
