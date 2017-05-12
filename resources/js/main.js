@@ -664,7 +664,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     $window.sessionStorage.currentSubItemIndex = l;
                     $scope.subItem = $scope.menuItems[k].subItems[l];
                     $scope.menuItems[k].subItems[l].highlight = true;
-                    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
+                    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs,type:$scope.subItem.type});
                 } else {
                     $scope.menuItems[k].subItems[l].highlight = false;
                 }
