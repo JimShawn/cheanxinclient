@@ -44,7 +44,7 @@
                 <td width="15%">可贷成数</td>
                 <td width="25%">
                     <div class="comm-inp-wp">
-                        {{selectedProduct.minAvailableRate}} - {{selectedProduct.maxAvailableRate}}
+                        {{selectedProduct.minAvailableRate}} - {{selectedProduct.maxAvailableRate}}成
                     </div>
                 </td>
             </tr>
@@ -52,7 +52,7 @@
                 <td width="15%">可贷期数</td>
                 <td width="25%">
                     <div class="comm-inp-wp">
-                        {{selectedProduct.availableTerms}}
+                        {{selectedProduct.availableTerms}}期
                     </div>
                 </td>
             </tr>
@@ -60,7 +60,7 @@
                 <td width="15%">贷款利率</td>
                 <td width="25%">
                     <div class="comm-inp-wp">
-                        {{selectedProduct.loanMonthlyInterestRate}}
+                        {{selectedProduct.loanMonthlyInterestRate}}%
                     </div>
                 </td>
             </tr>
@@ -68,9 +68,8 @@
                 <td width="15%">综合年限</td>
                 <td width="25%">
                     <div class="comm-inp-wp">
-                        {{selectedProduct.maxAvailableVehicleYear}}年
+                        {{selectedProduct.maxAvailableVehicleYear}}年<span class="red">（车龄+加贷款期限）</span>
                     </div>
-                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="red">（车龄+加贷款期限）</span>
                 </td>
             </tr>
             <tr>
