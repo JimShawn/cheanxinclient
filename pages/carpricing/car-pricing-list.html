@@ -37,7 +37,7 @@
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanapply.status==3?"待定价":"已定价"}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="showDetail(loanapply)">查看</a><a href="" class="blue" ng-click="setPrice(loanapply)" ng-show="subTab.edit && subTab.status == 3">定价</a></td>
+                    <td class="oper"><a href="" class="blue" ng-click="setPrice(loanapply)" ng-show="subTab.edit && subTab.status == 3">定价</a></td>
                 </tr>
 
                 </tbody>
