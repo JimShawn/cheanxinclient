@@ -327,7 +327,7 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = ($scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100).toFixed(2);
     };
     $scope.commit = function (operateType) {
         //预先获取图片url
@@ -1258,7 +1258,7 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
         $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm +  $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = ($scope.applicantLoanPrice / $scope.selectedTerm +  $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100).toFixed(2);
     };
 
     var getLoanBean = function (loanDraft) {

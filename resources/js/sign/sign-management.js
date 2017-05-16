@@ -184,7 +184,7 @@ loanrecheck.controller("giveupEditController",['$scope', '$http','$location','$r
         $scope.availableTerms = termsStr.split(",");
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = $scope.applicantLoanPrice/$scope.selectedTerm+$scope.applicantLoanPrice*$scope.selectedProduct.loanMonthlyInterestRate/100;
+        $scope.paybackPerMonth = ($scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100).toFixed(2);
     };
     $scope.adjust= function () {
         httpService.getProductByCityId($scope.applyLoan.sourceCityId).then(function (res) {
