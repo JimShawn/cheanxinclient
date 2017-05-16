@@ -9,7 +9,7 @@
                                 <td width="25%"><label class="comm-field-t">姓名</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.realName" ng-keyup="$event.keyCode == 13 && queryByCondition()">
+                                        <input type="text" class="comm-input1" ng-model="query.realName" ng-keyup="$event.keyCode == 13 && queryByCondition()" maxlength="6">
                                     </div>
                                 </td>
                             </tr>
@@ -21,7 +21,7 @@
                                 <td width="25%"><label class="comm-field-t">手机号码</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.mobileNumber" ng-keyup="$event.keyCode == 13 && queryByCondition()">
+                                        <input type="text" class="comm-input1" ng-model="query.mobileNumber" ng-keyup="$event.keyCode == 13 && queryByCondition()" maxlength="11">
                                     </div>
                                 </td>
                             </tr>
@@ -49,7 +49,7 @@
                                 <td width="25%"><label class="comm-field-t">邮箱</label></td>
                                 <td width="75%">
                                     <div class="comm-inp-wp">
-                                        <input type="text" class="comm-input1" ng-model="query.email" ng-keyup="$event.keyCode == 13 && queryByCondition()">
+                                        <input type="text" class="comm-input1" ng-model="query.email" ng-keyup="$event.keyCode == 13 && queryByCondition()" maxlength="20">
                                     </div>
                                 </td>
                             </tr>
