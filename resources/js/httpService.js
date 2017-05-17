@@ -304,6 +304,16 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
+    api.patchDept = function (dept,id) {
+        var deferd = $q.defer();
+        var patchDeptUrl = commonUtil.getServerHost() + "depts/" + id + "?access_token=" + $window.sessionStorage["access_token"];
+        $http.patch(patchDeptUrl,dept).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
     api.updateDeptCity = function (deptCity) {
         var deferd = $q.defer();
         var updateDeptCityUrl = commonUtil.getServerHost() + "dept_cities?access_token=" + $window.sessionStorage["access_token"];

@@ -418,14 +418,14 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                 toaster.error("申请人收入证明和房产证明必须传一个");
                 return;
             };
-            if (!coApplicantCertificateFileIds) {
-                toaster.error("请上传共同申请人身份证图片");
-                return;
-            };
-            if (!guarantorCertificateFileIds) {
-                toaster.error("请上传担保人身份证图片");
-                return;
-            };
+            // if (!coApplicantCertificateFileIds) {
+            //     toaster.error("请上传共同申请人身份证图片");
+            //     return;
+            // };
+            // if (!guarantorCertificateFileIds) {
+            //     toaster.error("请上传担保人身份证图片");
+            //     return;
+            // };
             if(!$scope.vehicleVin || $scope.vehicleVin.length!=17){
                 toaster.error("请输入17位车架号");
                 return;
