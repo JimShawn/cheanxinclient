@@ -52,7 +52,14 @@ imageUpload.directive('upload',[function () {
                 $scope.uploadStatus = false;
                 $scope.backUrl = addImage;
                 $scope.desc = oldDesc;
-                $scope.uploadedUrls[$scope.index] = null;
+                $scope.isZoom = false;
+                imageUploader = $scope.imageUploader = new FileUploader({
+                    url: commonUtil.getServerHost() + "image/upload?access_token=" + $window.sessionStorage["access_token"],
+                    queueLimit: 1, //文件个数
+                    removeAfterUpload: true
+                });
+                // $scope.uploadedUrls[$scope.index] = undefined;
+                // $scope.uploadedUrls.clean(undefined);
             };
 
             $scope.zoom = false;
