@@ -18,7 +18,7 @@ imageUpload.directive('upload',[function () {
             imageUrl:'@'
         },
         templateUrl:'/pages/directive/image-upload.html',
-        controller: function ($scope, FileUploader, $window, commonUtil,$timeout) {
+        controller: function ($scope, FileUploader, $window, commonUtil) {
             if ($scope.index > 9) {
                 console.error("index error.");
                 return;
