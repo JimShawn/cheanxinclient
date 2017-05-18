@@ -1,6 +1,6 @@
 <a href="javascript:void(0);" ng-show="!uploadStatus">
     <label style="display: inline-block; min-width: 50px; outline: 0 none; cursor: pointer; overflow: visible; background:url({{backUrl}}) no-repeat center; background-size: auto; height: 228px; width: 205px; margin-top: 0px;" for={{uploader}}></label>
-    <input type="file" name={{uploader}} id={{uploader}} style="position:absolute;clip:rect(0 0 0 0);" accept="image/*" nv-file-select="" uploader="imageUploader" class="add">
+    <input type="file" name={{uploader}} id={{uploader}} style="position:absolute;clip:rect(0 0 0 0);" accept="image/*" nv-file-select="" uploader="imageUploader" class="add" multiple>
 </a>
 <div id="image-display" style="cursor:pointer; background: url({{backUrl}}) no-repeat center; background-size: contain; height: 228px; width: 205px;" ng-show="uploadStatus" ng-click="zoom(!isZoom)"></div>
 <div role="button" title="删除" style="height: 20px; width: 20px; background: url(/resources/img/close.png) gray round; position: absolute; top: 0px; right: 0px; cursor:pointer; z-index: 1;" ng-show="uploadStatus && !readOnly" ng-click="init()"></div>
