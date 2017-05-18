@@ -415,7 +415,7 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                 return;
             };
             if (!applicantIncomeFileIds && !applicantEstateFileIds) {
-                toaster.error("申请人收入证明和房产证明必须传一个");
+                toaster.error("申请人工作与财力证明和房产证明必须传一个");
                 return;
             };
             // if (!coApplicantCertificateFileIds) {

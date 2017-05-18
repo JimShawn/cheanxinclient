@@ -92,7 +92,7 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
     $scope.isRight = true;
     $scope.commit = function () {
         if(!$scope.predictPrice){
-            toaster.error("评估价不能为空");
+            toaster.error("评估价非法");
             return;
         };
         if(!$scope.applyLoan.vehicleVin || $scope.applyLoan.vehicleVin.length !=17){
