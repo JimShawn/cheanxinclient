@@ -198,14 +198,47 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         },function (err) {
             console.log(err);
         });
+    };
 
+    $scope.IDTypes = [
+        {
+            id: 0,
+            name: "身份证"
+        },
+        {
+            id: 1,
+            name: "护照"
+        },
+        {
+            id: 2,
+            name: "户口本"
+        }
+    ];
+    $scope.marriages = [
+        {
+            id: 0,
+            name: "已婚"
+        },
+        {
+            id: 1,
+            name: "未婚"
+        }
+    ];
 
-        //获取当前城市的收单员
-        httpService.getUserByCityAndPost(userInfoObj.data.deptId, 24).then(function (result) {
-            console.log(result);
+    $scope.productTypes = [{
+        id: 0,
+        name: "二手车贷款"
+    }, {
+        id: 1,
+        name: "三手车贷款"
+    }];
+    $scope.AvailableRates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    $scope.init();
+
+    //获取当前城市的收单员
+    $scope.getPostUsers = function (deptId) {
+        httpService.getUserByCityAndPost(deptId, $scope.sourceCity.Id, 24).then(function (result) {
             $scope.collectors = result.data;
-
-
 
             if ($scope.type == 2) {
                 $scope.productId = selectedItem.productId;
@@ -244,46 +277,9 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         }, function (error) {
             console.log(error);
         });
-
-    };
-
-    $scope.IDTypes = [
-        {
-            id: 0,
-            name: "身份证"
-        },
-        {
-            id: 1,
-            name: "护照"
-        },
-        {
-            id: 2,
-            name: "户口本"
-        }
-    ];
-    $scope.marriages = [
-        {
-            id: 0,
-            name: "已婚"
-        },
-        {
-            id: 1,
-            name: "未婚"
-        }
-    ];
-
-    $scope.productTypes = [{
-        id: 0,
-        name: "二手车贷款"
-    }, {
-        id: 1,
-        name: "三手车贷款"
-    }];
-    $scope.AvailableRates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    $scope.init();
+    }
 
     $scope.getProductByCity = function () {
-        console.log("hhaaa");
         httpService.getProductByCityId($scope.sourceCity.Id).then(function (res) {
             $scope.products = res.data;
             if ($scope.type == 2) {

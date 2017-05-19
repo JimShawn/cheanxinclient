@@ -334,9 +334,9 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
-    api.getUserByCityAndPost = function (dept,post) {
+    api.getUserByCityAndPost = function (deptId, cityId, post) {
         var deferd = $q.defer();
-        var getUserByCityAndPostUrl = commonUtil.getServerHost() + "users/all?access_token=" + $window.sessionStorage["access_token"] + "&deptId=" + dept + "&postId=" + post;
+        var getUserByCityAndPostUrl = commonUtil.getServerHost() + "users/all?access_token=" + $window.sessionStorage["access_token"] + "&cityId=" + cityId + "&deptId=" + deptId + "&postId=" + post;
         $http.get(getUserByCityAndPostUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {

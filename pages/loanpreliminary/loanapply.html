@@ -16,7 +16,7 @@
                 <td width="15%"><span class="star">*</span>来源城市
                 </td>
                 <td width="35%"><div class="comm-inp-wp">
-                    <select class="comm-select1" ng-model="sourceCity" ng-options = "city.Name for city in cityArray" ng-change="getProductByCity()" >
+                    <select class="comm-select1" ng-model="sourceCity" ng-options = "city.Name for city in cityArray" ng-change="getProductByCity(); getPostUsers(userInfo.data.deptId)" >
                         <option value="">请选择</option>
                     </select>
                 </div></td>
