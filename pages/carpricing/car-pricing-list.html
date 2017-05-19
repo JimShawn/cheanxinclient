@@ -30,14 +30,14 @@
                     <td>{{loanapply.id}}</td>
                     <td>{{loanapply.applicantName}}</td>
                     <td>{{loanapply.applicantMobileNumber}}</td>
-                    <td>{{commonUtil.getArrayFromString(loanapply.vehicleDesc,'/')[2]}}</td>
+                    <td>{{loanapply.vehicleDesc.split("/")[0]}}&nbsp;{{loanapply.vehicleDesc.split("/")[1]}}</td>
                     <td>{{cityJson.provincesList[cityJson.Citys[loanapply.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[loanapply.sourceCityId-1].Name}}</td>
                     <td>{{loanapply.productName}}</td>
                     <td>{{loanapply.vehicleDealPrice}}</td>
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanapply.status==3?"待定价":"已定价"}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="showDetail(loanapply)">查看</a><a href="" class="blue" ng-click="setPrice(loanapply)" ng-show="subTab.edit && subTab.status == 3">定价</a></td>
+                    <td class="oper"><a href="" class="blue" ng-click="setPrice(loanapply)" ng-show="subTab.edit && subTab.status == 3">定价</a></td>
                 </tr>
 
                 </tbody>

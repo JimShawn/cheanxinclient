@@ -93,7 +93,7 @@
                         <td width="30%" ><span class="fl red">{{applyLoan.productLoanMonthlyInterestRate}}%/月</span></td>
                         <td width="15%">还款金额（元/月）：</td>
                         <td width="30%" >
-                            <span class="fl red">{{payPerMonth}}</span>
+                            <span class="fl red">{{payPerMonth.toFixed(2)}}</span>
                         </td>
                     </tr>
                     </tbody>
@@ -144,8 +144,7 @@
             </tr>
             <tr>
                 <td>月供（元）：</td>
-                <td>{{applyLoan.applicantLoanPrice*(applyLoan.productLoanMonthlyInterestRate/100+1/applyLoan.loanTerms)}}</td>
-                <td id="border-none" colspan="2 " ><div class="click round "><u>详细申请信息</u></div></td>
+                <td>{{(applyLoan.applicantLoanPrice*(applyLoan.productLoanMonthlyInterestRate/100+1/applyLoan.loanTerms)).toFixed(2)}}</td>
             </tr>
             </tbody>
         </table>

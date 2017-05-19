@@ -8,9 +8,9 @@ commonUtil.factory("commonUtil",function (cityJson) {
     var currentTab = {};
     var currentTabIndex = {};
     var currentItem = "";
-
-    var imageHost = "http://172.16.1.14:8888/";
-    var serverHost = "http://localhost:8081/cheanxin/";
+    
+    var imageHost = "http://139.224.135.179:80/";
+    var serverHost = "/cheanxin/";
 
     factory.getServerHost = function () {
         return serverHost;

@@ -48,7 +48,7 @@
                 </td>
             </tr>
             <tr>
-                <td>车辆登记证书：</td>
+                <td>机动车行驶证：</td>
                 <td colspan="4">
                     <div class="pic-container" ng-repeat="vehicleLicenseFile in vehicleLicenseFileIds">
                         <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleLicenseFile}}" alt=""></a>
@@ -56,7 +56,7 @@
                 </td>
             </tr>
             <tr>
-                <td>车辆登记证书：</td>
+                <td>车辆照片：</td>
                 <td colspan="4">
                     <div class="pic-container" ng-repeat="vehicleFile in vehicleFileIds">
                         <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleFile}}" alt=""></a>
@@ -191,7 +191,7 @@
                 <td width="20%"><span class="red">*</span>评估价（元）：</td>
                 <td>
                     <div class="comm-inp-wp inline three">
-                        <input type="text" class="comm-input1" ng-model="predictPrice">
+                        <input type="number" maxlength="8" class="comm-input1" ng-model="predictPrice">
                     </div>
                 </td>
             </tr>

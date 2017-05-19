@@ -18,7 +18,7 @@ imageUpload.directive('upload',[function () {
             imageUrl:'@'
         },
         templateUrl:'/pages/directive/image-upload.html',
-        controller: function ($scope, FileUploader, $window, commonUtil,$timeout) {
+        controller: function ($scope, FileUploader, $window, commonUtil) {
             if ($scope.index > 9) {
                 console.error("index error.");
                 return;
@@ -52,7 +52,9 @@ imageUpload.directive('upload',[function () {
                 $scope.uploadStatus = false;
                 $scope.backUrl = addImage;
                 $scope.desc = oldDesc;
-                $scope.uploadedUrls[$scope.index] = null;
+                $scope.isZoom = false;
+                $scope.uploadedUrls[$scope.index] = undefined;
+                $scope.uploadedUrls.clean(undefined);
             };
 
             $scope.zoom = false;

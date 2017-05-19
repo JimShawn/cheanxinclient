@@ -31,21 +31,20 @@
                     <td>{{loanapply.id}}</td>
                     <td>{{loanapply.applicantName}}</td>
                     <td>{{loanapply.applicantMobileNumber}}</td>
-                    <td>{{commonUtil.getArrayFromString(loanapply.vehicleDesc,"/")[2]}}</td>
+                    <td>{{loanapply.vehicleDesc.split("/")[0]}}&nbsp;{{loanapply.vehicleDesc.split("/")[1]}}</td>
                     <td>{{cityJson.provincesList[cityJson.Citys[loanapply.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[loanapply.sourceCityId-1].Name}}</td>
                     <td>{{loanapply.productName}}</td>
                     <td id="red">{{loanapply.reviewLoanPrice}}（{{loanapply.reviewLoanTerms}}期）</td>
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanStatuses[loanapply.status].name}}</td>
-                    <td class="oper"><a href="" class="blue">查看</a>
+                    <td class="oper">
                         <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status == 25 && subTab.edit">办理</a>
                         <a href="" class="blue" ng-click="uploadLendingResult(loanapply)" ng-show="loanapply.status == 28 && subTab.edit">重新上传</a>
-                        <a href="" class="blue" ng-click="check(loanapply, 'release')" ng-show="loanapply.releaseStatus == 3 && subTab.edit">放款</a>
+                        <a href="" class="blue" ng-click="check(loanapply, 'release')" ng-show="loanapply.releaseStatus == 2 && subTab.edit">放款</a>
                         <a href="" class="blue" ng-click="check(loanapply, 'release')" ng-show="loanapply.releaseStatus == 4 && subTab.edit">重新放款</a>
-                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status == 36 && subTab.review">编辑</a>
-                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status == 26 && subTab.review">审核</a>
-                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="(loanapply.status == 29 || loanapply.status == 33) && subTab.review">审核</a></td>
+                        <!--<a href="" class="blue" ng-click="check(loanapply)" ng-show="loanapply.status == 36 && subTab.review">编辑</a>-->
+                        <a href="" class="blue" ng-click="check(loanapply)" ng-show="(loanapply.status == 26 || loanapply.status == 29 || loanapply.status == 33) && subTab.review">审核</a></td>
                     </tr>
                 </tbody>
 

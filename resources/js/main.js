@@ -1,6 +1,16 @@
 var authors = angular.module('main', []);
 
 authors.controller('MainController', function($scope, $http, $location, $rootScope, $state, httpService, $window, $interval, toaster) {
+    Array.prototype.clean = function(deleteValue) {
+        for (var i = 0; i < this.length; i++) {
+            if (this[i] == deleteValue) {
+                this.splice(i, 1);
+                i--;
+            }
+        }
+        return this;
+    };
+
     $scope.logout = function () {
         httpService.logout().then(function () {
             toaster.success("您已安全退出");
@@ -459,7 +469,8 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                             edit:false,
                             show:false
                         }
-                    ]
+                    ],
+                    type:1
                 }
             ]
         },
@@ -663,7 +674,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
                     $window.sessionStorage.currentSubItemIndex = l;
                     $scope.subItem = $scope.menuItems[k].subItems[l];
                     $scope.menuItems[k].subItems[l].highlight = true;
-                    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
+                    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs,type:$scope.subItem.type});
                 } else {
                     $scope.menuItems[k].subItems[l].highlight = false;
                 }
@@ -678,7 +689,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
     }
     $scope.subItem = $scope.menuItems[$window.sessionStorage.currentItemIndex].subItems[$window.sessionStorage.currentSubItemIndex];
     $scope.subItem.highlight = true;
-    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs});
+    $state.go($scope.subItem.page, {subTabs:$scope.subItem.subTabs,type:$scope.subItem.type});
 
     $window.sessionStorage['preliminaryTabs'] = JSON.stringify(preliminaryTabs);
     $window.sessionStorage['priceTabs'] = JSON.stringify(priceTabs);

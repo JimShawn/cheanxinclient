@@ -304,6 +304,16 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
+    api.patchDept = function (dept,id) {
+        var deferd = $q.defer();
+        var patchDeptUrl = commonUtil.getServerHost() + "depts/" + id + "?access_token=" + $window.sessionStorage["access_token"];
+        $http.patch(patchDeptUrl,dept).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
     api.updateDeptCity = function (deptCity) {
         var deferd = $q.defer();
         var updateDeptCityUrl = commonUtil.getServerHost() + "dept_cities?access_token=" + $window.sessionStorage["access_token"];
@@ -324,9 +334,9 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
-    api.getUserByCityAndPost = function (dept,post) {
+    api.getUserByCityAndPost = function (deptId, cityId, post) {
         var deferd = $q.defer();
-        var getUserByCityAndPostUrl = commonUtil.getServerHost() + "users/all?access_token=" + $window.sessionStorage["access_token"] + "&deptId=" + dept + "&postId=" + post;
+        var getUserByCityAndPostUrl = commonUtil.getServerHost() + "users/all?access_token=" + $window.sessionStorage["access_token"] + "&cityId=" + cityId + "&deptId=" + deptId + "&postId=" + post;
         $http.get(getUserByCityAndPostUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {

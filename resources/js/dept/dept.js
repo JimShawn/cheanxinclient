@@ -91,13 +91,9 @@ dept.controller("deptController", function ($scope, $http, $location, $rootScope
 
     $scope.disabledDept = function () {
         var deptItem = {
-            deptCode:$scope.selectedItem.deptCode,
-            name:$scope.selectedItem.name,
-            parentDeptId:$scope.selectedItem.parentDeptId,
-            level:$scope.selectedItem.level,
             enabled:false
         };
-        httpService.updateDept(deptItem,$scope.selectedItem.id).then(function (result) {
+        httpService.patchDept(deptItem,$scope.selectedItem.id).then(function (result) {
             $scope.selectedItem = undefined;
             $scope.getAllDept();
             $state.go("main.deptmanagement.edit");

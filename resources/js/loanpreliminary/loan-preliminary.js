@@ -198,14 +198,47 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         },function (err) {
             console.log(err);
         });
+    };
 
+    $scope.IDTypes = [
+        {
+            id: 0,
+            name: "身份证"
+        },
+        {
+            id: 1,
+            name: "护照"
+        },
+        {
+            id: 2,
+            name: "户口本"
+        }
+    ];
+    $scope.marriages = [
+        {
+            id: 0,
+            name: "已婚"
+        },
+        {
+            id: 1,
+            name: "未婚"
+        }
+    ];
 
-        //获取当前城市的收单员
-        httpService.getUserByCityAndPost(userInfoObj.data.deptId, 24).then(function (result) {
-            console.log(result);
+    $scope.productTypes = [{
+        id: 0,
+        name: "二手车贷款"
+    }, {
+        id: 1,
+        name: "三手车贷款"
+    }];
+    $scope.AvailableRates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    $scope.init();
+
+    //获取当前城市的收单员
+    $scope.getPostUsers = function (deptId) {
+        httpService.getUserByCityAndPost(deptId, $scope.sourceCity.Id, 24).then(function (result) {
             $scope.collectors = result.data;
-
-
 
             if ($scope.type == 2) {
                 $scope.productId = selectedItem.productId;
@@ -244,46 +277,9 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         }, function (error) {
             console.log(error);
         });
-
-    };
-
-    $scope.IDTypes = [
-        {
-            id: 0,
-            name: "身份证"
-        },
-        {
-            id: 1,
-            name: "护照"
-        },
-        {
-            id: 2,
-            name: "户口本"
-        }
-    ];
-    $scope.marriages = [
-        {
-            id: 0,
-            name: "已婚"
-        },
-        {
-            id: 1,
-            name: "未婚"
-        }
-    ];
-
-    $scope.productTypes = [{
-        id: 0,
-        name: "二手车贷款"
-    }, {
-        id: 1,
-        name: "三手车贷款"
-    }];
-    $scope.AvailableRates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    $scope.init();
+    }
 
     $scope.getProductByCity = function () {
-        console.log("hhaaa");
         httpService.getProductByCityId($scope.sourceCity.Id).then(function (res) {
             $scope.products = res.data;
             if ($scope.type == 2) {
@@ -327,7 +323,7 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = ($scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100).toFixed(2);
     };
     $scope.commit = function (operateType) {
         //预先获取图片url
@@ -415,17 +411,17 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
                 return;
             };
             if (!applicantIncomeFileIds && !applicantEstateFileIds) {
-                toaster.error("申请人收入证明和房产证明必须传一个");
+                toaster.error("申请人工作与财力证明和房产证明必须传一个");
                 return;
             };
-            if (!coApplicantCertificateFileIds) {
-                toaster.error("请上传共同申请人身份证图片");
-                return;
-            };
-            if (!guarantorCertificateFileIds) {
-                toaster.error("请上传担保人身份证图片");
-                return;
-            };
+            // if (!coApplicantCertificateFileIds) {
+            //     toaster.error("请上传共同申请人身份证图片");
+            //     return;
+            // };
+            // if (!guarantorCertificateFileIds) {
+            //     toaster.error("请上传担保人身份证图片");
+            //     return;
+            // };
             if(!$scope.vehicleVin || $scope.vehicleVin.length!=17){
                 toaster.error("请输入17位车架号");
                 return;
@@ -1258,7 +1254,7 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
         $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
     };
     $scope.changeTerms = function () {
-        $scope.paybackPerMonth = $scope.applicantLoanPrice / $scope.selectedTerm +  $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100;
+        $scope.paybackPerMonth = ($scope.applicantLoanPrice / $scope.selectedTerm +  $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100).toFixed(2);
     };
 
     var getLoanBean = function (loanDraft) {

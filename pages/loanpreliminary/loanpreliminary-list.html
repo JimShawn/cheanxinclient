@@ -30,14 +30,14 @@
                     <td>{{draft.id}}</td>
                     <td>{{draft.applicantName}}</td>
                     <td>{{draft.applicantMobileNumber}}</td>
-                    <td>{{commonUtil.getArrayFromString(draft.vehicleDesc,'/')[2]}}</td>
+                    <td>{{draft.vehicleDesc.split("/")[0]}}&nbsp;{{draft.vehicleDesc.split("/")[1]}}</td>
                     <td>{{cityJson.provincesList[cityJson.Citys[draft.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[draft.sourceCityId-1].Name}}</td>
                     <td>{{draft.productName}}</td>
                     <td>{{draft.applicantLoanPrice}}</td>
                     <td>{{draft.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(draft.modifiedTime)}}</td>
                     <td>{{loanStatuses[draft.status].name}}</td>
-                    <td class="oper"><a href="" class="blue" ng-click="detial()">查看</a><a href="" class="blue" ng-click="edit(draft)"  ng-show="subTab.edit && (draft.status == 1 || draft.status ==2 || draft.status == 9)">编辑</a></td>
+                    <td class="oper"><a href="" class="blue" ng-click="edit(draft)"  ng-show="subTab.edit && (draft.status == 1 || draft.status ==2 || draft.status == 9)">编辑</a></td>
                 </tr>
 
                 </tbody>
