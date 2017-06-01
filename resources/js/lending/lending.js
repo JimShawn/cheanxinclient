@@ -150,6 +150,8 @@ lending.controller("transferDetailController", function ($filter,$scope,$http,$l
         $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds, true);
         $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds, true);
         $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds, true);
+        $scope.applyLoan.releaseCreatedTime = $scope.applyLoan.releaseCreatedTime * 1000;
+        $scope.lendingPhotos = commonUtil.reassembleImages($scope.applyLoan.releaseFileIds);
     }
 
     $scope.cancel = function () {
@@ -185,7 +187,6 @@ lending.controller("transferDetailController", function ($filter,$scope,$http,$l
             operateNum = 4;
         };
         httpService.updateLoandraft($scope.applyLoan.id,loanApply,operateNum).then(function (res) {//4表示放弃签约
-            console.log(res);
             $state.go("main.afterTransferLoanList");
             $scope.confirmCantTransfer = false;
             $scope.confirmCanTransfer = false;
