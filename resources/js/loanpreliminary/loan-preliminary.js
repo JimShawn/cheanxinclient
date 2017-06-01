@@ -305,8 +305,8 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
 
         })
     };
-    $scope.changeCarSeries = function () {
 
+    $scope.changeCarSeries = function () {
         if(!$scope.selectedSeries)return;
         httpService.getCarTypeBySerie($scope.selectedSeries.id).then(function (res) {
             $scope.carTypes = res.data;

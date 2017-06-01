@@ -119,14 +119,14 @@
                 <td width="20%"><span>*</span>汽车品牌：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedBrand" ng-options="brand.name for brand in brands" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="selectedBrand" ng-options="brand.name for brand in brands" ng-disabled="isRight" ng-change="changeCarBrand()">
                         </select>
                     </div>
                 </td>
                 <td width="20%"><span>*</span>汽车款式：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedSeries" ng-options="serie.name for serie in series" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="selectedSeries" ng-options="serie.name for serie in series" ng-disabled="isRight" ng-change="changeCarSeries()">
                         </select>
                     </div>
                 </td>

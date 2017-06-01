@@ -33,15 +33,6 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
     $scope.cities = cityJson;
     $scope.commonUtil = commonUtil;
 
-
-    $scope.brands = [
-        "奥迪","奔驰","宝马","丰田","本田","铃木","比亚迪","吉利","雪佛兰","现代","大众","福特"
-    ];
-    $scope.factories = [
-        "广汽","上汽","北汽","一汽"
-    ];
-    $scope.series = ["福克斯","科鲁兹","yalris","雷凌","宋","元"];
-
     $scope.produceYears = [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017];
 
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
@@ -85,9 +76,27 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
                     }
                 }
         },function (err) {
-            console.log(err);
+            toaster.error(err);
         });
     }
+
+    $scope.changeCarBrand = function () {
+        if(!$scope.selectedBrand)return;
+        httpService.getCarSeriesByBrand($scope.selectedBrand.id).then(function (res) {
+            $scope.series = res.data;
+        },function (err) {
+
+        })
+    };
+
+    $scope.changeCarSeries = function () {
+        if(!$scope.selectedSeries)return;
+        httpService.getCarTypeBySerie($scope.selectedSeries.id).then(function (res) {
+            $scope.carTypes = res.data;
+        },function (err) {
+
+        })
+    };
 
     $scope.isRight = true;
     $scope.commit = function () {
@@ -148,15 +157,13 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
 
 
         httpService.updateLoandraft($scope.applyLoan.id,applyLoantwo,1).then(function (res) {//1表示修改
-            console.log(res);
             httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//3表示初审审批通过
-                console.log(res);
                 $state.go("main.carpricinglist");
             },function (err) {
-                console.log(err);
+                toaster.error(err.data.errorMessage);
             });
         },function (err) {
-            console.log(err);
+            toaster.error(err.data.errorMessage);
         })
     };
     $scope.cancel = function () {
