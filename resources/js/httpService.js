@@ -424,9 +424,9 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
-    api.estimate = function(cityName) {
+    api.estimate = function(cityName, seriesId, saleName, carTime, kilometer, modelId) {
         var deferd = $q.defer();
-        var estimateUrl = commonUtil.getServerHost() + "273data/estimate?access_token=" + $window.sessionStorage["access_token"]+"&cityName="+cityName;
+        var estimateUrl = commonUtil.getServerHost() + "273data/estimate?access_token=" + $window.sessionStorage["access_token"]+"&cityName="+cityName+"&seriesId="+seriesId+"&saleName="+saleName+"&carTime="+carTime+"&kilometer="+kilometer+"&modelId="+modelId;
         $http.get(estimateUrl).then(function (result) {
             deferd.resolve(result);
         },function (error) {

@@ -100,7 +100,13 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
 
     if ($scope.applyLoan) {
         var cityName = $scope.cities.Citys[$scope.applyLoan.sourceCityId - 1].Name;
-        httpService.estimate(cityName).then(function (res) {
+        var seriesId = $scope.applyLoan.vehicleSeries;
+        var saleName = "111";
+        // TODO
+        var carTime = new Date($scope.applyLoan.vehicleRegistrationYearMonth).getTime() / 1000;
+        var kilometer = $scope.applyLoan.vehicleKilometers * 10000;
+        var modelId = $scope.applyLoan.vehicleType;
+        httpService.estimate(cityName, seriesId, saleName, carTime, kilometer, modelId).then(function (res) {
             $scope.predictPrice = res.data;
         },function (err) {
 
