@@ -98,6 +98,15 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
         })
     };
 
+    if ($scope.applyLoan) {
+        var cityName = $scope.cities.Citys[$scope.applyLoan.sourceCityId - 1].Name;
+        httpService.estimate(cityName).then(function (res) {
+            $scope.predictPrice = res.data;
+        },function (err) {
+
+        })
+    }
+
     $scope.isRight = true;
     $scope.commit = function () {
         if(!$scope.predictPrice){

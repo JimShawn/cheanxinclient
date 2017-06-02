@@ -424,5 +424,15 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
+    api.estimate = function(cityName) {
+        var deferd = $q.defer();
+        var estimateUrl = commonUtil.getServerHost() + "273data/estimate?access_token=" + $window.sessionStorage["access_token"]+"&cityName="+cityName;
+        $http.get(estimateUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    }
     return api;
 });
