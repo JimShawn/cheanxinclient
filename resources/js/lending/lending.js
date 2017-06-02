@@ -29,6 +29,7 @@ lending.controller("transferEditController", function ($filter,$scope,$http,$loc
         $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds);
         $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
         $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
+        $scope.applyLoan.transferCreatedTime = $scope.applyLoan.transferCreatedTime * 1000;
     };
     $scope.showGiveupDialog =false;
 

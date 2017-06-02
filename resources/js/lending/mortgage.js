@@ -31,6 +31,8 @@ lending.controller("mortgageEditController", function ($filter,$scope,$http,$loc
         $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
         $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
         $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds);
+        $scope.applyLoan.transferCreatedTime = $scope.applyLoan.transferCreatedTime * 1000;
+        $scope.applyLoan.mortgageCreatedTime = $scope.applyLoan.mortgageCreatedTime * 1000;
     };
     $scope.showGiveupDialog =false;
 
