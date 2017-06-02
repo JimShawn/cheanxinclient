@@ -9,20 +9,16 @@
 
             <tbody>
             <tr>
-
                 <td width="15%">申请人：</td>
                 <td width="35%"><span class="fl">{{applyLoan.applicantName}}</span></td>
                 <td width="15%">手机号码：</td>
                 <td width="35%"><span class="fl">{{applyLoan.applicantMobileNumber}}</span></td>
-
-
             </tr>
             <tr>
                 <td width="15%">车辆名称：</td>
                 <td width="35%"><span class="fl">{{commonUtil.getArrayFromString(applyLoan.vehicleDesc,'/')[2]}}</span></td>
                 <td width="15%">车架号：</td>
                 <td width="35%"><span class="fl">{{applyLoan.vehicleVin}}</span></td>
-
             </tr>
 
             <tr>
@@ -31,7 +27,6 @@
                 <td width="35%"><span class="fl">{{applyLoan.productName}}</span></td>
                 <td width="15%">贷款金额（元）：</td>
                 <td width="35%"><span class="fl red">{{applyLoan.reviewLoanPrice}}</span></td>
-
             </tr>
 
             <tr>
@@ -39,7 +34,6 @@
                 <td width="35%"><span class="fl">{{applyLoan.productLoanMonthlyInterestRate}}</span></td>
                 <td width="15%">期数：</td>
                 <td width="35%"><span class="fl">{{applyLoan.reviewLoanTerms}}</span></td>
-
             </tr>
             </tbody>
 
@@ -200,12 +194,10 @@
                     <input type="text" placeholder="请输入回退原因"  name="info[username]" id="username" class="list-input" ng-model="giveupReason"/>
                 </div>
             </div>
-
             <div class="button-area">
                 <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
                 <button class="comm-btn login-button button-right" ng-click="doFailTransfer()"><a href="javascript:void(0);" >确认</a></button>
             </div>
-
         </div>
 
         <div class="login" ng-show="showTransferDialog">
@@ -217,12 +209,10 @@
                     <input type="text" placeholder="请输入原因"  id="username1" class="list-input" ng-model="transferReason"/>
                 </div>
             </div>
-
             <div class="button-area">
                 <button class="comm-btn login-button button-left" ng-click="doCancel()"><a href="javascript:void(0);" >返回列表</a></button>
                 <button class="comm-btn login-button button-right" ng-click="doOperateTransfer()"><a href="javascript:void(0);" >确认</a></button>
             </div>
-
         </div>
 
 
