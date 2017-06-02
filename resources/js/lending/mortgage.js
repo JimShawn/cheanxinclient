@@ -136,10 +136,10 @@ lending.controller("mortgageDetailController",['$filter','$scope', '$http','$loc
         })
     };
     if ($scope.applyLoan) {
-        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds, true);
-        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds, true);
-        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds, true);
-        $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds, true);
+        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds);
+        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
+        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
+        $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds);
         $scope.applyLoan.releaseCreatedTime = $scope.applyLoan.releaseCreatedTime * 1000;
         $scope.lendingPhotos = commonUtil.reassembleImages($scope.applyLoan.releaseFileIds);
     }

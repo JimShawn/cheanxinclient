@@ -39,9 +39,9 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
     $scope.applyLoan = $stateParams.items;
     if ($scope.applyLoan != null) {
         $scope.applyLoan.vehicleProductionYearMonth = parseInt($scope.applyLoan.vehicleProductionYearMonth);
-        $scope.vehicleRegistrationCertificateFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleRegistrationCertificateFileIds, true);
-        $scope.vehicleLicenseFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleLicenseFileIds, true);
-        $scope.vehicleFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleFileIds, true);
+        $scope.vehicleRegistrationCertificateFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleRegistrationCertificateFileIds);
+        $scope.vehicleLicenseFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleLicenseFileIds);
+        $scope.vehicleFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleFileIds);
         //获取汽车品牌
         httpService.getCarBrand().then(function (res) {
             $scope.brands = res.data;
