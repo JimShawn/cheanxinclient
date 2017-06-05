@@ -99,18 +99,21 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
     };
 
     if ($scope.applyLoan) {
-        var cityName = $scope.cities.Citys[$scope.applyLoan.sourceCityId - 1].Name;
-        var seriesId = $scope.applyLoan.vehicleSeries;
-        var saleName = "111";
-        // TODO
-        var carTime = new Date($scope.applyLoan.vehicleRegistrationYearMonth).getTime() / 1000;
-        var kilometer = $scope.applyLoan.vehicleKilometers * 10000;
-        var modelId = $scope.applyLoan.vehicleType;
-        httpService.estimate(cityName, seriesId, saleName, carTime, kilometer, modelId).then(function (res) {
-            $scope.predictPrice = res.data;
-        },function (err) {
-
-        })
+        try {
+            var cityName = $scope.cities.Citys[$scope.applyLoan.sourceCityId - 1].Name;
+            var seriesId = $scope.applyLoan.vehicleSeries;
+            var saleName = "111";
+            var carTime = new Date($scope.applyLoan.vehicleRegistrationYearMonth.replace(/-/g, '/')).getTime() / 1000;
+            var kilometer = $scope.applyLoan.vehicleKilometers * 10000;
+            var modelId = $scope.applyLoan.vehicleType;
+            httpService.estimate(cityName, seriesId, saleName, carTime, kilometer, modelId).then(function (res) {
+                $scope.predictPrice = res.data;
+            }, function (err) {
+                $scope.predictPrice = "车价宝返回结果错误，未能评估车价。";
+            })
+        } catch(err) {
+            $scope.predictPrice = "参数有误，未能评估车价。";
+        }
     }
 
     $scope.isRight = true;
