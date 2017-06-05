@@ -107,17 +107,17 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
             var kilometer = $scope.applyLoan.vehicleKilometers * 10000;
             var modelId = $scope.applyLoan.vehicleType;
             httpService.estimate(cityName, seriesId, saleName, carTime, kilometer, modelId).then(function (res) {
-                $scope.predictPrice = res.data;
-                if ($scope.predictPrice < 100) {
-                    $scope.predictPrice = "参数有误，未能评估车价。";
+                $scope.estimatePrice = res.data;
+                if ($scope.estimatePrice < 100) {
+                    $scope.estimatePrice = "参数有误，未能评估车价。";
                 } else {
-                    $scope.predictPrice = $scope.predictPrice + "元";
+                    $scope.estimatePrice = $scope.estimatePrice + "元";
                 }
             }, function (err) {
-                $scope.predictPrice = "车价宝返回结果错误，未能评估车价。";
+                $scope.estimatePrice = "车价宝返回结果错误，未能评估车价。";
             })
         } catch(err) {
-            $scope.predictPrice = "参数有误，未能评估车价。";
+            $scope.estimatePrice = "参数有误，未能评估车价。";
         }
     }
 
