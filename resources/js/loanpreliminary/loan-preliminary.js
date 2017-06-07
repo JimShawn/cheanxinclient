@@ -95,6 +95,9 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
 
     //获取当前城市的收单员
     $scope.getPostUsers = function (deptId) {
+        if (!$scope.sourceCity) {
+            return;
+        }
         httpService.getUserByCityAndPost(deptId, $scope.sourceCity.Id, 24).then(function (result) {
             $scope.collectors = result.data;
             for (var i = 0; i < $scope.collectors.length; i++) {
@@ -108,6 +111,9 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
     }
 
     $scope.getProductByCity = function () {
+        if (!$scope.sourceCity) {
+            return;
+        }
         httpService.getProductByCityId($scope.sourceCity.Id).then(function (res) {
             $scope.products = res.data;
             if ($scope.type == 2) {
