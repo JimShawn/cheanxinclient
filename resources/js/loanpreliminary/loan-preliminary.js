@@ -93,6 +93,67 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         }
     ];
 
+    //获取当前城市的收单员
+    $scope.getPostUsers = function (deptId) {
+        httpService.getUserByCityAndPost(deptId, $scope.sourceCity.Id, 24).then(function (result) {
+            $scope.collectors = result.data;
+            for (var i = 0; i < $scope.collectors.length; i++) {
+                if ($scope.collectors[i].realName == $scope.sourceReceiver) {
+                    $scope.selectedCollector = $scope.collectors[i];
+                }
+            };
+        }, function (error) {
+            console.log(error);
+        });
+    }
+
+    $scope.getProductByCity = function () {
+        httpService.getProductByCityId($scope.sourceCity.Id).then(function (res) {
+            $scope.products = res.data;
+            if ($scope.type == 2) {
+                for (var j = 0; j < $scope.products.length; j++) {
+                    if ($scope.productId == $scope.products[j].id) {
+                        $scope.selectedProduct = $scope.products[j];
+                        $scope.selectProduct();
+                        $scope.selectedTerm = $scope.productLoanTerms + "";
+                        $scope.changeTerms();
+                    }
+                }
+            }
+        }, function (err) {
+
+        })
+    };
+
+    $scope.changeCarBrand = function () {
+        if(!$scope.selectedBrand)return;
+        httpService.getCarSeriesByBrand($scope.selectedBrand.id).then(function (res) {
+            $scope.series = res.data;
+        },function (err) {
+
+        })
+    };
+
+    $scope.changeCarSeries = function () {
+        if(!$scope.selectedSeries)return;
+        httpService.getCarTypeBySerie($scope.selectedSeries.id).then(function (res) {
+            $scope.carTypes = res.data;
+        },function (err) {
+
+        })
+    };
+
+    $scope.selectProduct = function () {
+        var termsStr = $scope.selectedProduct.availableTerms;
+        $scope.availableTerms = termsStr.split(",");
+    };
+    $scope.changeRate = function () {
+        $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
+    };
+    $scope.changeTerms = function () {
+        $scope.paybackPerMonth = ($scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100).toFixed(2);
+    };
+
     $scope.init = function () {
         var userInfo = $window.sessionStorage['userInfo'];
         var userInfoObj = JSON.parse(userInfo);
@@ -104,6 +165,32 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         var selectedItem = $stateParams.items;
         $scope.type = $stateParams.type;
         if($scope.type == 2){
+            $scope.productId = selectedItem.productId;
+            $scope.productLoanTerms = selectedItem.loanTerms;
+            $scope.loanDraftId = selectedItem.id;
+            $scope.cityJson = cityJson;
+            $scope.commonUtil = commonUtil;
+            $scope.sourceCity = cityJson.Citys[selectedItem.sourceCityId - 1];
+            $scope.selectedSource = $scope.sources[selectedItem.sourceChannel];
+            $scope.selectedMarriages = $scope.marriages[selectedItem.applicantMarriage];
+            $scope.sourcePersonName = selectedItem.sourcePersonName;
+            $scope.sourcePersonTel = selectedItem.sourcePersonTel;
+            $scope.applicantName = selectedItem.applicantName;
+            $scope.applicantMobileNumber = selectedItem.applicantMobileNumber;
+            $scope.selectedIDType = $scope.IDTypes[selectedItem.applicantCertificateType];
+            $scope.applicantCertificateNumber = selectedItem.applicantCertificateNumber;
+            $scope.applicantIncomePerMonth = selectedItem.applicantIncomePerMonth;
+            $scope.vehicleVin = selectedItem.vehicleVin;
+            $scope.vehicleKilometers = selectedItem.vehicleKilometers;
+            $scope.vehicleDealPrice = selectedItem.vehicleDealPrice;
+            $scope.selectedRate = selectedItem.applicantLoanRate;
+            $scope.applicantLoanPrice = selectedItem.applicantLoanPrice;
+            $scope.remark = selectedItem.remark;
+            $scope.sourceReceiver = selectedItem.sourceReceiver;
+
+            $scope.getPostUsers(userInfoObj.data.deptId);
+            $scope.getProductByCity();
+
             if(selectedItem.applicantCertificateFileIds){
                 $scope.identityPhotos = selectedItem.applicantCertificateFileIds.split(",");
             };
@@ -233,98 +320,9 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
         name: "三手车贷款"
     }];
     $scope.AvailableRates = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
     $scope.init();
 
-    //获取当前城市的收单员
-    $scope.getPostUsers = function (deptId) {
-        httpService.getUserByCityAndPost(deptId, $scope.sourceCity.Id, 24).then(function (result) {
-            $scope.collectors = result.data;
-
-            if ($scope.type == 2) {
-                $scope.productId = selectedItem.productId;
-                $scope.productLoanTerms = selectedItem.loanTerms;
-                $scope.loanDraftId = selectedItem.id;
-                $scope.cityJson = cityJson;
-                $scope.commonUtil = commonUtil;
-                $scope.sourceCity = cityJson.Citys[selectedItem.sourceCityId - 1];
-                for (var i = 0; i < $scope.collectors.length; i++) {
-                    if ($scope.collectors[i].realName == selectedItem.sourceReceiver) {
-                        $scope.selectedCollector = $scope.collectors[i];
-                    }
-                };
-                $scope.selectedSource = $scope.sources[selectedItem.sourceChannel];
-                $scope.selectedMarriages = $scope.marriages[selectedItem.applicantMarriage];
-                $scope.sourcePersonName = selectedItem.sourcePersonName;
-                $scope.sourcePersonTel = selectedItem.sourcePersonTel;
-                $scope.applicantName = selectedItem.applicantName;
-                $scope.applicantMobileNumber = selectedItem.applicantMobileNumber;
-                $scope.selectedIDType = $scope.IDTypes[selectedItem.applicantCertificateType];
-                $scope.applicantCertificateNumber = selectedItem.applicantCertificateNumber;
-                $scope.applicantIncomePerMonth = selectedItem.applicantIncomePerMonth;
-                $scope.vehicleVin = selectedItem.vehicleVin;
-                $scope.vehicleKilometers = selectedItem.vehicleKilometers;
-                $scope.vehicleDealPrice = selectedItem.vehicleDealPrice;
-                $scope.selectedRate = selectedItem.applicantLoanRate;
-                $scope.applicantLoanPrice = selectedItem.applicantLoanPrice;
-                $scope.remark = selectedItem.remark;
-
-
-
-                $scope.getProductByCity();
-
-
-            }
-        }, function (error) {
-            console.log(error);
-        });
-    }
-
-    $scope.getProductByCity = function () {
-        httpService.getProductByCityId($scope.sourceCity.Id).then(function (res) {
-            $scope.products = res.data;
-            if ($scope.type == 2) {
-                for (var j = 0; j < $scope.products.length; j++) {
-                    if ($scope.productId == $scope.products[j].id) {
-                        $scope.selectedProduct = $scope.products[j];
-                        $scope.selectProduct();
-                        $scope.selectedTerm = $scope.productLoanTerms + "";
-                        $scope.changeTerms();
-                    }
-                }
-            }
-        }, function (err) {
-
-        })
-    };
-
-    $scope.changeCarBrand = function () {
-        if(!$scope.selectedBrand)return;
-        httpService.getCarSeriesByBrand($scope.selectedBrand.id).then(function (res) {
-            $scope.series = res.data;
-        },function (err) {
-
-        })
-    };
-
-    $scope.changeCarSeries = function () {
-        if(!$scope.selectedSeries)return;
-        httpService.getCarTypeBySerie($scope.selectedSeries.id).then(function (res) {
-            $scope.carTypes = res.data;
-        },function (err) {
-
-        })
-    };
-
-    $scope.selectProduct = function () {
-        var termsStr = $scope.selectedProduct.availableTerms;
-        $scope.availableTerms = termsStr.split(",");
-    };
-    $scope.changeRate = function () {
-        $scope.applicantLoanPrice = $scope.vehicleDealPrice * $scope.selectedRate / 10;
-    };
-    $scope.changeTerms = function () {
-        $scope.paybackPerMonth = ($scope.applicantLoanPrice / $scope.selectedTerm + $scope.applicantLoanPrice * $scope.selectedProduct.loanMonthlyInterestRate / 100).toFixed(2);
-    };
     $scope.commit = function (operateType) {
         //预先获取图片url
         var applicantCertificateFileIds = $filter('filter')($scope.applicantIdentification, '').join(",");
