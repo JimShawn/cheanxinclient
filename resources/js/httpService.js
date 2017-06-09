@@ -433,6 +433,17 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
             deferd.reject(error);
         });
         return deferd.promise;
+    };
+    api.vehicleCondition = function (vin) {
+        var deferd = $q.defer();
+        var conditionUrl = commonUtil.getServerHost() + "273data/condition?access_token=" + $window.sessionStorage["access_token"]+"&vin="+vin;
+        $http.get(conditionUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
     }
+
     return api;
 });

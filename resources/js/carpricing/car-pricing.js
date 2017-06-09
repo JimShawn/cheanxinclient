@@ -119,6 +119,28 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
         } catch(err) {
             $scope.estimatePrice = "参数有误，未能评估车价。";
         }
+
+        try {
+            httpService.vehicleCondition($scope.applyLoan.vehicleVin).then(function (res) {
+                $scope.vehicleCondition = res.data.data;
+                if (!$scope.vehicleCondition.level) {
+                    $scope.vehicleCondition.level = "未知";
+                }
+                if (!$scope.vehicleCondition.report_url) {
+                    $scope.vehicleCondition.report_url = "#";
+                }
+            }, function (err) {
+                $scope.vehicleCondition = {
+                    level: "未知",
+                    report_url:"#"
+                }
+            })
+        } catch(err) {
+            $scope.vehicleCondition = {
+                level: "未知",
+                report_url:"#"
+            }
+        }
     }
 
     $scope.isRight = true;
