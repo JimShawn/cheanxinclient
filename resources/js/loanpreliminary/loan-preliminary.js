@@ -1608,30 +1608,30 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
             toaster.error("请选择本人职称");
             return false;
         };
-        if(!$scope.selectedDraft.coApplicantName){
-            toaster.error("请输入共同申请人姓名");
-            return false;
-        };
-        if(!$scope.selectedDraft.coApplicantCensusCityId && $scope.selectedDraft.coApplicantCensusCityId !=0){
-            toaster.error("请选择共同申请人户籍");
-            return false;
-        };
-        if(!$scope.selectedDraft.coApplicantCertificateNumber){
-            toaster.error("请输入共同申请人证件号码");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorName){
-            toaster.error("请输入担保人姓名");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorCensusCityId && $scope.selectedDraft.guarantorCensusCityId !=0){
-            toaster.error("请选择担保人户籍");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorCertificateNumber){
-            toaster.error("请输入担保人证件号码");
-            return false;
-        };
+        // if(!$scope.selectedDraft.coApplicantName){
+        //     toaster.error("请输入共同申请人姓名");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.coApplicantCensusCityId && $scope.selectedDraft.coApplicantCensusCityId !=0){
+        //     toaster.error("请选择共同申请人户籍");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.coApplicantCertificateNumber){
+        //     toaster.error("请输入共同申请人证件号码");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorName){
+        //     toaster.error("请输入担保人姓名");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorCensusCityId && $scope.selectedDraft.guarantorCensusCityId !=0){
+        //     toaster.error("请选择担保人户籍");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorCertificateNumber){
+        //     toaster.error("请输入担保人证件号码");
+        //     return false;
+        // };
         if(!$scope.selectedDraft.vehicleVin){
             toaster.error("请输入车架号");
             return false;
@@ -2042,9 +2042,9 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
                 break;
         }
         ;
-        if(!getLoanBean(loanObj)){
-            return;
-        };
+        // if(!getLoanBean(loanObj)){
+        //     return;
+        // };
         httpService.updateLoandraft($scope.selectedDraft.id, loanObj, 1).then(function (res) {
             $scope.currentPage = $scope.selectedType.id;
         }, function (err) {
