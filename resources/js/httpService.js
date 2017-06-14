@@ -424,5 +424,26 @@ httpservice.factory('httpService',function ($http, $q, $window, commonUtil) {
         });
         return deferd.promise;
     };
+    api.estimate = function(cityName, seriesId, saleName, carTime, kilometer, modelId) {
+        var deferd = $q.defer();
+        var estimateUrl = commonUtil.getServerHost() + "273data/estimate?access_token=" + $window.sessionStorage["access_token"]+"&cityName="+cityName+"&seriesId="+seriesId+"&saleName="+saleName+"&carTime="+carTime+"&kilometer="+kilometer+"&modelId="+modelId;
+        $http.get(estimateUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    };
+    api.vehicleCondition = function (vin) {
+        var deferd = $q.defer();
+        var conditionUrl = commonUtil.getServerHost() + "273data/condition?access_token=" + $window.sessionStorage["access_token"]+"&vin="+vin;
+        $http.get(conditionUrl).then(function (result) {
+            deferd.resolve(result);
+        },function (error) {
+            deferd.reject(error);
+        });
+        return deferd.promise;
+    }
+
     return api;
 });

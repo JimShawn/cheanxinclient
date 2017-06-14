@@ -29,6 +29,7 @@ lending.controller("transferEditController", function ($filter,$scope,$http,$loc
         $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds);
         $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
         $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
+        $scope.applyLoan.transferCreatedTime = $scope.applyLoan.transferCreatedTime * 1000;
     };
     $scope.showGiveupDialog =false;
 
@@ -146,10 +147,12 @@ lending.controller("transferDetailController", function ($filter,$scope,$http,$l
     };
 
     if ($scope.applyLoan) {
-        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds, true);
-        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds, true);
-        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds, true);
-        $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds, true);
+        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds);
+        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
+        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
+        $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds);
+        $scope.applyLoan.releaseCreatedTime = $scope.applyLoan.releaseCreatedTime * 1000;
+        $scope.lendingPhotos = commonUtil.reassembleImages($scope.applyLoan.releaseFileIds);
     }
 
     $scope.cancel = function () {
@@ -185,7 +188,6 @@ lending.controller("transferDetailController", function ($filter,$scope,$http,$l
             operateNum = 4;
         };
         httpService.updateLoandraft($scope.applyLoan.id,loanApply,operateNum).then(function (res) {//4表示放弃签约
-            console.log(res);
             $state.go("main.afterTransferLoanList");
             $scope.confirmCantTransfer = false;
             $scope.confirmCanTransfer = false;

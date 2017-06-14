@@ -54,7 +54,7 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
     $scope.applyLoan = $stateParams.items;
     if ($scope.applyLoan && $scope.applyLoan.materialsFileIds) {
-        $scope.materialsFileIds = $scope.applyLoan.materialsFileIds;
+        $scope.materialsFileIds = commonUtil.reassembleImages($scope.applyLoan.materialsFileIds);
     }
 
     $scope.getOperateLog = function (id, from, to) {
@@ -120,7 +120,9 @@ loanrecheck.controller("checkLoanController",['$scope', '$http','$location','$ro
         for(var i=0;i<$scope.mainRefuseReasons.length;i++){
             errMsg += $scope.mainRefuseReasons[i]+"&";
         };
-        errMsg = errMsg+$scope.otherRefuseReason;
+        if ($scope.otherRefuseReason) {
+            errMsg = errMsg+$scope.otherRefuseReason;
+        }
         var loanApply = {
             reviewRemark:errMsg
         };

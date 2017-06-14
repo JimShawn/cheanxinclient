@@ -12,16 +12,17 @@
             <table class="mod-table1">
                 <thead>
                 <tr>
-                    <th width="9%">编号</th>
+                    <th width="4%">编号</th>
                     <th width="9%">申请人</th>
                     <th width="9%">联系方式</th>
                     <th width="9%">车型</th>
                     <th width="9%">地区</th>
                     <th width="9%">产品</th>
-                    <th width="9%">成交价格</th>
-                    <th width="9%">跟进人</th>
-                    <th width="9%">提交日期</th>
-                    <th width="9%">状态</th>
+                    <th width="6%">成交价格</th>
+                    <th width="6%">评估价</th>
+                    <th width="8%">跟进人</th>
+                    <th width="6%">提交日期</th>
+                    <th width="6%">状态</th>
                     <th width="9%">操作</th>
                 </tr>
                 </thead>
@@ -34,6 +35,7 @@
                     <td>{{cityJson.provincesList[cityJson.Citys[loanapply.sourceCityId].ProvinceId-1].Name}}-{{cityJson.Citys[loanapply.sourceCityId-1].Name}}</td>
                     <td>{{loanapply.productName}}</td>
                     <td>{{loanapply.vehicleDealPrice}}</td>
+                    <td>{{loanapply.vehiclePredictPrice}}</td>
                     <td>{{loanapply.sourceFinancialCommissioner}}</td>
                     <td>{{commonUtil.getDateFromInt(loanapply.modifiedTime)}}</td>
                     <td>{{loanapply.status==3?"待定价":"已定价"}}</td>

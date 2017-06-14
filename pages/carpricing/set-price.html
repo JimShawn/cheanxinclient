@@ -42,25 +42,19 @@
             <tr>
                 <td>车辆登记证书：</td>
                 <td colspan="4">
-                    <div class="pic-container" ng-repeat="vehicleRegistrationCertificateFile in vehicleRegistrationCertificateFileIds">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleRegistrationCertificateFile}}" alt=""></a>
-                    </div>
+                    <div class="upload" desc="车辆登记证书" uploaded-urls="vehicleRegistrationCertificateFileIds" read-only="true" image-url={{vehicleRegistrationCertificateFile}} ng-repeat="vehicleRegistrationCertificateFile in vehicleRegistrationCertificateFileIds"></div>
                 </td>
             </tr>
             <tr>
                 <td>机动车行驶证：</td>
                 <td colspan="4">
-                    <div class="pic-container" ng-repeat="vehicleLicenseFile in vehicleLicenseFileIds">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleLicenseFile}}" alt=""></a>
-                    </div>
+                    <div class="upload" desc="机动车行驶证" uploaded-urls="vehicleLicenseFileIds" read-only="true" image-url={{vehicleLicenseFile}} ng-repeat="vehicleLicenseFile in vehicleLicenseFileIds"></div>
                 </td>
             </tr>
             <tr>
                 <td>车辆照片：</td>
                 <td colspan="4">
-                    <div class="pic-container" ng-repeat="vehicleFile in vehicleFileIds">
-                        <a href="javascript:void(0);"><img class="add" ng-src="{{vehicleFile}}" alt=""></a>
-                    </div>
+                    <div class="upload" desc="车辆照片" uploaded-urls="vehicleFileIds" read-only="true" image-url={{vehicleFile}} ng-repeat="vehicleFile in vehicleFileIds"></div>
                 </td>
             </tr>
             </tbody>
@@ -71,8 +65,10 @@
             <tr>
                 <td width="10%">车况宝检测评级</td>
                 <td>
-                    <span class="fl bold red"> <u>B</u></span>
-                    <div class="report blue">检测网站报告</div>
+                    <a href="{{vehicleCondition.report_url}}" target="_blank">
+                        <span class="fl bold red"> <u>{{vehicleCondition.level}}</u></span>
+                        <div class="report blue">检测网站报告</div>
+                    </a>
                 </td>
             </tr>
             </tbody>
@@ -83,7 +79,7 @@
             <tr>
                 <td width="10%">车价宝评估价</td>
                 <td>
-                    <span class="fl bold red"><u>{{applyLoan.vehicleDealPrice}}</u></span>
+                    <span class="fl bold red"><u>{{estimatePrice}}</u></span>
                 </td>
             </tr>
             </tbody>
@@ -119,14 +115,14 @@
                 <td width="20%"><span>*</span>汽车品牌：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedBrand" ng-options="brand.name for brand in brands" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="selectedBrand" ng-options="brand.name for brand in brands" ng-disabled="isRight" ng-change="changeCarBrand()">
                         </select>
                     </div>
                 </td>
                 <td width="20%"><span>*</span>汽车款式：</td>
                 <td width="30%">
                     <div class="comm-inp-wp">
-                        <select class="comm-select1" ng-model="selectedSeries" ng-options="serie.name for serie in series" ng-disabled="isRight">
+                        <select class="comm-select1" ng-model="selectedSeries" ng-options="serie.name for serie in series" ng-disabled="isRight" ng-change="changeCarSeries()">
                         </select>
                     </div>
                 </td>

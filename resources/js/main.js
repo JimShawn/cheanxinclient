@@ -288,7 +288,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ", "ROLE_FINANCE"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_TRANSFER_READ"],
             editRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_MORTGAGE_UPDATE"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_RELEASE_UPDATE"],
             status:"24"
@@ -332,7 +332,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER", "ROLE_SELLER"],
             editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
             status:"",
             releaseStatus:"1"
@@ -342,7 +342,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER", "ROLE_SELLER"],
             editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
             status:"",
             releaseStatus:"3"
@@ -398,7 +398,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ", "ROLE_FINANCE"],
+            showRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_READ"],
             reviewRoles:["ROLE_ADMIN", "ROLE_LOAN_MORTGAGE_RELEASE_UPDATE"],
             status:"36"
         },
@@ -407,7 +407,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER", "ROLE_SELLER"],
             editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
             status:"",
             releaseStatus:"2"
@@ -417,7 +417,7 @@ authors.controller('MainController', function($scope, $http, $location, $rootSco
             review:false,
             edit:false,
             show:false,
-            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER"],
+            showRoles:["ROLE_ADMIN", "ROLE_FINANCE", "ROLE_FIRST_REVIEWER", "ROLE_SELLER"],
             editRoles:["ROLE_ADMIN", "ROLE_FINANCE"],
             status:"",
             releaseStatus:"4"

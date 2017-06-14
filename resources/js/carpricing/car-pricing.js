@@ -33,24 +33,15 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
     $scope.cities = cityJson;
     $scope.commonUtil = commonUtil;
 
-
-    $scope.brands = [
-        "奥迪","奔驰","宝马","丰田","本田","铃木","比亚迪","吉利","雪佛兰","现代","大众","福特"
-    ];
-    $scope.factories = [
-        "广汽","上汽","北汽","一汽"
-    ];
-    $scope.series = ["福克斯","科鲁兹","yalris","雷凌","宋","元"];
-
     $scope.produceYears = [2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017];
 
     $scope.emissiones = ["化油器","国1","国2","欧1","欧2","国3","国3带OBD","欧3","国4","欧4","国5","欧5","欧6","国4(京5)"];
     $scope.applyLoan = $stateParams.items;
     if ($scope.applyLoan != null) {
         $scope.applyLoan.vehicleProductionYearMonth = parseInt($scope.applyLoan.vehicleProductionYearMonth);
-        $scope.vehicleRegistrationCertificateFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleRegistrationCertificateFileIds, true);
-        $scope.vehicleLicenseFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleLicenseFileIds, true);
-        $scope.vehicleFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleFileIds, true);
+        $scope.vehicleRegistrationCertificateFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleRegistrationCertificateFileIds);
+        $scope.vehicleLicenseFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleLicenseFileIds);
+        $scope.vehicleFileIds = commonUtil.reassembleImages($scope.applyLoan.vehicleFileIds);
         //获取汽车品牌
         httpService.getCarBrand().then(function (res) {
             $scope.brands = res.data;
@@ -85,8 +76,71 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
                     }
                 }
         },function (err) {
-            console.log(err);
+            toaster.error(err);
         });
+    }
+
+    $scope.changeCarBrand = function () {
+        if(!$scope.selectedBrand)return;
+        httpService.getCarSeriesByBrand($scope.selectedBrand.id).then(function (res) {
+            $scope.series = res.data;
+        },function (err) {
+
+        })
+    };
+
+    $scope.changeCarSeries = function () {
+        if(!$scope.selectedSeries)return;
+        httpService.getCarTypeBySerie($scope.selectedSeries.id).then(function (res) {
+            $scope.carTypes = res.data;
+        },function (err) {
+
+        })
+    };
+
+    if ($scope.applyLoan) {
+        try {
+            var cityName = $scope.cities.Citys[$scope.applyLoan.sourceCityId - 1].Name;
+            var seriesId = $scope.applyLoan.vehicleSeries;
+            var saleName = "111";
+            var carTime = new Date($scope.applyLoan.vehicleRegistrationYearMonth.replace(/-/g, '/')).getTime() / 1000;
+            var kilometer = $scope.applyLoan.vehicleKilometers * 10000;
+            var modelId = $scope.applyLoan.vehicleType;
+            httpService.estimate(cityName, seriesId, saleName, carTime, kilometer, modelId).then(function (res) {
+                $scope.estimatePrice = res.data;
+                if ($scope.estimatePrice < 100) {
+                    $scope.estimatePrice = "参数有误，未能评估车价。";
+                } else {
+                    $scope.estimatePrice = $scope.estimatePrice + "元";
+                }
+            }, function (err) {
+                $scope.estimatePrice = "车价宝返回结果错误，未能评估车价。";
+            })
+        } catch(err) {
+            $scope.estimatePrice = "参数有误，未能评估车价。";
+        }
+
+        try {
+            httpService.vehicleCondition($scope.applyLoan.vehicleVin).then(function (res) {
+                $scope.vehicleCondition = res.data.data;
+                if (!$scope.vehicleCondition.level) {
+                    $scope.vehicleCondition.level = "未知";
+                }
+                if (!$scope.vehicleCondition.report_url) {
+                    $scope.vehicleCondition.report_url = "#";
+                }
+            }, function (err) {
+                $scope.vehicleCondition = {
+                    level: "未知",
+                    report_url:"#"
+                }
+            })
+        } catch(err) {
+            $scope.vehicleCondition = {
+                level: "未知",
+                report_url:"#"
+            }
+        }
     }
 
     $scope.isRight = true;
@@ -148,15 +202,13 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
 
 
         httpService.updateLoandraft($scope.applyLoan.id,applyLoantwo,1).then(function (res) {//1表示修改
-            console.log(res);
             httpService.updateLoandraft($scope.applyLoan.id,{},2).then(function (res) {//3表示初审审批通过
-                console.log(res);
                 $state.go("main.carpricinglist");
             },function (err) {
-                console.log(err);
+                toaster.error(err.data.errorMessage);
             });
         },function (err) {
-            console.log(err);
+            toaster.error(err.data.errorMessage);
         })
     };
     $scope.cancel = function () {

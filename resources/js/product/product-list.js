@@ -148,6 +148,7 @@ product.factory("productFactory", function (toaster, $window,$state) {
             for (var i in $scope.productStatus) {
                 if ($scope.productStatus[i].id == $scope.query.status) {
                     $scope.productStatus[i].on = true;
+                    $scope.curTab = $scope.productStatus[i];
                 } else {
                     $scope.productStatus[i].on = false;
                 }
@@ -233,9 +234,27 @@ product.factory("productFactory", function (toaster, $window,$state) {
     return productFactoryApi;
 });
 
-product.controller("productTemplateController", function($scope, $http, $location, $rootScope, $state, httpService, productFactory) {
+product.controller("productTemplateController", function($scope, $http, $location, $rootScope, $state, httpService, productFactory, $window) {
     productFactory.initScope($scope, httpService);
     $scope.QueryPositonName = "";
+
+    var hasRoleAuthority = function (roles, postAuthorities) {
+        if (!roles) {
+            return false;
+        }
+        if (!postAuthorities) {
+            return false;
+        }
+        for (var i in postAuthorities) {
+            if (roles.indexOf(postAuthorities[i].authority) >= 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    var user = JSON.parse($window.sessionStorage["userInfo"]);
+    $scope.canEdit = hasRoleAuthority(["ROLE_ADMIN", "ROLE_PRODUCT_UPDATE"], user.data.postAuthorities);
+
 
     $scope.addProduct = function () {
         $state.go("main.addproductmanagement",{items:null});

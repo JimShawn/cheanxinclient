@@ -161,9 +161,54 @@
         </table>
     </div>
     <br/>
-    <div class="row2" ng-show="applyLoan.status==4">
+
+    <div class="row2" ng-show="applyLoan.status==10">
+
+        <div class="row3 ">
+            <div class="mod-hd">
+                <h2>申请重新审核</h2>
+            </div>
+            <div class="the-reason">
+                <div class="inline reason">
+                    理由：
+                </div>
+                <div class="inline write_area">
+                    <span>{{applyLoan.materialsRemark}}</span>
+                </div>
+            </div>
+            <div class="add-message">
+                <div class="inline reason">
+                    补充材料:
+                </div>：
+                <div class="upload" desc="补充材料" uploaded-urls="materialsFileIds" read-only="true" image-url={{materialsFileId}} ng-repeat="materialsFileId in materialsFileIds"></div>
+
+                <!--<div class="pic-container" ng-repeat="materialsFileId in commonUtil.reassembleImages(materialsFileIds,true)">-->
+                    <!--<a href="javascript:void(0);"><img class="add" ng-src="{{materialsFileId}}" alt=""></a>-->
+                <!--</div>-->
+            </div>
+        </div>
         <div class="mod-hd">
-            <h2>复审结果</h2>
+            <h2>上次审核结果</h2>
+        </div>
+        <div class="the-reason">
+            <div class="inline reason">
+                理由：
+            </div>
+            <div class="inline show_area">
+                <span>{{refuseReason}}</span>
+            </div>
+            <div class="inline show_area">
+                <span>审核人：{{operateUserName}}</span>
+            </div>
+            <div class="inline show_area">
+                <span>审核时间：{{commonUtil.getDateFromInt(createdTime)}}</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="row2" ng-show="applyLoan.status==4 || applyLoan.status==10 || applyLoan.status==12">
+        <div class="mod-hd">
+            <h2>复审</h2>
         </div>
 
         <div>
@@ -209,59 +254,11 @@
         </div>
     </div>
 
-    <div class="row2" ng-show="applyLoan.status==10">
-
-        <div class="row3 ">
-            <div class="mod-hd">
-                <h2>申请重新审核</h2>
-            </div>
-            <div class="the-reason">
-                <div class="inline reason">
-                    理由：
-                </div>
-                <div class="inline write_area">
-                    <span>{{applyLoan.materialsRemark}}</span>
-                </div>
-            </div>
-            <div class="add-message">
-                <div class="inline reason">
-                    补充材料:
-                </div>：
-
-                <div class="pic-container" ng-repeat="materialsFileId in commonUtil.reassembleImages(materialsFileIds,true)">
-                    <a href="javascript:void(0);"><img class="add" ng-src="{{materialsFileId}}" alt=""></a>
-                </div>
-            </div>
-        </div>
-        <div class="mod-hd">
-            <h2>上次审核结果</h2>
-        </div>
-        <div class="the-reason">
-            <div class="inline reason">
-                理由：
-            </div>
-            <div class="inline show_area">
-                <span>{{refuseReason}}</span>
-            </div>
-            <div class="inline show_area">
-                <span>审核人：{{operateUserName}}</span>
-            </div>
-            <div class="inline show_area">
-                <span>审核时间：{{commonUtil.getDateFromInt(createdTime)}}</span>
-            </div>
-        </div>
-    </div>
-
 
 
     <div class="footer">
         <button class="comm-btn comm-btn-blue fr footer-button" ng-click="refuse()">审核拒绝</button>
         <button class="comm-btn  fr footer-button" ng-click="pass()">审核通过</button>
-        <div class=" a fr ">
-            <img class="up-logo" src="/resources/img/up.jpg" alt="">
-            <span>更多操作</span>
-        </div>
-
     </div>
 
 

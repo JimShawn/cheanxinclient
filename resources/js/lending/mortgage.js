@@ -31,6 +31,8 @@ lending.controller("mortgageEditController", function ($filter,$scope,$http,$loc
         $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
         $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
         $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds);
+        $scope.applyLoan.transferCreatedTime = $scope.applyLoan.transferCreatedTime * 1000;
+        $scope.applyLoan.mortgageCreatedTime = $scope.applyLoan.mortgageCreatedTime * 1000;
     };
     $scope.showGiveupDialog =false;
 
@@ -135,11 +137,13 @@ lending.controller("mortgageDetailController",['$filter','$scope', '$http','$loc
 
         })
     };
-    if ($scope.applyLoan && ($scope.applyLoan.status == 29 || $scope.applyLoan.status == 33)) {
-        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds, true);
-        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds, true);
-        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds, true);
-        $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds, true);
+    if ($scope.applyLoan) {
+        $scope.transferPhotos = commonUtil.reassembleImages($scope.applyLoan.transferFileIds);
+        $scope.GPSPhotos = commonUtil.reassembleImages($scope.applyLoan.transferGPSFileIds);
+        $scope.insuranceContractPhotos = commonUtil.reassembleImages($scope.applyLoan.transferInsuranceFileIds);
+        $scope.mortgagePhotos = commonUtil.reassembleImages($scope.applyLoan.mortgageFileIds);
+        $scope.applyLoan.releaseCreatedTime = $scope.applyLoan.releaseCreatedTime * 1000;
+        $scope.lendingPhotos = commonUtil.reassembleImages($scope.applyLoan.releaseFileIds);
     }
 
 
