@@ -1348,37 +1348,37 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
                 loanDraft.applicantPost = $scope.selectedDraft.applicantPost;
                 break;
             case 6:
-                if(!$scope.selectedDraft.coApplicantName){
-                    toaster.error("请输入共同申请人姓名");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantName){
+                //     toaster.error("请输入共同申请人姓名");
+                //     return false;
+                // };
                 loanDraft.coApplicantName = $scope.selectedDraft.coApplicantName;
-                if(!$scope.selectedDraft.coApplicantCensusCityId ){
-                    toaster.error("请选择共同申请人户籍");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantCensusCityId ){
+                //     toaster.error("请选择共同申请人户籍");
+                //     return false;
+                // };
                 loanDraft.coApplicantCensusCityId = $scope.selectedDraft.coApplicantCensusCityId;
-                if(!$scope.selectedDraft.coApplicantCertificateNumber){
-                    toaster.error("请输入共同申请人证件号码");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantCertificateNumber){
+                //     toaster.error("请输入共同申请人证件号码");
+                //     return false;
+                // };
                 loanDraft.coApplicantCertificateNumber = $scope.selectedDraft.coApplicantCertificateNumber;
                 break;
             case 10:
-                if(!$scope.selectedDraft.guarantorName){
-                    toaster.error("请输入担保人姓名");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorName){
+                //     toaster.error("请输入担保人姓名");
+                //     return false;
+                // };
                 loanDraft.guarantorName = $scope.selectedDraft.guarantorName;
-                if(!$scope.selectedDraft.guarantorCensusCityId){
-                    toaster.error("请选择担保人户籍");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorCensusCityId){
+                //     toaster.error("请选择担保人户籍");
+                //     return false;
+                // };
                     loanDraft.guarantorCensusCityId = $scope.selectedDraft.guarantorCensusCityId;
-                if(!$scope.selectedDraft.guarantorCertificateNumber){
-                    toaster.error("请输入担保人证件号码");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorCertificateNumber){
+                //     toaster.error("请输入担保人证件号码");
+                //     return false;
+                // };
                     loanDraft.guarantorCertificateNumber = $scope.selectedDraft.guarantorCertificateNumber;
                 break;
             case 14:
