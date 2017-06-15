@@ -29,7 +29,7 @@
 .left .thumbnail .left1{display: both;float: left;margin-top: 28px;}
 .left .thumbnail .right1{display: both;float: right;margin-top: 28px;}
 
-.right{ float: left;width:25%;height: 710px;background: black;}
+.right{ float: left;width:25%;height: 710px;background: black; color: white;}
 .message-audit{height: 276px;border:1px solid #F1F1F1; }
 .message-audit>div {margin-left: 23px; height: 43px;margin-top: 5px; margin-right: 23px;}
 .message-audit .message-audit_1{height: 60px;}

@@ -123,22 +123,29 @@ product.controller("setPriceController", function ($scope,$http,$location,$rootS
         try {
             httpService.vehicleCondition($scope.applyLoan.vehicleVin).then(function (res) {
                 $scope.vehicleCondition = res.data.data;
-                if (!$scope.vehicleCondition.level) {
-                    $scope.vehicleCondition.level = "未知";
-                }
-                if (!$scope.vehicleCondition.report_url) {
-                    $scope.vehicleCondition.report_url = "#";
+                if (!$scope.vehicleCondition) {
+                    $scope.vehicleCondition = {
+                        level: "未知",
+                        report_url:""
+                    }
+                } else {
+                    if (!$scope.vehicleCondition.level) {
+                        $scope.vehicleCondition.level = "未知";
+                    }
+                    if (!$scope.vehicleCondition.report_url) {
+                        $scope.vehicleCondition.report_url = "";
+                    }
                 }
             }, function (err) {
                 $scope.vehicleCondition = {
                     level: "未知",
-                    report_url:"#"
+                    report_url:""
                 }
             })
         } catch(err) {
             $scope.vehicleCondition = {
                 level: "未知",
-                report_url:"#"
+                report_url:""
             }
         }
     }

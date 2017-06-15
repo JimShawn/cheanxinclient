@@ -252,6 +252,14 @@ loanpreliminary.controller("loanapplyController", ['$filter', '$scope', '$http',
             if(selectedItem.applicationPicUrl){
                 $scope.applicationPicPhotos = selectedItem.applicationPicUrl.split(",");
             };
+
+            if (selectedItem.status == 9) {
+                httpService.getOperateLog(selectedItem.id, 2, selectedItem.status).then(function (loanLogs) {
+                    $scope.firstReviewRejectedRemark = loanLogs.data[0].remark;
+                },function (err) {
+
+                })
+            }
         };
         //获取汽车品牌
         httpService.getCarBrand().then(function (res) {
@@ -1453,67 +1461,67 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
                     return false;
                 };
                 loanDraft.applicantPostCode = $scope.selectedDraft.applicantPostCode;
-                if(!$scope.selectedDraft.coApplicantName){
-                    toaster.error("请填写共同申请人姓名");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantName){
+                //     toaster.error("请填写共同申请人姓名");
+                //     return false;
+                // };
                 loanDraft.coApplicantName = $scope.selectedDraft.coApplicantName;
-                if(!$scope.selectedDraft.coApplicantRelationship){
-                    toaster.error("请填写共同申请人与申请人关系");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantRelationship){
+                //     toaster.error("请填写共同申请人与申请人关系");
+                //     return false;
+                // };
                 loanDraft.coApplicantRelationship = $scope.selectedDraft.coApplicantRelationship;
                 loanDraft.coApplicantCensusCityId = $scope.selectedDraft.coApplicantCensusCityId;
-                if(!$scope.selectedDraft.coApplicantCertificateNumber){
-                    toaster.error("请填写共同申请人证件号码");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantCertificateNumber){
+                //     toaster.error("请填写共同申请人证件号码");
+                //     return false;
+                // };
                 loanDraft.coApplicantCertificateNumber = $scope.selectedDraft.coApplicantCertificateNumber;
-                if(!$scope.selectedDraft.coApplicantMobileNumber|| !isPhone.test($scope.selectedDraft.coApplicantMobileNumber)){
-                    toaster.error("请填写共同申请人手机号码");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantMobileNumber|| !isPhone.test($scope.selectedDraft.coApplicantMobileNumber)){
+                //     toaster.error("请填写共同申请人手机号码");
+                //     return false;
+                // };
                 loanDraft.coApplicantMobileNumber = $scope.selectedDraft.coApplicantMobileNumber;
-                if(!$scope.selectedDraft.coApplicantQualification){
-                    toaster.error("请填写共同申请人教育程度");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantQualification){
+                //     toaster.error("请填写共同申请人教育程度");
+                //     return false;
+                // };
                 loanDraft.coApplicantQualification = $scope.selectedDraft.coApplicantQualification;
-                if(!$scope.selectedDraft.coApplicantIncomePerMonth){
-                    toaster.error("请填写共同申请人月收入");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.coApplicantIncomePerMonth){
+                //     toaster.error("请填写共同申请人月收入");
+                //     return false;
+                // };
                 loanDraft.coApplicantIncomePerMonth = $scope.selectedDraft.coApplicantIncomePerMonth;
-                if(!$scope.selectedDraft.guarantorName){
-                    toaster.error("请填写担保人姓名");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorName){
+                //     toaster.error("请填写担保人姓名");
+                //     return false;
+                // };
                 loanDraft.guarantorName = $scope.selectedDraft.guarantorName;
                 loanDraft.guarantorCensusCityId = $scope.selectedDraft.guarantorCensusCityId;
-                if(!$scope.selectedDraft.guarantorRelationship){
-                    toaster.error("请填写担保人与申请人关系");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorRelationship){
+                //     toaster.error("请填写担保人与申请人关系");
+                //     return false;
+                // };
                 loanDraft.guarantorRelationship = $scope.selectedDraft.guarantorRelationship;
-                if(!$scope.selectedDraft.guarantorCertificateNumber){
-                    toaster.error("请填写担保人证件号码");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorCertificateNumber){
+                //     toaster.error("请填写担保人证件号码");
+                //     return false;
+                // };
                 loanDraft.guarantorCertificateNumber = $scope.selectedDraft.guarantorCertificateNumber;
-                if(!$scope.selectedDraft.guarantorMobileNumber || !isPhone.test($scope.selectedDraft.guarantorMobileNumber)){
-                    toaster.error("请填写担保人手机号码");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorMobileNumber || !isPhone.test($scope.selectedDraft.guarantorMobileNumber)){
+                //     toaster.error("请填写担保人手机号码");
+                //     return false;
+                // };
                 loanDraft.guarantorMobileNumber = $scope.selectedDraft.guarantorMobileNumber;
-                if(!$scope.selectedDraft.guarantorRealEstateOwnType){
-                    toaster.error("请填写担保人房产属权");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorRealEstateOwnType){
+                //     toaster.error("请填写担保人房产属权");
+                //     return false;
+                // };
                 loanDraft.guarantorRealEstateOwnType = $scope.selectedDraft.guarantorRealEstateOwnType;
-                if(!$scope.selectedDraft.guarantorIncomePerMonth){
-                    toaster.error("请填写担保人月收入");
-                    return false;
-                };
+                // if(!$scope.selectedDraft.guarantorIncomePerMonth){
+                //     toaster.error("请填写担保人月收入");
+                //     return false;
+                // };
                 loanDraft.guarantorIncomePerMonth = $scope.selectedDraft.guarantorIncomePerMonth;
                 if(!$scope.selectedDraft.applicantFirstEmergencyContact){
                     toaster.error("请填写紧急联系人姓名");
@@ -1685,54 +1693,54 @@ loanpreliminary.controller("editLoanapplyController", function ($scope, $http, $
             toaster.error("请填写邮政编码");
             return false;
         };
-        if(!$scope.selectedDraft.coApplicantName){
-            toaster.error("请填写共同申请人姓名");
-            return false;
-        };
-        if(!$scope.selectedDraft.coApplicantRelationship){
-            toaster.error("请填写共同申请人与申请人关系");
-            return false;
-        };
-        if(!$scope.selectedDraft.coApplicantCertificateNumber){
-            toaster.error("请填写共同申请人证件号码");
-            return false;
-        };
-        if(!$scope.selectedDraft.coApplicantMobileNumber || !isPhone.test($scope.selectedDraft.coApplicantMobileNumber)){
-            toaster.error("请填写共同申请人手机号码");
-            return false;
-        };
-        if(!$scope.selectedDraft.coApplicantQualification){
-            toaster.error("请填写共同申请人教育程度");
-            return false;
-        };
-        if(!$scope.selectedDraft.coApplicantIncomePerMonth){
-            toaster.error("请填写共同申请人月收入");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorName){
-            toaster.error("请填写担保人姓名");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorRelationship){
-            toaster.error("请填写担保人与申请人关系");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorCertificateNumber){
-            toaster.error("请填写担保人证件号码");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorMobileNumber || !isPhone.test($scope.selectedDraft.guarantorMobileNumber)){
-            toaster.error("请填写担保人手机号码");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorRealEstateOwnType){
-            toaster.error("请填写担保人房产属权");
-            return false;
-        };
-        if(!$scope.selectedDraft.guarantorIncomePerMonth){
-            toaster.error("请填写担保人月收入");
-            return false;
-        };
+        // if(!$scope.selectedDraft.coApplicantName){
+        //     toaster.error("请填写共同申请人姓名");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.coApplicantRelationship){
+        //     toaster.error("请填写共同申请人与申请人关系");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.coApplicantCertificateNumber){
+        //     toaster.error("请填写共同申请人证件号码");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.coApplicantMobileNumber || !isPhone.test($scope.selectedDraft.coApplicantMobileNumber)){
+        //     toaster.error("请填写共同申请人手机号码");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.coApplicantQualification){
+        //     toaster.error("请填写共同申请人教育程度");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.coApplicantIncomePerMonth){
+        //     toaster.error("请填写共同申请人月收入");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorName){
+        //     toaster.error("请填写担保人姓名");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorRelationship){
+        //     toaster.error("请填写担保人与申请人关系");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorCertificateNumber){
+        //     toaster.error("请填写担保人证件号码");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorMobileNumber || !isPhone.test($scope.selectedDraft.guarantorMobileNumber)){
+        //     toaster.error("请填写担保人手机号码");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorRealEstateOwnType){
+        //     toaster.error("请填写担保人房产属权");
+        //     return false;
+        // };
+        // if(!$scope.selectedDraft.guarantorIncomePerMonth){
+        //     toaster.error("请填写担保人月收入");
+        //     return false;
+        // };
         if(!$scope.selectedDraft.applicantFirstEmergencyContact){
             toaster.error("请填写紧急联系人姓名");
             return false;
