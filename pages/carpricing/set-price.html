@@ -65,10 +65,9 @@
             <tr>
                 <td width="10%">车况宝检测评级</td>
                 <td>
-                    <a href="{{vehicleCondition.report_url}}" target="_blank">
-                        <span class="fl bold red"> <u>{{vehicleCondition.level}}</u></span>
-                        <div class="report blue">检测网站报告</div>
-                    </a>
+
+                    <span class="fl bold red"> <u>{{vehicleCondition.level}}</u></span>
+                    <div class="report blue"><a ng-show="vehicleCondition.report_url.length > 0"href="{{vehicleCondition.report_url}}" target="_blank">检测网站报告</a></div>
                 </td>
             </tr>
             </tbody>
