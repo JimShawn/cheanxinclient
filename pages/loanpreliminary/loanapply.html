@@ -1,7 +1,11 @@
 <div class="main" ng-controller="loanapplyController">
 
-    <div class="mod-hd">
+    <div style="float:left" class="mod-hd">
         <h2>贷款申请</h2>
+    </div>
+
+    <div style="float:right; color: red; padding: 20px 0px; font-size: 16px;" ng-show="firstReviewRejectedRemark">
+        {{firstReviewRejectedRemark}}
     </div>
 
     <div class="loan-application-row1">
