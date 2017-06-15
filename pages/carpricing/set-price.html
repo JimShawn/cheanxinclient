@@ -66,8 +66,8 @@
                 <td width="10%">车况宝检测评级</td>
                 <td>
 
-                    <span class="fl bold red"> <u>{{vehicleCondition.level}}</u></span>
-                    <div class="report blue"><a ng-show="vehicleCondition.report_url.length > 0"href="{{vehicleCondition.report_url}}" target="_blank">检测网站报告</a></div>
+                    <span class="fl bold red">{{vehicleCondition.level}}</span>
+                    <div class="report blue"><a ng-show="vehicleCondition.report_url.length > 0" href="{{vehicleCondition.report_url}}" target="_blank">检测网站报告</a></div>
                 </td>
             </tr>
             </tbody>
@@ -78,7 +78,7 @@
             <tr>
                 <td width="10%">车价宝评估价</td>
                 <td>
-                    <span class="fl bold red"><u>{{estimatePrice}}</u></span>
+                    <span class="fl bold red"><a href="http://pinggu.273.cn" target="_blank">{{estimatePrice}}</a></span>
                 </td>
             </tr>
             </tbody>
